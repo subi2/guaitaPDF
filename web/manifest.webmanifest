@@ -1,0 +1,23 @@
+{
+  "name": "Guaita PDF Edit",
+  "short_name": "Guaita PDF",
+  "description": "Editor de PDF local i sense núvol: edita, revisa, signa i compon PDFs al teu ordinador.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "background_color": "#171B21",
+  "theme_color": "#171B21",
+  "lang": "ca",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "file_handlers": [
+    { "action": "./", "accept": { "application/pdf": [".pdf"] } }
+  ],
+  "launch_handler": { "client_mode": "navigate-existing" }
+}
