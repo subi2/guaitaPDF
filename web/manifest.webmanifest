@@ -19,5 +19,5 @@
   "file_handlers": [
     { "action": "./", "accept": { "application/pdf": [".pdf"] } }
   ],
-  "launch_handler": { "client_mode": "navigate-existing" }
+  "launch_handler": { "client_mode": "focus-existing" }
 }

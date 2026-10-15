@@ -1,0 +1,110 @@
+<!--
+  Guaita Apps - Suite d'eines autònomes per a arquitectura, BIM i documentació.
+  Copyright (c) 2026 Jordi Subirós
+  GNU Affero General Public License v3.0
+  See LICENSE file for details
+-->
+<!DOCTYPE html>
+<html lang="ca" data-l="ca"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guaita PDF Edit 7.5</title>
+<meta name="description" content="Guaita PDF Edit: editor de PDF en un sol fitxer HTML, offline i privat. / Single-file offline PDF editor.">
+<style>
+:root{--bg:#0b0d07;--bg2:#12160a;--card:#1c220c;--bd:#2b3313;--tx:#e6ecd2;--mut:#99a37a;--a:#C6FF00;--a2:#FF2ECC;--a3:#00E5FF;--a4:#FFE500;--on:#0b0d07}
+:root[data-t=l]{--bg:#eef0e0;--bg2:#e4e8cf;--card:#fbfcf4;--bd:#c3cc98;--tx:#232814;--mut:#5d6840;--a:#6f8f00;--on:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 'IBM Plex Sans','Space Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;background-image:linear-gradient(var(--bd) 1px,transparent 1px),linear-gradient(90deg,var(--bd) 1px,transparent 1px);background-size:48px 48px;background-position:-1px -1px}
+body:before{content:"";position:fixed;inset:0;background:var(--bg);opacity:.9;z-index:-1}
+html[data-l=ca] [lang=en],html[data-l=en] [lang=ca]{display:none!important}
+.mono{font-family:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace}
+.top{position:fixed;top:12px;right:12px;display:flex;gap:6px;z-index:9}
+.top button{background:var(--card);color:var(--tx);border:1px solid var(--bd);padding:5px 12px;cursor:pointer;font:12px 'IBM Plex Mono',ui-monospace,monospace}
+.top button.on{background:var(--a);color:var(--on);border-color:var(--a)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.hero{padding:76px 0 40px}
+.cells{display:inline-grid;grid-template-columns:repeat(2,13px);gap:3px;vertical-align:middle;margin-right:12px}
+.cells span{display:block;width:13px;height:13px}.cells span:nth-child(1){background:#C6FF00}.cells span:nth-child(2){background:#FF2ECC}.cells span:nth-child(3){background:#00E5FF}.cells span:nth-child(4){background:#FFE500}
+.brand{font:700 14px 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.2em}.brand small{font-weight:400;color:var(--mut);letter-spacing:.12em;margin-left:8px}
+.tag{display:inline-block;margin:26px 0 10px;border:1px solid var(--a);color:var(--a);padding:2px 10px;font:12px 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}
+h1{font-size:clamp(38px,7vw,68px);line-height:1.05;margin:0 0 18px;letter-spacing:-.02em}h1 em{font-style:normal;color:var(--a)}
+.lead{max-width:680px;color:var(--mut);font-size:19px;margin:0 0 30px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:13px 24px;border:1px solid var(--a);color:var(--a);text-decoration:none;font:600 14px 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.06em}
+.btn.pri{background:var(--a);color:var(--on)}.btn:hover{background:var(--a2);border-color:var(--a2);color:#fff}
+h2{font:12px 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.2em;color:var(--a);margin:0;text-transform:uppercase}
+.st{font-size:30px;font-weight:700;margin:2px 0 22px}
+section{padding:36px 0}
+video{width:100%;display:block;border:1px solid var(--bd);background:#000}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--bd);padding:18px 20px}.card b{color:var(--a)}
+.card p{margin:6px 0 0;color:var(--tx);font-size:15px}
+.modes{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.modes span{border:1px solid var(--bd);background:var(--bg2);padding:4px 12px;font:13px 'IBM Plex Mono',ui-monospace,monospace}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.lang{background:var(--card);border:1px solid var(--bd);padding:22px}.lang h3{margin:0 0 4px;font-size:22px}.lang p{margin:0 0 16px;color:var(--mut)}
+.lang .btn{margin:0 8px 8px 0;padding:10px 18px}
+footer{border-top:1px solid var(--bd);background:var(--bg2);padding:30px 0 40px;margin-top:30px;font-size:13px;color:var(--mut)}
+.fb{display:flex;align-items:center;gap:8px;font:700 12px 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.18em;color:var(--tx);margin-bottom:10px}
+.fb .cells{grid-template-columns:repeat(2,6px);margin:0}.fb .cells span{width:6px;height:6px}
+footer a{color:var(--a)}
+</style></head><body>
+<div class="top"><button data-l="ca" class="on">CA</button><button data-l="en">EN</button><button id="th" title="theme">◐</button></div>
+<header class="hero"><div class="wrap">
+<div class="brand"><span class="cells"><span></span><span></span><span></span><span></span></span>GUAITA<small>pdf edit</small></div>
+<span class="tag mono" lang="ca">SBS BIM Consulting presenta</span><span class="tag mono" lang="en">SBS BIM Consulting presents</span>
+<h1>Guaita <em>PDF Edit</em> 7.5</h1>
+<p class="lead" lang="ca">Editor de PDF multidocument en un sol fitxer HTML. Es pot usar al navegador o instal·lar com a aplicació; no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador.</p>
+<p class="lead" lang="en">Multi-document PDF editor in a single HTML file. Use it in the browser or install it as an app; it connects to no server and works offline: your PDFs never leave your computer.</p>
+<div class="cta" lang="ca"><a class="btn pri" href="https://subi2.github.io/guaitaPDF/web/index.html">▶ Obre l'app (català)</a><a class="btn" href="https://subi2.github.io/guaitaPDF/web/HLP%20guaitaPDFedit-ajuda.html">Manual d'ús</a><a class="btn" href="#install">Instal·la-la</a></div>
+<div class="cta" lang="en"><a class="btn pri" href="https://subi2.github.io/guaitaPDF/weben/index.html">▶ Open the app (English)</a><a class="btn" href="https://subi2.github.io/guaitaPDF/weben/HLP_guaitaPDFedit-help_EN.html">User guide</a><a class="btn" href="#install">Install it</a></div>
+</div></header>
+<main class="wrap">
+<section><h2 lang="ca">Vídeo</h2><h2 lang="en">Video</h2><div class="st" lang="ca">Mira-ho en 60 segons</div><div class="st" lang="en">See it in 60 seconds</div>
+<video controls preload="metadata" poster="poster.jpg" playsinline><source src="guaitaPDFedit_video.mp4" type="video/mp4"></video></section>
+<section><h2 lang="ca">Funcions</h2><h2 lang="en">Features</h2><div class="st" lang="ca">Què pots fer</div><div class="st" lang="en">What you can do</div>
+<div class="grid" lang="ca">
+<div class="card"><b>Obrir i llegir</b><p>Pàgina única, llibre, contínua, enquadernada, anvers-revers i organitzador de pàgines, amb cintes de marcadors i colors de pàgina amb llegenda i filtre.</p></div>
+<div class="card"><b>Editar el contingut</b><p>Canvia text i imatges originals del PDF, escriu text directament a la pàgina, afegeix capçaleres i peus amb camps, i aplica una marca a altres pàgines.</p></div>
+<div class="card"><b>Revisar</b><p>Anotacions PDF reals: notes, ressaltats, núvols, fletxes i segells, amb llista i exportació.</p></div>
+<div class="card"><b>Signar</b><p>Signatura digital amb certificat .p12/.pfx (RSA i EC) i circuits d'aprovació.</p></div>
+<div class="card"><b>Composar</b><p>Llenç de nodes per combinar, triar, ordenar, transformar, imprimir en mosaic o en A3, dividir i processar lots de PDF, amb receptes per a arquitectura.</p></div>
+<div class="card"><b>Reduir i exportar</b><p>Redueix la mida del PDF, genera índexs des dels marcadors i exporta la geometria a DXF.</p></div>
+<div class="card"><b>Analitzar PDF sospitosos</b><p>El mode Escanejar desarma PDF perillosos amb guaitaPDFscan, dins un marc aïllat.</p></div>
+<div class="card"><b>Local i privat</b><p>Cap CDN, cap servidor. Tot es processa al navegador.</p></div></div>
+<div class="grid" lang="en">
+<div class="card"><b>Open and read</b><p>Single page, book, continuous, bound, front-back and page organiser, with bookmark ribbons and page colours with legend and filter.</p></div>
+<div class="card"><b>Edit the content</b><p>Change the PDF's original text and images, type text straight onto the page, add headers and footers with fields, and apply a mark to other pages.</p></div>
+<div class="card"><b>Review</b><p>Real PDF annotations: notes, highlights, clouds, arrows and stamps, with list and export.</p></div>
+<div class="card"><b>Sign</b><p>Digital signature with a .p12/.pfx certificate (RSA and EC) and approval circuits.</p></div>
+<div class="card"><b>Compose</b><p>A node canvas to combine, pick, sort, transform, print as mosaic or on A3, split and batch-process PDFs, with architecture recipes.</p></div>
+<div class="card"><b>Reduce and export</b><p>Shrink the PDF, generate indexes from bookmarks and export geometry to DXF.</p></div>
+<div class="card"><b>Analyse suspicious PDFs</b><p>Scan mode disarms dangerous PDFs with guaitaPDFscan, inside an isolated frame.</p></div>
+<div class="card"><b>Local and private</b><p>No CDN, no server. Everything is processed in the browser.</p></div></div>
+<div class="modes mono"><span>Veure · View</span><span>Editar · Edit</span><span>Revisar · Review</span><span>Signar · Sign</span><span>Composar · Compose</span><span>Escanejar · Scan</span></div></section>
+<section id="install"><h2 lang="ca">Aplicació (PWA)</h2><h2 lang="en">App (PWA)</h2><div class="st" lang="ca">Instal·la-la a l'escriptori</div><div class="st" lang="en">Install it on your desktop</div>
+<div class="grid" lang="ca">
+<div class="card"><b>Què és una PWA</b><p>Una <i>aplicació web progressiva</i>. En pocs mots: <b>instal·la l'app a l'escriptori del teu ordinador i romandrà actualitzada.</b> S'obre en finestra pròpia, sense barra d'adreces, i es refresca sola quan hi ha connexió.</p></div>
+<div class="card"><b>A Chrome</b><p>Obre l'app i prem la icona d'instal·lar, a la dreta de la barra d'adreces; o bé menú ⋮ → «Instal·la Guaita PDF Edit».</p></div>
+<div class="card"><b>A Edge</b><p>Menú ··· → Aplicacions → «Instal·la aquest lloc com a aplicació».</p></div>
+<div class="card"><b>Des de l'app</b><p>Menú Ajuda → «Instal·lar com a aplicació…», o el botó de la pantalla de benvinguda. Un cop instal·lada funciona sense connexió i la pots triar per obrir PDF (clic dret sobre un PDF → Obre amb).</p></div></div>
+<div class="grid" lang="en">
+<div class="card"><b>What a PWA is</b><p>A <i>progressive web app</i>. In short: <b>install the app on your computer's desktop and it will stay up to date.</b> It opens in its own window, without an address bar, and refreshes itself when you are online.</p></div>
+<div class="card"><b>In Chrome</b><p>Open the app and click the install icon at the right of the address bar; or menu ⋮ → “Install Guaita PDF Edit”.</p></div>
+<div class="card"><b>In Edge</b><p>Menu ··· → Apps → “Install this site as an app”.</p></div>
+<div class="card"><b>From the app</b><p>Help menu → “Install as an app…”, or the button on the welcome screen. Once installed it works offline and you can pick it to open PDFs (right-click a PDF → Open with).</p></div></div>
+<p style="color:var(--mut);font-size:14px;margin-top:14px" lang="ca">Disponible a Chrome i Edge (escriptori i Android). A Safari i Firefox, l'app funciona igual al navegador.</p>
+<p style="color:var(--mut);font-size:14px;margin-top:14px" lang="en">Available in Chrome and Edge (desktop and Android). In Safari and Firefox the app works the same in the browser.</p></section>
+<section><h2 lang="ca">Accés</h2><h2 lang="en">Access</h2><div class="st" lang="ca">Tria l'idioma</div><div class="st" lang="en">Choose your language</div>
+<div class="two"><div class="lang"><h3>Català</h3><p lang="ca">Aplicació i manual en català.</p><p lang="en">App and guide in Catalan.</p><a class="btn pri" href="https://subi2.github.io/guaitaPDF/web/index.html">▶ <span lang="ca">Obre l'app</span><span lang="en">Open the app</span></a><a class="btn" href="https://subi2.github.io/guaitaPDF/web/HLP%20guaitaPDFedit-ajuda.html"><span lang="ca">Manual d'ús</span><span lang="en">User guide</span></a></div>
+<div class="lang"><h3>English</h3><p lang="ca">Aplicació i manual en anglès.</p><p lang="en">App and guide in English.</p><a class="btn pri" href="https://subi2.github.io/guaitaPDF/weben/index.html">▶ <span lang="ca">Obre l'app</span><span lang="en">Open the app</span></a><a class="btn" href="https://subi2.github.io/guaitaPDF/weben/HLP_guaitaPDFedit-help_EN.html"><span lang="ca">Manual d'ús</span><span lang="en">User guide</span></a></div></div></section>
+</main>
+<footer><div class="wrap"><div class="fb"><span class="cells"><span></span><span></span><span></span><span></span></span>GUAITA · PDF EDIT 7.5</div>
+<p>SBS BIM Consulting 2026 · Copyright © 2026 Jordi Subirós · AGPL-3.0-only · <a href="https://github.com/subi2/guaitaPDF">GitHub</a></p>
+<p lang="ca">Guaita Apps es distribueix «tal com és», sense cap garantia. Les eines estan pensades desde la recerca i com a suport tècnic i educatiu; la verificació dels resultats i la responsabilitat derivada del seu ús recauen únicament sobre l'usuari final.</p>
+<p lang="en">Guaita Apps is distributed “as is”, without any warranty. The tools are designed from research and as technical and educational support; verification of the results and the responsibility arising from their use rest solely with the end user.</p></div></footer>
+<script>
+const R=document.documentElement;
+function setL(l){R.dataset.l=l;R.lang=l;document.querySelectorAll('.top [data-l]').forEach(b=>b.classList.toggle('on',b.dataset.l==l));try{localStorage.setItem('gpdf_l',l)}catch(e){}}
+let l0;try{l0=localStorage.getItem('gpdf_l')}catch(e){}
+setL(l0||((navigator.language||'ca').toLowerCase().startsWith('ca')||(navigator.language||'').toLowerCase().startsWith('es')?'ca':'en'));
+document.querySelectorAll('.top [data-l]').forEach(b=>b.onclick=()=>setL(b.dataset.l));
+document.getElementById('th').onclick=()=>{R.dataset.t=R.dataset.t=='l'?'d':'l'};
+</script></body></html>
