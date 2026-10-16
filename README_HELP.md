@@ -1,0 +1,322 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only · Copyright (c) 2026 Jordi Subirós, SBS BIM Consulting -->
+<p align="center"><img src="guaitaPDF_social_preview.png" alt="Guaita PDF Edit · SBS BIM Consulting" width="100%"></p>
+
+# Guaita PDF Edit — User guide
+
+**Version 7.5** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+
+Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
+
+## Contents
+
+- [01. What it is](#01-what-it-is)
+- [02. Working modes](#02-working-modes)
+- [03. Open, save and print](#03-open-save-and-print)
+- [04. Pages and view](#04-pages-and-view)
+- [05. Annotations and measuring](#05-annotations-and-measuring)
+- [06. Edit the original content](#06-edit-the-original-content)
+- [07. Bookmarks](#07-bookmarks)
+- [08. Review and sign](#08-review-and-sign)
+- [09. Attachments, layers and properties](#09-attachments-layers-and-properties)
+- [10. Compose: nodes](#10-compose-nodes)
+- [11. Reduce size](#11-reduce-size)
+- [12. Export to DXF](#12-export-to-dxf)
+- [13. Analyse a suspicious PDF (guaitaPDFscan)](#13-analyse-a-suspicious-pdf-guaitapdfscan)
+- [14. Install as an app](#14-install-as-an-app)
+- [15. Keyboard shortcuts](#15-keyboard-shortcuts)
+- [16. FAQ](#16-faq)
+
+---
+
+## 01. What it is
+
+- **Local and private** — Everything is processed in the browser. No CDN, no server.
+- **Multi-document** — Each PDF opens in its own tab; you can copy pages between documents.
+- **Editing and review** — Original text and images, real PDF annotations, bookmarks and digital signature.
+- **Compose** — A node canvas to combine, pick, sort, transform and split pages and batches of documents.
+
+Components: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1, @pdf-lib/fontkit 1.1.1 (MIT) and node-forge for signing, all embedded in the file.
+
+## 02. Working modes
+
+The switch in the header separates the ways of working:
+
+| Mode | What it is for |
+|---|---|
+| **View** | Navigation, page views, hand, scaled measuring, search, export and printing. |
+| **Edit** | Tools by family (History, Pages, Content, Annotate, Insert) and, below, the options of the active tool. Editing-tool shortcuts take you to this mode by themselves. |
+| **Review** | Real PDF annotations (notes, text markups, clouds, stamps, attachments) with list, filters and export. |
+| **Sign** | Digital signature with a .p12/.pfx certificate, signature fields and signer circuits. |
+| **Compose** | Grasshopper-style node canvas to organise documents and pages. |
+| **Scan** | The guaitaPDFscan suspicious-PDF analyser, inside an isolated frame. |
+
+## 03. Open, save and print
+
+1.  **File › Open** or drag one or several PDFs onto the window. They are also recognised by the `.pdf` extension and opened in name order (`plan 2` before `plan 10`), with progress and a final summary.
+2.  Edit (pages, annotations, content, bookmarks).
+3.  **File › New document…** creates a PDF from scratch: blank pages or one page per image (the image is fitted inside the page, centred; automatic size from the image or a chosen format).
+4.  **Save current PDF** generates a new PDF with all the changes.
+
+**Print** shows a preview that compares the paper size with the PDF size and lets you choose paper (A4, A3…), orientation and scale. **Merge all** creates one document from all the tabs.
+
+## 04. Pages and view
+
+The thumbnails on the left let you select (Ctrl+click), reorder by dragging, rotate, duplicate, extract, delete and insert blank pages or pages from another PDF. Thumbnail size changes by dragging the column edge or with Ctrl+wheel.
+
+| View | Key | Detail |
+|---|---|---|
+| Single page | `1` | Best for editing. |
+| Book | `2` | Double page with page turn. |
+| Continuous / two columns | `3` `4` | Vertical scrolling. |
+| Bound | `5` | Double page with spine, shadows and optional binding mark. |
+| Front-back | `6` | Side by side, as back-lit transparency with adjustable opacity, or flipping the sheet over the long or short edge. |
+| Page organiser | `7` | All pages, to pick and reorder by dragging. |
+| Presentation | `Ctrl+L` | Full screen; `Esc` exits. |
+
+### Page organiser
+
+Dragged pages lift and follow the cursor (as a stack with a counter if there are several); the others move aside to open the gap where they will land. It scrolls automatically near the edges, `Esc` cancels the drag, and you can select with a marquee dragged over empty space (Shift or Ctrl adds to the selection). Each page shows its format (A4, A3…) and its number.
+
+### Page colours
+
+Right-click a thumbnail › **Page colour…** puts a colour frame on the page (8 colours). The **Pages** bar has a **colour legend**: you can name each colour (e.g. *Report*, *Drawings*, *Pending*) and use it as a filter: clicking a colour dims the other pages (you can pick several); ◀ ▶ jump to the previous or next page with the filter and ✕ removes it. The colour is shown in the book view and in Compose nodes, and is saved inside the PDF; only Guaita reads it.
+
+### Bookmark ribbons
+
+Every page with a bookmark shows a red bookmark ribbon on its right side, at the height of the destination. Hover to see the title; click to open it in the panel. Turn them on with **View › Bookmark ribbons on the pages** (single page, continuous views and organiser).
+
+### Split and index
+
+- **Pages › Split the document…**: every N pages, by first-level bookmarks, by ranges, by blank pages, by format or by maximum size. Output as a ZIP, downloads or tabs.
+- **Pages › Index from the bookmarks…**: generates editable A4 pages with dot leaders, page numbers (already counting the index) and clickable links, which also work in View mode.
+
+Pages with their own /Rotate are displayed and saved correctly rotated.
+
+## 05. Annotations and measuring
+
+Pencil, highlighter, text, shapes, signature, images, watermark and page numbering. There are **3 pencils** (translucent, thickness varies with speed) and **2 pens** (opaque, constant thickness); each remembers its colour, thickness and opacity. With **Select** (`V`) you move, scale and rotate objects (with a rotation handle; `Shift` snaps to 15° steps) and change their order or opacity.
+
+Right-click an annotation, image, signature, stamp or field for **Apply to other pages…**: all, odd, even, same format, selected or a range. Choose position relative to the nearest edge, absolute or proportional, and replace or delete the copies. In **Header and footer** you can apply to odd or even pages only; it accepts the fields `[page]` `[total]` `[date]` `[file]`…
+
+### In-place text and highlight text
+
+**In-place text** (`Shift+T`): click the page and type directly; click an existing text to edit it, and `Esc` or a click outside confirms it. **Highlight text** (`Shift+H`): drag over the page text to highlight it; the text stays selectable.
+
+### Size and position in millimetres
+
+With an image or an embedded page selected, right-click › **Size and position…** (or the selection toolbar button): width and height in mm (with a **Proportion** lock), **Scale** in %, **Position X/Y** in mm from the left and from the top, and **Centre on the page**. The dialog shows the original size, the page size and the right and bottom margins, and warns in red if the object extends beyond the page.
+
+### Embed a PDF page
+
+**Insert › PDF page…** embeds a page from another PDF (or from any open document) inside the current page, as a **vector** (keeps text and lines) and with cropping: drag over the preview to choose the area, or press **Whole page**. If it cannot be embedded as a vector, it is inserted as an image. Once placed, it is moved, scaled and rotated like an image, and its size and position can be set in mm.
+
+> ⚠️ The crop is visual: content outside the crop stays in the file. A page with annotations is used in its original version, without the annotations.
+
+### Measure
+
+The **Measure** tool (`M`) has three modes in the selector next to the scale:
+
+- **Distance** at the chosen scale (`1:`).
+- **Area and perimeter**: click the vertices and close the polygon by clicking the first point, double-clicking or pressing Enter.
+- **Calibrate scale**: click the two ends of a known dimension, type its real length in metres and the scale is computed for you.
+
+## 06. Edit the original content
+
+With the **✎ Content** tool (`X`) click a text in the PDF to change it.
+
+| Mode | What it does |
+|---|---|
+| Original | Edits with the letters of the original embedded font. |
+| Combine | Keeps the original letters and fills in only the missing ones with the replacement font (standard, a .ttf/.otf file or an installed font). |
+| Rewrite whole fragment | The whole fragment in the replacement font (uniform look). |
+| Overlay | Covers the original with the background colour and writes on top (the original stays underneath). |
+
+Click an **image** in the PDF to delete it, replace it or turn it into a movable object.
+
+> ⚠️ If the original content has changed since the analysis, the edit is skipped with a warning instead of damaging the PDF.
+
+## 07. Bookmarks
+
+The **🔖 Bookmarks** tab shows the PDF's bookmark tree: read, create, edit and navigate.
+
+- `Ctrl+B` adds a bookmark to the current page.
+- Double-click or `F2` to rename; drag to reorder or nest.
+- You can change colour, bold, italic and the open/closed state.
+- `Alt+↑/↓` jumps to the previous or next bookmark.
+- You can export the list to Markdown, LaTeX, CSV and JSON.
+
+They are saved inside the PDF (`/Outlines`) and follow pages when extracting, duplicating and merging.
+
+> 💡 Navigation goes to the page, not to the exact position of the destination. “Insert from PDF” does not import bookmarks.
+
+## 08. Review and sign
+
+**Review** mode adds **real PDF annotations**, which Acrobat and other viewers can read, reply to and change the status of:
+
+- Notes (editable in a small window over the sheet, `Ctrl+Enter` saves) and margin notes with an arrow.
+- Highlight, underline and strike out text by dragging over it. They are listed under the **Text markups** filter and exported to CSV or Markdown.
+- Rectangles, ellipses, arrows, polygons and **review clouds**.
+- **Stamps** (APPROVED, REJECTED, REVIEWED…, or custom, with author and date), also with a hand-made look and a rotation handle.
+- File attachments at a point on the page.
+
+The right panel lists all marks with filters by page, type, author and status, and lets you export them. You can hide or show all notes.
+
+### Sign
+
+1.  In **Sign** mode add a signature field or pick an existing one.
+2.  Load your `.p12`/`.pfx` certificate (RSA key or EC P-256, P-384 and P-521) and type its password.
+3.  Sign. The signature is PAdES and can be validated with Acrobat, pyHanko or pdfsig. EC and RSA signatures can be combined in a signer circuit.
+
+> ⚠️ The certificate and password are processed in the browser and never leave your computer. A signature is invalidated if you modify the document afterwards: always sign last.
+
+## 09. Attachments, layers and properties
+
+The side panel has four tabs: **Pages**, **Bookmarks**, **Attachments** and **Layers**.
+
+- **Attachments**: add files (by dragging them or with the button), describe them, save them to disk or remove them. They are stored inside the PDF and the editor never opens them; executables are flagged.
+- **Layers**: show and hide the layers (optional content) of CAD or BIM PDFs. The state applies to the view, to printing and to the saved PDF.
+- **File › Document properties…**: title, author and other metadata.
+
+## 10. Compose: nodes
+
+**File › Merge composer…** or **Compose** mode opens a node canvas. Connections carry lists of pages (solid wire) or of numbers, text and true/false (dashed wire). An incompatible connection is refused with a warning. Counts are shown on each wire.
+
+### Palette
+
+At the top, always visible, **Merge** and **Final document**; below, the **Documents** (open PDFs) and **Operations** tabs. You can drag PDFs onto the sidebar (they open) or onto the canvas (each is placed as a source). **All on canvas** puts one source per document, connected to a new Merge.
+
+| Family | Nodes |
+|---|---|
+| Values | Property, Compare, Logic, Pattern, Value, Panel, Extract from text, Calculate, Count |
+| Pick | Filter, Group by (one output per group), Pick range (codes `p` = first and `z` = last: `p, z` · `p+1` · `z-1` · `1-3, 8, 12-z`; with “Within each document” they count for each source document), Remove blanks, Remove duplicates |
+| Sort | Reverse, Shift, Repeat, Sort by, Interleave |
+| Transform | Rotate, Scale (with an “Only reduce” option and a report of the pages scaled), Crop, Add margins, Cut into parts, **Mosaic** (cuts each large drawing into pieces of a format, e.g. an A2 into 4 A4s, with overlap, alignment crosses and a piece label), **Print** (1, 2 or 4 pages per sheet of a given size, at fitted scale, reduce-only or at 100 %, with printer margin, cut marks and a label), N-up (with booklet mode), Insert blank, Colour and raster |
+| Edit | Header and footer (with three positions), Text, Stamp / watermark, Image / title block, **Embedded PDF page** (a page from another document inside each page, as a vector, with anchor or mm position, scale, rotation, opacity and cropping), Signature field |
+| Generate | Document batch, Cover page, Separators, Index, Insert blank |
+| Document | Flatten, Layers, Metadata, Attachments, Bookmarks from text, **Automatic bookmarks** (“text =\> title” rules or by pages, with a colour ribbon), **Page colours** (colour frame by keyword, pages or document) and **Sort bookmarks** (by colour, with a parent bookmark per colour named after the legend; by page or by title) |
+
+### Working on the canvas
+
+- **Multiple selection**: Shift+click adds, Ctrl+click removes; Shift+drag draws a marquee (left to right, whole nodes only; right to left, also those it touches). `Ctrl+A` selects all and `Esc` clears. With several nodes, the right bar aligns, distributes, folds, unfolds and deletes.
+- **Groups** with title and colour (`Ctrl+G`), **notes** and **clusters**: a folded group looks like a single node.
+- **My nodes**: save a group as a reusable node. **Recipe templates**: 13 built-in plus your own, to reuse with other PDFs. They include **architecture** recipes: outline project report, construction project, submission for approval, tiled drawings and drawings to print on A3 (the keywords are editable; they are a starting structure, not a validation of what the CoAC requires).
+- Each node's options are on the node itself and in the right bar; right-click offers the quick ones.
+- In the preview strip, **Relative size** draws each page at true scale relative to the others (an A3 has twice the area of an A4); another click makes them all equal again.
+
+### Output
+
+- **Final document**: one file per group or output, with a name pattern (`{file}` `{doc}` `{group}` `{n}`), nested bookmarks and the **Reduce size on saving** option.
+- **Multiple save** (right bar with no node selected): downloads, ZIP or straight into a folder, with a CSV report.
+- **Document batch**: the recipe is applied to each document separately (signed ones are excluded).
+
+> 💡 Vector transformations (scale, crop, N-up…) keep the text; **Colour and raster** turns it into an image. Links and form fields of transformed pages are lost. The recipe is saved as JSON.
+
+## 11. Reduce size
+
+**File › Reduce size…** optimises the current PDF. Pick a profile:
+
+| Profile | Image resolution |
+|---|---|
+| Minimum size / Web | 96 dpi |
+| Standard | 150 dpi |
+| High-quality print | 300 dpi |
+| Press | Images are not recompressed |
+
+Clean-up removes metadata, thumbnails, JavaScript and automatic actions, attachments (optional), duplicate and unused objects; it compresses streams and can flatten annotations and forms. You see the size before and after with a breakdown. If the basic conditions are met, the result is “PDF/A-2b compatible”; otherwise you are told why.
+
+> 💡 CMYK, indexed and masked images are left untouched.
+
+## 12. Export to DXF
+
+**File › Export to DXF…** converts the vector geometry of the current page, the selected pages or all of them into **R12 (AC1009)** DXF files, the most compatible format.
+
+| Option | Detail |
+|---|---|
+| Content | Lines, polylines (curves are split into segments) and texts. |
+| Layers | One layer per colour (`COL_rrggbb`) with the nearest ACI. |
+| Units | Millimetres or points. |
+| Scale | The same as the Measure tool; it can be calibrated with the last measurement. |
+| Quality | Curve smoothness and a filter for tiny segments. |
+| Includes | Content edits and, optionally, annotations. Page rotation is respected. |
+
+> ⚠️ Images and shadings are not exported. Text is encoded in Windows-1252.
+
+## 13. Analyse a suspicious PDF (guaitaPDFscan)
+
+**Scan** mode (header switch or **File › Analyse suspicious PDF…**) loads **guaitaPDFscan 1.3** inside the editor, in an isolated frame (`sandbox`) with no access to the editor. The suspicious PDF is opened and analysed **only** in the analyser; in this mode the editor does not accept dropped files either.
+
+1.  Load the suspicious PDF and analyse it.
+2.  Disarm it and save it.
+3.  Press **Open in guaitaPDF Edit**: the editor validates the clean PDF, opens it as a new document and goes back to edit mode.
+
+### Connection security
+
+Communication uses `postMessage` with a versioned protocol. The editor only accepts messages from the frame it opened, with app `guaitaPDFscan`, an ArrayBuffer of 1 B to 500 MB starting with `%PDF-` and a sanitised name (no `\ / : * ? " < > |`).
+
+## 14. Install as an app
+
+Guaita PDF Edit can be installed as a **desktop app** (PWA): it opens in its own window, works offline, updates itself when there is a new version and can be chosen to open PDFs. Your files never leave your computer.
+
+- **Chrome:** install icon at the right of the address bar, or menu ⋮ › **Install Guaita PDF Edit**.
+- **Edge:** menu ··· › Apps › **Install this site as an app**.
+- **From the app:** **Help › Install as an app…** menu.
+
+Once installed, right-click a PDF › **Open with › Guaita PDF Edit**. If the app is already open, new PDFs are added as tabs in the same window. To make it the default app: **Properties › Opens with › Change** (Windows) or **Get Info › Open with** (macOS).
+
+> 💡 You need to open the app's web address (https), not the file from disk. Desktop Firefox and Safari do not install PWAs; on iPhone Safari: **Share › Add to Home Screen**.
+
+## 15. Keyboard shortcuts
+
+| Key | Action |
+|---|---|
+| `Ctrl+Z` / `Ctrl+Y` | Undo / redo |
+| `Ctrl+F` | Search text |
+| `Ctrl+P` | Print |
+| `Ctrl+C` `Ctrl+X` `Ctrl+V` | Copy / cut / paste pages (Ctrl+V also pastes an image) |
+| `Ctrl+B` | Add a bookmark to the current page |
+| `Alt+↑` / `Alt+↓` | Previous / next bookmark |
+| `F2` | Rename the selected bookmark |
+| `Del` | Delete the selected pages, object or bookmark |
+| `←` `→` `PgUp` `PgDn` | Previous / next page |
+| `Home` / `End` | First / last page |
+| `G` | Go to a page |
+| `1` `2` `3` `4` | Page · book · continuous · continuous 2 columns |
+| `5` `6` `7` | Bound · front-back · page organiser |
+| `Ctrl+L` | Full-screen presentation (Esc exits) |
+| `+` `-` `F` | Zoom in / zoom out / fit page |
+| Shift/Ctrl+wheel | Zoom at the mouse point |
+| `P` `V` `X` `M` | Hand · Select · Edit content · Measure |
+| `D` `H` `T` `R` `E` `S` | Pencil · highlighter · text · shape · eraser · signature |
+| `Shift+T` / `Shift+H` | In-place text / highlight text |
+| `Ctrl+A` / `Ctrl+G` | Compose: select all nodes / group |
+| `Esc` / `F11` | Close dialogs, cancel · full screen |
+
+## 16. FAQ
+
+**❓ Why can't I edit a signed PDF?**
+
+Any change invalidates the signature. Edit first and sign last; Compose batches exclude documents that are already signed.
+
+**❓ Can they be published on GitHub Pages?**
+
+Yes: they are static files. Serve them over HTTPS.
+
+**❓ The DXF does not show the images**
+
+This is a known limitation: only vector geometry and text are exported.
+
+**❓ After reducing the size the text can't be selected**
+
+That happens with **Colour and raster** (Compose), which turns pages into images. **Reduce size** keeps the text.
+
+**❓ If I double-click another PDF, does the one I have open close?**
+
+No. With the app installed, the new PDF opens as a new tab in the same window.
+
+**❓ Do my PDFs leave my computer?**
+
+No. Everything is processed locally in the browser, including the analyser and signing.
+
+---
+
+<sub>SBS BIM Consulting 2026 · Copyright © 2026 Jordi Subirós · AGPL-3.0-only<br>Guaita Apps is distributed “as is”, without any warranty. The tools are designed from research and as technical and educational support; verification of the results and the responsibility arising from their use rest solely with the end user.</sub>
