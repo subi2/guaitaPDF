@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 7.7.1 — Multi-document PDF editor (Guaita Apps suite)
+  Guaita PDF Edit 7.7.2 — Multi-document PDF editor (Guaita Apps suite)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v7.7.1 (EN)</title>
+<title>Guaita PDF Edit v7.7.2 (EN)</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -1404,6 +1404,30 @@ body.cp-dropping #cp-cv::after { content: 'Deixa anar aquí els PDF: una font pe
 
 
 
+/* ── v7.7.2: eines avançades de notes ── */
+.ctx-g[data-ctx="ntx"] { display: none !important; }
+body.mode-notes .ctx-g[data-ctx="ntx"].on { display: flex !important; }
+#nt-rec.rec { background: #D93636; color: #fff; border-color: #D93636; animation: ntrec 1.2s infinite; }
+@keyframes ntrec { 50% { opacity: .55; } }
+.nt-rect { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--text-mid); min-width: 30px; }
+#nt-zw { display: none; position: fixed; left: 50%; bottom: 36px; transform: translateX(-50%); width: min(96vw, 920px); background: var(--bg-panel); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,.35); z-index: 60; overflow: hidden; }
+body.mode-notes #nt-zw.on { display: block; }
+.zw-bar { display: flex; gap: 6px; align-items: center; padding: 4px 8px; font-size: 12px; background: var(--bg-deep2); }
+.zw-bar span { flex: 1; font-weight: 600; }
+#nt-zc { display: block; width: 100%; height: 160px; touch-action: none; cursor: crosshair; background: #fff; }
+#nt-zbox { display: none; position: absolute; border: 2px solid #FF2ECC; background: rgba(255,46,204,.08); pointer-events: none; z-index: 5; box-sizing: border-box; }
+body:not(.mode-notes) #nt-zbox { display: none !important; }
+#nt-vp { display: none; position: fixed; right: 14px; top: 120px; width: min(94vw, 340px); background: var(--bg-panel); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,.35); z-index: 61; }
+#nt-vp.on { display: block; }
+.vp-h { display: flex; align-items: center; padding: 6px 10px; font-weight: 600; font-size: 12.5px; background: var(--bg-deep2); border-radius: 10px 10px 0 0; }
+.vp-h span { flex: 1; }
+#nt-vp-l { padding: 6px; max-height: 40vh; overflow: auto; }
+.vp-r { display: flex; align-items: center; gap: 6px; padding: 3px 2px; font-size: 12px; }
+.vp-r.on { background: var(--accent-soft); border-radius: 6px; }
+.vp-n { min-width: 48px; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: text; }
+.vp-s { flex: 1; min-width: 60px; }
+.vp-t { font-variant-numeric: tabular-nums; color: var(--text-mut); }
+.vp-e { padding: 10px; color: var(--text-mut); font-size: 12px; }
 /* ── v7.7.1: llibreta amb seccions ── */
 .nb-pp { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-mut); margin-left: 8px; }
 .nb-sec { margin: 6px 6px 10px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
@@ -1871,7 +1895,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <button id="mode-compose" onclick="setMode('compose')" title="Compose: merge documents and pages with a node tree (sources → Merge → Final document)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Compose</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v7.7.1</span>
+  <span class="tag">v7.7.2</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Switch to light theme"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -1967,28 +1991,38 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
   <span class="nt-grip" id="nt-grip" title="Drag to move the toolbar (full screen)">⠿</span>
   <div class="fam"><div class="row">
     <button class="btn ib" data-twin="btn-undo" onclick="undo()" disabled title="Undo (Ctrl+Z)" aria-label="Undo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg></button>
-    <button class="btn ib" data-twin="btn-redo" onclick="redo()" disabled title="Refer (Ctrl+Y)" aria-label="Redo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 000 12h3"/></svg></button>
+    <button class="btn ib" data-twin="btn-redo" onclick="redo()" disabled title="Redo (Ctrl+Y)" aria-label="Redo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 000 12h3"/></svg></button>
   </div><span class="flab">History</span></div>
   <div class="fam"><div class="row">
     <button class="btn ib" data-ntool="pan" onclick="setTool('pan')" title="Hand: scroll the page (P)" aria-label="Hand: scroll the page (P)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 13V6.5a1.5 1.5 0 013 0V11V4.5a1.5 1.5 0 013 0V11V6.5a1.5 1.5 0 013 0V15a6 6 0 01-6 6c-2.6 0-4-1.5-5.4-3.6L4 14.8a1.5 1.5 0 012.4-1.8z"/></svg></button>
     <button class="btn ib" data-ntool="select" onclick="setTool('select')" title="Select and move notes (V)" aria-label="Select and move notes (V)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6z"/></svg></button>
+    <button class="btn ib" data-ntool="lasso" onclick="setTool('lasso')" title="Lasso: select, move, copy and recolour" aria-label="Lasso"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c-5 0-8 2.2-8 5s3 5 8 5 8-2.2 8-5-3-5-8-5z" stroke-dasharray="3 2"/><path d="M9.5 13.5C8 16 9 19 12 19.5"/></svg></button>
     <button class="btn ib" data-ntool="pencil" onclick="setTool('pencil')" title="Pencils and ballpoints (D)" aria-label="Pencils and ballpoints (D)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg></button>
-    <button class="btn ib" data-ntool="highlight" onclick="setTool('highlight')" title="Ressaltadors (H)" aria-label="Ressaltadors (H)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14l7-9 4 3-7 9z"/><path d="M9 14l-1 4 4-1"/><path d="M4 21h9"/></svg></button>
+    <button class="btn ib" data-ntool="highlight" onclick="setTool('highlight')" title="Highlighters (H)" aria-label="Highlighters (H)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14l7-9 4 3-7 9z"/><path d="M9 14l-1 4 4-1"/><path d="M4 21h9"/></svg></button>
     <button class="btn ib" data-ntool="hlsel" onclick="setTool('hlsel')" title="Highlight text (Shift+I)" aria-label="Highlight text (Shift+I)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h9"/><path d="M5 12h14" stroke-width="5" opacity=".45"/><path d="M5 8h14"/></svg></button>
-    <button class="btn ib" data-ntool="hltext" onclick="hlTextTool()" title="Rectangle ressaltat (Maj+H)" aria-label="Rectangle ressaltat (Maj+H)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="6" rx="1" fill="currentColor" fill-opacity=".35"/><path d="M5 7h14M5 17h9"/></svg></button>
+    <button class="btn ib" data-ntool="hltext" onclick="hlTextTool()" title="Highlight rectangle (Shift+H)" aria-label="Highlight rectangle (Shift+H)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="6" rx="1" fill="currentColor" fill-opacity=".35"/><path d="M5 7h14M5 17h9"/></svg></button>
     <button class="btn ib" data-ntool="text" onclick="setTool('text')" title="Add text (T)" aria-label="Add text (T)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M8 9h8M12 9v7"/></svg></button>
     <button class="btn ib" data-ntool="textin" onclick="setTool('textin')" title="In-place text (Shift+T)" aria-label="In-place text (Shift+T)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V4h11v3M8.5 4v11M6 15h5"/><path d="M17 10v10M14.5 10h5M14.5 20h5"/></svg></button>
-    <button class="btn ib" data-ntool="shape" onclick="setTool('shape')" title="Formes (R)" aria-label="Formes (R)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9" width="11" height="11" rx="1"/><circle cx="16" cy="8" r="5"/></svg></button>
-    <button class="btn ib" data-ntool="erase" onclick="setTool('erase')" title="Goma (E)" aria-label="Goma (E)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 20h12"/><path d="M5 15l9-9 5 5-7 7H9z"/></svg></button>
+    <button class="btn ib" data-ntool="shape" onclick="setTool('shape')" title="Shapes (R)" aria-label="Shapes (R)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9" width="11" height="11" rx="1"/><circle cx="16" cy="8" r="5"/></svg></button>
+    <button class="btn ib" data-ntool="erase" onclick="setTool('erase')" title="Eraser (E)" aria-label="Eraser (E)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 20h12"/><path d="M5 15l9-9 5 5-7 7H9z"/></svg></button>
   </div><span class="flab">Notes</span></div>
   <div class="fam"><div class="row">
     <button class="btn ib" onclick="ntAddPage()" title="New page after the current one (same size and paper)" aria-label="New page"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M12 11v6M9 14h6"/></svg></button>
     <button class="btn ib" onclick="bmSetTab('nb')" title="Notebook: sections and pages" aria-label="Notebook"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M3 7h3M3 12h3M3 17h3"/><path d="M10 8h5M10 12h5"/></svg></button>
   </div><span class="flab">Notebook</span></div>
   <div class="fam"><div class="row">
+    <button class="btn ib" onclick="ntUrlOpen()" title="Link to a URL: clickable rectangle (opens in View mode and in the PDF)" aria-label="Link to a URL"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 006 0l3-3a4 4 0 00-6-6l-1 1"/><path d="M14 10a4 4 0 00-6 0l-3 3a4 4 0 006 6l1-1"/></svg></button>
+    <button class="btn ib" onclick="vidOpen()" title="Video card: thumbnail with a link to YouTube, Vimeo or any URL" aria-label="Video card"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg></button>
+  </div><span class="flab">Links</span></div>
+  <div class="fam"><div class="row">
+    <button class="btn ib" id="nt-rec" onclick="vrToggle()" title="Record a voice note: the strokes you make stay synchronised with the audio" aria-label="Record voice note"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0012 0M12 17v4"/></svg></button><span class="nt-rect" id="nt-rec-t"></span>
+    <button class="btn ib" onclick="vrPanel()" title="Voice notes: play back with the strokes" aria-label="Voice notes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v6M9 6v12M13 8v8M17 5v14M21 10v4"/></svg></button>
+  </div><span class="flab">Voice</span></div>
+  <div class="fam"><div class="row">
     <button class="btn ib" id="nt-finger" onclick="ntFinger()" title="Finger: draws / scrolls. With a stylus, the pen draws and the finger always scrolls."><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 013 0V11M12 10V4.5a1.5 1.5 0 013 0V13M9 12.5L7.5 11a1.5 1.5 0 00-2.2 2l3.2 4.5A5 5 0 0012.6 20H14a5 5 0 005-5v-4a1.5 1.5 0 00-3 0"/></svg></button>
     <button class="btn ib" id="nt-nb" onclick="ntNeighbors()" title="Show the neighbouring pages (previous and next)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="6" width="10" height="12" rx="1"/><path d="M3 8v8M21 8v8"/></svg></button>
     <button class="btn ib" onclick="toggleThumbs()" title="Show or hide the thumbnails"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="6" height="16" rx="1"/><path d="M13 5h8M13 12h8M13 19h8"/></svg></button>
+    <button class="btn ib" id="nt-zwb" onclick="ntZw()" title="Zoom window: write large in a strip and the stroke lands at normal size"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M15 15l5 5M10 7.5v5M7.5 10h5"/></svg></button>
     <button class="btn ib" id="nt-fs" onclick="ntFull()" title="Full screen (floating toolbar)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
   </div><span class="flab">Screen</span></div>
   <span class="spacer"></span>
@@ -2066,6 +2100,15 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <select id="nt-erkind" title="Eraser type" onchange="ntErSet()"><option value="stroke">Whole stroke</option><option value="circle">Circular</option><option value="square">Square</option></select>
     <label class="chk" title="Eraser size (px)">Size <input type="range" id="nt-ersize" min="6" max="120" value="24" oninput="ntErSet()" style="width:90px"> <span id="nt-ersz-v">24</span> px</label>
     <label class="chk" title="Also acts on the original PDF content: images are removed and the rest is covered with white (the original stays underneath)"><input type="checkbox" id="nt-erorig" onchange="ntErSet()"> Also original PDF content</label>
+  </div>
+  <div class="ctx-g" data-ctx="lasso">
+    <button class="btn sm" onclick="lzCopy()" disabled title="Duplicate the selection">Copy</button>
+    <label class="chk" title="Change the colour of the selection">Colour <input type="color" id="lz-color" value="#E53935" oninput="lzColor(this.value)" disabled></label>
+    <button class="btn sm" onclick="lzDel()" disabled title="Delete the selection (Del)">Delete</button><span id="lz-n" class="chk"></span>
+  </div>
+  <div class="ctx-g" data-ctx="ntx">
+    <label class="chk" title="Hold the pencil still for a moment at the end of the stroke: it becomes a line, rectangle, triangle or ellipse"><input type="checkbox" id="nt-snap" onchange="ntSnapSet()"> Auto shapes</label>
+    <select id="nt-tex" onchange="ntTexSet()" title="Stroke texture"><option value="">Clean stroke</option><option value="grain">Graphite grain</option><option value="chalk">Chalk</option><option value="brush">Brush</option></select>
   </div>
   <div class="ctx-g" data-ctx="shape">
     <select id="shape-kind" title="Shape type">
@@ -2216,7 +2259,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 7.7.1</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 7.7.2</small></div>
           <h1>PDF editor <em>local</em>, no cloud.</h1>
           <p>Open one or more PDFs or drag them onto the window. Everything is processed on this computer: no file leaves the browser.</p>
           <div class="wl-act">
@@ -2438,7 +2481,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
   <span id="st-worker" class="hidden" title="This environment does not allow pdf.js workers (embedded viewer or browser restrictions). PDFs are processed on the main thread: everything works the same, but large documents are slower. Opened directly in Chrome or Edge from disk, this does not normally happen.">pdf.js · main thread</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 7.7.1 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 7.7.2 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -2771,6 +2814,26 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
       <button class="btn" onclick="closeModal('modal-cert')">Cancel</button>
       <button class="btn primary" id="cert-go" onclick="certSignActive()" disabled>Sign and save</button>
     </div>
+  </div>
+</div>
+<div id="nt-zw"><div class="zw-bar"><span>Zoom window</span><button class="btn sm" onclick="zwMove('l')" title="Enrere">◀</button><button class="btn sm" onclick="zwMove('r')" title="Endavant">▶</button><button class="btn sm" onclick="zwMove('u')" title="Amunt">▲</button><button class="btn sm" onclick="zwMove('d')" title="Avall">▼</button><button class="btn sm" onclick="zwMove('n')" title="Next line: back to the left and down">↵</button><select id="nt-zwf" onchange="zwSetF(this.value)" title="Augment"><option value="2">×2</option><option value="3">×3</option><option value="4">×4</option><option value="6">×6</option></select><button class="btn sm" onclick="ntZw()" title="Close">✕</button></div><canvas id="nt-zc"></canvas></div>
+<div id="nt-vp"><div class="vp-h"><span>Voice notes</span><button class="btn sm" onclick="vrPanel(false)">✕</button></div><div id="nt-vp-l"></div></div>
+<div class="modal-bg hidden" id="modal-url">
+  <div class="modal">
+    <h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 006 0l3-3a4 4 0 00-6-6l-1 1"/><path d="M14 10a4 4 0 00-6 0l-3 3a4 4 0 006 6l1-1"/></svg>Link to a URL</h2>
+    <label>Address (http, https or e-mail)</label><input type="text" id="lk-url" placeholder="https://…" onkeydown="if(event.key==='Enter')ntUrlGo()">
+    <p class="cert-note">Next you will drag a rectangle over the text, image or drawing you want to make clickable. It is saved in the PDF as a standard link.</p>
+    <div class="mactions"><button class="btn" onclick="closeModal('modal-url')">Cancel</button><button class="btn primary" onclick="ntUrlGo()">Draw the rectangle</button></div>
+  </div>
+</div>
+<div class="modal-bg hidden" id="modal-vid">
+  <div class="modal">
+    <h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/></svg>Video card</h2>
+    <label>Video URL (YouTube, Vimeo, …)</label><input type="text" id="vd-url" placeholder="https://www.youtube.com/watch?v=…">
+    <label>Title (optional)</label><input type="text" id="vd-title" maxlength="80">
+    <label>Thumbnail (optional: an image, or a video file to take a frame from)</label><input type="file" id="vd-img" accept="image/*,video/*">
+    <p class="cert-note">A PDF cannot reliably embed a YouTube or Vimeo player: the card is an image with a link that opens in the browser. Nothing is downloaded from the Internet.</p>
+    <div class="mactions"><button class="btn" onclick="closeModal('modal-vid')">Cancel</button><button class="btn primary" onclick="vidMake()">Insert the card</button></div>
   </div>
 </div>
 <div class="modal-bg hidden" id="modal-index">
@@ -4139,12 +4202,18 @@ const vcDown = e => {
     edtinDown(e);
   } else if (tool === 'rv') {
     rvDown(e);
+  } else if (tool === 'lasso') {
+    lzDown(e);
+  } else if (tool === 'urllink') {
+    lkDown(e);
   }
 };
 vc.addEventListener('mousedown', vcDown);
 
 const vcMove = e => {
   if (!getActiveDoc()) return;
+  if (tool === 'lasso' && (LZ.path || LZ.drag)) { lzMove(e); return; }
+  if (tool === 'urllink' && LK.d) { lkMove(e); return; }
   if (panning) {
     panX = panSPX + e.clientX - panSX;
     panY = panSPY + e.clientY - panSY;
@@ -4182,6 +4251,8 @@ function stopPan() {
   if (erasing) endErase();
   if (sigDraft) endSig();
   if (rvDrag) rvUp();
+  if (LZ.path || LZ.drag) lzUp();
+  if (LK.d) lkUp();
 }
 vc.addEventListener('mouseup', stopPan);
 vc.addEventListener('mouseleave', stopPan);
@@ -4491,7 +4562,9 @@ const CTX = {
   select: ['Select', 'Click to select an annotation · drag it to move it · double-click to edit a text · Del to delete it.', ['clear']],
   edit: ['Edit content', 'Hover over a text or an image in the PDF and click it to edit.', []],
   edtin: ['Edit text in place', 'Click a text in the PDF and type directly · Enter opens the dialog (font, substitution, overlay) · Esc cancels · clicking outside also opens the dialog (Shift+X).', []],
-  pencil: ['Pencil', 'Draw freehand. Choose one of the 3 pencils (translucent, variable thickness) or 2 pens (opaque, constant thickness): each remembers its colour, thickness and opacity.', ['pens', 'draw', 'penop', 'color']],
+  pencil: ['Pencil', 'Draw freehand. Pick one of the 3 pencils (translucent, variable width) or 2 pens (opaque, constant width): each remembers colour, width and opacity. Notes mode: stroke texture and auto shapes (hold the pencil still at the end of the stroke).', ['pens', 'draw', 'penop', 'color', 'ntx']],
+  lasso: ['Lasso', 'Draw a loop around strokes, texts or shapes to select them · drag inside the box to move them · copy, recolour or delete with the buttons.', ['lasso']],
+  urllink: ['URL link', 'Drag a rectangle over the element you want to link. In View mode a click opens it (with confirmation).', []],
   hltext: ['Highlight rectangle', 'Drag over the text on the page to mark it with a coloured rectangle (the text stays selectable).', ['hltext']],
   highlight: ['Highlighter', 'Pick one of the 5 markers (each remembers its colour, thickness and opacity). Free: drag by hand · Straight: a straight line that follows the line of text (also with Shift held down).', ['hlpens']],
   text: ['Text', 'Click the page to add a text (dialog). Font, size, style and colour are in the bar.', ['textst']],
@@ -6160,6 +6233,7 @@ function startDraw(e) {
 
 function continueDraw(e) {
   if (!drawing || !curStroke) return;
+  if (curStroke.snapped) return;
   const q = scrToCanvas(e.clientX, e.clientY);
   if (curStroke.pen === 'l') {   // el llapis s'aprima quan vas ràpid i s'engruixeix quan vas lent
     const pr = curStroke.points[curStroke.points.length - 1], sp = Math.hypot(q.x - pr.x, q.y - pr.y) / RENDER_SCALE;
@@ -6170,6 +6244,7 @@ function continueDraw(e) {
   if (curStroke.line) curStroke.points[1] = { x: q.x, y: curStroke.points[0].y };   // recte: només es mou l'extrem final, sobre la línia
   else curStroke.points.push(q);
   redrawAnnotations();
+  ntHoldArm();
 }
 
 function endDraw() {
@@ -7000,6 +7075,10 @@ async function embedAnnotations(outPage, annotations, rot, font, fontB, out, sig
     const col = hexToRgb(a.color || '#ff0000');
     const clr = rgb(col.r / 255, col.g / 255, col.b / 255);
 
+    if (t === 'stroke' && (a.tex === 'grain' || a.tex === 'chalk') && a.points && a.points.length > 1) {   // v7.7.2: els traços amb textura s'incrusten com a imatge
+      const tc = texCanvas(a);
+      if (tc) { await embedImageAnnot(outPage, { type: 'image', dataUrl: tc.cv.toDataURL('image/png'), fmt: 'png', x1: tc.ox, y1: tc.oy, x2: tc.ox + tc.cv.width, y2: tc.oy + tc.cv.height, rot: 0, opacity: 1 }, g, out, sigCache); continue; }
+    }
     if (t === 'stroke' || t === 'highlight') {
       if (!a.points || a.points.length < 2) continue;
       const thick = Math.max(0.5, a.width / RENDER_SCALE);
@@ -8812,6 +8891,8 @@ const HELP = {
 <p><b>Structures…</b> (Composer toolbar) creates a <b>slot</b> for each item of a dossier structure, grouped with the matching bookmarks. There is a generic building-project structure and you can <b>import your own</b> from a JSON file (format <code>guaita-estructura</code>: <code>nom</code> and <code>arbre</code>, each element with <code>codi</code>, <code>titol</code>, <code>obligatori</code> and <code>fills</code>; «Download an example» gives you one). Imported structures are kept only in this browser. Each slot is filled with an open document (automatic assignment by the code or the title in the file name) and, if needed, a page range; empty required slots are marked ⚠ and «Check slots» lists them. Everything is editable on the canvas.</p>
 <p><b>Parameters…</b> defines reusable values (project, client…) that go into node texts as <code>[@project]</code> and into the file name pattern as <code>{@project}</code>; they are saved with the recipe. New branch nodes: <b>Flatten branches</b>, <b>Put in branch</b> and <b>Select branch</b>. Automatic annotations: <b>Highlight words</b> (keywords with their own colour) and <b>«p. N» links</b> (turns text references into links inside the final PDF).</p>
 <p>The <b>Sign with certificate</b> node (7.6.2) signs the Final document with a .p12 / .pfx certificate (PAdES, SHA-256) as the last step when saving; it goes right before the Final document, can be combined with the fields created with «Signature», and the certificate is only kept in memory.</p>
+<h3>Advanced Notes tools (7.7.2)</h3>
+<p><b>Lasso</b>: draw a loop around strokes, texts or shapes to select them; drag, copy, recolour or delete them. <b>Auto shapes</b>: with the pencil, hold it still for a moment at the end of the stroke and it turns into a line, rectangle, triangle or ellipse. <b>Zoom window</b>: write large in a strip and the stroke lands at normal size on the page; the window advances by itself. <b>Textures</b>: graphite grain, chalk and brush. <b>Voice notes</b>: record audio while you write; when you play it back, the strokes reappear in time with the voice. The audio is attached to the PDF; when you reopen it, the voice follows the pages, but the strokes are already part of the page. <b>Links</b>: a clickable rectangle to a URL and a video card (thumbnail with a link).</p>
 <h3>Paper and notebook (7.7.1)</h3>
 <p>Blank pages (<b>Add blank page</b> and <b>File › New document…</b>) can have <b>ruled, grid or dotted paper</b>, with the spacing in mm; they are real vector lines in the saved PDF. The <b>Notebook</b> tab of the side panel shows the document as sections (the top-level bookmarks) and pages: you can add new sections and pages with the chosen paper, rename them (double-click), reorder them, duplicate and delete pages, move them to another section and give each section a colour (a colour frame on its pages). It is saved as any other PDF, with the bookmarks as sections.</p>
 <h3>Notes mode (7.7.0)</h3>
@@ -8884,7 +8965,7 @@ const HELP = {
 <h3>If the option does not appear</h3>
 <p>You need to open the app's web address (https), not the file from disk. Desktop Firefox and Safari do not install PWAs; on iPhone Safari: <b>Share › Add to Home Screen</b>.</p>`],
   about: ['About Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 7.7.1</b> — multi-document PDF editor from the Guaita Apps suite. A single, self-contained HTML file: it installs nothing, connects to no server and works offline.</p>
+<p><b>Guaita PDF Edit 7.7.2</b> — multi-document PDF editor from the Guaita Apps suite. A single, self-contained HTML file: it installs nothing, connects to no server and works offline.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Licence <b>AGPL-3.0-only</b>.</p>
 <p>Included components: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) and @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Related program: guaitaPDFscan 1.3 (suspicious PDF analyser), built into Scan mode.</p>`]
@@ -13169,7 +13250,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 7.7.1 · pdf-lib';
+  const prod = 'Guaita PDF Edit 7.7.2 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -13208,7 +13289,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'XMP metadata'); del(cat, 'PieceInfo', 'private application data');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 7.7.1') })); rep.cleaned.push('document information'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 7.7.2') })); rep.cleaned.push('document information'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'thumbnails'));
@@ -13358,14 +13439,15 @@ const rvInkDash = S => [9 * S, 0.7 * S, 14 * S, 0.5 * S, 5 * S, 0.9 * S, 11 * S,
 function linksWrite(out, pagesList, outPages, rots, pidRef) {
   const { PDFName, PDFArray, PDFNumber, PDFNull } = PDFLib, ctx = out.context;
   pagesList.forEach((pd, i) => {
-    const L = (pd.annotations || []).filter(a => a.type === 'link' && a.target), pg = outPages[i]; if (!L.length || !pg) return;
+    const L = (pd.annotations || []).filter(a => (a.type === 'link' && (a.target || a.url)) || (a.type === 'image' && a.url)), pg = outPages[i]; if (!L.length || !pg) return;
     const g = pageGeom(pg, rots[i] || 0);
     let A = pg.node.lookup(PDFName.of('Annots')); if (!(A instanceof PDFArray)) { A = ctx.obj([]); pg.node.set(PDFName.of('Annots'), A); }
     L.forEach(a => {
-      const ref = pidRef.get(a.target); if (!ref) return;
+      const ref = a.url ? null : pidRef.get(a.target); if (!a.url && !ref) return;
       const P = [v2p(a.x1, a.y1, g), v2p(a.x2, a.y2, g)];
       const d = ctx.obj({ Type: 'Annot', Subtype: 'Link', Rect: [Math.min(P[0].x, P[1].x), Math.min(P[0].y, P[1].y), Math.max(P[0].x, P[1].x), Math.max(P[0].y, P[1].y)], Border: [0, 0, 0], F: 4 });
-      d.set(PDFName.of('Dest'), ctx.obj([ref, PDFName.of('XYZ'), PDFNull, PDFNull, PDFNull]));
+      if (a.url) d.set(PDFName.of('A'), ctx.obj({ Type: 'Action', S: 'URI', URI: PDFLib.PDFString.of(a.url) }));
+      else d.set(PDFName.of('Dest'), ctx.obj([ref, PDFName.of('XYZ'), PDFNull, PDFNull, PDFNull]));
       A.push(ctx.register(d));
     });
   });
@@ -13375,6 +13457,7 @@ vc.addEventListener('click', e => {
   if (typeof vwDown !== 'undefined' && vwDown && Math.hypot(e.clientX - vwDown.x, e.clientY - vwDown.y) > 5) return;
   const doc = getActiveDoc(); if (!doc) return;
   const a = linkAt(doc.pages[doc.curIdx], scrToCanvas(e.clientX, e.clientY)); if (!a) return;
+  if (a.url) { openUrl(a.url); return; }
   const i = doc.pages.findIndex(q => q.pid === a.target); if (i >= 0) goTo(i);
 });
 vc.addEventListener('mousemove', e => {
@@ -13383,7 +13466,7 @@ vc.addEventListener('mousemove', e => {
   const on = !!linkAt(doc.pages[doc.curIdx], scrToCanvas(e.clientX, e.clientY));
   if (on) vc.style.cursor = 'pointer'; else if (vc.style.cursor === 'pointer') vc.style.cursor = '';
 });
-function linkAt(pd, p) { return (pd.annotations || []).find(a => a.type === 'link' && p.x >= Math.min(a.x1, a.x2) && p.x <= Math.max(a.x1, a.x2) && p.y >= Math.min(a.y1, a.y2) && p.y <= Math.max(a.y1, a.y2)); }
+function linkAt(pd, p) { return (pd.annotations || []).find(a => (a.type === 'link' || (a.type === 'image' && a.url)) && p.x >= Math.min(a.x1, a.x2) && p.x <= Math.max(a.x1, a.x2) && p.y >= Math.min(a.y1, a.y2) && p.y <= Math.max(a.y1, a.y2)); }
 
 // ── índex a partir dels marcadors
 function bmFlatIdx(doc, maxLv) {
@@ -14922,7 +15005,7 @@ Object.assign(CP_TIPS722, { csign: 'Digitally signs the Final document with a ce
   document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-cpcert]')) cpCertOpen(); });
 })();
 // ═══════════════ v7.7.0: mode Notes (apunts sobre el PDF) ═══════════════
-const NOTES_TOOLS = ['select', 'pencil', 'highlight', 'hlsel', 'text', 'textin', 'shape', 'erase'];
+const NOTES_TOOLS = ['select', 'lasso', 'urllink', 'pencil', 'highlight', 'hlsel', 'text', 'textin', 'shape', 'erase'];
 const NT = (() => {
   const g = (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : v; } catch (e) { return d; } };
   return { finger: g('guaita-nt-finger', 'draw'), nb: g('guaita-nt-nb', '1') !== '0', penAt: 0, full: false, fsReq: false,
@@ -15296,6 +15379,446 @@ async function ntAddPage() {
   const cur = doc.pages[doc.curIdx], np = { type: 'blank', dinSize: cur && cur.type === 'blank' ? cur.dinSize : 'A4', landscape: cur && cur.type === 'blank' ? !!cur.landscape : false, rotation: 0, annotations: [], pid: newPid(), paper: cur && cur.paper ? { ...cur.paper } : paperOf(paperLast.k, paperLast.mm) };
   const at = doc.curIdx + 1; doc.pages.splice(at, 0, np); await renderThumbs(); await goTo(at); toast('New page added');
 }
+
+// ═══ v7.7.2: llaç, formes automàtiques, finestra de zoom, textures, notes de veu, enllaços i targetes de vídeo ═══
+const ntLoad = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+Object.assign(NT, { snap: ntLoad('guaita-nt-snap') === '1', tex: ntLoad('guaita-nt-tex') || '', zw: false, zwF: +ntLoad('guaita-nt-zwf') || 3, holdP: null, linkUrl: '' });
+
+// ── ajudes de geometria
+function annMove(a, dx, dy) {
+  if (a.points) a.points.forEach(p => { p.x += dx; p.y += dy; });
+  ['x', 'x1', 'x2'].forEach(k => { if (typeof a[k] === 'number') a[k] += dx; });
+  ['y', 'y1', 'y2'].forEach(k => { if (typeof a[k] === 'number') a[k] += dy; });
+}
+function pip(pt, poly) {
+  let c = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const a = poly[i], b = poly[j];
+    if ((a.y > pt.y) !== (b.y > pt.y) && pt.x < (b.x - a.x) * (pt.y - a.y) / (b.y - a.y) + a.x) c = !c;
+  }
+  return c;
+}
+const ntOvCtx = () => $('overlay-canvas').getContext('2d');
+const ntCurPd = () => { const d = getActiveDoc(); return d ? d.pages[d.curIdx] : null; };
+
+// ── Llaç: seleccionar amb un traç lliure, moure, copiar, canviar de color o esborrar
+const LZ = { path: null, sel: [], drag: null };
+function lzPrune() { const pd = ntCurPd(); LZ.sel = pd ? LZ.sel.filter(a => pd.annotations.includes(a)) : []; }
+function lzBox() {
+  if (!LZ.sel.length) return null;
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  LZ.sel.forEach(a => { const b = annotBox(a); x0 = Math.min(x0, b.x0); y0 = Math.min(y0, b.y0); x1 = Math.max(x1, b.x1); y1 = Math.max(y1, b.y1); });
+  return { x0, y0, x1, y1 };
+}
+function lzPaint() {
+  clearOverlay(); const c = ntOvCtx(), S = RENDER_SCALE;
+  if (LZ.path && LZ.path.length > 1) {
+    c.save(); c.strokeStyle = '#2F5FE6'; c.lineWidth = 1.6 * S; c.setLineDash([6 * S, 4 * S]); c.beginPath();
+    LZ.path.forEach((p, i) => i ? c.lineTo(p.x, p.y) : c.moveTo(p.x, p.y)); c.stroke();
+    c.setLineDash([2 * S, 4 * S]); c.globalAlpha = .5; c.beginPath(); c.moveTo(LZ.path[LZ.path.length - 1].x, LZ.path[LZ.path.length - 1].y); c.lineTo(LZ.path[0].x, LZ.path[0].y); c.stroke(); c.restore();
+  }
+  if (LZ.sel.length) {
+    c.save(); c.strokeStyle = '#2F5FE6'; c.fillStyle = 'rgba(47,95,230,.07)'; c.lineWidth = 1 * S; c.setLineDash([]);
+    LZ.sel.forEach(a => { const b = annotBox(a); c.strokeRect(b.x0, b.y0, b.x1 - b.x0, b.y1 - b.y0); });
+    const B = lzBox(), p = 4 * S; c.lineWidth = 1.6 * S; c.setLineDash([6 * S, 3 * S]); c.fillRect(B.x0 - p, B.y0 - p, B.x1 - B.x0 + 2 * p, B.y1 - B.y0 + 2 * p); c.strokeRect(B.x0 - p, B.y0 - p, B.x1 - B.x0 + 2 * p, B.y1 - B.y0 + 2 * p);
+    c.restore();
+  }
+  lzUi();
+}
+function lzUi() { document.querySelectorAll('[data-ctx="lasso"] button, [data-ctx="lasso"] input').forEach(b => { b.disabled = !LZ.sel.length; }); const h = $('lz-n'); if (h) h.textContent = LZ.sel.length ? LZ.sel.length + ' selected' + (LZ.sel.length > 1 ? 's' : '') : ''; }
+function lzClear() { LZ.sel = []; LZ.path = null; LZ.drag = null; clearOverlay(); lzUi(); }
+function lzDown(e) {
+  const p = scrToCanvas(e.clientX, e.clientY); lzPrune();
+  if (LZ.sel.length) { const b = lzBox(), t = 10 * RENDER_SCALE / Math.max(zoom, .15); if (b && p.x >= b.x0 - t && p.x <= b.x1 + t && p.y >= b.y0 - t && p.y <= b.y1 + t) { LZ.drag = { x: p.x, y: p.y, saved: false }; return; } }
+  LZ.sel = []; LZ.path = [p]; lzPaint();
+}
+function lzMove(e) {
+  const p = scrToCanvas(e.clientX, e.clientY);
+  if (LZ.drag) {
+    if (!LZ.drag.saved) { saveHistory(); LZ.drag.saved = true; }
+    const dx = p.x - LZ.drag.x, dy = p.y - LZ.drag.y; LZ.drag.x = p.x; LZ.drag.y = p.y;
+    LZ.sel.forEach(a => annMove(a, dx, dy)); redrawAnnotations(); return;
+  }
+  if (LZ.path) { LZ.path.push(p); lzPaint(); }
+}
+function lzUp() {
+  if (LZ.drag) { LZ.drag = null; return; }
+  const poly = LZ.path; LZ.path = null; if (!poly) return;
+  const pd = ntCurPd(); LZ.sel = [];
+  if (pd && poly.length > 6) {
+    LZ.sel = pd.annotations.filter(a => {
+      if (a.type === 'watermark' || a.type === 'rv') return false;
+      if (!(a.points || a.type === 'text' || a.x1 != null)) return false;
+      if (a.points && a.points.length) return a.points.filter(q => pip(q, poly)).length >= a.points.length * 0.5;
+      const b = annotBox(a); return pip({ x: (b.x0 + b.x1) / 2, y: (b.y0 + b.y1) / 2 }, poly);
+    });
+  }
+  lzPaint(); if (pd && poly.length > 6) toast(LZ.sel.length ? LZ.sel.length + ' item(s) inside the lasso: drag to move them' : 'The lasso did not pick anything');
+}
+function lzCopy() {
+  lzPrune(); const pd = ntCurPd(); if (!pd || !LZ.sel.length) return;
+  saveHistory(); const off = 14 * RENDER_SCALE, cl = [];
+  LZ.sel.forEach(a => { const c = { ...a }; delete c.vr; if (a.points) c.points = a.points.map(p => ({ ...p })); annMove(c, off, off); pd.annotations.push(c); cl.push(c); });
+  LZ.sel = cl; redrawAnnotations(); toast('Copied · ' + cl.length + ' element(s)');
+}
+function lzColor(col) {
+  lzPrune(); if (!LZ.sel.length) return; saveHistory();
+  LZ.sel.forEach(a => { if (a.type === 'stroke' || a.type === 'highlight' || a.type === 'text' || a.type === 'shape') a.color = col; });
+  redrawAnnotations();
+}
+function lzDel() {
+  lzPrune(); const pd = ntCurPd(); if (!pd || !LZ.sel.length) return;
+  saveHistory(); const s = new Set(LZ.sel); pd.annotations = pd.annotations.filter(a => !s.has(a)); LZ.sel = []; redrawAnnotations(); toast('Esborrat');
+}
+{ const _ra = redrawAnnotations; redrawAnnotations = function () { _ra.apply(this, arguments); if (tool === 'lasso' && !LZ.path) { lzPrune(); lzPaint(); } if (NT.zw) zwDraw(); }; }
+document.addEventListener('keydown', e => { if (tool === 'lasso' && LZ.sel.length && (e.key === 'Delete' || e.key === 'Backspace') && !/INPUT|TEXTAREA|SELECT/.test((e.target || {}).tagName || '')) { e.preventDefault(); lzDel(); } });
+
+// ── Formes automàtiques: mantenir el llapis quiet al final del traç el converteix en recta, rectangle, triangle o el·lipse
+function dpSimplify(pts, eps) {
+  const keep = new Array(pts.length).fill(false); keep[0] = keep[pts.length - 1] = true;
+  const st = [[0, pts.length - 1]];
+  while (st.length) {
+    const [i, j] = st.pop(); if (j <= i + 1) continue;
+    const a = pts[i], b = pts[j], dx = b.x - a.x, dy = b.y - a.y, l = Math.hypot(dx, dy); let md = -1, mk = -1;
+    for (let k = i + 1; k < j; k++) { const d = l > 1e-6 ? Math.abs(dx * (a.y - pts[k].y) - (a.x - pts[k].x) * dy) / l : Math.hypot(pts[k].x - a.x, pts[k].y - a.y); if (d > md) { md = d; mk = k; } }
+    if (md > eps) { keep[mk] = true; st.push([i, mk], [mk, j]); }
+  }
+  return pts.filter((_, i) => keep[i]);
+}
+function shSnap(pts) {
+  const n = pts.length; if (n < 6) return null;
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9, L = 0;
+  for (let i = 0; i < n; i++) { const p = pts[i]; x0 = Math.min(x0, p.x); x1 = Math.max(x1, p.x); y0 = Math.min(y0, p.y); y1 = Math.max(y1, p.y); if (i) L += Math.hypot(p.x - pts[i - 1].x, p.y - pts[i - 1].y); }
+  const D = Math.hypot(x1 - x0, y1 - y0); if (D < 14 * RENDER_SCALE) return null;
+  const a = pts[0], b = pts[n - 1], de = Math.hypot(b.x - a.x, b.y - a.y);
+  if (de > 0.85 * L) {
+    let mx = 0; for (const p of pts) mx = Math.max(mx, Math.abs((b.x - a.x) * (a.y - p.y) - (a.x - p.x) * (b.y - a.y)) / de);
+    return mx < 0.08 * de ? { kind: 'line', pts: [{ x: a.x, y: a.y }, { x: b.x, y: b.y }] } : null;
+  }
+  if (de > 0.3 * L) return null;
+  let v = dpSimplify(pts, 0.06 * D);
+  if (v.length > 2 && Math.hypot(v[v.length - 1].x - v[0].x, v[v.length - 1].y - v[0].y) < 0.3 * D) v.pop();
+  const turn = (p, q, r) => { const a1 = Math.atan2(q.y - p.y, q.x - p.x), a2 = Math.atan2(r.y - q.y, r.x - q.x); let d = Math.abs(a2 - a1); if (d > Math.PI) d = 2 * Math.PI - d; return d; };
+  let changed = true;
+  while (changed && v.length > 3) { changed = false; for (let i = 0; i < v.length; i++) { if (turn(v[(i + v.length - 1) % v.length], v[i], v[(i + 1) % v.length]) < 0.35) { v.splice(i, 1); changed = true; break; } } }
+  const ring = q => q.concat([q[0]]).map(p => ({ x: p.x, y: p.y }));
+  if (v.length === 4 && v.every((p, i) => { const t = turn(v[(i + 3) % 4], p, v[(i + 1) % 4]); return t > 0.9 && t < 2.2; })) {
+    const ax = v.every((p, i) => { const q = v[(i + 1) % 4], ang = Math.abs(Math.atan2(q.y - p.y, q.x - p.x)) % (Math.PI / 2); return Math.min(ang, Math.PI / 2 - ang) < 0.26; });
+    if (ax) return { kind: 'rect', pts: ring([{ x: x0, y: y0 }, { x: x1, y: y0 }, { x: x1, y: y1 }, { x: x0, y: y1 }]) };
+    return { kind: 'rect', pts: ring(v) };
+  }
+  if (v.length === 3) return { kind: 'tri', pts: ring(v) };
+  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2, ra = (x1 - x0) / 2, rb = (y1 - y0) / 2;
+  if (ra > 4 && rb > 4) {
+    let s = 0, mxr = 0; for (const p of pts) { const r = Math.hypot((p.x - cx) / ra, (p.y - cy) / rb); s += Math.abs(r - 1); mxr = Math.max(mxr, Math.abs(r - 1)); }
+    if (s / n < 0.16 && mxr < 0.5) { const o = []; for (let i = 0; i <= 48; i++) { const t = i / 48 * Math.PI * 2; o.push({ x: cx + Math.cos(t) * ra, y: cy + Math.sin(t) * rb }); } return { kind: 'ellipse', pts: o }; }
+  }
+  return null;
+}
+let ntHoldT = 0;
+function ntHoldArm() {
+  if (!(uiMode === 'notes' && NT.snap && curStroke && curStroke.type === 'stroke' && !curStroke.line && !curStroke.snapped && curStroke.points.length >= 6)) return;
+  const lp = curStroke.points[curStroke.points.length - 1];
+  if (NT.holdP && Math.hypot(lp.x - NT.holdP.x, lp.y - NT.holdP.y) < 4 * RENDER_SCALE) return;
+  NT.holdP = { x: lp.x, y: lp.y }; clearTimeout(ntHoldT); ntHoldT = setTimeout(ntHoldFire, 650);
+}
+function ntHoldFire() {
+  if (!drawing || !curStroke || curStroke.snapped) return;
+  const r = shSnap(curStroke.points); if (!r) return;
+  curStroke.points = r.pts; curStroke.snapped = r.kind; if (curStroke.pen === 'l') r.pts.forEach(p => { p.k = 1; });
+  redrawAnnotations(); toast({ line: 'Recta', rect: 'Rectangle', tri: 'Triangle', ellipse: 'Ellipse' }[r.kind]);
+}
+function ntSnapSet() { NT.snap = $('nt-snap').checked; try { localStorage.setItem('guaita-nt-snap', NT.snap ? '1' : '0'); } catch (e) { } }
+function ntTexSet() { NT.tex = $('nt-tex').value; try { localStorage.setItem('guaita-nt-tex', NT.tex); } catch (e) { } }
+
+// ── Textures de traç: gra de grafit, guix (soroll que esborra la tinta) i pinzell (gruix amb punta i final fins)
+const TEXC = new WeakMap(), TEXP = {};
+function texPattern(kind) {
+  if (TEXP[kind]) return TEXP[kind];
+  const s = 32, c = document.createElement('canvas'); c.width = c.height = s; const x = c.getContext('2d'), id = x.createImageData(s, s);
+  let seed = kind === 'chalk' ? 7 : 3; const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+  const thr = kind === 'chalk' ? 0.5 : 0.38;
+  for (let i = 0; i < s * s; i++) id.data[i * 4 + 3] = rnd() < thr ? Math.round(255 * (0.6 + 0.4 * rnd())) : 0;
+  x.putImageData(id, 0, 0);
+  const big = document.createElement('canvas'); big.width = big.height = kind === 'chalk' ? 64 : 32; const bx = big.getContext('2d'); bx.imageSmoothingEnabled = false; bx.drawImage(c, 0, 0, big.width, big.height);
+  return TEXP[kind] = bx.createPattern(big, 'repeat');
+}
+function texCanvas(s) {
+  const key = s.points.length + '|' + s.color + '|' + s.width + '|' + s.tex + '|' + (s.op == null ? 1 : s.op) + '|' + s.pen;
+  let c = TEXC.get(s); if (c && c.key === key) return c;
+  const b = annotBox(s), pad = 3, ox = Math.floor(b.x0) - pad, oy = Math.floor(b.y0) - pad, w = Math.ceil(b.x1 - b.x0) + 2 * pad, h = Math.ceil(b.y1 - b.y0) + 2 * pad;
+  if (w < 1 || h < 1 || w * h > 4e7) return null;
+  const cv = document.createElement('canvas'); cv.width = w; cv.height = h; const x = cv.getContext('2d');
+  x.translate(-ox, -oy); drawStroke(Object.assign({}, s, { tex: null }), x);
+  x.setTransform(1, 0, 0, 1, 0, 0); x.globalCompositeOperation = 'destination-out'; x.fillStyle = texPattern(s.tex); x.fillRect(0, 0, w, h);
+  c = { key, cv, ox, oy }; TEXC.set(s, c); return c;
+}
+function brushTaper(s) {
+  const n = s.points.length, m = Math.min(12, n >> 1);
+  for (let i = 0; i < m; i++) { const f = 0.2 + 0.8 * (i / m); [s.points[i], s.points[n - 1 - i]].forEach(p => { p.k = (p.k == null ? 1 : p.k) * f; }); }
+}
+
+// ── Finestra de zoom: s'escriu gran en una tira i el traç queda a mida normal a la pàgina
+const ZW = { x: 0, y: 0, pg: -1 };
+function zwDims() {
+  const cv = $('nt-zc'), pc = $('page-canvas'), s = (pc.clientWidth || pc.width / RENDER_SCALE) / (pc.width || 1), f = s * Math.max(zoom, .1) * NT.zwF;
+  return { cv, s, f, sw: cv.width / f, sh: cv.height / f, W: pc.width, H: pc.height };
+}
+function zwClamp(d) { ZW.x = Math.max(0, Math.min(Math.max(0, d.W - d.sw), ZW.x)); ZW.y = Math.max(0, Math.min(Math.max(0, d.H - d.sh), ZW.y)); }
+function zwSize() { const cv = $('nt-zc'); if (cv.width !== cv.clientWidth || cv.height !== cv.clientHeight) { cv.width = Math.max(100, cv.clientWidth); cv.height = Math.max(60, cv.clientHeight); } }
+function zwReset() { const pc = $('page-canvas'); ZW.x = pc.width * 0.03; ZW.y = pc.height * 0.05; const d = zwDims(); zwClamp(d); }
+function zwDraw() {
+  if (!NT.zw || !getActiveDoc()) return;
+  zwSize(); const d = zwDims(), doc = getActiveDoc();
+  if (ZW.pg !== doc.curIdx) { ZW.pg = doc.curIdx; zwReset(); }
+  zwClamp(d); const x = d.cv.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, d.cv.width, d.cv.height);
+  try { x.drawImage($('page-canvas'), ZW.x, ZW.y, d.sw, d.sh, 0, 0, d.cv.width, d.cv.height); x.drawImage($('annot-canvas'), ZW.x, ZW.y, d.sw, d.sh, 0, 0, d.cv.width, d.cv.height); } catch (e) { }
+  x.strokeStyle = 'rgba(255,46,204,.55)'; x.setLineDash([5, 4]); x.beginPath(); x.moveTo(d.cv.width * .72, 0); x.lineTo(d.cv.width * .72, d.cv.height); x.stroke(); x.setLineDash([]);
+  const bx = $('nt-zbox'); if (bx) { bx.style.left = ZW.x * d.s + 'px'; bx.style.top = ZW.y * d.s + 'px'; bx.style.width = d.sw * d.s + 'px'; bx.style.height = d.sh * d.s + 'px'; }
+}
+function ntZw() {
+  NT.zw = !NT.zw; $('nt-zw').classList.toggle('on', NT.zw); $('nt-zwb').classList.toggle('on', NT.zw);
+  let bx = $('nt-zbox'); if (!bx) { bx = document.createElement('div'); bx.id = 'nt-zbox'; $('page-canvas').parentNode.appendChild(bx); }
+  bx.style.display = NT.zw ? 'block' : 'none';
+  if (NT.zw) { if (tool !== 'pencil') setTool('pencil'); ZW.pg = -1; zwDraw(); setTimeout(zwDraw, 80); }
+}
+function zwMove(k) {
+  const d = zwDims();
+  if (k === 'l') ZW.x -= d.sw * .5; else if (k === 'r') ZW.x += d.sw * .5; else if (k === 'u') ZW.y -= d.sh * .7; else if (k === 'd') ZW.y += d.sh * .7;
+  else if (k === 'n') { ZW.x = d.W * .03; ZW.y += d.sh * .7; }
+  zwClamp(d); zwDraw();
+}
+function zwSetF(v) { NT.zwF = +v || 3; try { localStorage.setItem('guaita-nt-zwf', String(NT.zwF)); } catch (e) { } zwDraw(); }
+(function () {
+  const cv = $('nt-zc'); let last = null;
+  const pos = e => { const r = cv.getBoundingClientRect(), d = zwDims(); return { x: ZW.x + (e.clientX - r.left) * (cv.width / r.width) / d.f, y: ZW.y + (e.clientY - r.top) * (cv.height / r.height) / d.f }; };
+  cv.addEventListener('pointerdown', e => {
+    if (!getActiveDoc()) return; e.preventDefault();
+    if (tool !== 'pencil') { toast('The zoom window writes with the pencil: pick it in the bar', true); return; }
+    try { cv.setPointerCapture(e.pointerId); } catch (er) { }
+    const p = pos(e); p.k = 1; drawing = true;
+    curStroke = { type: 'stroke', color: $('pencil-color').value, width: (parseFloat($('pencil-width').value) || 2) * RENDER_SCALE, points: [p], pen: penKind(penIdx), op: Math.max(10, Math.min(100, parseFloat($('pencil-opacity').value) || 100)) / 100 };
+    ntInit772(curStroke); last = p;
+  }, { passive: false });
+  cv.addEventListener('pointermove', e => {
+    if (!drawing || !curStroke || !last) return; e.preventDefault();
+    const list = e.getCoalescedEvents && e.getCoalescedEvents().length ? e.getCoalescedEvents() : [e];
+    list.forEach(c => {
+      const q = pos(c), pr = curStroke.points[curStroke.points.length - 1];
+      if (curStroke.pen === 'l') { const sp = Math.hypot(q.x - pr.x, q.y - pr.y) / RENDER_SCALE; q.k = 0.55 * (pr.k == null ? 1 : pr.k) + 0.45 * Math.max(0.55, Math.min(1.3, 1.3 - sp / 18)); if (e.pointerType === 'pen' && c.pressure > 0) q.k = 0.5 * (pr.k == null ? 1 : pr.k) + 0.5 * Math.max(0.35, Math.min(1.5, 0.35 + 1.15 * c.pressure)); }
+      if (curStroke.points.length > 1) { q.x = pr.x + (q.x - pr.x) * 0.6; q.y = pr.y + (q.y - pr.y) * 0.6; }
+      curStroke.points.push(q);
+    });
+    redrawAnnotations(); ntHoldArm();
+  }, { passive: false });
+  const up = e => {
+    if (!drawing || !curStroke) return;
+    const r = cv.getBoundingClientRect(), lx = (e.clientX - r.left) / r.width; endDraw(); last = null;
+    if (lx > 0.72) { const d = zwDims(); ZW.x += d.sw * .5; zwClamp(d); zwDraw(); }
+  };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+})();
+
+// ── inici/fi dels traços: textura, notes de veu i hooks
+function ntInit772(s) {
+  if (uiMode === 'notes' && s.type === 'stroke' && !s.line && NT.tex) { s.tex = NT.tex; if (NT.tex === 'brush') s.pen = 'l'; }
+  if (VR.rec) s.vr = { id: VR.rec.id, t0: vrNow() };
+}
+{ const _sd = startDraw; startDraw = function () { _sd.apply(this, arguments); if (curStroke) ntInit772(curStroke); }; }
+{
+  const _ed = endDraw;
+  endDraw = function () {
+    clearTimeout(ntHoldT); NT.holdP = null;
+    const s = curStroke, doc = getActiveDoc(), had = !!(s && drawing && doc && s.points.length > 1);
+    if (had) { if (s.tex === 'brush') brushTaper(s); if (s.vr) s.vr.t1 = vrNow(); }
+    _ed.apply(this, arguments);
+    if (had && s.vr && VR.rec) vrNote(doc);
+  };
+}
+{
+  const _ds = drawStroke;
+  drawStroke = function (s, ctx) {
+    if ((s.tex === 'grain' || s.tex === 'chalk') && s !== curStroke && s.points.length > 1) { const c = texCanvas(s); if (c) { ctx.drawImage(c.cv, c.ox, c.oy); return; } }
+    _ds(s, ctx);
+  };
+}
+{
+  const _da = drawAnnot;
+  drawAnnot = function (a, ctx) {
+    if (a.type === 'link') {
+      if (a.url) {
+        const x = Math.min(a.x1, a.x2), y = Math.min(a.y1, a.y2), w = Math.abs(a.x2 - a.x1), h = Math.abs(a.y2 - a.y1), S = RENDER_SCALE;
+        ctx.save(); ctx.fillStyle = 'rgba(47,95,230,.10)'; ctx.fillRect(x, y, w, h); ctx.strokeStyle = '#2F5FE6'; ctx.lineWidth = 1.2 * S; ctx.setLineDash([5 * S, 3 * S]); ctx.strokeRect(x, y, w, h); ctx.restore();
+      }
+      return;
+    }
+    if (a.vr && VR.play && a.vr.id === VR.play.id && a.vr.t0 > VR.play.t) return;
+    if (a.vr && VR.play && a.vr.id === VR.play.id && a.vr.t1 > VR.play.t && a.points && a.points.length > 3) {
+      const f = Math.max(0, (VR.play.t - a.vr.t0) / Math.max(1, a.vr.t1 - a.vr.t0)); _da(Object.assign({}, a, { points: a.points.slice(0, Math.max(2, Math.ceil(a.points.length * f))) }), ctx); return;
+    }
+    _da(a, ctx);
+  };
+}
+{ const _ah = annotHit; annotHit = function (a, p, tol) { if (a.type === 'link' && a.url) { return p.x > Math.min(a.x1, a.x2) - tol && p.x < Math.max(a.x1, a.x2) + tol && p.y > Math.min(a.y1, a.y2) - tol && p.y < Math.max(a.y1, a.y2) + tol; } return _ah.apply(this, arguments); }; }
+
+// ── Notes de veu: àudio gravat mentre s'escriu; els traços recorden quan s'han fet i es redibuixen al ritme de la veu
+const VR = { rec: null, play: null };
+const vrNow = () => VR.rec ? Math.round(performance.now() - VR.rec.t0) : 0;
+const vrRe = /^guaita-voz-([a-z0-9]+)\.(webm|m4a|ogg|mp4)$/i;
+const vrFmt = s => { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+function vrNote(doc) { fixPids(doc); const pd = doc.pages[doc.curIdx], r = VR.rec; if (!r || !pd) return; const l = r.tl[r.tl.length - 1], t = vrNow(); if (!l || l.pid !== pd.pid) r.tl.push({ t: Math.max(0, t - 800), pid: pd.pid }); }
+async function vrToggle() {
+  if (VR.rec) return vrStopRec();
+  const doc = getActiveDoc(); if (!doc) { toast('Open a document first', true); return; }
+  if (!navigator.mediaDevices || !window.MediaRecorder) { toast('This browser cannot record audio', true); return; }
+  let stream; try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); } catch (e) { toast('Cannot access the microphone' + (e && e.name === 'NotAllowedError' ? ': permission denied (check the browser permissions)' : ''), true, 7000); return; }
+  const mt = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'].find(m => { try { return MediaRecorder.isTypeSupported(m); } catch (e) { return false; } }) || '';
+  const mr = new MediaRecorder(stream, mt ? { mimeType: mt } : {}), chunks = [];
+  mr.ondataavailable = ev => { if (ev.data && ev.data.size) chunks.push(ev.data); };
+  fixPids(doc);
+  VR.rec = { id: Date.now().toString(36), doc, mr, chunks, stream, mime: (mr.mimeType || mt || 'audio/webm'), t0: performance.now(), tl: [{ t: 0, pid: doc.pages[doc.curIdx].pid }] };
+  VR.rec.tm = setInterval(vrTick, 500); mr.start(1000); vrTick(); toast('Recording the voice note · the strokes you make will be synchronised');
+}
+function vrTick() { const b = $('nt-rec'), t = $('nt-rec-t'); if (b) b.classList.toggle('rec', !!VR.rec); if (t) t.textContent = VR.rec ? vrFmt(vrNow() / 1000) : ''; }
+function vrStopRec() {
+  const r = VR.rec; if (!r) return; VR.rec = null; clearInterval(r.tm);
+  r.mr.onstop = async () => {
+    try { r.stream.getTracks().forEach(t => t.stop()); } catch (e) { }
+    const dur = (performance.now() - r.t0) / 1000, mime = r.mime.split(';')[0], blob = new Blob(r.chunks, { type: mime });
+    if (!blob.size) { toast('No audio was recorded', true); vrTick(); return; }
+    const bytes = new Uint8Array(await blob.arrayBuffer()), ext = mime.includes('mp4') ? 'm4a' : mime.includes('ogg') ? 'ogg' : 'webm', doc = r.doc;
+    doc.attachments = doc.attachments || []; doc.vr = doc.vr || {};
+    const n = Object.keys(doc.vr).length + 1;
+    doc.attachments.push({ name: 'guaita-voz-' + r.id + '.' + ext, bytes, desc: 'Voice note · Guaita PDF Edit', mime });
+    doc.vr[r.id] = { dur, tl: r.tl, name: 'Veu ' + n };
+    vrSyncMeta(doc); vrTick(); vrPanel(true);
+    toast('Voice note saved (' + vrFmt(dur) + ') · it will go inside the PDF when saving');
+  };
+  try { r.mr.stop(); } catch (e) { vrTick(); }
+}
+function vrSyncMeta(doc) {
+  if (!doc || !doc.vr) return; fixPids(doc); doc.attachments = doc.attachments || [];
+  for (const id of Object.keys(doc.vr)) {
+    if (!doc.attachments.some(a => vrRe.test(a.name) && vrRe.exec(a.name)[1] === id)) { delete doc.vr[id]; continue; }
+    const v = doc.vr[id], tl = v.tl.map(e => ({ t: e.t, p: e.pid ? doc.pages.findIndex(q => q.pid === e.pid) + 1 : e.p })).filter(e => e.p > 0);
+    const bytes = new TextEncoder().encode(JSON.stringify({ guaita: 'voz', v: 1, id, name: v.name, dur: v.dur, tl })), name = 'guaita-voz-' + id + '.json', it = { name, bytes, desc: 'Voice note timeline', mime: 'application/json' };
+    const k = doc.attachments.findIndex(a => a.name === name); if (k >= 0) doc.attachments[k] = it; else doc.attachments.push(it);
+  }
+}
+function vrList(doc) {
+  if (!doc) return []; doc.attachments = doc.attachments || []; doc.vr = doc.vr || {}; fixPids(doc); const out = [];
+  doc.attachments.forEach(a => {
+    const m = vrRe.exec(a.name); if (!m) return; const id = m[1];
+    if (!doc.vr[id]) {
+      let meta = null; const j = doc.attachments.find(q => q.name === 'guaita-voz-' + id + '.json');
+      if (j) { try { meta = JSON.parse(new TextDecoder().decode(j.bytes)); } catch (e) { } }
+      doc.vr[id] = { dur: (meta && meta.dur) || 0, name: (meta && meta.name) || 'Veu', tl: ((meta && meta.tl) || []).map(e => ({ t: e.t, pid: (doc.pages[e.p - 1] || {}).pid })).filter(e => e.pid) };
+    }
+    out.push({ id, att: a, v: doc.vr[id] });
+  });
+  return out;
+}
+function vrPanel(show) { const p = $('nt-vp'); if (!p) return; p.classList.toggle('on', show == null ? !p.classList.contains('on') : !!show); vrRender(); }
+function vrRender() {
+  const p = $('nt-vp'), L = $('nt-vp-l'); if (!p || !L) return; const doc = getActiveDoc(), items = vrList(doc);
+  L.innerHTML = items.length ? items.map(it => '<div class="vp-r" data-id="' + it.id + '"><button class="btn sm vp-p" onclick="vrPlay(\'' + it.id + '\')">▶</button><span class="vp-n" title="Double-click to rename" ondblclick="vrRename(\'' + it.id + '\')">' + escHtml(it.v.name) + '</span><input type="range" class="vp-s" min="0" max="' + Math.round((it.v.dur || 1) * 1000) + '" value="0" oninput="vrSeek(\'' + it.id + '\',this.value)"><span class="vp-t">' + vrFmt(it.v.dur) + '</span><button class="btn sm" onclick="vrDel(\'' + it.id + '\')" title="Delete the voice note">✕</button></div>').join('') : '<div class="vp-e">No voice notes. Press the microphone to record while you write.</div>';
+}
+function vrRename(id) { const doc = getActiveDoc(), v = doc && doc.vr && doc.vr[id]; if (!v) return; const n = prompt('Voice note name', v.name); if (n && n.trim()) { v.name = n.trim().slice(0, 60); vrSyncMeta(doc); vrRender(); } }
+function vrDel(id) {
+  const doc = getActiveDoc(); if (!doc) return; if (VR.play && VR.play.id === id) vrStopPlay();
+  doc.attachments = (doc.attachments || []).filter(a => !(a.name.startsWith('guaita-voz-' + id + '.'))); if (doc.vr) delete doc.vr[id];
+  doc.pages.forEach(p => (p.annotations || []).forEach(a => { if (a.vr && a.vr.id === id) delete a.vr; })); vrRender(); toast('Voice note deleted');
+}
+function vrStopPlay() { const p = VR.play; if (!p) return; VR.play = null; try { p.audio.pause(); URL.revokeObjectURL(p.url); } catch (e) { } redrawAnnotations(); vrUi(); }
+function vrPlay(id) {
+  const doc = getActiveDoc(); if (!doc) return;
+  if (VR.play && VR.play.id === id) { const a = VR.play.audio; if (a.paused) a.play(); else a.pause(); vrUi(); return; }
+  vrStopPlay(); const it = vrList(doc).find(q => q.id === id); if (!it) return;
+  const url = URL.createObjectURL(new Blob([it.att.bytes], { type: it.att.mime || 'audio/webm' })), audio = new Audio(url);
+  VR.play = { id, audio, url, t: 0, last: null, v: it.v, doc };
+  audio.onended = () => { vrStopPlay(); };
+  audio.onerror = () => { toast('The audio could not be played', true); vrStopPlay(); };
+  audio.play().then(() => { vrUi(); requestAnimationFrame(vrLoop); }).catch(e => { toast('Could not play: ' + e.message, true); vrStopPlay(); });
+}
+function vrFollow() {
+  const P = VR.play; if (!P) return; let cur = null; for (const e of P.v.tl) if (e.t <= P.t) cur = e;
+  if (cur && cur.pid !== P.last) { P.last = cur.pid; const d = P.doc; if (getActiveDoc() === d) { const i = d.pages.findIndex(q => q.pid === cur.pid); if (i >= 0 && i !== d.curIdx) goTo(i); } }
+}
+function vrLoop() {
+  const P = VR.play; if (!P) return;
+  if (!P.audio.paused) { P.t = P.audio.currentTime * 1000; vrFollow(); redrawAnnotations(); vrUi(); }
+  requestAnimationFrame(vrLoop);
+}
+function vrSeek(id, v) {
+  if (!VR.play || VR.play.id !== id) { vrPlay(id); setTimeout(() => { if (VR.play) { VR.play.audio.currentTime = v / 1000; VR.play.t = +v; vrFollow(); redrawAnnotations(); } }, 120); return; }
+  VR.play.audio.currentTime = v / 1000; VR.play.t = +v; vrFollow(); redrawAnnotations();
+}
+function vrUi() {
+  document.querySelectorAll('#nt-vp .vp-r').forEach(r => {
+    const on = VR.play && VR.play.id === r.dataset.id, b = r.querySelector('.vp-p'), s = r.querySelector('.vp-s');
+    b.textContent = on && !VR.play.audio.paused ? '⏸' : '▶'; r.classList.toggle('on', !!on);
+    if (on && document.activeElement !== s) s.value = Math.round(VR.play.t);
+  });
+}
+{ const _sp = savePdf; savePdf = async function () { try { vrSyncMeta(getActiveDoc()); } catch (e) { console.warn('Veu:', e); } return _sp.apply(this, arguments); }; }
+
+// ── Enllaços a URL i targetes de vídeo
+function normUrl(u) {
+  u = (u || '').trim(); if (!u) return ''; if (!/^[a-z][a-z0-9+.-]*:/i.test(u)) u = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(u) ? 'mailto:' + u : 'https://' + u;
+  return /^(https?:|mailto:)/i.test(u) && u.length < 2000 ? u : '';
+}
+function openUrl(u) { if (!u) return; if (confirm('Open the link?\n\n' + u)) window.open(u, '_blank', 'noopener'); }
+function ntUrlOpen() { if (!getActiveDoc()) { toast('Open a document first', true); return; } $('lk-url').value = ''; openModal('modal-url'); setTimeout(() => $('lk-url').focus(), 60); }
+function ntUrlGo() { const u = normUrl($('lk-url').value); if (!u) { toast('Invalid URL: use http, https or an e-mail address', true); return; } NT.linkUrl = u; closeModal('modal-url'); setTool('urllink'); toast('Drag a rectangle over the element you want to link'); }
+const LK = { d: null };
+function lkDown(e) { const p = scrToCanvas(e.clientX, e.clientY); LK.d = { x0: p.x, y0: p.y, x1: p.x, y1: p.y }; }
+function lkMove(e) {
+  if (!LK.d) return; const p = scrToCanvas(e.clientX, e.clientY); LK.d.x1 = p.x; LK.d.y1 = p.y; clearOverlay();
+  const c = ntOvCtx(), S = RENDER_SCALE, d = LK.d; c.save(); c.strokeStyle = '#2F5FE6'; c.fillStyle = 'rgba(47,95,230,.12)'; c.lineWidth = 1.5 * S; c.setLineDash([5 * S, 3 * S]); c.fillRect(Math.min(d.x0, d.x1), Math.min(d.y0, d.y1), Math.abs(d.x1 - d.x0), Math.abs(d.y1 - d.y0)); c.strokeRect(Math.min(d.x0, d.x1), Math.min(d.y0, d.y1), Math.abs(d.x1 - d.x0), Math.abs(d.y1 - d.y0)); c.restore();
+}
+function lkUp() {
+  const d = LK.d; LK.d = null; clearOverlay(); const pd = ntCurPd(); if (!d || !pd) return;
+  if (Math.abs(d.x1 - d.x0) < 8 * RENDER_SCALE || Math.abs(d.y1 - d.y0) < 8 * RENDER_SCALE) { toast('Rectangle massa petit', true); return; }
+  saveHistory(); const a = { type: 'link', url: NT.linkUrl, x1: Math.min(d.x0, d.x1), y1: Math.min(d.y0, d.y1), x2: Math.max(d.x0, d.x1), y2: Math.max(d.y0, d.y1) };
+  pd.annotations.push(a); setTool('select'); selAnn = a; redrawAnnotations(); toast('Link created · right-click / Del to remove it');
+}
+function vidOpen() { if (!getActiveDoc()) { toast('Open a document first', true); return; } $('vd-url').value = ''; $('vd-title').value = ''; $('vd-img').value = ''; openModal('modal-vid'); setTimeout(() => $('vd-url').focus(), 60); }
+function vidThumb(file) {
+  return new Promise(res => {
+    if (!file) return res(null);
+    const u = URL.createObjectURL(file);
+    if (file.type.startsWith('video/')) {
+      const v = document.createElement('video'); v.muted = true; v.preload = 'auto'; v.src = u;
+      v.onloadeddata = () => { v.currentTime = Math.min(1, (v.duration || 2) / 2); }; v.onseeked = () => { res({ el: v, w: v.videoWidth, h: v.videoHeight, u }); }; v.onerror = () => res(null);
+    } else { const im = new Image(); im.onload = () => res({ el: im, w: im.naturalWidth, h: im.naturalHeight, u }); im.onerror = () => res(null); im.src = u; }
+  });
+}
+async function vidMake() {
+  const doc = getActiveDoc(), pd = ntCurPd(); if (!doc || !pd) return;
+  const url = normUrl($('vd-url').value); if (!url) { toast('Type the video URL (http or https)', true); return; }
+  const th = await vidThumb($('vd-img').files[0]), W = 960, H = 540, cv = document.createElement('canvas'); cv.width = W; cv.height = H; const x = cv.getContext('2d');
+  x.save(); x.beginPath(); x.roundRect ? x.roundRect(0, 0, W, H, 30) : x.rect(0, 0, W, H); x.clip();
+  const g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#222838'); g.addColorStop(1, '#0d0f15'); x.fillStyle = g; x.fillRect(0, 0, W, H);
+  if (th) { const k = Math.max(W / th.w, H / th.h); x.drawImage(th.el, (W - th.w * k) / 2, (H - th.h * k) / 2, th.w * k, th.h * k); URL.revokeObjectURL(th.u); }
+  const gb = x.createLinearGradient(0, H * .55, 0, H); gb.addColorStop(0, 'rgba(0,0,0,0)'); gb.addColorStop(1, 'rgba(0,0,0,.78)'); x.fillStyle = gb; x.fillRect(0, H * .5, W, H * .5);
+  x.fillStyle = 'rgba(255,255,255,.92)'; x.beginPath(); x.arc(W / 2, H / 2 - 20, 74, 0, Math.PI * 2); x.fill();
+  x.fillStyle = '#C6174C'; x.beginPath(); x.moveTo(W / 2 - 22, H / 2 - 62); x.lineTo(W / 2 - 22, H / 2 + 22); x.lineTo(W / 2 + 46, H / 2 - 20); x.closePath(); x.fill();
+  let host = ''; try { host = new URL(url).hostname.replace(/^www\./, ''); } catch (e) { }
+  const title = $('vd-title').value.trim() || host || 'Video';
+  x.fillStyle = '#fff'; x.font = '700 44px Arial, sans-serif'; x.textBaseline = 'alphabetic';
+  let t = title; while (x.measureText(t).width > W - 80 && t.length > 4) t = t.slice(0, -2); if (t !== title) t += '…'; x.fillText(t, 40, H - 62);
+  x.fillStyle = 'rgba(255,255,255,.72)'; x.font = '400 28px Arial, sans-serif'; x.fillText('▶ ' + host, 40, H - 24); x.restore();
+  const wpx = MM2PX(80), hpx = wpx * H / W, ac = $('annot-canvas'), cx = ac.width / 2, cy = ac.height / 2;
+  saveHistory(); const a = { type: 'image', dataUrl: cv.toDataURL('image/png'), fmt: 'png', x1: cx - wpx / 2, y1: cy - hpx / 2, x2: cx + wpx / 2, y2: cy + hpx / 2, rot: 0, opacity: 1, url, vcard: true };
+  pd.annotations.push(a); closeModal('modal-vid'); setTool('select'); selAnn = a; redrawAnnotations(); toast('Video card inserted · a click in View mode opens the link');
+}
+vc.addEventListener('dblclick', e => { if (tool === 'select' && selAnn && selAnn.url) openUrl(selAnn.url); });
+
+// ── hooks d'eines noves
+{ const _st = setTool; setTool = function (t) { if (t !== 'lasso' && (LZ.sel.length || LZ.path)) lzClear(); if (t !== 'urllink') LK.d = null; return _st.apply(this, arguments); }; }
+{ const _rp2 = renderPage; renderPage = async function () { const r = await _rp2.apply(this, arguments); if (NT.zw) zwDraw(); return r; }; }
+window.addEventListener('resize', () => { if (NT.zw) zwDraw(); });
+(function () { const s = $('nt-snap'), t = $('nt-tex'), f = $('nt-zwf'); if (s) s.checked = NT.snap; if (t) t.value = NT.tex; if (f) f.value = String(NT.zwF); })();
 
 // v7.6.0: Fitxer › Processar per lots…: munta la recepta d'un node Lot (un fitxer de sortida per document obert)
 function cpBatch() {
@@ -16415,7 +16938,7 @@ function hfRefresh(doc) {
 
 // ─── v6.4: adjunts, capes, metadades ───
 const ATT_RISK = /\.(exe|bat|cmd|com|scr|pif|msi|msp|vbs|vbe|js|jse|wsf|wsh|ps1|psm1|hta|jar|lnk|dll|cpl|reg|sh|app|dmg|iso|docm|xlsm|pptm)$/i;
-const attMime = n => ({ pdf: 'application/pdf', ifc: 'application/x-step', dwg: 'image/vnd.dwg', dxf: 'image/vnd.dxf', xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', csv: 'text/csv', txt: 'text/plain', json: 'application/json', png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', zip: 'application/zip', xml: 'application/xml' })[(n.split('.').pop() || '').toLowerCase()] || 'application/octet-stream';
+const attMime = n => ({ webm: 'audio/webm', m4a: 'audio/mp4', ogg: 'audio/ogg', pdf: 'application/pdf', ifc: 'application/x-step', dwg: 'image/vnd.dwg', dxf: 'image/vnd.dxf', xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', csv: 'text/csv', txt: 'text/plain', json: 'application/json', png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', zip: 'application/zip', xml: 'application/xml' })[(n.split('.').pop() || '').toLowerCase()] || 'application/octet-stream';
 const fmtBytes = b => b < 1024 ? b + ' B' : b < 1048576 ? (b / 1024).toFixed(1) + ' kB' : (b / 1048576).toFixed(2) + ' MB';
 async function attDescs(bytes) {
   const out = new Map();
@@ -16616,7 +17139,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 7.7.1 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 7.7.2 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadata:', e); }
 }
