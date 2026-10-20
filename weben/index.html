@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 7.5.5 — Multi-document PDF editor (Guaita Apps suite)
+  Guaita PDF Edit 7.6.0 — Multi-document PDF editor (Guaita Apps suite)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v7.5.5 (EN)</title>
+<title>Guaita PDF Edit v7.6.0 (EN)</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -1011,10 +1011,8 @@ body.mode-compose #status-bar .sgrp, body.mode-compose #st-info { display: none;
 .cp-help b { color: var(--text-soft); font-weight: 600; }
 .cp-ghost { position: fixed; z-index: 500; pointer-events: none; padding: 5px 10px; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--accent-line); font-size: 12px; box-shadow: 0 8px 20px rgba(0,0,0,.35); }
 #cp-cv { grid-area: cv; position: relative; overflow: hidden; background: radial-gradient(circle, var(--border) 1px, transparent 1.2px) 0 0 / 24px 24px, var(--bg); cursor: grab; }
-#cp-zoom { position: absolute; right: 12px; bottom: 12px; z-index: 6; display: flex; gap: 2px; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; padding: 3px; box-shadow: 0 2px 8px rgba(0,0,0,.25); cursor: default; }
-#cp-zoom button { min-width: 28px; height: 26px; border: 0; border-radius: 5px; background: transparent; color: var(--text); font: 600 14px 'IBM Plex Mono', monospace; cursor: pointer; padding: 0 6px; }
-#cp-zoom button:hover { background: var(--bg-hover); color: var(--accent-text); }
-#cp-zoom #cp-zl { font-size: 11px; min-width: 48px; }
+#cp-zoom { display: inline-flex; gap: 2px; align-items: center; }
+#cp-zoom #cp-zl { font: 600 11px 'IBM Plex Mono', monospace; min-width: 52px; justify-content: center; }
 #cp-world { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
 #cp-wires { position: absolute; left: 0; top: 0; width: 1px; height: 1px; overflow: visible; }
 #cp-emptycv { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; cursor: default; }
@@ -1705,6 +1703,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
         <div class="msep"></div>
         <button class="mi" data-twin="btn-merge" onclick="mergeAllDocs()" disabled title="Merges all tabs into a new document"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="12" r="2"/><path d="M6 7v10"/><path d="M6 8c0 3 3 4 6 4h4"/></svg>Merge all</span></button>
         <button class="mi needs-doc" onclick="cpOpen()" disabled title="Order and combine documents and pages with a node tree"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Merge composer…</span></button>
+        <button class="mi needs-doc" onclick="cpBatch()" disabled title="Applies the same recipe to all open documents: one output file per document"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="12" height="14" rx="1"/><path d="M9 21h12V8"/><path d="M7 8h4M7 12h4"/></svg>Batch processing…</span></button>
         <button class="mi needs-doc" onclick="showMetaModal()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Document properties…</span></button>
         <button class="mi needs-doc" onclick="bmSetTab('att')" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11l-8.5 8.5a5 5 0 01-7-7L13 4a3.5 3.5 0 015 5l-8.5 8.5a2 2 0 01-3-3L14 7"/></svg>Attached files…</span></button>
         <button class="mi" data-twin="btn-png" onclick="exportPagePng()" disabled title="Export the current page as a PNG image"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="9" cy="10" r="1.5"/><path d="M21 16l-5-5-8 8"/></svg>Export page as PNG</span></button>
@@ -1826,7 +1825,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <button id="mode-compose" onclick="setMode('compose')" title="Compose: merge documents and pages with a node tree (sources → Merge → Final document)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Compose</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v7.5.5</span>
+  <span class="tag">v7.6.0</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Switch to light theme"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2125,7 +2124,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 7.5.5</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 7.6.0</small></div>
           <h1>PDF editor <em>local</em>, no cloud.</h1>
           <p>Open one or more PDFs or drag them onto the window. Everything is processed on this computer: no file leaves the browser.</p>
           <div class="wl-act">
@@ -2260,12 +2259,13 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
       <button class="btn" onclick="cpSave()" title="Save the recipe (JSON) for reuse" aria-label="Save the recipe (JSON) for reuse"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 19h16"/></svg>Recipe</button>
       <button class="btn ib" onclick="$('cp-file').click()" title="Open a recipe (JSON)" aria-label="Open a recipe (JSON)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><path d="M3 11h18"/></svg></button>
       <button class="btn ib" onclick="if (confirm('Start again with one node per open document?')) { cpReset(); cpPalette(); cpRender(); requestAnimationFrame(cpLayout); }" title="Reset: one node per open document" aria-label="Reset: one node per open document"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 11-2.3-5.7"/><path d="M20 4v5h-5"/></svg></button>
+      <button class="btn ib dang" onclick="cpClearCanvas()" title="Clear canvas: deletes all nodes, groups and notes" aria-label="Clear canvas"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <span id="cp-zoom" role="group" aria-label="Canvas zoom"><button type="button" class="btn ib" onclick="cpZoomBy(1/1.25)" title="Zoom out (−)" aria-label="Allunyar">−</button><button type="button" class="btn" id="cp-zl" onclick="cpZoomTo(1)" title="Zoom 100 %">100%</button><button type="button" class="btn ib" onclick="cpZoomBy(1.25)" title="Acostar (+)" aria-label="Acostar">+</button></span>
       <span id="cp-status" class="mono"></span>
       <input type="file" id="cp-file" accept=".json,application/json" hidden>
     </div>
     <div id="cp-pal"></div>
     <div id="cp-cv"><div id="cp-world"><svg id="cp-wires"></svg></div>
-      <div id="cp-zoom" role="group" aria-label="Canvas zoom"><button type="button" onclick="cpZoomBy(1/1.25)" title="Zoom out (−)" aria-label="Allunyar">−</button><button type="button" id="cp-zl" onclick="cpZoomTo(1)" title="Zoom 100 %">100%</button><button type="button" onclick="cpZoomBy(1.25)" title="Acostar (+)" aria-label="Acostar">+</button><button type="button" onclick="cpFitIfNeeded()" title="Fit all to canvas" aria-label="Ajustar">⤢</button></div>
       <div id="cp-emptycv" class="hidden"><div class="wl-card">
         <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>COMPOSE</small></div>
         <h1>Open a PDF to get started</h1>
@@ -2343,7 +2343,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
   <span id="st-worker" class="hidden" title="This environment does not allow pdf.js workers (embedded viewer or browser restrictions). PDFs are processed on the main thread: everything works the same, but large documents are slower. Opened directly in Chrome or Edge from disk, this does not normally happen.">pdf.js · main thread</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 7.5.5 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 7.6.0 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -8642,6 +8642,8 @@ const HELP = {
 <p>With the <b>Measure</b> tool (M), the selector next to the scale chooses <b>Distance</b>, <b>Area and perimeter</b> (click the vertices; close the polygon by clicking the first point, by double-clicking or with Enter) or <b>Calibrate scale</b> (click the two ends of a known dimension and type its real length in metres; the scale is calculated automatically).</p>
 <h3>Merge composer</h3>
 <p><b>File › Merge composer…</b> (or the tree button on the View bar, or right-clicking a tab) opens a canvas of nodes for combining the open documents. Each <b>segment</b> is a document, or part of one, with a strip of its pages: clicking a thumbnail discards it. The <b>Final document</b> receives the connected segments in the vertical order of the nodes. To insert a document <b>between two pages</b> of another, click the line that separates them to create an insertion point there, and connect the segment by dragging from its output port. The strip at the bottom shows the final order. The recipe can be saved as JSON and reopened with new versions of the documents (they are identified by name). <b>Merge</b> creates a new tab, with one bookmark per segment and the original bookmarks of the pages included.</p>
+<h3>Composer news (7.6)</h3>
+<p>New nodes: <b>Reduce size</b>, <b>Page labels</b> (numbering and prefixes per branch), <b>Signature sheet</b>, <b>Images → pages</b>, <b>Insert document</b> (every N pages or in front of a branch) and <b>Join tiles</b> (the inverse of Mosaic). <b>Sort</b> accepts a manual order. <b>Print</b> adds binding, manual duplex, registration marks and rasterising; <b>Mosaic</b> adds printer margin and rasterising. The Final document can be split by maximum weight (MB), saved in subfolders and exported to PNG, text, DXF or CSV. <b>File › Batch processing…</b> applies the canvas recipe to many PDFs. The zoom buttons are now in the top bar, and <b>Clear canvas</b> empties the tree.</p>
 <h3>View, Edit and Scan modes</h3>
 <p>The switch in the header separates the ways of working. <b>View</b> groups navigation, page views, the hand, scale measuring, search, export and printing. <b>Edit</b> groups the tools by family (History, Pages, Content, Annotate, Insert) and shows below a bar with the options of the active tool. The keyboard shortcuts of an editing tool automatically switch to Edit mode. Page navigation and zoom are on the bottom bar, in both modes.</p>
 <h3>Open, save and print</h3>
@@ -8710,7 +8712,7 @@ const HELP = {
 <h3>If the option does not appear</h3>
 <p>You need to open the app's web address (https), not the file from disk. Desktop Firefox and Safari do not install PWAs; on iPhone Safari: <b>Share › Add to Home Screen</b>.</p>`],
   about: ['About Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 7.5.5</b> — multi-document PDF editor from the Guaita Apps suite. A single, self-contained HTML file: it installs nothing, connects to no server and works offline.</p>
+<p><b>Guaita PDF Edit 7.6.0</b> — multi-document PDF editor from the Guaita Apps suite. A single, self-contained HTML file: it installs nothing, connects to no server and works offline.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Licence <b>AGPL-3.0-only</b>.</p>
 <p>Included components: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) and @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Related program: guaitaPDFscan 1.3 (suspicious PDF analyser), built into Scan mode.</p>`]
@@ -10375,6 +10377,14 @@ function cpNewOut(x, y, name) {
   CP.nodes.set(id, { id, kind: 'out', x, y, name: nm, in: null, fold: false, optSeg: true, optOrig: true });
   return id;
 }
+// v7.6.0: buida el llenç (nodes, grups i notes), amb confirmació
+function cpClearCanvas() {
+  if (!CP.nodes.size && !(CP.groups || []).length && !(CP.notes || []).length) { toast('The canvas is already empty'); return; }
+  if (!confirm('Clear the canvas? All nodes, groups and notes will be deleted (open documents are not closed).')) return;
+  CP.nodes.clear(); cpSeq = 0; CP.groups = []; CP.notes = []; CP.sel = null; CP.selWire = null; CP.built = true; CP.auto = false;
+  if (typeof cpSelSet === 'function') cpSelSet([]);
+  cpPalette(); cpRender(); toast('Canvas cleared');
+}
 function cpReset() {
   CP.nodes.clear(); cpSeq = 0; CP.groups = []; CP.notes = [];
   const ids = docs.map((d, k) => cpNewSrc(d.id, null, 40, 40 + k * 200));
@@ -10871,6 +10881,10 @@ function cpInspector() {
       <p class="cp-note">Fields: {file} {doc} {group} {n}</p>
       ${cpOutBadge(n)}
       <label>Reduce size on saving</label><select id="cp-red"><option value="">No</option>${Object.entries(RED_PROFILES).map(([k, p]) => `<option value="${k}"${n.reduce === k ? ' selected' : ''}>${p.name}</option>`).join('')}</select>
+      <label>Output format</label><select id="cp-ofmt">${Object.entries({ '': 'PDF', png: 'PNG of each page (ZIP)', txt: 'Text of each page (ZIP)', dxf: 'DXF of each page (ZIP)', csv: 'CSV with the page properties' }).map(([k, v]) => `<option value="${k}"${(n.ofmt || '') === k ? ' selected' : ''}>${v}</option>`).join('')}</select>
+      <label class="${n.ofmt === 'png' ? '' : 'hidden'}" id="cp-odpil">PNG resolution</label><select id="cp-odpi" class="${n.ofmt === 'png' ? '' : 'hidden'}">${['96', '150', '200', '300'].map(v => `<option value="${v}"${(n.odpi || '150') === v ? ' selected' : ''}>${v} ppp</option>`).join('')}</select>
+      <label>Split by maximum weight (MB; empty = no)</label><input type="number" id="cp-maxmb" min="0.5" step="0.5" value="${cpEsc(n.maxMB || '')}" placeholder="e.g. 10">
+      <label class="chk"><input type="checkbox" id="cp-sub" ${n.sub ? 'checked' : ''}> One subfolder per group (with «One file per group»)</label>
       <p class="cp-note">${cpSeqOf(n.id).length} pages. The source documents are not modified.</p>
       <button class="btn acc" id="cp-sv0">${CMI.save}Save</button>
       <button class="btn" id="cp-sv1">${CMI.eye}Save and view</button>
@@ -10881,6 +10895,10 @@ function cpInspector() {
     $('cp-optorig').onchange = e => { n.optOrig = e.target.checked; };
     $('cp-red').onchange = e => { n.reduce = e.target.value; };
     $('cp-split').onchange = e => { n.split = e.target.checked; cpRender(); };
+    $('cp-ofmt').onchange = e => { n.ofmt = e.target.value; $('cp-odpi').classList.toggle('hidden', n.ofmt !== 'png'); $('cp-odpil').classList.toggle('hidden', n.ofmt !== 'png'); };
+    $('cp-odpi').onchange = e => { n.odpi = e.target.value; };
+    $('cp-maxmb').onchange = e => { const v = parseFloat(e.target.value); n.maxMB = v > 0 ? String(v) : ''; e.target.value = n.maxMB; };
+    $('cp-sub').onchange = e => { n.sub = e.target.checked; };
     $('cp-pat').onchange = e => { n.pattern = e.target.value.trim(); };
     $('cp-sv0').onclick = () => cpSaveNode(n.id, false); $('cp-sv1').onclick = () => cpSaveNode(n.id, true); $('cp-pv').onclick = () => cpPreview(n.id);
     $('cp-deln').onclick = () => cpDelete(n.id);
@@ -11092,7 +11110,7 @@ async function cpResultFor(id, itemsOverride, nameOverride) {
 }
 async function cpSaveNode(id, view) {
   const n0 = CP.nodes.get(id);
-  if (n0 && n0.kind === 'out' && (n0.split || cpLotOf(id))) return cpSaveMany([id], 'dl');
+  if (n0 && n0.kind === 'out' && (n0.split || cpLotOf(id) || n0.maxMB || n0.ofmt)) return cpSaveMany([id], 'dl');
   const b = await cpResultFor(id); if (!b) return null;
   const { r, name } = b;
   if (!LIB_PDFLIB) { toast('pdf-lib is not available', true); return null; }
@@ -11123,8 +11141,8 @@ async function cpSaveAll() {
 function cpRecipeNow() {
   const nodes = [...CP.nodes.values()].map(n => n.kind === 'src' ? { id: n.id, kind: 'src', x: n.x, y: n.y, doc: n.docName, label: n.label, pages: n.pages.map(p => [p.i, p.on ? 1 : 0]), fold: !!n.fold }
     : n.kind === 'mrg' ? { id: n.id, kind: 'mrg', x: n.x, y: n.y, label: n.label, ins: n.ins.slice() }
-    : n.kind === 'out' ? { id: n.id, kind: 'out', x: n.x, y: n.y, name: n.name, in: n.in, fold: !!n.fold, optSeg: n.optSeg, optOrig: n.optOrig, reduce: n.reduce || '', split: !!n.split, pattern: n.pattern || '' }
-    : (({ id, kind, x, y, op, inp, ins, fold, ...p }) => ({ id, kind, x, y, op, inp: { ...inp }, ins: ins.slice(), p: JSON.parse(JSON.stringify(p)) }))(n));
+    : n.kind === 'out' ? { id: n.id, kind: 'out', x: n.x, y: n.y, name: n.name, in: n.in, fold: !!n.fold, optSeg: n.optSeg, optOrig: n.optOrig, reduce: n.reduce || '', split: !!n.split, pattern: n.pattern || '', maxMB: n.maxMB || '', ofmt: n.ofmt || '', odpi: n.odpi || '', sub: !!n.sub }
+    : (({ id, kind, x, y, op, inp, ins, fold, _idoc, ...p }) => ({ id, kind, x, y, op, inp: { ...inp }, ins: ins.slice(), p: JSON.parse(JSON.stringify(p)) }))(n));
   return { app: 'guaitaPDFedit-compositor', v: nodes.some(o => o.kind === 'op') ? 3 : 2, nodes, groups: cpGrpJson(), notes: CP.notes.map(m => ({ ...m })) };
 }
 function cpSave() {
@@ -11183,7 +11201,7 @@ async function cpLoad(file, jIn) {
           CP.nodes.set(id, { ...D, ...p, id, kind: 'op', op: o.op, x, y, fold: false, inp, ins: (Array.isArray(o.ins) ? o.ins : []).map(ref).filter(Boolean) }); cpOpNorm(CP.nodes.get(id));
         }
         else if (o.kind === 'mrg') CP.nodes.set(id, { id, kind: 'mrg', x, y, label: String(o.label || '').slice(0, 200), ins: (Array.isArray(o.ins) ? o.ins : []).map(ref).filter(Boolean) });
-        else if (o.kind === 'out') CP.nodes.set(id, { id, kind: 'out', x, y, name: cpFileName(o.name, 'Composition'), in: ref(o.in), fold: !!o.fold, optSeg: o.optSeg !== false, optOrig: o.optOrig !== false, reduce: RED_PROFILES[o.reduce] ? o.reduce : '', split: !!o.split, pattern: String(o.pattern || '') });
+        else if (o.kind === 'out') CP.nodes.set(id, { id, kind: 'out', x, y, name: cpFileName(o.name, 'Composition'), in: ref(o.in), fold: !!o.fold, optSeg: o.optSeg !== false, optOrig: o.optOrig !== false, reduce: RED_PROFILES[o.reduce] ? o.reduce : '', split: !!o.split, pattern: String(o.pattern || ''), maxMB: String(o.maxMB || ''), ofmt: ['png', 'txt', 'csv', 'dxf'].includes(o.ofmt) ? o.ofmt : '', odpi: String(o.odpi || ''), sub: !!o.sub });
         else {
           const d = docs.find(q => q.name === o.doc); if (!d) miss++;
           const pages = (Array.isArray(o.pages) ? o.pages : []).map(p => ({ i: +p[0] | 0, on: !!p[1] })).filter(p => p.i >= 0 && (!d || p.i < d.pages.length));
@@ -11572,7 +11590,7 @@ const CMP_OPS = { '=': 'is equal to', '!=': 'is different from', '>': 'is greate
   has: 'contains', starts: 'starts with', ends: 'ends with', re: 'matches the expression', inlist: 'is in the list', yes: 'is true', no: 'is false' };
 const CMP_NOVAL = new Set(['even', 'odd', 'yes', 'no']);
 const GROUP_KEYS = { format: 'Format', orient: 'Orientation', rot: 'Rotation', bm1: 'Level 1 bookmark', bm: 'Bookmark', doc: 'Source document', words: 'Keywords (list)', blocks: 'Blocks of N pages' };
-const SORT_KEYS = { orig: 'Original page', format: 'Format (A0 → A5)', w: 'Width', h: 'Height', bm: 'Bookmark', bm1: 'Level 1 bookmark', code: 'Code found in the text', text: 'Page text', doc: 'Document' };
+const SORT_KEYS = { manual: 'Manual order (list of positions)', orig: 'Original page', format: 'Format (A0 → A5)', w: 'Width', h: 'Height', bm: 'Bookmark', bm1: 'Level 1 bookmark', code: 'Code found in the text', text: 'Page text', doc: 'Document' };
 const P_IN = [['p', 'pages', 'pages']], P_OUT = () => [['out', 'pages', 'pages']];
 const OPS = {
   prop: { fam: 'val', t: 'Property', ins: () => P_IN, outs: n => [['out', (PROPS[n.prop] || PROPS.format)[0].toLowerCase(), (PROPS[n.prop] || PROPS.format)[1]]], def: { prop: 'format' } },
@@ -11765,6 +11783,7 @@ function cpCompute(n) {
   }
   if (n.kind === 'out') return { out: PG(n.in ? cpPagesOf(n.in) : []) };
   const I = k => n.inp[k] || null, P = OPS[n.op].mergeIn ? [...(I('p') ? cpPagesOf(I('p')) : []), ...(n.ins || []).flatMap(r => cpPagesOf(r))] : cpPagesOf(I('p'));   // v7.5.2: Escalar admet diverses entrades de pàgines
+  const R760 = cpCompute760(n, P, I); if (R760) return R760;
   const R732 = cpCompute732(n, P, I); if (R732) return R732;
   const R731 = cpCompute731(n, P, I); if (R731) return R731;
   const R722 = cpCompute722(n, P, I); if (R722) return R722;
@@ -11876,6 +11895,7 @@ function cpValStr(x) { return x === undefined ? '…' : typeof x === 'boolean' ?
 
 // ── node d'operació (DOM)
 function cpOpSummary(n) {
+  { const s760 = cpSum760(n); if (s760 !== undefined) return s760; }
   switch (n.op) {
     case 'prop': return (PROPS[n.prop] || PROPS.format)[0];
     case 'cmp': return CMP_OPS[n.cop] && (CMP_OPS[n.cop] + (CMP_NOVAL.has(n.cop) ? '' : ' ' + (n.inp.b ? '[B]' : '«' + n.v + '»') + (n.cop === 'between' || n.cop === 'mod' ? ' · ' + n.v2 : '')));
@@ -11887,7 +11907,7 @@ function cpOpSummary(n) {
     case 'range': return n.expr;
     case 'shift': return 'shift ' + n.n;
     case 'repeat': return '× ' + n.k + (n.mode === 'block' ? ' (whole block)' : ' (each page)');
-    case 'sort': return (n.inp.k ? 'cable key' : SORT_KEYS[n.key]) + (n.desc ? ' ↓' : ' ↑');
+    case 'sort': return n.key === 'manual' ? 'ordre manual: ' + (n.ord || '(buit)') : (n.inp.k ? 'cable key' : SORT_KEYS[n.key]) + (n.desc ? ' ↓' : ' ↑');
     case 'weave': return 'one from each input' + (n.inv2 ? ' · 2nd inverted' : '');
     case 'rotate': return { r90: '90° right', r180: '180°', r270: '90° left', portrait: 'auto: all portrait', landscape: 'auto: all landscape' }[n.mode];
   }
@@ -12037,6 +12057,7 @@ async function cpSaveMany(ids, mode) {
   cpMsRedNow = cpMsRed || null;
   try { return await cpSaveMany0(ids, mode); } finally { cpMsRedNow = null; }
 }
+async function cpDirHandle(dir, path, create) { const p = path.split('/'); let d = dir; for (const x of p.slice(0, -1)) d = await d.getDirectoryHandle(x, { create }); return [d, p[p.length - 1]]; }
 async function cpSaveMany0(ids, mode) {
   if (!LIB_PDFLIB) { toast('pdf-lib is not available', true); return; }
   let dir = null;
@@ -12061,17 +12082,17 @@ async function cpSaveMany0(ids, mode) {
   }
   if (dir) {
     const exist = [];
-    for (const f of files) { try { await dir.getFileHandle(f.name); exist.push(f.name); } catch (e) { } }
+    for (const f of files) { try { const [d, nm] = await cpDirHandle(dir, f.name, false); await d.getFileHandle(nm); exist.push(f.name); } catch (e) { } }
     if (exist.length && !confirm(exist.length + ' file(s) already exist in the folder (' + exist.slice(0, 3).join(', ') + (exist.length > 3 ? '…' : '') + ').\nOverwrite them?')) return;
-    for (const f of files) { const fh = await dir.getFileHandle(f.name, { create: true }), w = await fh.createWritable(); await w.write(f.bytes); await w.close(); }
+    for (const f of files) { const [d, nm] = await cpDirHandle(dir, f.name, true), fh = await d.getFileHandle(nm, { create: true }), w = await fh.createWritable(); await w.write(f.bytes); await w.close(); }
     toast(files.length + ' PDFs saved to the folder «' + dir.name + '»', false, 6000); return;
   }
   for (const f of files) {
     const u = URL.createObjectURL(new Blob([f.bytes], { type: f.report ? 'text/csv' : 'application/pdf' })), a = document.createElement('a');
-    a.href = u; a.download = f.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 60000);
+    a.href = u; a.download = f.name.replace(/\//g, '_'); document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 60000);
     await new Promise(r => setTimeout(r, 250));
   }
-  toast(files.filter(f => !f.report).length + ' PDFs saved' + (files.some(f => f.report) ? ' and the report' : ''), false, 5000);
+  toast(files.filter(f => !f.report).length + ' file(s) saved' + (files.some(f => f.report) ? ' and the report' : ''), false, 5000);
 }
 
 // ─── v7.2.2: transformacions (escalar, retallar, marges, tallar, N per full, color i ràster), nodes nous i opcions als nodes ───
@@ -12143,30 +12164,30 @@ const CP_NUP_GRIDS = { 1: [[1, 1]], 2: [[2, 1], [1, 2]], 4: [[2, 2]], 6: [[3, 2]
 function cpMkNup(cells, N, n) {
   const gs = cells.map(c => cpGeo(c) || { w: 595.3, h: 841.9 });
   const mw = Math.max(...gs.map(g => g.w)), mh = Math.max(...gs.map(g => g.h));
-  const m = mmToPt(Math.max(0, cpNumV(n.m) || 0)), gap = mmToPt(Math.max(0, cpNumV(n.gap) || 0));
+  const m = mmToPt(Math.max(0, cpNumV(n.m) || 0)), gap = mmToPt(Math.max(0, cpNumV(n.gap) || 0)), bl = n._bl || 0, br = n._br || 0;
   let best = null;
   for (const [c, r] of CP_NUP_GRIDS[N] || [[2, 1]]) {
     if (n.fmt === 'auto' || !n.fmt) {
-      const W = c * mw + (c - 1) * gap + 2 * m, H = r * mh + (r - 1) * gap + 2 * m;
+      const W = c * mw + (c - 1) * gap + 2 * m + bl + br, H = r * mh + (r - 1) * gap + 2 * m;
       const sc = -Math.abs(Math.log((Math.max(W, H) / Math.min(W, H)) / Math.SQRT2));
       if (!best || sc > best.sc) best = { sc, c, r, W, H };
     } else {
       const P0 = CP_PAPER.find(x => x[0] === n.fmt) || CP_PAPER[4], a = mmToPt(P0[1]), b = mmToPt(P0[2]);
       for (const land of n.orient === 'v' ? [false] : n.orient === 'h' ? [true] : [false, true]) {
-        const W = land ? b : a, H = land ? a : b, cw = (W - 2 * m - (c - 1) * gap) / c, ch = (H - 2 * m - (r - 1) * gap) / r;
+        const W = land ? b : a, H = land ? a : b, cw = (W - 2 * m - bl - br - (c - 1) * gap) / c, ch = (H - 2 * m - (r - 1) * gap) / r;
         const sc = Math.min(...gs.map(g => Math.min(cw / g.w, ch / g.h)));
         if (!best || sc > best.sc + 1e-9) best = { sc, c, r, W, H };
       }
     }
   }
   const f = cells[0];
-  return { doc: f.doc, idx: f.idx, node: f.node, lab: f.lab, rot: 0, xf: [], nup: { cells, c: best.c, r: best.r, W: best.W, H: best.H, m, gap, border: !!n.border, order: n.order === 'cols' ? 'cols' : 'rows', one: n.scale === 'one', down: n.scale === 'down', anc: n.anchor || 'c' } };
+  return { doc: f.doc, idx: f.idx, node: f.node, lab: f.lab, rot: 0, xf: [], nup: { cells, c: best.c, r: best.r, W: best.W, H: best.H, m, bl, br, gap, border: !!n.border, order: n.order === 'cols' ? 'cols' : 'rows', one: n.scale === 'one', down: n.scale === 'down', anc: n.anchor || 'c' } };
 }
 function cpNupPlace(nup) {
-  const { c, r, W, H, m, gap } = nup, cw = (W - 2 * m - (c - 1) * gap) / c, ch = (H - 2 * m - (r - 1) * gap) / r;
+  const { c, r, W, H, m, gap } = nup, bl = nup.bl || 0, br = nup.br || 0, cw = (W - 2 * m - bl - br - (c - 1) * gap) / c, ch = (H - 2 * m - (r - 1) * gap) / r;
   return nup.cells.map((it, k) => {
     const col = nup.order === 'cols' ? Math.floor(k / r) : k % c, row = nup.order === 'cols' ? k % r : Math.floor(k / c);
-    const x = m + col * (cw + gap), y = m + row * (ch + gap), g = cpGeo(it) || { w: cw, h: ch };
+    const x = m + bl + col * (cw + gap), y = m + row * (ch + gap), g = cpGeo(it) || { w: cw, h: ch };
     const fit = Math.min(cw / g.w, ch / g.h), s = nup.one ? 1 : nup.down ? Math.min(1, fit) : fit, a = nup.anc || 'c';
     const ax = /l/.test(a) ? 0 : /r/.test(a) ? 1 : 0.5, ay = /^t/.test(a) ? 0 : /^b/.test(a) ? 1 : 0.5, ox = x + (cw - g.w * s) * ax, oy = y + (ch - g.h * s) * ay;
     return { it, rect: { x, y, w: cw, h: ch }, m: afMul(afT(ox, oy), afS(s)), g, s, foot: { x0: ox, y0: oy, x1: ox + g.w * s, y1: oy + g.h * s } };
@@ -12211,7 +12232,7 @@ Object.assign(OPS, {
 OPS.rotate.ins = () => [['p', 'pages', 'pages'], ['c', 'condition (optional)', 'bool']];
 OPS.rotate.def = { mode: 'rot', dir: 'cw', ang: '90', tgt: 'v', set: '0' };
 Object.assign(OPS.group.def, { ord: 'first', wmode: 'has' });
-Object.assign(OPS.sort.def, { key2: '' });
+Object.assign(OPS.sort.def, { key2: '', ord: '', rest: 'end' });
 Object.assign(OPS.weave.def, { pat: '1 1', stop: false });
 Object.assign(OPS.reverse.def, { blk: '0' });
 OP_ORDER.val = ['prop', 'cmp', 'logic', 'pattern', 'value', 'extract', 'calc', 'count', 'panel'];
@@ -12274,6 +12295,7 @@ function cpCompute722(n, P, I) {
       return { out: PG(out) };
     }
     case 'sort': {
+      if (n.key === 'manual') { const o = cpOrderList(n.ord, P.length), seen = new Set(o), rest = P.map((_, i) => i).filter(i => !seen.has(i)); return { out: PG([...o, ...(n.rest === 'drop' ? [] : rest)].map(i => P[i])) }; }
       const kr = I('k') ? cpEval(I('k')) : null;
       const k1 = kr && kr.v ? P.map((_, i) => cpAt(kr.v, i)) : cpSortKeys(P, n.key, n), k2 = cpSortKeys(P, n.key2, n);
       const idx = P.map((_, i) => i);
@@ -12417,7 +12439,9 @@ const FIELDS = {
   reverse: [{ f: 'blk', l: 'Per blocks of N pages (0 = the whole list)', il: 'blocks', t: 'num', inl: 1 }],
   shift: [{ f: 'n', l: 'N (negative: the last ones to the start)', il: 'N', t: 'num', inl: 1 }],
   repeat: [{ f: 'k', l: 'Times', il: '×', t: 'num', inl: 1 }, { f: 'mode', l: 'Mode', t: 'seg', o: { page: 'Every page', block: 'Whole block' }, inl: 1 }],
-  sort: [{ f: 'key', l: 'Key', t: 'sel', o: SORT_KEYS, inl: 1, show: n => !n.inp.k }, { f: 'desc', l: 'Direction', t: 'seg', o: { 0: '↑ Ascending', 1: '↓ Descending' }, bool: 1, inl: 1 }, { f: 'key2', l: 'Second key (tie-breaker)', t: 'sel', o: { '': '(none)', ...SORT_KEYS } }, { f: 're', l: 'Code expression', t: 'txt', show: n => n.key === 'code' || n.key2 === 'code' }],
+  sort: [{ f: 'key', l: 'Key', t: 'sel', o: SORT_KEYS, inl: 1, show: n => !n.inp.k }, { f: 'desc', l: 'Direction', t: 'seg', o: { 0: '↑ Ascending', 1: '↓ Descending' }, bool: 1, inl: 1 }, { f: 'key2', l: 'Second key (tie-breaker)', t: 'sel', o: { '': '(none)', ...SORT_KEYS } }, { f: 're', l: 'Code expression', t: 'txt', show: n => n.key === 'code' || n.key2 === 'code' },
+    { f: 'ord', l: 'Order (list positions; e.g. 3, 1, 5-8, 12-10, z)', t: 'txt', ph: '3, 1, 5-8, z', show: n => n.key === 'manual' },
+    { f: 'rest', l: 'Pages not listed', t: 'seg', o: { end: 'At the end', drop: 'Remove them' }, show: n => n.key === 'manual' }],
   weave: [{ f: 'pat', l: 'How many pages from each input', il: 'pattern', t: 'txt', ph: '1 1', inl: 1 }, { f: 'inv2', l: 'Reverse the second input (backs of single-sided originals)', t: 'chk', inl: 1 }, { f: 'stop', l: 'When an input runs out', t: 'seg', o: { 0: 'Continue with the others', 1: 'Stop' }, bool: 1 }],
   rotate: [{ f: 'mode', l: 'Mode', t: 'seg', o: { rot: 'Rotate', auto: 'Auto-orient', set: 'Set' }, oi: { rot: 'Rotate', auto: 'Auto', set: 'Set' }, inl: 1 }, { f: 'dir', l: 'Direction', t: 'seg', o: { cw: '↻ Right', ccw: '↺ Left' }, inl: 1, show: n => n.mode !== 'set' }, { f: 'ang', l: 'Angle', t: 'seg', o: { 90: '90°', 180: '180°' }, inl: 1, show: n => n.mode === 'rot' }, { f: 'tgt', l: 'Keep all pages', t: 'seg', o: { v: 'Portrait', h: 'Landscape' }, oi: { v: '▯ Portrait', h: '▭ Landscape' }, inl: 1, show: n => n.mode === 'auto' }, { f: 'set', l: 'Final rotation', t: 'seg', o: { 0: '0°', 90: '90°', 180: '180°', 270: '270°' }, inl: 1, show: n => n.mode === 'set' }],
   scale: [{ f: 'mode', l: 'Scale to', t: 'seg', o: { fmt: 'Format', mm: 'Size', pct: '%' }, inl: 1 }, { f: 'fmt', l: 'Format', t: 'sel', o: PAPER_O, inl: 1, show: n => n.mode === 'fmt' }, { f: 'orient', l: 'Orientation', t: 'seg', o: { same: 'Same as the page', v: 'Portrait', h: 'Landscape' }, oi: { same: 'Same', v: '▯ Port.', h: '▭ Land.' }, inl: 1, show: n => n.mode === 'fmt' }, { f: 'w', l: 'Width (mm)', il: 'wid.', t: 'num', inl: 1, show: n => n.mode === 'mm' }, { f: 'h', l: 'Height (mm)', il: 'ht.', t: 'num', inl: 1, show: n => n.mode === 'mm' }, { f: 'pct', l: 'Percentage', il: '%', t: 'num', inl: 1, show: n => n.mode === 'pct' }, { f: 'fit', l: 'Fit', t: 'seg', o: { fit: 'Fit (white margins)', fill: 'Fill (crops)' }, show: n => n.mode !== 'pct' }, { f: 'only', l: 'Reduce only (smaller pages are not enlarged)', t: 'chk' }],
@@ -12440,6 +12464,7 @@ function cpFieldsHtml(n, inline) {
     if (fd.t === 'col') return `${inline ? '' : lab}<input type="color" class="cp-col" data-f="${fd.f}" value="${cpEsc(/^#[0-9a-f]{6}$/i.test(v) ? v : '#000000')}" aria-label="${cpEsc(fd.l)}" title="${cpEsc(fd.l)}">`;
     if (fd.t === 'file') return `${lab}<button type="button" class="cp-imgb" data-file="${fd.f}" title="${cpEsc(fd.l)}">${n[fd.f] ? cpEsc(n.fname || 'file') + ' · change…' : 'Choose a file…'}</button>`;
     if (fd.t === 'img') return `${lab}<button type="button" class="cp-imgb" data-img="${fd.f}" title="${cpEsc(fd.l)}">${n[fd.f] ? `<img src="${n[fd.f]}" alt="">Change the image…` : 'Choose an image…'}</button>`;
+    if (fd.t === 'imgs') return `${lab}<button type="button" class="cp-imgb" data-imgs="1">Add images…</button>` + (n.imgs || []).map((im, k) => `<div class="cp-imgrow"><img src="${im.url}" alt="" style="height:22px"> <span>${cpEsc(im.name)}</span> <button type="button" class="btn ib" data-imgdel="${k}" title="Remove the image" aria-label="Remove the image">×</button></div>`).join('');
     if (fd.t === 'area') return `${lab}<textarea class="cp-area" data-f="${fd.f}" rows="${fd.rows || 5}" spellcheck="false"${fd.ph ? ` placeholder="${cpEsc(fd.ph)}"` : ''} aria-label="${cpEsc(fd.l)}">${cpEsc(v)}</textarea>`;
     const inp = `<input type="text" data-f="${fd.f}" value="${cpEsc(v)}"${fd.ph ? ` placeholder="${cpEsc(fd.ph)}"` : ''}${fd.t === 'num' ? ' inputmode="decimal" class="num"' : ''} aria-label="${cpEsc(fd.l)}" spellcheck="false">`;
     return inline && fd.t === 'num' ? `<span class="cp-ipair">${lab}${inp}</span>` : lab + inp;
@@ -12456,6 +12481,8 @@ function cpBindFields(box, n) {
     else el.onchange = () => cpFldSet(n, el.dataset.f, el.type === 'checkbox' ? el.checked : el.value);
   });
   box.querySelectorAll('[data-img]').forEach(b => b.onclick = ev => { ev.stopPropagation(); cpPickImg(n, b.dataset.img); });
+  box.querySelectorAll('[data-imgs]').forEach(b => b.onclick = ev => { ev.stopPropagation(); cpPickImgs(n); });
+  box.querySelectorAll('[data-imgdel]').forEach(b => b.onclick = ev => { ev.stopPropagation(); n.imgs.splice(+b.dataset.imgdel, 1); CP.auto = false; cpRender(); });
   box.querySelectorAll('[data-file]').forEach(b => b.onclick = ev => { ev.stopPropagation(); cpPickFile(n, b.dataset.file); });
 }
 function cpQuickMenu(n) {   // opcions ràpides per al menú del botó dret
@@ -12967,7 +12994,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 7.5.5 · pdf-lib';
+  const prod = 'Guaita PDF Edit 7.6.0 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -13006,7 +13033,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'XMP metadata'); del(cat, 'PieceInfo', 'private application data');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 7.5.5') })); rep.cleaned.push('document information'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 7.6.0') })); rep.cleaned.push('document information'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'thumbnails'));
@@ -13364,7 +13391,7 @@ Object.assign(OPS, {
   eimg: { fam: 'ed', t: 'Image / title block', ins: P_INC, outs: P_OUT, def: { img: '', iw: 0, ih: 0, fmt: 'png', w: '40', anchor: 'br', dx: '10', dy: '10', opac: '100' } },
   epage: { fam: 'ed', t: 'Embedded PDF page', ins: () => [['p', 'pages', 'pages'], ['q', 'page to embed', 'pages'], ['c', 'condition (optional)', 'bool']], outs: P_OUT, def: { pick: 'first', sz: 'w', w: '60', h: '', pct: '100', pos: 'anc', anchor: 'br', dx: '10', dy: '10', px: '10', py: '10', rot: '0', opac: '100', cu: 'pct', cx0: '', cy0: '', cx1: '', cy1: '', vec: true } },
   esig: { fam: 'ed', t: 'Signature field', ins: P_INC, outs: P_OUT, def: { name: 'Signature', w: '60', h: '22', anchor: 'br', dx: '15', dy: '15', scope: 'last' } },
-  lot: { fam: 'ins', t: 'Document batch', ins: () => [], outs: P_OUT, def: { sel: 'all', docs: [], q: '', nosig: true } },
+  lot: { fam: 'ins', t: 'Document batch', ins: () => [], outs: P_OUT, def: { sel: 'all', docs: [], q: '', nosig: true, onlysig: false, mbmin: '', mbmax: '', pgmin: '', pgmax: '' } },
   cover: { fam: 'ins', t: 'Cover', ins: () => P_IN, outs: P_OUT, def: { title: '[file]', sub: '', date: true, fmt: 'same', per: 'none' } },
   sep: { fam: 'ins', t: 'Separators', ins: () => P_IN, outs: P_OUT, def: { by: 'grp', text: '[group]' } },
   index: { fam: 'ins', t: 'Index', ins: () => P_IN, outs: P_OUT, def: { title: 'Index', by: 'grp', links: true, dots: true } }
@@ -13414,7 +13441,8 @@ Object.assign(FIELDS, {
     { f: 'cx0', l: 'Crop: left (empty = 0)', t: 'num' }, { f: 'cy0', l: 'Crop: top (empty = 0)', t: 'num' }, { f: 'cx1', l: 'Crop: right (empty = to the end)', t: 'num' }, { f: 'cy1', l: 'Crop: bottom (empty = to the end)', t: 'num' },
     { f: 'vec', l: 'Vector (otherwise, image)', t: 'chk' }],
   esig: [{ f: 'name', l: 'Field name', t: 'txt', inl: 1 }, { f: 'scope', l: 'On', t: 'seg', o: { last: 'Last page', first: 'First page', all: 'All' }, inl: 1 }, { f: 'anchor', l: 'Position', t: 'seg', o: ANCH_O, oi: ANCH_S }, { f: 'w', l: 'Width (mm)', t: 'num' }, { f: 'h', l: 'Height (mm)', t: 'num' }, ...DXY(0)],
-  lot: [{ f: 'sel', l: 'Documents', t: 'seg', o: { all: 'All open', some: 'Ticked' }, inl: 1 }, { f: 'q', l: 'Only those whose name contains', il: 'name', t: 'txt', inl: 1 }, { f: 'nosig', l: 'Skip signed ones (the signature would be lost)', t: 'chk' }],
+  lot: [{ f: 'sel', l: 'Documents', t: 'seg', o: { all: 'All open', some: 'Ticked' }, inl: 1 }, { f: 'q', l: 'Only those whose name contains', il: 'name', t: 'txt', inl: 1 }, { f: 'nosig', l: 'Skip signed ones (the signature would be lost)', t: 'chk', show: n => !n.onlysig }, { f: 'onlysig', l: 'Signed only', t: 'chk', show: n => !n.nosig },
+    { f: 'mbmin', l: 'Minimum weight (MB)', il: 'MB ≥', t: 'num', inl: 0, ph: 'p. ex. 20' }, { f: 'mbmax', l: 'Maximum weight (MB)', t: 'num', ph: 'p. ex. 100' }, { f: 'pgmin', l: 'Minimum pages', t: 'num' }, { f: 'pgmax', l: 'Maximum pages', t: 'num' }],
   cover: [{ f: 'title', l: 'Title', t: 'txt', inl: 1 }, { f: 'sub', l: 'Subtitle', t: 'txt' }, { f: 'date', l: 'Date', t: 'chk' }, { f: 'per', l: 'Covers', t: 'seg', o: { none: 'One at the start', grp: 'One per group' }, inl: 1 }, { f: 'fmt', l: 'Format', t: 'sel', o: { same: 'Same as the first page', ...DIN_O } }],
   sep: [{ f: 'by', l: 'One separator at each change of', t: 'sel', o: SEPBY, inl: 1 }, { f: 'text', l: 'Text', t: 'txt', inl: 1 }],
   index: [{ f: 'title', l: 'Title', t: 'txt', inl: 1 }, { f: 'by', l: 'One entry per', t: 'sel', o: SEPBY, inl: 1 }, { f: 'dots', l: 'Dot leaders', t: 'chk' }, { f: 'links', l: 'Clickable links', t: 'chk' }]
@@ -13437,7 +13465,10 @@ let CP_LOTDOC = null;
 const cpLotNodes = new Map();
 function cpLotDocs(n) {
   const q = cpNorm(n.q || '', true);
-  return docs.filter(d => (n.sel !== 'some' || (n.docs || []).includes(d.name)) && (!q || cpNorm(d.name, true).includes(q)) && !(n.nosig && d.signed));
+  const mb = d => { const p = d.pages.find(x => x.pdfBytes); return p ? p.pdfBytes.byteLength / 1048576 : 0; }, num = v => { const x = parseFloat(String(v).replace(',', '.')); return isFinite(x) ? x : null; };
+  const mn = num(n.mbmin), mx = num(n.mbmax), pn = num(n.pgmin), px = num(n.pgmax);
+  return docs.filter(d => (n.sel !== 'some' || (n.docs || []).includes(d.name)) && (!q || cpNorm(d.name, true).includes(q)) && !(n.nosig && d.signed) && !(n.onlysig && !d.signed)
+    && (mn == null || mb(d) >= mn) && (mx == null || mb(d) <= mx) && (pn == null || d.pages.length >= pn) && (px == null || d.pages.length <= px));
 }
 function cpLotNode(n, d) { const k = n.id + ':' + d.id; let x = cpLotNodes.get(k); if (!x) { x = { id: k, kind: 'src', label: '', docName: d.name, docId: d.id, pages: [] }; cpLotNodes.set(k, x); } x.docName = d.name; return x; }
 function cpLotOf(id) { for (const u of cpUpstream(id)) { const x = CP.nodes.get(u); if (x && x.kind === 'op' && x.op === 'lot') return x; } return null; }
@@ -13586,6 +13617,8 @@ function cpEdAnns(it, info) {
       const col = p.col || '#6B7280', sz = 7 * S, L = (x1, y1, x2, y2) => out.push({ type: 'shape', kind: 'line', x1, y1, x2, y2, color: col, width: 0.5 * S, fill: false, role: 'etext' });
       const fp = it.nup ? cpNupPlace(it.nup) : [];
       if (p.marks) fp.forEach(q => { const f = q.foot, o = mm(1.5), l = mm(4); [[f.x0 * S, f.y0 * S, -1, -1], [f.x1 * S, f.y0 * S, 1, -1], [f.x0 * S, f.y1 * S, -1, 1], [f.x1 * S, f.y1 * S, 1, 1]].forEach(([x, y, dx, dy]) => { L(x + dx * o, y, x + dx * (o + l), y); L(x, y + dy * o, x, y + dy * (o + l)); }); });
+      if (p.reg) { const o = mm(4.5), r0 = mm(2.2), cx = [W / 2, W - o, W / 2, o], cy = [o, H / 2, H - o, H / 2];
+        cx.forEach((x, k) => { const y = cy[k]; out.push({ type: 'shape', kind: 'ellipse', x1: x - r0, y1: y - r0, x2: x + r0, y2: y + r0, color: '#000000', width: 0.5 * S, fill: false, role: 'etext' }); L(x - r0 * 1.8, y, x + r0 * 1.8, y); L(x, y - r0 * 1.8, x, y + r0 * 1.8); }); }
       if (p.lab) { const t = F(p.lab).replace(/\[esc\]/gi, fp.length ? Math.round(fp[0].s * 100) + ' %' : ''); if (t.trim()) out.push({ type: 'text', role: 'etext', text: t, x: (W - cpTW(t, sz)) / 2, y: H - mm(4) - sz * 1.25, size: sz, color: col }); }
     } else if (d.t === 'estamp') {
       const t = F(p.text) || 'APPROVED', col = p.col || '#1E9E4A';
@@ -13615,6 +13648,25 @@ function cpEdAnns(it, info) {
       out.push({ type: 'shape', kind: 'line', x1: W * 0.3, y1: y0 + sz1 * 1.5, x2: W * 0.7, y2: y0 + sz1 * 1.5, color: '#8B939F', width: 0.8 * S, fill: false, role: 'cover' });
       if (s2) { const sz = 14 * S; out.push({ type: 'text', role: 'cover', text: s2, x: (W - cpTW(s2, sz)) / 2, y: y0 + sz1 * 1.9, size: sz, color: '#3A414B' }); }
       if (dt) { const sz = 11 * S; out.push({ type: 'text', role: 'cover', text: dt, x: (W - cpTW(dt, sz)) / 2, y: H * 0.86, size: sz, color: '#5C6470' }); }
+    } else if (d.t === 'sigs') {
+      const Fs = t => String(t || '').replace(/\[(?:grup|group)\]/gi, p.key || '').replace(/\[([^\]]+)\]/g, m => F(m)), mx = 20 * S * 2.835 / 2.835, X0 = mm(18), X1 = W - mm(18), tw = X1 - X0;
+      const rows = String(p.rows || '').split('\n').map(l => l.split('|').map(x => x.trim())).filter(r => r[0] || r[1]);
+      const sz1 = 20 * S, sz2 = 11 * S, szh = 9 * S, szr = 11 * S, y0 = mm(24), col = ['#171B21', '#5C6470', '#8B939F'];
+      out.push({ type: 'text', role: 'sigs', text: Fs(p.title), x: X0, y: y0, size: sz1, color: col[0], bold: true });
+      if (p.sub) out.push({ type: 'text', role: 'sigs', text: Fs(p.sub), x: X0, y: y0 + sz1 * 1.5, size: sz2, color: col[1] });
+      const cw = p.date ? [0.26, 0.30, 0.14, 0.30] : [0.28, 0.34, 0, 0.38], cx = [X0]; cw.forEach(w0 => cx.push(cx[cx.length - 1] + w0 * tw));
+      const ty = y0 + sz1 * 1.5 + (p.sub ? sz2 * 2.2 : sz1 * 0.5), rh = mm(24), hh = mm(8), heads = ['Role', 'Name', 'Data', 'Signature'];
+      heads.forEach((h, c) => { if (cw[c]) out.push({ type: 'text', role: 'sigs', text: h, x: cx[c] + mm(1.5), y: ty + (hh - szh) / 2 - szh * 0.1, size: szh, color: col[1], bold: true }); });
+      const yb = ty + hh + rows.length * rh;
+      out.push({ type: 'shape', kind: 'line', x1: X0, y1: ty, x2: X1, y2: ty, color: col[0], width: 0.8 * S, fill: false, role: 'sigs' });
+      for (let r = 0; r <= rows.length; r++) out.push({ type: 'shape', kind: 'line', x1: X0, y1: ty + hh + r * rh, x2: X1, y2: ty + hh + r * rh, color: r ? col[2] : col[0], width: (r ? 0.5 : 0.8) * S, fill: false, role: 'sigs' });
+      for (let c = 0; c <= 4; c++) if (c === 0 || c === 4 || cw[c - 1] || cw[c]) { if (c > 0 && c < 4 && !cw[c - 1] && !cw[c]) continue; out.push({ type: 'shape', kind: 'line', x1: cx[c], y1: ty, x2: cx[c], y2: yb, color: col[2], width: 0.5 * S, fill: false, role: 'sigs' }); }
+      rows.forEach((r, k) => {
+        const yy = ty + hh + k * rh;
+        if (r[0]) out.push({ type: 'text', role: 'sigs', text: r[0], x: cx[0] + mm(1.5), y: yy + mm(2), size: szr, color: col[0] });
+        if (r[1]) out.push({ type: 'text', role: 'sigs', text: r[1], x: cx[1] + mm(1.5), y: yy + mm(2), size: szr, color: col[0] });
+        if (p.fields) out.push({ type: 'rv', sub: 'sigfield', name: 'Signature · ' + (r[0] || 'signant ' + (k + 1)) + (p.key ? ' · ' + p.key : ''), x1: cx[3] + mm(1.5), y1: yy + mm(2), x2: cx[4] - mm(1.5), y2: yy + rh - mm(2), color: '#2F5FE6', id: rvId(), author: rvWho(), date: rvNow(), status: '', replies: [], text: '' });
+      });
     } else if (d.t === 'sep') {
       const t = String(p.text || '[group]').replace(/\[(?:grup|group)\]/gi, p.key || '').replace(/\[([^\]]+)\]/g, m => F(m)); if (!t.trim()) continue;
       const sz = Math.min(26 * S, (W - 120 * S) / Math.max(1, cpTW(t, 1))), y = H * 0.44;
@@ -13680,13 +13732,67 @@ async function cpFilesFor(id) {
         const nm = lot || (n.kind === 'out' && n.split) ? cpFileName(cpNamePattern(n, L[j], parts[q].key, q + 1), 'Composition') : null;
         try {
           const b = await cpResultFor(id, parts[q].items, nm); if (!b) continue;
-          const bytes = await cpReduceOut(id, await cpGen(b.r));
-          files.push({ name: b.name, bytes, pages: b.r.pages.length, src: [...new Set(parts[q].items.filter(it => it.doc !== CP_BLANKDOC).map(it => it.doc.name))].join(', ') });
+          const src = [...new Set(parts[q].items.filter(it => it.doc !== CP_BLANKDOC).map(it => it.doc.name))].join(', ');
+          const dir = n.kind === 'out' && n.split && n.sub && parts[q].key ? String(parts[q].key).replace(/[\\/:*?"<>|]+/g, '_').trim() : '';
+          const push = f => files.push({ ...f, name: (dir ? dir + '/' : '') + f.name, src });
+          if (n.kind === 'out' && n.ofmt) for (const f of await cpOtherFmt(n, b, parts[q].items)) push(f);
+          else await cpPdfParts(id, n, b, parts[q].items, push);
         } catch (e) { console.error(e); files.push({ name: nm || n.name, error: e.message || String(e) }); }
       }
     }
   } finally { CP_LOTDOC = null; cpEvalReset(); }
   return files;
+}
+// v7.6.0: dividir per pes màxim (MB): trossos de pàgines seguides, repartits a partir de la mida estimada i refinats a la meitat si encara passen
+async function cpPdfParts(id, n, b, items, push) {
+  const lim = (parseFloat(n.kind === 'out' ? n.maxMB : '') || 0) * 1048576;
+  const bytes = await cpReduceOut(id, await cpGen(b.r));
+  if (!lim || bytes.length <= lim || items.length < 2) { push({ name: b.name, bytes, pages: b.r.pages.length }); return; }
+  const gen = async its => {
+    const bb = await cpResultFor(id, its, b.name); if (!bb) return [];
+    const by = await cpReduceOut(id, await cpGen(bb.r));
+    if (by.length <= lim || its.length < 2) return [{ bytes: by, pages: bb.r.pages.length }];
+    const h = Math.ceil(its.length / 2); return [...await gen(its.slice(0, h)), ...await gen(its.slice(h))];
+  };
+  const k = Math.min(items.length, Math.max(2, Math.ceil(bytes.length / lim * 1.08))), sz = Math.ceil(items.length / k), out = [];
+  for (let i = 0; i < items.length; i += sz) { toast('Splitting by weight · part ' + (out.length + 1) + '…', false, 20000); out.push(...await gen(items.slice(i, i + sz))); }
+  const base = b.name.replace(/\.pdf$/i, ''), w = String(out.length).length;
+  out.forEach((o, i) => push({ name: base + '_part' + String(i + 1).padStart(w, '0') + '.pdf', bytes: o.bytes, pages: o.pages }));
+  if (out.some(o => o.bytes.length > lim)) toast('Alguna part supera ' + n.maxMB + ' MB because it is a single very heavy page', true, 6000);
+}
+// v7.6.0: altres formats de sortida: PNG, text i DXF per pàgina (en un ZIP) i CSV amb les propietats de les pàgines
+async function cpOtherFmt(n, b, items) {
+  const base = b.name.replace(/\.pdf$/i, '');
+  if (n.ofmt === 'csv') {
+    const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+    const rows = items.map((it, i) => {
+      const g = cpGeo(it), wmm = g ? g.w * 25.4 / 72 : 0, hmm = g ? g.h * 25.4 / 72 : 0;
+      return [i + 1, q(it.doc === CP_BLANKDOC ? '(blank)' : it.doc.name), it.doc === CP_BLANKDOC ? '' : it.idx + 1, q(it.grp || ''), g ? wmm.toFixed(1) : '', g ? hmm.toFixed(1) : '', g ? cpFormat(g) : '', g ? (g.w > g.h + 0.5 ? 'landscape' : g.h > g.w + 0.5 ? 'portrait' : 'square') : '', cpTotRot(it)].join(';');
+    });
+    return [{ name: base + '_pagines.csv', bytes: new TextEncoder().encode('\ufeffpage;source document;source page;group;width (mm);height (mm);format;orientation;rotation\n' + rows.join('\n') + '\n'), pages: items.length, report: true }];
+  }
+  const pdfBytes = await cpGen(b.r), pdf = await openPdfJs(pdfBytes), files = [], w = String(pdf.numPages).length;
+  try {
+    for (let p = 1; p <= pdf.numPages; p++) {
+      toast((n.ofmt || '').toUpperCase() + ' · page ' + p + ' of ' + pdf.numPages + '…', false, 20000);
+      const pg = await pdf.getPage(p), nm = base + '_p' + String(p).padStart(w, '0');
+      if (n.ofmt === 'png') {
+        const vp = pg.getViewport({ scale: (parseFloat(n.odpi) || 150) / 72 }), cv = document.createElement('canvas'); cv.width = Math.round(vp.width); cv.height = Math.round(vp.height);
+        const cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, cv.width, cv.height);
+        await pg.render({ canvasContext: cx, viewport: vp }).promise;
+        const bl = await new Promise(r => cv.toBlob(r, 'image/png')); files.push({ name: nm + '.png', bytes: new Uint8Array(await bl.arrayBuffer()) });
+      } else if (n.ofmt === 'txt') {
+        const tc = await pg.getTextContent(); let out = '', ly = null;
+        tc.items.forEach(i => { if (!i.str && !i.hasEOL) return; const y = i.transform ? Math.round(i.transform[5]) : 0; if (ly !== null && Math.abs(y - ly) > 2) out += '\n'; else if (out && !/\s$/.test(out)) out += ' '; out += i.str; ly = y; });
+        files.push({ name: nm + '.txt', bytes: new TextEncoder().encode(out.trim() + '\n') });
+      } else if (n.ofmt === 'dxf') {
+        const { dxf } = await pageToDxf(pg, { units: 'mm', scale: 1, tessSteps: 10, minLen: 0, text: true });
+        files.push({ name: nm + '.dxf', bytes: new TextEncoder().encode(dxf) });
+      }
+    }
+  } finally { try { pdf.destroy(); } catch (e) { } }
+  const z = zipStore(files);
+  return [{ name: base + '_' + n.ofmt + '.zip', bytes: new Uint8Array(await z.arrayBuffer()), pages: pdf.numPages || files.length }];
 }
 let cpMsReport = false;
 function cpReportFile(files) {
@@ -13886,7 +13992,7 @@ function cpCompute732(n, P, I) {
     case 'bmsort': return { out: PG(cpDxAdd(P, { t: 'bmsort', p: cpEdParams(n), id: n.id })) };
     case 'layers': case 'meta': case 'att': return { out: PG(cpDxAdd(P, { t: n.op, p: cpEdParams(n), id: n.id })) };
     case 'mosaic': {
-      const P0 = CP_PAPER.find(x => x[0] === n.fmt) || CP_PAPER[4], A = mmToPt(P0[1]), B = mmToPt(P0[2]), ov = mmToPt(Math.max(0, cpNumV(n.ov) || 0)), out = [];
+      const P0 = CP_PAPER.find(x => x[0] === n.fmt) || CP_PAPER[4], pm = mmToPt(Math.max(0, Math.min(40, cpNumV(n.pm) || 0))), A = mmToPt(P0[1]) - 2 * pm, B = mmToPt(P0[2]) - 2 * pm, ov = mmToPt(Math.max(0, cpNumV(n.ov) || 0)), out = [];   // v7.6.0: pm = marge d'impressora de cada peça
       const cnt = (len, T) => Math.max(1, Math.ceil((len - ov) / Math.max(1, T - ov) - 1e-6));
       P.forEach(it => {
         const g0 = cpGeo(it); if (!g0) { out.push(it); return; }
@@ -13905,7 +14011,8 @@ function cpCompute732(n, P, I) {
         const N = c * r, byCols = n.order === 'cols'; let k = 0;
         for (let a = 0; a < (byCols ? c : r); a++) for (let b2 = 0; b2 < (byCols ? r : c); b2++) {
           const col = byCols ? a : b2, row = byCols ? b2 : a, x0 = col * (W - ov), y0 = row * (H - ov); k++;
-          const t = cpXf(src, { t: 'box', x0, y0, x1: x0 + W, y1: y0 + H });
+          let t = cpXf(src, { t: 'box', x0: x0 - pm, y0: y0 - pm, x1: x0 + W + pm, y1: y0 + H + pm });
+          if (+n.ras) t = cpXf(t, { t: 'ras', mode: 'color', dpi: Math.max(72, Math.min(600, +n.ras)), thr: 55, q: 85 });
           out.push(n.marks || n.label ? { ...t, ed: (t.ed || []).concat([{ t: 'tmark', p: { marks: !!n.marks, ov: n.ov, lab: n.label ? og + ' · piece ' + k + '/' + N + ' · row ' + (row + 1) + ', col. ' + (col + 1) : '' }, id: n.id + 't' + k }]) } : t);
         }
       });
@@ -13914,11 +14021,13 @@ function cpCompute732(n, P, I) {
     case 'print': {
       const N = [1, 2, 4].includes(+n.n) ? +n.n : 1, L = P.slice(); if (!L.length) return { out: PG([]) };
       const out = []; for (let i = 0; i < L.length; i += N) {
-        let sh = cpMkNup(L.slice(i, i + N), N, n);
-        if (n.marks || n.label) sh = { ...sh, ed: (sh.ed || []).concat([{ t: 'pmark', p: { marks: !!n.marks, lab: n.label ? String(n.ltxt || '') : '' }, id: n.id + 'p' + i }]) };
+        const fc = i / N, bd = mmToPt(Math.max(0, cpNumV(n.bind) || 0)), nn = bd ? { ...n, _bl: fc % 2 === 0 ? bd : 0, _br: fc % 2 === 1 ? bd : 0 } : n;   // v7.6.0: marge d'enquadernació (a l'esquerra a les cares senars, a la dreta a les parells)
+        let sh = cpMkNup(L.slice(i, i + N), N, nn);
+        if (n.marks || n.label || n.reg) sh = { ...sh, ed: (sh.ed || []).concat([{ t: 'pmark', p: { marks: !!n.marks, reg: !!n.reg, lab: n.label ? String(n.ltxt || '') : '' }, id: n.id + 'p' + i }]) };
+        if (+n.ras) sh = cpXf(sh, { t: 'ras', mode: 'color', dpi: Math.max(72, Math.min(600, +n.ras)), thr: 55, q: 85 });
         out.push(sh);
       }
-      return { out: PG(out) };
+      return { out: PG(n.dup === 'manual' ? [...out.filter((_, i) => i % 2 === 0), ...out.filter((_, i) => i % 2 === 1).reverse()] : out) };
     }
     case 'pcolr': {
       const colOf = t => { t = String(t || '').trim(); if (/^#[0-9a-f]{6}$/i.test(t)) return t.toUpperCase(); const q = cpNorm(t, true), f = PCOLS.find(c => cpNorm(c[0], true) === q); return f ? f[1] : null; };
@@ -14020,12 +14129,27 @@ function cpDocX(pairs, opt) {
     if (p.mode !== 'add') src.forEach(d => (d.attachments || []).forEach(a => { if (!seen.has(a.name)) { seen.add(a.name); attachments.push(a); } }));
     if (p.mode !== 'src' && p.file) { try { const b = atob(p.file.split(',')[1] || ''), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); attachments = attachments.filter(a => a.name !== p.fname); attachments.push({ name: p.fname || 'attachment', bytes: u, mime: p.fmime || attMime(p.fname || ''), desc: '' }); } catch (e) { console.warn('Adjunt:', e); } }
   }
-  return { extra: { ocOff, meta, attachments }, post: { flat, ly } };
+  let red = '', labels = null;
+  if (D.red && RED_PROFILES[D.red.prof]) red = D.red.prof;
+  if (D.plabel) {
+    const p = D.plabel, keyOf = it => p.by === 'grp' ? (it.grp || '') : p.by === 'src' ? (it.doc ? it.doc.id : '') : '', L = [];
+    let last = null, startK = 0;
+    pairs.forEach(([it], k) => {
+      const key = keyOf(it);
+      if (k === 0 || (p.by !== 'all' && key !== last)) { L.push({ k, S: p.style === 'N' ? '' : p.style, P: String(p.pre || '').replace(/\[(?:grup|group)\]/gi, it.grp || ''), St: Math.max(1, Math.round(cpNumV(p.start) || 1)) + (p.restart === false ? k : 0) }); }
+      last = key;
+    });
+    if (L.length) labels = L;
+  }
+  return { extra: { ocOff, meta, attachments }, post: { flat, ly, red, labels } };
 }
 async function cpGen(r) {
   let b = await generatePdfBytes(r.pages, null, r.bms, r.extra || { ocOff: new Set(), meta: {} });
-  if (r.post && (r.post.flat.size || r.post.ly)) {
+  if (r.post && (r.post.flat.size || r.post.ly || r.post.labels)) {
     try { b = await cpPost(b, r.post); } catch (e) { console.warn('Aplanar / capes:', e); toast('Could not apply the final steps (flatten, layers): ' + e.message, true, 7000); }
+  }
+  if (r.post && r.post.red && RED_PROFILES[r.post.red]) {
+    try { b = (await pdfReduce(b, { ...RED_PROFILES[r.post.red] })).bytes; } catch (e) { console.warn('Reduce (node):', e); toast('The document could not be reduced: it is saved without reducing', true, 6000); }
   }
   return b;
 }
@@ -14033,6 +14157,11 @@ async function cpPost(bytes, post) {
   const P = await PDFLib.PDFDocument.load(bytes, { updateMetadata: false });
   if (post.flat.size) cpFlatPages(P, post.flat);
   if (post.ly) await cpLayersPost(P, post.ly);
+  if (post.labels && post.labels.length) {
+    const { PDFName, PDFNumber, PDFHexString } = PDFLib, N = PDFName.of, ctx = P.context, nums = [];
+    post.labels.forEach(l => { const d = ctx.obj({}); if (l.S) d.set(N('S'), N(l.S)); if (l.P) d.set(N('P'), PDFHexString.fromText(l.P)); if (l.St > 1) d.set(N('St'), PDFNumber.of(l.St)); nums.push(PDFNumber.of(l.k), d); });
+    P.catalog.set(N('PageLabels'), ctx.obj({ Nums: nums }));
+  }
   return await P.save();
 }
 // aplanar: com a Reduir (aparença de cada anotació → contingut de la pàgina), però per pàgines i per tipus
@@ -14187,6 +14316,172 @@ async function cpLayersPost(P, ly) {
   P.catalog.delete(N('OCProperties'));
 }
 
+
+// ─── v7.6.0: nodes nous (Reduir, Etiquetes de pàgina, Full de signatures, Imatges → pàgines, Inserir pàgines) i ordre manual ───
+function cpOrderList(expr, len) {
+  const out = [], seen = new Set(), val = t => { t = String(t).trim().toLowerCase(); return t === 'z' ? len : parseInt(t, 10); };
+  String(expr || '').split(/[\s,;]+/).filter(Boolean).forEach(tok => {
+    const m = tok.match(/^([0-9]+|z)(?:-([0-9]+|z))?$/i); if (!m) return;
+    const a = val(m[1]), b = m[2] ? val(m[2]) : a, st = a <= b ? 1 : -1;
+    for (let k = a; st > 0 ? k <= b : k >= b; k += st) if (k >= 1 && k <= len && !seen.has(k)) { seen.add(k); out.push(k - 1); }
+  });
+  return out;
+}
+const CP_RED_O = () => Object.fromEntries(Object.entries(RED_PROFILES).map(([k, p]) => [k, p.name]));
+const CP_PL_ST = { D: '1, 2, 3…', r: 'i, ii, iii…', R: 'I, II, III…', a: 'a, b, c…', A: 'A, B, C…', N: '(no number, prefix only)' };
+Object.assign(OPS, {
+  red: { fam: 'doc', t: 'Reduce size', ins: () => P_IN, outs: P_OUT, def: { prof: 'std' } },
+  plabel: { fam: 'doc', t: 'Page labels', ins: () => P_IN, outs: P_OUT, def: { by: 'grp', style: 'D', pre: '', start: '1', restart: true } },
+  sigs: { fam: 'ins', t: 'Signature sheet', ins: () => P_IN, outs: P_OUT, def: { pos: 'end', per: 'doc', title: 'Approval sheet', sub: '[file]', rows: 'Author | \nReviewer | \nApproval | ', date: true, fields: true } },
+  imgp: { fam: 'ins', t: 'Images → pages', ins: () => [], outs: P_OUT, def: { imgs: [], fmt: 'A4', orient: 'auto', m: '10', name: 'Imatges' } },
+  insdoc: { fam: 'ins', t: 'Insert pages', ins: () => [['p', 'pages', 'pages'], ['q', 'pages to insert', 'pages']], outs: P_OUT, def: { mode: 'every', n: '10', where: 'after' } }
+});
+OP_ORDER.doc.push('red', 'plabel'); OP_ORDER.ins.push('sigs', 'imgp', 'insdoc');
+Object.assign(FIELDS, {
+  red: [{ f: 'prof', l: 'Reduction profile', t: 'sel', o: CP_RED_O() }, { f: 'prof', l: () => '', t: 'note' }],
+  plabel: [{ f: 'by', l: 'Numerar', t: 'seg', o: { grp: 'Per branch', src: 'Per document', all: 'All' }, inl: 1 }, { f: 'style', l: 'Number style', t: 'sel', o: CP_PL_ST, inl: 1 },
+    { f: 'pre', l: 'Prefix (admet [grup]; ex. A-)', t: 'txt', ph: 'A-' }, { f: 'start', l: 'First number', t: 'num', inl: 1, show: n => n.style !== 'N' }, { f: 'restart', l: 'Restart at each branch or document', t: 'chk', show: n => n.by !== 'all' }],
+  sigs: [{ f: 'pos', l: 'On', t: 'seg', o: { end: 'At the end', start: 'At the beginning' }, inl: 1 }, { f: 'per', l: 'One sheet per', t: 'seg', o: { doc: 'Document', grp: 'Branca' }, inl: 1 },
+    { f: 'title', l: 'Title', t: 'txt' }, { f: 'sub', l: 'Subtitle ([file] [doc] [date] [group])', t: 'txt' },
+    { f: 'rows', l: 'Signers (one line per signer: role | name)', t: 'area', rows: 5, ph: 'Redactor | Anna Puig\nRevisor | ' }, { f: 'date', l: 'Columna de data', t: 'chk' }, { f: 'fields', l: 'Digital signature field on each row', t: 'chk' }],
+  imgp: [{ f: 'imgs', l: 'Imatges (en ordre)', t: 'imgs' }, { f: 'fmt', l: 'Page format', t: 'sel', o: { A0: 'A0', A1: 'A1', A2: 'A2', A3: 'A3', A4: 'A4', A5: 'A5' }, inl: 1 },
+    { f: 'orient', l: 'Orientation', t: 'seg', o: { auto: 'Per image', v: 'Portrait', h: 'Landscape' }, inl: 1 }, { f: 'm', l: 'Margin (mm)', t: 'num' }, { f: 'name', l: 'Page group name', t: 'txt' }],
+  insdoc: [{ f: 'mode', l: 'Inserir', t: 'seg', o: { every: 'Every N pages', grp: 'Per branch' }, inl: 1 }, { f: 'n', l: 'Every how many pages', t: 'num', inl: 1, show: n => n.mode === 'every' },
+    { f: 'where', l: 'Position', t: 'seg', o: { after: 'After', before: 'Davant' }, inl: 1, show: n => n.mode === 'grp' }]
+});
+FIELDS.red.pop();
+Object.assign(CP_TIPS722, {
+  red: 'Reduces the size of the final document (recompresses images, clears metadata…) with the chosen profile. It is applied on saving, after all the other steps. If the Final document also has a reduction, both are applied.',
+  plabel: 'PDF page numbering (page labels shown by Acrobat and other viewers): per branch of a Group by, per source document or the whole document. Styles 1, i, I, a, A or prefix only (e.g. A-1, A-2… for each annex).',
+  sigs: 'Adds a sheet with the approval table (role, name, date and signature), with digital signature fields on each row. One per document or one per branch, at the start or at the end.',
+  imgp: 'Converts images (PNG or JPEG) into pages of the chosen format, centred and fitted to the margin. Useful to add photos or scans without having a PDF.',
+  insdoc: 'Inserts a set of pages (second wire) every N pages, or in front of or behind each branch of a Group by. For example, a separator sheet or a control page in each chapter.'
+});
+function cpSum760(n) {
+  switch (n.op) {
+    case 'unmosaic': return cpSumU(n);
+    case 'red': return (RED_PROFILES[n.prof] || {}).name || '';
+    case 'plabel': return (CP_PL_ST[n.style] || '').replace('…', '') + (n.pre ? ' · prefix «' + n.pre + '»' : '') + ' · ' + { grp: 'per branch', src: 'per document', all: 'tot' }[n.by];
+    case 'sigs': return (n.pos === 'start' ? 'at the start' : 'at the end') + ' · ' + (n.per === 'grp' ? 'one per branch' : 'one per document');
+    case 'imgp': return (n.imgs || []).length + ' image' + ((n.imgs || []).length === 1 ? '' : 's') + ' · ' + n.fmt;
+    case 'insdoc': return n.mode === 'every' ? 'cada ' + n.n + ' pages' : (n.where === 'before' ? 'davant' : 'after') + ' of each branch';
+  }
+  return undefined;
+}
+function cpImgDoc(n) {
+  const sig = JSON.stringify([n.fmt, n.orient, n.m, (n.imgs || []).map(i => [i.name, i.w, i.h, (i.url || '').length])]);
+  n._idoc = n._idoc || {}; if (n._idoc.sig === sig && n._idoc.doc) return n._idoc.doc;
+  const z = DIN[n.fmt] || DIN.A4, m = mmToPt(Math.max(0, cpNumV(n.m) || 0)) * RENDER_SCALE, pages = [];
+  (n.imgs || []).forEach(im => {
+    if (!im.url || !im.w || !im.h) return;
+    const land = n.orient === 'h' || (n.orient !== 'v' && im.w > im.h), pw = mmToPt(land ? z.h : z.w) * RENDER_SCALE, ph = mmToPt(land ? z.w : z.h) * RENDER_SCALE;
+    const k = Math.min((pw - 2 * m) / im.w, (ph - 2 * m) / im.h), iw = im.w * k, ih = im.h * k;
+    imgReady(im.url);
+    pages.push({ type: 'blank', dinSize: DIN[n.fmt] ? n.fmt : 'A4', landscape: land, rotation: 0, annotations: [{ type: 'image', dataUrl: im.url, fmt: im.fmt || 'png', x1: (pw - iw) / 2, y1: (ph - ih) / 2, x2: (pw + iw) / 2, y2: (ph + ih) / 2, rot: 0, opacity: 1 }] });
+  });
+  const doc = { id: '__img' + n.id, name: (cpFileName(n.name || 'Imatges', 'Imatges')), pages, outline: [], virt: true };
+  n._idoc = { sig, doc }; return doc;
+}
+function cpCompute760(n, P, I) {
+  switch (n.op) {
+    case 'red': case 'plabel': return { out: PG(cpDxAdd(P, { t: n.op, p: cpEdParams(n), id: n.id })) };
+    case 'sigs': {
+      if (!P.length) return { out: PG([]) };
+      const mk = ref => ({ ...cpBlankFor(ref, 'A4', 'v'), grp: ref.grp, ed: [{ t: 'sigs', p: { ...cpEdParams(n), key: ref.grp || '' }, id: n.id }] });
+      if (n.per === 'grp') {
+        const out = [];
+        P.forEach((it, i) => { const k = it.grp || '', nx = P[i + 1], first = !i || (P[i - 1].grp || '') !== k, last = !nx || (nx.grp || '') !== k; if (n.pos === 'start' && first) out.push(mk(it)); out.push(it); if (n.pos !== 'start' && last) out.push(mk(it)); });
+        return { out: PG(out) };
+      }
+      return { out: PG(n.pos === 'start' ? [mk(P[0]), ...P] : [...P, mk(P[P.length - 1])]) };
+    }
+    case 'imgp': {
+      const doc = cpImgDoc(n), nd = { id: n.id + ':img', kind: 'src', label: '', docName: doc.name, docId: doc.id, pages: [] };
+      return { out: PG(doc.pages.map((_, i) => ({ doc, idx: i, node: nd, rot: 0, lab: [] }))) };
+    }
+    case 'unmosaic': {
+      const c = Math.max(1, Math.min(10, Math.round(cpNumV(n.cols) || 1))), r = Math.max(1, Math.min(10, Math.round(cpNumV(n.rows) || 1))), N = c * r;
+      if (N < 2) return { out: PG(P.slice()) };
+      const ov = mmToPt(Math.max(0, cpNumV(n.ov) || 0)), pm = mmToPt(Math.max(0, cpNumV(n.pm) || 0)), out = [];
+      for (let i = 0; i < P.length; i += N) {
+        const G = P.slice(i, i + N); if (G.length < N) { out.push(...G); continue; }
+        const gs = G.map(it => cpGeo(it)); if (gs.some(g => !g)) { out.push(...G); continue; }
+        const cells = G.map((it, k) => pm ? cpXf(it, { t: 'box', x0: pm, y0: pm, x1: gs[k].w - pm, y1: gs[k].h - pm }) : it);
+        const pw = Math.max(...gs.map(g => g.w)) - 2 * pm, ph = Math.max(...gs.map(g => g.h)) - 2 * pm, f = cells[0];
+        out.push({ doc: f.doc, idx: f.idx, node: f.node, lab: f.lab, grp: f.grp, rot: 0, xf: [], nup: { cells, c, r, W: c * pw - (c - 1) * ov, H: r * ph - (r - 1) * ov, m: 0, bl: 0, br: 0, gap: -ov, border: false, order: n.order === 'cols' ? 'cols' : 'rows', one: true, down: false, anc: 'tl' } });
+      }
+      return { out: PG(out) };
+    }
+    case 'insdoc': {
+      const Q = I('q') ? cpPagesOf(I('q')) : [];
+      if (!Q.length) return { out: PG(P.slice()) };
+      const out = [];
+      if (n.mode === 'grp') P.forEach((it, i) => { const k = it.grp || '', first = !i || (P[i - 1].grp || '') !== k, last = i === P.length - 1 || (P[i + 1].grp || '') !== k; if (n.where === 'before' && first) out.push(...Q); out.push(it); if (n.where !== 'before' && last) out.push(...Q); });
+      else { const N = Math.max(1, Math.round(cpNumV(n.n) || 1)); P.forEach((it, i) => { out.push(it); if ((i + 1) % N === 0 && i < P.length - 1) out.push(...Q); }); }
+      return { out: PG(out) };
+    }
+  }
+  return null;
+}
+// camp «imatges» (llista) per al node Imatges → pàgines
+function cpPickImgs(n) {
+  const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/png,image/jpeg,image/webp,image/gif,image/bmp'; i.multiple = true;
+  i.onchange = async () => {
+    for (const fl of [...i.files]) {
+      try {
+        const bmp = await createImageBitmap(fl); let url, fmt;
+        if (fl.type === 'image/png' || fl.type === 'image/jpeg') { url = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(fl); }); fmt = fl.type === 'image/png' ? 'png' : 'jpg'; }
+        else { const cv = document.createElement('canvas'); cv.width = bmp.width; cv.height = bmp.height; cv.getContext('2d').drawImage(bmp, 0, 0); url = cv.toDataURL('image/png'); fmt = 'png'; }
+        (n.imgs = n.imgs || []).push({ name: fl.name, url, w: bmp.width, h: bmp.height, fmt });
+      } catch (e) { toast('Could not read «' + fl.name + '»', true); }
+    }
+    CP.auto = false; cpRender();
+  };
+  i.click();
+}
+
+
+// v7.6.0: opcions noves d'Imprimir i Mosaic, i node «Unir peces» (operació inversa de Mosaic)
+Object.assign(OPS.print.def, { bind: '0', dup: 'off', reg: false, ras: '' });
+Object.assign(OPS.mosaic.def, { pm: '0', ras: '' });
+const CP_RAS_O = { '': 'No (vector)', 150: '150 ppp', 200: '200 ppp', 300: '300 ppp' };
+FIELDS.print.push({ f: 'bind', l: 'Binding margin (mm; left on odd sides, right on even sides)', t: 'num' }, { f: 'dup', l: 'Order of the sides', t: 'seg', o: { off: 'Seguit', manual: 'Anvers i revers' } },
+  { f: 'reg', l: 'Registration marks (circle and cross at the middle of each edge; needs a margin of 6 mm or more)', t: 'chk' }, { f: 'ras', l: 'Rasteritzar a', t: 'sel', o: CP_RAS_O });
+FIELDS.mosaic.push({ f: 'pm', l: 'Printer margin of each tile (mm)', t: 'num' }, { f: 'ras', l: 'Rasterise each tile at', t: 'sel', o: CP_RAS_O });
+OPS.unmosaic = { fam: 'tr', t: 'Unir peces', ins: () => P_IN, outs: P_OUT, def: { cols: '2', rows: '2', ov: '10', pm: '0', order: 'rows' } };
+OP_ORDER.tr.push('unmosaic');
+FIELDS.unmosaic = [{ f: 'cols', l: 'Columns', il: 'col.', t: 'num', inl: 1 }, { f: 'rows', l: 'Rows', il: 'rows', t: 'num', inl: 1 }, { f: 'ov', l: 'Overlap between pieces (mm)', t: 'num' }, { f: 'pm', l: 'Printer margin of each tile (mm; trimmed)', t: 'num' },
+  { f: 'order', l: 'Order of the tiles', t: 'seg', o: { rows: 'By rows', cols: 'By columns' } }];
+Object.assign(CP_TIPS722, { unmosaic: 'Inverse of Mosaic: reassembles into a single page each group of columns × rows consecutive tiles, taking the overlap into account and removing the printer margin of each tile.' });
+const cpSumU = n => (n.cols || 2) + ' × ' + (n.rows || 2) + ' tiles · overlap ' + (n.ov || 0) + ' mm';
+
+
+// v7.6.0: Fitxer › Processar per lots…: munta la recepta d'un node Lot (un fitxer de sortida per document obert)
+function cpBatch() {
+  if (!docs.length) { toast('Open a PDF first', true); return; }
+  cpOpen();
+  const lotN = [...CP.nodes.values()].find(n => n.kind === 'op' && n.op === 'lot');
+  if (lotN) { cpSelSet([lotN.id]); cpRender(); toast('The recipe already has a Batch node: adjust its filters and save'); return; }
+  const srcs = [...CP.nodes.values()].filter(n => n.kind === 'src'), custom = !CP.auto && [...CP.nodes.values()].some(n => n.kind === 'op');
+  if (custom && !confirm('Convert the canvas recipe into a batch? The ' + srcs.length + ' source(s) will be replaced by a Batch node (one output file per document), and the other nodes are kept.')) return;
+  if (!custom) {
+    CP.nodes.clear(); cpSeq = 0; CP.groups = []; CP.notes = [];
+    const a = cpNewOp('lot', 40, 60), o = cpNewOut(420, 60, 'Lot.pdf'); Object.assign(CP.nodes.get(o), { pattern: '{doc}_processat' }); cpLink(a, o, 0);
+    CP.auto = false; CP.built = true; cpSelSet([a]); cpPalette(); cpRender(); requestAnimationFrame(() => { cpLayout(); cpFitIfNeeded(); });
+    toast('Batch ready: add the nodes you want between the Batch and the Final document', false, 5000); return;
+  }
+  const x = Math.min(...srcs.map(n => n.x)), y = Math.min(...srcs.map(n => n.y)), lot = cpNewOp('lot', x, y), ids = new Set(srcs.map(n => n.id));
+  const fix = r => (r && ids.has(cpRefId(r)) ? lot : r), dd = L => L.filter((r, i) => L.indexOf(r) === i);
+  CP.nodes.forEach(n => {
+    if (n.kind === 'mrg') n.ins = dd(n.ins.map(fix));
+    else if (n.kind === 'out') n.in = fix(n.in);
+    else if (n.kind === 'op') { n.ins = dd((n.ins || []).map(fix)); Object.keys(n.inp || {}).forEach(k => { n.inp[k] = fix(n.inp[k]); }); }
+  });
+  ids.forEach(id => CP.nodes.delete(id));
+  CP.auto = false; cpSelSet([lot]); cpPalette(); cpRender(); requestAnimationFrame(cpFitIfNeeded);
+  toast('Recipe converted into a batch · ' + docs.length + ' open document(s) → one file each', false, 5000);
+}
+
 // ─── v7.3.2: grups, notes, clústers i plantilles al llenç ───
 CP.groups = CP.groups || []; CP.notes = CP.notes || [];
 let cpGSeq = 0;
@@ -14317,7 +14612,7 @@ function cpMkNodes(list, dx, dy) {
       const inp = Object.fromEntries(Object.entries(o.inp || {}).map(([k, v]) => [k, ref(v)]).filter(e => e[1]));
       CP.nodes.set(id, { ...D, ...p, id, kind: 'op', op: o.op, x, y, fold: false, inp, ins: (o.ins || []).map(ref).filter(Boolean) }); cpOpNorm(CP.nodes.get(id));
     } else if (o.kind === 'mrg') CP.nodes.set(id, { id, kind: 'mrg', x, y, label: String(o.label || '').slice(0, 200), ins: (o.ins || []).map(ref).filter(Boolean) });
-    else if (o.kind === 'out') CP.nodes.set(id, { id, kind: 'out', x, y, name: cpFileName(o.name, 'Composition'), in: ref(o.in), fold: !!o.fold, optSeg: o.optSeg !== false, optOrig: o.optOrig !== false, reduce: RED_PROFILES[o.reduce] ? o.reduce : '', split: !!o.split, pattern: String(o.pattern || '') });
+    else if (o.kind === 'out') CP.nodes.set(id, { id, kind: 'out', x, y, name: cpFileName(o.name, 'Composition'), in: ref(o.in), fold: !!o.fold, optSeg: o.optSeg !== false, optOrig: o.optOrig !== false, reduce: RED_PROFILES[o.reduce] ? o.reduce : '', split: !!o.split, pattern: String(o.pattern || ''), maxMB: String(o.maxMB || ''), ofmt: ['png', 'txt', 'csv', 'dxf'].includes(o.ofmt) ? o.ofmt : '', odpi: String(o.odpi || ''), sub: !!o.sub });
     else { const d = docs.find(q => q.name === o.doc) || getActiveDoc(); CP.nodes.set(id, { id, kind: 'src', x, y, docId: d ? d.id : null, docName: d ? d.name : String(o.doc || ''), label: String(o.label || '').slice(0, 200), pages: d ? d.pages.map((_, i) => ({ i, on: true })) : [], fold: true }); }
   });
   return idmap;
@@ -15479,7 +15774,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 7.5.5 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 7.6.0 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadata:', e); }
 }
