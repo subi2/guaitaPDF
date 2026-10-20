@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 7.6.2 — Multi-document PDF editor (Guaita Apps suite)
+  Guaita PDF Edit 7.7.0 — Multi-document PDF editor (Guaita Apps suite)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v7.6.2 (EN)</title>
+<title>Guaita PDF Edit v7.7.0 (EN)</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -1402,6 +1402,33 @@ body.cp-dropping #cp-cv::after { content: 'Deixa anar aquí els PDF: una font pe
 .mt-info div { display: flex; justify-content: space-between; gap: 10px; }
 .mt-info span { color: var(--text-mut); } .mt-info b { color: var(--text); font-weight: 500; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
+
+/* ── v7.7.0: mode Notes ── */
+#mbar-notes { display: none; }
+body.mode-notes #mbar-notes { display: flex; }
+body.mode-notes #mbar-view, body.mode-notes #mbar-edit, body.mode-notes #mbar-review, body.mode-notes #mbar-sign, body.mode-notes #rv-panel, body.mode-notes #sg-panel { display: none !important; }
+body.mode-scan #mbar-notes, body.mode-compose #mbar-notes { display: none !important; }
+#mode-seg #mode-notes.on { background: var(--accent); color: var(--on-accent); }
+.ctx-g[data-ctx="ernt"] { display: none !important; }
+body.mode-notes .ctx-g[data-ctx="ernt"].on { display: flex !important; }
+body.mode-notes #viewer-container { touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+body.mode-notes.nt-seltxt #viewer-container { -webkit-user-select: text; user-select: text; }
+#mbar-notes .btn.active, #mbar-notes .btn.on { background: var(--accent-soft2); border-color: var(--accent-line); color: var(--text); }
+.nt-grip { display: none; cursor: grab; padding: 0 8px; color: var(--text-dim2); font-size: 17px; user-select: none; touch-action: none; }
+.nt-nb { position: absolute; opacity: .42; cursor: pointer; box-shadow: 0 2px 14px rgba(0,0,0,.45); transition: opacity .15s; background: #fff; }
+.nt-nb:hover { opacity: .72; }
+.nt-nb.v.nt-nb-prev { bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 28px; }
+.nt-nb.v.nt-nb-next { top: 100%; left: 50%; transform: translateX(-50%); margin-top: 28px; }
+.nt-nb.h.nt-nb-prev { right: 100%; top: 50%; transform: translateY(-50%); margin-right: 28px; }
+.nt-nb.h.nt-nb-next { left: 100%; top: 50%; transform: translateY(-50%); margin-left: 28px; }
+body.nt-full #app-header, body.nt-full #tabs-bar, body.nt-full #status-bar { display: none !important; }
+body.nt-full #mbar-notes { position: fixed; top: var(--nt-y, 8px); left: var(--nt-x, 50%); transform: translateX(-50%); z-index: 300; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 28px rgba(0,0,0,.5); flex-wrap: nowrap; max-width: 96vw; overflow-x: auto; transition: opacity .15s; }
+body.nt-full #mbar-notes .nt-grip { display: block; }
+body.nt-full #mbar-notes .spacer, body.nt-full #mbar-notes .right { display: none; }
+body.nt-full #ctxbar { position: fixed; top: calc(var(--nt-y, 8px) + 56px); left: var(--nt-x, 50%); transform: translateX(-50%); z-index: 299; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 28px rgba(0,0,0,.45); max-width: 96vw; }
+body.nt-full.nt-drawing #mbar-notes, body.nt-full.nt-drawing #ctxbar { opacity: .2; pointer-events: none; }
+body.nt-full.nt-min #mbar-notes .fam:not(:nth-child(3)), body.nt-full.nt-min #ctxbar { display: none; }
+
 /* ── v6.5: mode Revisar i signar ── */
 #mbar-review, #rv-panel { display: none; }
 body.mode-review #mbar-review { display: flex; }
@@ -1787,6 +1814,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
         <button class="mi" onclick="setMode('scan')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Scan mode</span></button>
         <div class="msep"></div>
         <button class="mi" onclick="setMode('view')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>View mode</span></button>
+        <button class="mi" onclick="setMode('notes')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5z"/><path d="M9 11h6M9 15h4"/><path d="M14 18l4-4"/></svg>Notes mode</span></button>
         <button class="mi" onclick="setMode('edit')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg>Edit mode</span></button>
         <button class="mi" onclick="setMode('review')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5l2 2 4-4"/></svg>Review mode</span></button>
         <button class="mi" onclick="setMode('sign')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17c3-6 5-10 6-9s-2 9 0 9 3-5 4-5 1 4 3 4 3-2 5-2"/><path d="M3 21h18"/></svg>Sign mode</span></button>
@@ -1819,13 +1847,14 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <button id="mode-scan" onclick="setMode('scan')" title="Scan: analyse and disarm a suspicious PDF with guaitaPDFscan, isolated from the editor"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Scan</button>
     <span class="mode-sep" aria-hidden="true"></span>
     <button id="mode-view" class="on" onclick="setMode('view')" title="View: navigate, views, zoom, find, measure, print"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>View</button>
+    <button id="mode-notes" onclick="setMode('notes')" title="Notes: take notes on the PDF (pencils, ballpoints, highlighters, shapes, text and erasers), designed for tablets and stylus"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5z"/><path d="M9 11h6M9 15h4"/><path d="M14 18l4-4"/></svg>Notes</button>
     <button id="mode-edit" onclick="setMode('edit')" title="Edit: pages, content, annotations and insertions"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg>Edit</button>
     <button id="mode-review" onclick="setMode('review')" title="Review: comments, text marks, shapes, stamps, attachments and version comparison"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 10.5l2 2 4-4"/></svg>Review</button>
     <button id="mode-sign" onclick="setMode('sign')" title="Sign: your signature, initials, signature fields and approval workflow"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17c3-6 5-10 6-9s-2 9 0 9 3-5 4-5 1 4 3 4 3-2 5-2"/><path d="M3 21h18"/></svg>Sign</button>
     <button id="mode-compose" onclick="setMode('compose')" title="Compose: merge documents and pages with a node tree (sources → Merge → Final document)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Compose</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v7.6.2</span>
+  <span class="tag">v7.7.0</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Switch to light theme"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -1916,6 +1945,37 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
   </div>
 </div>
 
+<!-- ══ BARRA · MODE NOTES (v7.7.0) ═══════════════════════ -->
+<div id="mbar-notes" class="mbar">
+  <span class="nt-grip" id="nt-grip" title="Drag to move the toolbar (full screen)">⠿</span>
+  <div class="fam"><div class="row">
+    <button class="btn ib" data-twin="btn-undo" onclick="undo()" disabled title="Undo (Ctrl+Z)" aria-label="Undo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg></button>
+    <button class="btn ib" data-twin="btn-redo" onclick="redo()" disabled title="Refer (Ctrl+Y)" aria-label="Redo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 000 12h3"/></svg></button>
+  </div><span class="flab">History</span></div>
+  <div class="fam"><div class="row">
+    <button class="btn ib" data-ntool="pan" onclick="setTool('pan')" title="Hand: scroll the page (P)" aria-label="Hand: scroll the page (P)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 13V6.5a1.5 1.5 0 013 0V11V4.5a1.5 1.5 0 013 0V11V6.5a1.5 1.5 0 013 0V15a6 6 0 01-6 6c-2.6 0-4-1.5-5.4-3.6L4 14.8a1.5 1.5 0 012.4-1.8z"/></svg></button>
+    <button class="btn ib" data-ntool="select" onclick="setTool('select')" title="Select and move notes (V)" aria-label="Select and move notes (V)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6z"/></svg></button>
+    <button class="btn ib" data-ntool="pencil" onclick="setTool('pencil')" title="Pencils and ballpoints (D)" aria-label="Pencils and ballpoints (D)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg></button>
+    <button class="btn ib" data-ntool="highlight" onclick="setTool('highlight')" title="Ressaltadors (H)" aria-label="Ressaltadors (H)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14l7-9 4 3-7 9z"/><path d="M9 14l-1 4 4-1"/><path d="M4 21h9"/></svg></button>
+    <button class="btn ib" data-ntool="hlsel" onclick="setTool('hlsel')" title="Highlight text (Shift+I)" aria-label="Highlight text (Shift+I)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h9"/><path d="M5 12h14" stroke-width="5" opacity=".45"/><path d="M5 8h14"/></svg></button>
+    <button class="btn ib" data-ntool="hltext" onclick="hlTextTool()" title="Rectangle ressaltat (Maj+H)" aria-label="Rectangle ressaltat (Maj+H)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="6" rx="1" fill="currentColor" fill-opacity=".35"/><path d="M5 7h14M5 17h9"/></svg></button>
+    <button class="btn ib" data-ntool="text" onclick="setTool('text')" title="Add text (T)" aria-label="Add text (T)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M8 9h8M12 9v7"/></svg></button>
+    <button class="btn ib" data-ntool="textin" onclick="setTool('textin')" title="In-place text (Shift+T)" aria-label="In-place text (Shift+T)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V4h11v3M8.5 4v11M6 15h5"/><path d="M17 10v10M14.5 10h5M14.5 20h5"/></svg></button>
+    <button class="btn ib" data-ntool="shape" onclick="setTool('shape')" title="Formes (R)" aria-label="Formes (R)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9" width="11" height="11" rx="1"/><circle cx="16" cy="8" r="5"/></svg></button>
+    <button class="btn ib" data-ntool="erase" onclick="setTool('erase')" title="Goma (E)" aria-label="Goma (E)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 20h12"/><path d="M5 15l9-9 5 5-7 7H9z"/></svg></button>
+  </div><span class="flab">Notes</span></div>
+  <div class="fam"><div class="row">
+    <button class="btn ib" id="nt-finger" onclick="ntFinger()" title="Finger: draws / scrolls. With a stylus, the pen draws and the finger always scrolls."><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 013 0V11M12 10V4.5a1.5 1.5 0 013 0V13M9 12.5L7.5 11a1.5 1.5 0 00-2.2 2l3.2 4.5A5 5 0 0012.6 20H14a5 5 0 005-5v-4a1.5 1.5 0 00-3 0"/></svg></button>
+    <button class="btn ib" id="nt-nb" onclick="ntNeighbors()" title="Show the neighbouring pages (previous and next)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="6" width="10" height="12" rx="1"/><path d="M3 8v8M21 8v8"/></svg></button>
+    <button class="btn ib" onclick="toggleThumbs()" title="Show or hide the thumbnails"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="6" height="16" rx="1"/><path d="M13 5h8M13 12h8M13 19h8"/></svg></button>
+    <button class="btn ib" id="nt-fs" onclick="ntFull()" title="Full screen (floating toolbar)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  </div><span class="flab">Screen</span></div>
+  <span class="spacer"></span>
+  <div class="right">
+    <button class="btn acc" data-twin="btn-save" onclick="savePdf()" disabled title="Save the PDF with the notes" aria-label="Save the PDF with the notes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7V3M8 21v-7h8v7"/></svg></button>
+  </div>
+</div>
+
 <!-- ══ BARRA · MODE REVISAR I SIGNAR (v6.5) ══════════════ -->
 <div id="mbar-review" class="mbar">
   <div class="fam"><div class="row">
@@ -1981,6 +2041,11 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
 <div id="ctxbar">
   <span id="ctx-name"><span id="ctx-ico"></span><span id="ctx-label">Select</span></span>
   <span class="vrule"></span>
+  <div class="ctx-g" data-ctx="ernt" id="nt-erctl">
+    <select id="nt-erkind" title="Eraser type" onchange="ntErSet()"><option value="stroke">Whole stroke</option><option value="circle">Circular</option><option value="square">Square</option></select>
+    <label class="chk" title="Eraser size (px)">Size <input type="range" id="nt-ersize" min="6" max="120" value="24" oninput="ntErSet()" style="width:90px"> <span id="nt-ersz-v">24</span> px</label>
+    <label class="chk" title="Also acts on the original PDF content: images are removed and the rest is covered with white (the original stays underneath)"><input type="checkbox" id="nt-erorig" onchange="ntErSet()"> Also original PDF content</label>
+  </div>
   <div class="ctx-g" data-ctx="shape">
     <select id="shape-kind" title="Shape type">
       <option value="line">Line</option>
@@ -2124,7 +2189,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 7.6.2</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 7.7.0</small></div>
           <h1>PDF editor <em>local</em>, no cloud.</h1>
           <p>Open one or more PDFs or drag them onto the window. Everything is processed on this computer: no file leaves the browser.</p>
           <div class="wl-act">
@@ -2346,7 +2411,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
   <span id="st-worker" class="hidden" title="This environment does not allow pdf.js workers (embedded viewer or browser restrictions). PDFs are processed on the main thread: everything works the same, but large documents are slower. Opened directly in Chrome or Edge from disk, this does not normally happen.">pdf.js · main thread</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 7.6.2 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 7.7.0 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -3919,7 +3984,8 @@ function fitPage() {
   if (viewMode !== 'single') { bkFit(false); return; }
   const vc = $('viewer-container');
   const pcv = $('page-canvas');
-  const cW = vc.clientWidth - 40, cH = vc.clientHeight - 40;
+  let cW = vc.clientWidth - 40, cH = vc.clientHeight - 40;
+  if (uiMode === 'notes' && NT.nb) { if (ntPortrait()) cH -= 2 * 38; else cW -= 2 * 38; }   // v7.7.0: deixa lloc a les pàgines veïnes
   const pW = pcv.clientWidth || pcv.width / RENDER_SCALE;
   const pH = pcv.clientHeight || pcv.height / RENDER_SCALE;
   if (!pW || !pH) return;
@@ -4005,7 +4071,7 @@ vc.addEventListener('wheel', e => {
   if (Math.abs(whAcc) >= 60) { const d = whAcc > 0 ? 1 : -1; whAcc = 0; whLock = now + 260; wheelPage(d); }
 }, { passive: false });
 
-vc.addEventListener('mousedown', e => {
+const vcDown = e => {
   if (e.button !== 0 || !getActiveDoc()) return;
   CM.close();
   if (tool === 'pan') {
@@ -4036,9 +4102,10 @@ vc.addEventListener('mousedown', e => {
   } else if (tool === 'rv') {
     rvDown(e);
   }
-});
+};
+vc.addEventListener('mousedown', vcDown);
 
-vc.addEventListener('mousemove', e => {
+const vcMove = e => {
   if (!getActiveDoc()) return;
   if (panning) {
     panX = panSPX + e.clientX - panSX;
@@ -4061,10 +4128,12 @@ vc.addEventListener('mousemove', e => {
   } else if (tool === 'rv') {
     rvMove(e);
   }
-});
+  if (uiMode === 'notes' && tool === 'erase') ntEraserCursor(e);
+};
+vc.addEventListener('mousemove', vcMove);
 vc.addEventListener('dblclick', e => { if (tool === 'select' && selAnn && selAnn.type === 'text') selEdit(); if (tool === 'measure') areaClose(); if (tool === 'rv') { if (rvPoly) rvPolyEnd(); else { const a = rvHit(scrToCanvas(e.clientX, e.clientY)); if (a) { rvSel = a.id; rvRender(true); rvDrawSel(); rvFocusText(); } } } });
 
-const stopPan = () => {
+function stopPan() {
   if (panning) {
     panning = false;
     vc.style.cursor = toolCursor();
@@ -4075,7 +4144,7 @@ const stopPan = () => {
   if (erasing) endErase();
   if (sigDraft) endSig();
   if (rvDrag) rvUp();
-};
+}
 vc.addEventListener('mouseup', stopPan);
 vc.addEventListener('mouseleave', stopPan);
 
@@ -4355,25 +4424,28 @@ const VIEW_TOOLS = ['pan', 'measure', 'seltext'];
 let uiMode = 'view';
 function setMode(m, fromTool) {
   const prev = uiMode;
-  uiMode = ['edit', 'scan', 'review', 'sign', 'compose'].includes(m) ? m : 'view';
-  ['view', 'edit', 'scan', 'review', 'sign', 'compose'].forEach(k => {
+  uiMode = ['edit', 'scan', 'review', 'sign', 'compose', 'notes'].includes(m) ? m : 'view';
+  ['view', 'edit', 'notes', 'scan', 'review', 'sign', 'compose'].forEach(k => {
     document.body.classList.toggle('mode-' + k, uiMode === k);
     $('mode-' + k).classList.toggle('on', uiMode === k); $('mode-' + k).setAttribute('aria-pressed', uiMode === k);
   });
   if (prev === 'compose' && uiMode !== 'compose') cpHide();
+  if (prev === 'notes' && uiMode !== 'notes') ntLeave();
+  if (prev !== 'notes' && uiMode === 'notes') ntEnter();
   if (uiMode === 'compose') { cpShow(); updateStatus(); return; }
   if (uiMode === 'scan') { scanEnsure(); updateStatus(); return; }
   if ((prev === 'scan' || prev === 'compose') && getActiveDoc()) setTimeout(() => (viewMode === 'single' ? fitPage() : bkFit(false)), 30);
   if (!fromTool) {
     if (uiMode === 'view' && !VIEW_TOOLS.includes(tool)) setTool('pan');
     else if (uiMode === 'edit' && (VIEW_TOOLS.includes(tool) || tool === 'rv' || tool === 'signature')) setTool('select');
+    else if (uiMode === 'notes' && !(NOTES_TOOLS.includes(tool) || (tool === 'pan' && prev === 'notes') || (tool === 'rv' && rvHlEdit))) setTool('pencil');
     else if (uiMode === 'review' && (tool !== 'rv' || rvTool === 'sigfield')) { setTool('rv'); rvSetTool('select'); }
     else if (uiMode === 'sign' && !(tool === 'select' || tool === 'signature' || (tool === 'rv' && rvTool === 'sigfield'))) setTool('select');
   }
   ribSoon();
   if (uiMode === 'review') rvRender(); else if (uiMode === 'sign') sgRender();
   sgSyncBar(); updateStatus();
-  if ((uiMode === 'edit' || uiMode === 'review') && prev !== uiMode && getActiveDoc() && getActiveDoc().signed) toast('Signed document: any change will invalidate the digital signatures', true, 5000);
+  if ((uiMode === 'edit' || uiMode === 'review' || uiMode === 'notes') && prev !== uiMode && getActiveDoc() && getActiveDoc().signed) toast('Signed document: any change will invalidate the digital signatures', true, 5000);
   if (getActiveDoc()) setTimeout(() => window.dispatchEvent(new Event('resize')), 0);
 }
 const CTX = {
@@ -4387,7 +4459,7 @@ const CTX = {
   text: ['Text', 'Click the page to add a text (dialog). Font, size, style and colour are in the bar.', ['textst']],
   textin: ['In-place text', 'Click the page and type directly; click an existing text to edit it. Esc or click outside to confirm (Shift+T). Font, size, style and colour are in the bar.', ['textst']],
   shape: ['Shape', 'Drag to draw the shape.', ['shape', 'draw']],
-  erase: ['Eraser', 'Click or drag over an annotation, a highlight or a review mark to erase it.', ['clear']],
+  erase: ['Eraser', 'Click or drag over an annotation, a highlight or a review mark to erase it.', ['clear', 'ernt']],
   signature: ['Signature', 'Click on the page to place the signature.', ['sig']],
   seltext: ['Select text', 'Drag over the text to select it · Ctrl+C copies it · Ctrl+A selects all the text on the page · right-click: more options.', ['seltxt']],
   hlsel: ['Highlight text', 'Drag over the text: it is highlighted along the lines of characters with the chosen highlighter (colour and opacity).', ['hlpens']],
@@ -4407,7 +4479,7 @@ function stPaper(w, h) {
   return '';
 }
 function updateStatus() {
-  $('st-mode').textContent = '● ' + ({ edit: 'EDIT', scan: 'SCAN', view: 'VIEW', review: 'REVIEW', sign: 'SIGN', compose: 'COMPOSE' }[uiMode]);
+  $('st-mode').textContent = '● ' + ({ edit: 'EDIT', notes: 'NOTES', scan: 'SCAN', view: 'VIEW', review: 'REVIEW', sign: 'SIGN', compose: 'COMPOSE' }[uiMode]);
   const doc = getActiveDoc(), info = $('st-info');
   if (!doc) { info.textContent = ''; $('pg-count').textContent = ''; $('bm-count').textContent = ''; stKey = ''; return; }
   $('pg-count').textContent = doc.pages.length;
@@ -4691,7 +4763,7 @@ function setTool(t) {
   if (t === 'rv') { if (uiMode !== 'review' && uiMode !== 'sign' && !rvHlEdit) setMode(rvTool === 'sigfield' ? 'sign' : 'review', true); }
   else if (t === 'signature') { if (uiMode !== 'sign') setMode('sign', true); }
   else if (t === 'select' && uiMode === 'sign') { /* seleccionar signatures i camps des del mode Signar */ }
-  else if (!VIEW_TOOLS.includes(t) && uiMode !== 'edit') setMode('edit', true);
+  else if (!VIEW_TOOLS.includes(t) && uiMode !== 'edit' && !(uiMode === 'notes' && NOTES_TOOLS.includes(t))) setMode('edit', true);
   if (t !== 'rv') { rvPoly = null; rvDrag = null; }
   if (t !== 'pan' && viewMode !== 'single') {
     setViewMode('single');
@@ -4702,6 +4774,7 @@ function setTool(t) {
     $('tool-' + x).classList.toggle('active', x === t));
   vc.className = t !== 'pan' ? 'tool-' + t : '';
   document.body.dataset.tool = t;
+  document.querySelectorAll('[data-ntool]').forEach(b => b.classList.toggle('active', b.dataset.ntool === 'hltext' ? (t === 'rv' && rvHlEdit) : b.dataset.ntool === t));
   document.querySelectorAll('.tb-seltext').forEach(b => b.classList.toggle('active', t === 'seltext')); const hsb = $('tool-hlsel'); if (hsb) hsb.classList.toggle('active', t === 'hlsel');
   if (t !== 'seltext' && t !== 'hlsel') { try { getSelection().removeAllRanges(); } catch (e) {} } else tlEnsure();
   if (t !== 'select') clearSel();
@@ -6053,7 +6126,9 @@ function continueDraw(e) {
   if (curStroke.pen === 'l') {   // el llapis s'aprima quan vas ràpid i s'engruixeix quan vas lent
     const pr = curStroke.points[curStroke.points.length - 1], sp = Math.hypot(q.x - pr.x, q.y - pr.y) / RENDER_SCALE;
     q.k = 0.55 * (pr.k == null ? 1 : pr.k) + 0.45 * Math.max(0.55, Math.min(1.3, 1.3 - sp / 18));
+    if (e.pointerType === 'pen' && e.pressure > 0) q.k = 0.5 * (pr.k == null ? 1 : pr.k) + 0.5 * Math.max(0.35, Math.min(1.5, 0.35 + 1.15 * e.pressure));   // v7.7.0: pressió del llapis òptic
   }
+  if (uiMode === 'notes' && !curStroke.line && curStroke.points.length > 1) { const pr2 = curStroke.points[curStroke.points.length - 1]; q.x = pr2.x + (q.x - pr2.x) * 0.55; q.y = pr2.y + (q.y - pr2.y) * 0.55; }   // estabilitzador
   if (curStroke.line) curStroke.points[1] = { x: q.x, y: curStroke.points[0].y };   // recte: només es mou l'extrem final, sobre la línia
   else curStroke.points.push(q);
   redrawAnnotations();
@@ -7676,6 +7751,7 @@ function annotHit(a, p, tol) {
 function eraseAt(e) {
   const doc = getActiveDoc();
   if (!doc) return;
+  if (uiMode === 'notes') { ntEraseAt(e); return; }
   const p = scrToCanvas(e.clientX, e.clientY);
   const tol = 10 * RENDER_SCALE / Math.max(zoom, 0.15);
   const anns = doc.pages[doc.curIdx].annotations;
@@ -7697,7 +7773,7 @@ function eraseRvHit(a, p, tol) {
   return p.x > b.x1 - tol / 2 && p.x < b.x2 + ex + tol / 2 && p.y > b.y1 - tol / 2 && p.y < b.y2 + ex + tol / 2;
 }
 
-function endErase() { erasing = false; eraseDirty = false; }
+function endErase() { if (uiMode === 'notes') ntEraseEnd(); erasing = false; eraseDirty = false; }
 
 // ─── Watermark ────────────────────────────────────────────
 function showWatermarkModal() { if (getActiveDoc()) openModal('modal-wm'); }
@@ -8698,6 +8774,8 @@ const HELP = {
 <p><b>Structures…</b> (Composer toolbar) creates a <b>slot</b> for each item of a dossier structure, grouped with the matching bookmarks. There is a generic building-project structure and you can <b>import your own</b> from a JSON file (format <code>guaita-estructura</code>: <code>nom</code> and <code>arbre</code>, each element with <code>codi</code>, <code>titol</code>, <code>obligatori</code> and <code>fills</code>; «Download an example» gives you one). Imported structures are kept only in this browser. Each slot is filled with an open document (automatic assignment by the code or the title in the file name) and, if needed, a page range; empty required slots are marked ⚠ and «Check slots» lists them. Everything is editable on the canvas.</p>
 <p><b>Parameters…</b> defines reusable values (project, client…) that go into node texts as <code>[@project]</code> and into the file name pattern as <code>{@project}</code>; they are saved with the recipe. New branch nodes: <b>Flatten branches</b>, <b>Put in branch</b> and <b>Select branch</b>. Automatic annotations: <b>Highlight words</b> (keywords with their own colour) and <b>«p. N» links</b> (turns text references into links inside the final PDF).</p>
 <p>The <b>Sign with certificate</b> node (7.6.2) signs the Final document with a .p12 / .pfx certificate (PAdES, SHA-256) as the last step when saving; it goes right before the Final document, can be combined with the fields created with «Signature», and the certificate is only kept in memory.</p>
+<h3>Notes mode (7.7.0)</h3>
+<p>The <b>Notes</b> mode (between View and Edit, also under Tools) is for taking notes on the PDF, mainly on a tablet. It only has the tools that leave marks: pencils and ballpoints, highlighters, highlight rectangle, text, shapes and erasers; the tools for editing the original content, pages and insertion stay in Edit mode. With a <b>stylus</b> the pen draws (with pressure) and the finger scrolls; without a stylus, the finger button chooses between <b>drawing</b> and <b>scrolling</b>. Two fingers zoom and, with the whole page in view, swiping changes page. The neighbouring pages peek in at the edges (above and below on a portrait screen, at the sides on a landscape one) and a tap goes to them. <b>Full screen</b> leaves a floating (draggable) toolbar and the collapsible thumbnails on the left. The <b>eraser</b> can be whole-stroke, circular or square (size in px) and only erases your annotations; with «Also original PDF content» it removes the original images and covers the rest with white.</p>
 <h3>View, Edit and Scan modes</h3>
 <p>The switch in the header separates the ways of working. <b>View</b> groups navigation, page views, the hand, scale measuring, search, export and printing. <b>Edit</b> groups the tools by family (History, Pages, Content, Annotate, Insert) and shows below a bar with the options of the active tool. The keyboard shortcuts of an editing tool automatically switch to Edit mode. Page navigation and zoom are on the bottom bar, in both modes.</p>
 <h3>Open, save and print</h3>
@@ -8766,7 +8844,7 @@ const HELP = {
 <h3>If the option does not appear</h3>
 <p>You need to open the app's web address (https), not the file from disk. Desktop Firefox and Safari do not install PWAs; on iPhone Safari: <b>Share › Add to Home Screen</b>.</p>`],
   about: ['About Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 7.6.2</b> — multi-document PDF editor from the Guaita Apps suite. A single, self-contained HTML file: it installs nothing, connects to no server and works offline.</p>
+<p><b>Guaita PDF Edit 7.7.0</b> — multi-document PDF editor from the Guaita Apps suite. A single, self-contained HTML file: it installs nothing, connects to no server and works offline.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Licence <b>AGPL-3.0-only</b>.</p>
 <p>Included components: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) and @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Related program: guaitaPDFscan 1.3 (suspicious PDF analyser), built into Scan mode.</p>`]
@@ -9489,7 +9567,7 @@ async function setViewMode(m) {
   applyViewVisibility(); lbChip();
   if (!doc) return;
   if (m !== 'single' && tool !== 'pan') setTool('pan');
-  if (m !== 'single' && (uiMode === 'edit' || uiMode === 'sign')) setMode('view', true);
+  if (m !== 'single' && (uiMode === 'edit' || uiMode === 'sign' || uiMode === 'notes')) setMode('view', true);
   if (!changed && m !== 'single') return;
   bkCache.clear(); bkSig = '';
   if (m === 'single') {
@@ -13051,7 +13129,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 7.6.2 · pdf-lib';
+  const prod = 'Guaita PDF Edit 7.7.0 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -13090,7 +13168,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'XMP metadata'); del(cat, 'PieceInfo', 'private application data');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 7.6.2') })); rep.cleaned.push('document information'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 7.7.0') })); rep.cleaned.push('document information'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'thumbnails'));
@@ -14803,6 +14881,236 @@ Object.assign(CP_TIPS722, { csign: 'Digitally signs the Final document with a ce
   if ($('cpc-open')) $('cpc-open').onclick = cpCertLoad;
   document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-cpcert]')) cpCertOpen(); });
 })();
+// ═══════════════ v7.7.0: mode Notes (apunts sobre el PDF) ═══════════════
+const NOTES_TOOLS = ['select', 'pencil', 'highlight', 'hlsel', 'text', 'textin', 'shape', 'erase'];
+const NT = (() => {
+  const g = (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : v; } catch (e) { return d; } };
+  return { finger: g('guaita-nt-finger', 'draw'), nb: g('guaita-nt-nb', '1') !== '0', penAt: 0, full: false, fsReq: false,
+           er: { kind: 'stroke', size: 24, orig: false }, erPath: [], erImg: false };
+})();
+const ntSave = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { } };
+const ntPortrait = () => vc.clientHeight >= vc.clientWidth * 0.9;
+
+function ntEnter() {
+  ntFingerLabel(); ntNbBtn(); ntErSet();
+  if (getActiveDoc() && viewMode !== 'single') setViewMode('single');
+  setTimeout(() => { if (getActiveDoc() && viewMode === 'single') { fitPage(); ntNb(); } }, 60);
+}
+function ntLeave() { ntFullOff(true); ntNb(); ntEraserClear(); setTimeout(() => { if (getActiveDoc() && viewMode === 'single') fitPage(); }, 60); }
+
+// ── Dit / llapis
+function ntFingerLabel() { const b = $('nt-finger'); if (!b) return; b.classList.toggle('on', NT.finger === 'draw'); b.title = NT.finger === 'draw' ? 'The finger draws (click to make it scroll). With a stylus, the finger always scrolls.' : 'The finger scrolls (click to make it draw). With a stylus, the pen draws.'; }
+function ntFinger() { NT.finger = NT.finger === 'draw' ? 'pan' : 'draw'; ntSave('guaita-nt-finger', NT.finger); ntFingerLabel(); toast(NT.finger === 'draw' ? 'The finger draws' : 'The finger scrolls the page'); }
+
+// ── Pantalla completa amb barra flotant
+function ntFull() { if (NT.full) ntFullOff(); else ntFullOn(); }
+function ntFullOn() {
+  NT.full = true; document.body.classList.add('nt-full'); $('nt-fs').classList.add('on');
+  try { if (document.documentElement.requestFullscreen) { NT.fsReq = true; document.documentElement.requestFullscreen().catch(() => { NT.fsReq = false; }); } } catch (e) { NT.fsReq = false; }
+  setTimeout(() => { if (getActiveDoc() && viewMode === 'single') { fitPage(); ntNb(); } }, 120);
+}
+function ntFullOff(quiet) {
+  if (!NT.full && !document.body.classList.contains('nt-full')) return;
+  NT.full = false; document.body.classList.remove('nt-full', 'nt-min', 'nt-drawing'); const b = $('nt-fs'); if (b) b.classList.remove('on');
+  if (NT.fsReq && document.fullscreenElement) { NT.fsReq = false; try { document.exitFullscreen(); } catch (e) { } }
+  if (!quiet) setTimeout(() => { if (getActiveDoc() && viewMode === 'single') { fitPage(); ntNb(); } }, 120);
+}
+document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && NT.full && NT.fsReq) { NT.fsReq = false; ntFullOff(); } });
+(() => {   // barra flotant arrossegable; doble toc a la nansa la replega
+  const gr = $('nt-grip'); let d = null, last = 0;
+  gr.addEventListener('pointerdown', e => {
+    const n = Date.now(); if (n - last < 350) { document.body.classList.toggle('nt-min'); last = 0; return; } last = n;
+    d = { x: e.clientX, y: e.clientY, cx: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nt-x')) || innerWidth / 2, cy: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nt-y')) || 8 };
+    gr.setPointerCapture(e.pointerId); e.preventDefault();
+  });
+  gr.addEventListener('pointermove', e => { if (!d) return; const r = document.documentElement.style; r.setProperty('--nt-x', Math.max(40, Math.min(innerWidth - 40, d.cx + e.clientX - d.x)) + 'px'); r.setProperty('--nt-y', Math.max(0, Math.min(innerHeight - 60, d.cy + e.clientY - d.y)) + 'px'); });
+  const up = () => { d = null; }; gr.addEventListener('pointerup', up); gr.addEventListener('pointercancel', up);
+})();
+
+// ── Pàgines veïnes
+const NTN = { el: {}, ver: 0 };
+function ntNbBtn() { const b = $('nt-nb'); if (b) b.classList.toggle('on', NT.nb); }
+function ntNeighbors() { NT.nb = !NT.nb; ntSave('guaita-nt-nb', NT.nb ? '1' : '0'); ntNbBtn(); if (getActiveDoc() && viewMode === 'single') { fitPage(); ntNb(); } }
+function ntNbEl(k) {
+  let c = NTN.el[k];
+  if (!c) {
+    c = document.createElement('canvas'); c.className = 'nt-nb nt-nb-' + k;
+    ['pointerdown', 'mousedown'].forEach(t => c.addEventListener(t, e => e.stopPropagation()));
+    c.addEventListener('click', () => { const d = getActiveDoc(); if (d) goTo(d.curIdx + (k === 'next' ? 1 : -1)); });
+    $('page-wrapper').appendChild(c); NTN.el[k] = c;
+  }
+  return c;
+}
+async function ntNb() {
+  const doc = getActiveDoc(), my = ++NTN.ver;
+  Object.values(NTN.el).forEach(c => { c.style.display = 'none'; });
+  if (uiMode !== 'notes' || !NT.nb || !doc || viewMode !== 'single') return;
+  const port = ntPortrait();
+  for (const k of ['prev', 'next']) {
+    const j = doc.curIdx + (k === 'next' ? 1 : -1); if (j < 0 || j >= doc.pages.length) continue;
+    const pd = doc.pages[j], c = ntNbEl(k);
+    try {
+      let cssW, cssH, drawBase;
+      const SC = 0.8;
+      if (pd.type === 'blank') {
+        const z = DIN[pd.dinSize], wPt = mmToPt(pd.landscape ? z.h : z.w), hPt = mmToPt(pd.landscape ? z.w : z.h);
+        cssW = wPt; cssH = hPt; c.width = Math.round(wPt * SC); c.height = Math.round(hPt * SC);
+        drawBase = async ctx => { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height); };
+      } else {
+        const pg = await getPdfPage(pd); if (!pg) continue;
+        const v1 = pg.getViewport({ scale: 1, rotation: pd.rotation }), v = pg.getViewport({ scale: SC, rotation: pd.rotation });
+        cssW = v1.width; cssH = v1.height; c.width = Math.round(v.width); c.height = Math.round(v.height);
+        drawBase = async ctx => { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height); await pg.render({ canvasContext: ctx, viewport: v, optionalContentConfigPromise: ocFor(pd) }).promise; };
+      }
+      if (my !== NTN.ver) return;
+      const ctx = c.getContext('2d'); await drawBase(ctx);
+      if (my !== NTN.ver) return;
+      ctx.save(); ctx.scale(c.width / (cssW * RENDER_SCALE), c.height / (cssH * RENDER_SCALE));
+      (pd.annotations || []).forEach(a => { try { drawAnnot(a, ctx); } catch (e) { } }); ctx.restore();
+      c.style.width = cssW + 'px'; c.style.height = cssH + 'px';
+      c.className = 'nt-nb nt-nb-' + k + ' ' + (port ? 'v' : 'h'); c.style.display = 'block';
+    } catch (e) { console.warn('veïna', e); }
+  }
+}
+{ const _rp = renderPage; renderPage = async function () { await _rp.apply(this, arguments); if (uiMode === 'notes') ntNb(); }; }
+addEventListener('resize', () => { if (uiMode === 'notes' && getActiveDoc() && viewMode === 'single') { clearTimeout(ntNb._t); ntNb._t = setTimeout(() => { fitPage(); ntNb(); }, 120); } });
+
+// ── Goma (traç sencer, circular, quadrada) + «també originals»
+function ntErSet() {
+  NT.er.kind = $('nt-erkind').value; NT.er.size = +$('nt-ersize').value || 24; NT.er.orig = $('nt-erorig').checked;
+  $('nt-ersz-v').textContent = NT.er.size;
+  $('nt-ersize').disabled = NT.er.kind === 'stroke';
+  if (NT.er.orig && getActiveDoc()) loadEditData();
+}
+const ntErR = () => NT.er.size / 2 * RENDER_SCALE / Math.max(zoom, 0.05);
+function ntEraserClear() { if (!drawing && !shapeDraft) { try { clearOverlay(); } catch (e) { } } }
+function ntEraserCursor(e) {
+  if (NT.er.kind === 'stroke') { clearOverlay(); return; }
+  const cv = $('overlay-canvas'), ctx = cv.getContext('2d'), p = scrToCanvas(e.clientX, e.clientY), r = ntErR();
+  ctx.clearRect(0, 0, cv.width, cv.height); ctx.save(); ctx.lineWidth = 1.5 * RENDER_SCALE / Math.max(zoom, 0.3); ctx.strokeStyle = 'rgba(30,30,30,.85)'; ctx.fillStyle = 'rgba(255,255,255,.35)'; ctx.setLineDash([4 * RENDER_SCALE / Math.max(zoom, 0.3), 3 * RENDER_SCALE / Math.max(zoom, 0.3)]);
+  ctx.beginPath(); if (NT.er.kind === 'circle') ctx.arc(p.x, p.y, r, 0, 7); else ctx.rect(p.x - r, p.y - r, 2 * r, 2 * r); ctx.fill(); ctx.stroke(); ctx.restore();
+}
+function ntInside(pt, p, r) { return NT.er.kind === 'circle' ? Math.hypot(pt.x - p.x, pt.y - p.y) <= r : Math.max(Math.abs(pt.x - p.x), Math.abs(pt.y - p.y)) <= r; }
+function ntEraseAt(e) {
+  const doc = getActiveDoc(); if (!doc) return;
+  const p = scrToCanvas(e.clientX, e.clientY), pd = doc.pages[doc.curIdx], stroke = NT.er.kind === 'stroke', r = stroke ? 10 * RENDER_SCALE / Math.max(zoom, 0.15) : ntErR();
+  let changed = false, out = [];
+  for (const a of pd.annotations) {
+    const isPts = (a.type === 'stroke' || a.type === 'highlight') && a.points && !a.line;
+    if (!stroke && isPts) {
+      if (!a.points.some(q => ntInside(q, p, r))) { out.push(a); continue; }
+      changed = true; let run = [];
+      const flush = () => { if (run.length > 1) out.push({ ...a, points: run }); run = []; };
+      for (const q of a.points) { if (ntInside(q, p, r)) flush(); else run.push(q); }
+      flush();
+    } else if (annotHit(a, p, r) || eraseRvHit(a, p, r)) { changed = true; }
+    else out.push(a);
+  }
+  if (changed) {
+    if (!eraseDirty) { saveHistory(); eraseDirty = true; }
+    const hadRv = pd.annotations.some(a => a.type === 'rv' && !out.includes(a));
+    pd.annotations = out; redrawAnnotations();
+    if (hadRv) { try { if (rvSel && !rvFind(rvSel)) rvSel = null; rvRender(); rvDrawSel(); } catch (err) { } }
+  }
+  if (!stroke) ntEraserCursor(e);
+  if (NT.er.orig) {
+    if (!NT.erPath.length || Math.hypot(NT.erPath[NT.erPath.length - 1].x - p.x, NT.erPath[NT.erPath.length - 1].y - p.y) > 1) NT.erPath.push({ x: p.x, y: p.y });
+    try {
+      const it = editPick(p);
+      if (it && it.kind === 'image' && !imgDelEdit(it)) { if (!eraseDirty) { saveHistory(); eraseDirty = true; } eiCur = it; eiAddDel(pd); NT.erImg = true; }
+    } catch (err) { }
+  }
+}
+async function ntEraseEnd() {
+  const doc = getActiveDoc(); let refresh = NT.erImg; NT.erImg = false;
+  if (doc && NT.er.orig && NT.erPath.length && NT.er.kind !== 'stroke') {   // tapa amb blanc el que ha tocat la goma
+    const pd = doc.pages[doc.curIdx], pts = NT.erPath.length > 1 ? NT.erPath : [NT.erPath[0], { x: NT.erPath[0].x + 0.01, y: NT.erPath[0].y }];
+    if (!eraseDirty) saveHistory();
+    pd.annotations.push({ type: 'stroke', color: '#ffffff', width: 2 * ntErR(), points: pts, pen: 'b', op: 1, cap: NT.er.kind === 'square' ? 'square' : 'round', cover: true });
+    redrawAnnotations();
+  }
+  NT.erPath = [];
+  try { clearOverlay(); } catch (e) { }
+  if (refresh) { try { await refreshAfterEdit(); } catch (e) { } }
+}
+
+// ── Entrada per Pointer Events (llapis òptic i dit)
+const ntPtr = new Map();
+let ntMode = null, ntPinch = null, ntPanS = null, ntLastType = 'mouse';
+const ntFake = (pe, base) => ({ clientX: pe.clientX, clientY: pe.clientY, button: 0, buttons: 1, shiftKey: !!(base || pe).shiftKey, ctrlKey: !!(base || pe).ctrlKey, altKey: !!(base || pe).altKey, metaKey: false, target: pe.target, detail: 1, pointerType: pe.pointerType, pressure: pe.pressure, preventDefault() { }, stopPropagation() { } });
+function ntCancelStroke() { drawing = false; curStroke = null; shapeDraft = null; erasing = false; erasing = false; NT.erPath = []; try { redrawAnnotations(); clearOverlay(); } catch (e) { } document.body.classList.remove('nt-drawing'); }
+const ntFitZoom = () => { const p = $('page-canvas'), pW = p.clientWidth || p.width / RENDER_SCALE, pH = p.clientHeight || p.height / RENDER_SCALE; let cW = vc.clientWidth - 40, cH = vc.clientHeight - 40; if (NT.nb) { if (ntPortrait()) cH -= 76; else cW -= 76; } return pW && pH ? Math.min(cW / pW, cH / pH) : 1; };
+vc.addEventListener('pointerdown', e => {
+  if (uiMode !== 'notes' || e.pointerType === 'mouse' || !getActiveDoc()) return;
+  if (e.target.closest('#sel-pop, #minimap, .bk-big, #vw-ctl, button, select, input, textarea, [contenteditable], .nt-nb')) return;
+  e.preventDefault(); ntLastType = e.pointerType;
+  try { vc.setPointerCapture(e.pointerId); } catch (er) { }
+  const now = Date.now();
+  if (e.pointerType === 'pen') {
+    NT.penAt = now;
+    for (const [id, q] of ntPtr) if (q.type === 'touch') { ntPtr.delete(id); }
+    if (ntMode === 'pan' || ntMode === 'pinch') { ntMode = null; ntPinch = null; ntPanS = null; }
+    ntPtr.set(e.pointerId, { type: 'pen', x: e.clientX, y: e.clientY });
+    ntMode = 'tool'; document.body.classList.add('nt-drawing'); vcDown(ntFake(e)); return;
+  }
+  // dit
+  if (ntMode === 'tool' && [...ntPtr.values()].some(q => q.type === 'pen')) return;   // rebuig de la palma mentre el llapis dibuixa
+  const touches = [...ntPtr.values()].filter(q => q.type === 'touch').length;
+  ntPtr.set(e.pointerId, { type: 'touch', x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, t0: now });
+  if (touches >= 1) {   // segon dit: pessic
+    if (ntMode === 'tool') ntCancelStroke();
+    const [a, b] = [...ntPtr.values()].filter(q => q.type === 'touch');
+    ntMode = 'pinch'; ntPinch = { d0: Math.hypot(a.x - b.x, a.y - b.y) || 1, z0: zoom, px0: panX, py0: panY, mx0: (a.x + b.x) / 2, my0: (a.y + b.y) / 2 };
+    return;
+  }
+  const penRecent = now - NT.penAt < 5000;
+  if (tool === 'pan' || penRecent || NT.finger === 'pan') { ntMode = 'pan'; ntPanS = { x: e.clientX, y: e.clientY, px: panX, py: panY }; }
+  else { ntMode = 'tool'; document.body.classList.add('nt-drawing'); vcDown(ntFake(e)); }
+}, { passive: false });
+vc.addEventListener('pointermove', e => {
+  if (uiMode !== 'notes' || e.pointerType === 'mouse') return;
+  const q = ntPtr.get(e.pointerId);
+  if (!q) { if (e.pointerType === 'pen' && tool === 'erase') ntEraserCursor(e); return; }   // sobrevol amb el llapis
+  q.x = e.clientX; q.y = e.clientY;
+  if (ntMode === 'tool') {
+    const list = e.getCoalescedEvents && e.getCoalescedEvents().length ? e.getCoalescedEvents() : [e];
+    if (drawing || erasing) list.forEach(c => vcMove(Object.assign(ntFake(c, e), { pointerType: e.pointerType, pressure: c.pressure })));
+    else vcMove(ntFake(e));
+  } else if (ntMode === 'pan' && ntPanS) {
+    panX = ntPanS.px + e.clientX - ntPanS.x; panY = ntPanS.py + e.clientY - ntPanS.y; applyTransform(); updateMinimap();
+  } else if (ntMode === 'pinch' && ntPinch) {
+    const t = [...ntPtr.values()].filter(x => x.type === 'touch'); if (t.length < 2) return;
+    const [a, b] = t, d = Math.hypot(a.x - b.x, a.y - b.y) || 1, mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, rect = vc.getBoundingClientRect();
+    const nz = Math.max(0.05, Math.min(20, ntPinch.z0 * d / ntPinch.d0)), r = nz / ntPinch.z0;
+    const cx0 = ntPinch.mx0 - rect.left - rect.width / 2, cy0 = ntPinch.my0 - rect.top - rect.height / 2, cx = mx - rect.left - rect.width / 2, cy = my - rect.top - rect.height / 2;
+    zoom = nz; panX = cx + (ntPinch.px0 - cx0) * r; panY = cy + (ntPinch.py0 - cy0) * r;
+    applyTransform(); updateMinimap(); $('zoom-label').textContent = Math.round(zoom * 100) + '%';
+  }
+}, { passive: false });
+function ntPtrEnd(e) {
+  if (uiMode !== 'notes' || e.pointerType === 'mouse') return;
+  const q = ntPtr.get(e.pointerId); if (!q) return;
+  ntPtr.delete(e.pointerId);
+  if (ntMode === 'tool') { if (e.type === 'pointercancel') ntCancelStroke(); else stopPan(); document.body.classList.remove('nt-drawing'); ntMode = null; return; }
+  if (ntMode === 'pinch') {
+    if (![...ntPtr.values()].some(x => x.type === 'touch')) { ntMode = null; ntPinch = null; if (zoom < ntFitZoom() * 0.98) fitPage(); }
+    else { const left = [...ntPtr.values()].find(x => x.type === 'touch'); if (left) { ntMode = 'pan'; ntPinch = null; ntPanS = { x: left.x, y: left.y, px: panX, py: panY }; } }
+    return;
+  }
+  if (ntMode === 'pan' && ntPanS) {
+    ntMode = null; const dx = e.clientX - q.x0, dy = e.clientY - q.y0, L = singleLimits(), port = ntPortrait(), dt = Date.now() - q.t0;
+    ntPanS = null;
+    if (e.type === 'pointerup' && viewMode === 'single') {
+      if (port && L.fitsV && Math.abs(dy) > 70 && Math.abs(dy) > 1.5 * Math.abs(dx)) { panX = 0; panY = 0; applyTransform(); const d = getActiveDoc(); goTo(d.curIdx + (dy < 0 ? 1 : -1)); return; }
+      if (!port && L.fitsH && Math.abs(dx) > 70 && Math.abs(dx) > 1.5 * Math.abs(dy)) { panX = 0; panY = 0; applyTransform(); const d = getActiveDoc(); goTo(d.curIdx + (dx < 0 ? 1 : -1)); return; }
+    }
+    if (L.fitsH && Math.abs(panX) > 0) panX = 0; if (L.fitsV && Math.abs(panY) > 0) panY = 0;   // si la pàgina hi cap, torna al centre
+    applyTransform(); updateMinimap();
+  }
+}
+vc.addEventListener('pointerup', ntPtrEnd); vc.addEventListener('pointercancel', ntPtrEnd);
+vc.addEventListener('contextmenu', e => { if (uiMode === 'notes' && ntLastType !== 'mouse') e.preventDefault(); }, true);
+
 // v7.6.0: Fitxer › Processar per lots…: munta la recepta d'un node Lot (un fitxer de sortida per document obert)
 function cpBatch() {
   if (!docs.length) { toast('Open a PDF first', true); return; }
@@ -16122,7 +16430,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 7.6.2 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 7.7.0 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadata:', e); }
 }
