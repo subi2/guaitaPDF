@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 7.6.2** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 7.7.2** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -44,11 +44,23 @@ El commutador de la capçalera separa les maneres de treballar:
 | Mode | Per a què serveix |
 |---|---|
 | **Veure** | Navegació, vistes de pàgina, mà, mesura a escala, cerca, exportació i impressió. |
+| **Notes** | Per prendre apunts amb llapis òptic o dit: llapis, ressaltadors, text, formes i goma, paper de llibreta, llaç, veu i enllaços. Entre Veure i Editar; també a Eines › Mode Notes. |
 | **Editar** | Eines per famílies (Historial, Pàgines, Contingut, Anotar, Inserir) i, a sota, les opcions de l'eina activa. Les dreceres d'una eina d'edició et porten sols a aquest mode. |
 | **Revisar** | Anotacions PDF reals (notes, marques de text, núvols, segells, adjunts) amb llista, filtres i exportació. |
 | **Signar** | Signatura digital amb certificat .p12/.pfx, camps de signatura i circuits de signants. |
 | **Composar** | Llenç de nodes estil Grasshopper per organitzar documents i pàgines. |
 | **Escanejar** | Analitzador de PDF sospitosos guaitaPDFscan, dins un marc aïllat. |
+
+### Mode Notes
+
+- **Eines**: mà, selecció, **llaç**, llapis i bolígrafs, ressaltadors, ressaltar text, rectangle ressaltat, text (finestra i in situ), formes i goma. Les eines del mode Editar no canvien.
+- **Llapis òptic i dit**: el llapis dibuixa amb pressió i estabilitzador; el dit desplaça la pàgina i amb dos dits es fa zoom (el botó *Dit* fa que dibuixi); la palma es rebutja mentre el llapis és a prop; lliscar canvia de pàgina quan la pàgina hi cap sencera.
+- **Gomes**: traç sencer, circular o quadrada, amb mida regulable. L'opció *També originals del PDF* elimina les imatges originals; la resta de contingut original es tapa amb blanc (continua a sota).
+- **Pantalla**: pàgines veïnes, miniatures i pantalla completa amb barra flotant que es pot arrossegar.
+- **Paper i llibreta (7.7.1)**: les pàgines en blanc poden tenir paper pautat, quadriculat o de punts (separació en mm; línies vectorials al PDF). La pestanya *Llibreta* del tauler lateral mostra seccions (marcadors de primer nivell, amb color) i pàgines, que es poden afegir, moure, duplicar i esborrar.
+- **Eines avançades (7.7.2)**: *llaç* (selecciona, mou, copia, canvia el color); *formes automàtiques* (el llapis quiet al final del traç el converteix en recta, rectangle, triangle o el·lipse); *finestra de zoom* (s'escriu gran i el traç queda a mida normal); *textures* de gra de grafit, guix i pinzell (s'incrusten com a imatge al PDF); ressaltadors i llapis editables (5 + 5 preajustos).
+- **Notes de veu**: grava àudio mentre escrius; en reproduir-lo, els traços reapareixen al ritme de la veu i la vista segueix les pàgines. L'àudio s'adjunta al PDF (`guaita-voz-*`) i el micròfon només s'usa quan tu ho demanes. En reobrir el PDF se segueix la veu pàgina a pàgina, però els traços ja formen part de la pàgina i no reapareixen progressivament.
+- **Enllaços i vídeo**: rectangle clicable cap a una URL (enllaç estàndard `/URI`, funciona a qualsevol visor) i *targeta de vídeo* (miniatura pujada per tu o un fotograma d'un fitxer de vídeo, amb enllaç a YouTube, Vimeo o qualsevol URL). En mode Veure, un clic obre l'enllaç amb confirmació. No es descarrega res d'Internet.
 
 ## 03. Obrir, desar i imprimir
 

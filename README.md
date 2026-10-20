@@ -32,6 +32,7 @@
 | 📄 **Pàgines** | Reordena, gira, duplica, extreu, elimina, insereix; copia/enganxa entre documents; fusiona pestanyes; **nou document** en blanc o amb una pàgina per imatge; **incrusta una pàgina PDF** (vectorial i amb retall) dins una altra |
 | 👁 **Vistes** | Pàgina única, llibre, continu i continu en dues columnes; **Organitzador de pàgines** (arrossega per reordenar, mida S/M/L); **cintes de marcadors** de colors al marge de cada pàgina marcada |
 | 🎨 **Colors de pàgina** | Marc de color per pàgina, **llegenda amb noms** i **filtre** (atenua les altres); es veu a la vista de llibre i als nodes de Composar, i es desa dins el PDF |
+| 📝 **Mode Notes** | Apunts amb llapis òptic: llaç, formes automàtiques, finestra de zoom, textures, paper pautat/quadriculat/de punts, **llibreta** amb seccions, **notes de veu** sincronitzades amb els traços i **enllaços/targetes de vídeo** |
 | ✍ **Anotacions** | Llapis i bolígrafs (3 + 2) amb gruix i opacitat, ressaltador, text (també **in situ** i en negreta), formes, signatura, imatges (amb **mida i posició en mm**), marca d'aigua, numeració, mesura a escala |
 | ✎ **Contingut original** | Edita text amb la font incrustada, **combina** lletres originals amb una font de reemplaçament, i elimina/substitueix/mou imatges |
 | 🔖 **Marcadors** | Lectura, creació, edició, arrossegar i niar, navegació, panell lateral; es desen dins el PDF; **índex a partir dels marcadors** amb enllaços |

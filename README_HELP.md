@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 7.6.2** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 7.7.2** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -44,11 +44,23 @@ The switch in the header separates the ways of working:
 | Mode | What it is for |
 |---|---|
 | **View** | Navigation, page views, hand, scaled measuring, search, export and printing. |
+| **Notes** | For taking notes with a stylus or finger: pencils, highlighters, text, shapes and eraser, notebook paper, lasso, voice and links. Between View and Edit; also in Tools › Notes mode. |
 | **Edit** | Tools by family (History, Pages, Content, Annotate, Insert) and, below, the options of the active tool. Editing-tool shortcuts take you to this mode by themselves. |
 | **Review** | Real PDF annotations (notes, text markups, clouds, stamps, attachments) with list, filters and export. |
 | **Sign** | Digital signature with a .p12/.pfx certificate, signature fields and signer circuits. |
 | **Compose** | Grasshopper-style node canvas to organise documents and pages. |
 | **Scan** | The guaitaPDFscan suspicious-PDF analyser, inside an isolated frame. |
+
+### Notes mode
+
+- **Tools**: hand, select, **lasso**, pencils and ballpoints, highlighters, highlight text, highlight rectangle, text (box and in-place), shapes and eraser. The Edit-mode tools are unchanged.
+- **Stylus and finger**: the stylus draws with pressure and a stabiliser; the finger pans the page and two fingers zoom (the *Finger* button makes it draw); the palm is rejected while the stylus is nearby; swiping changes page when the page fits entirely.
+- **Erasers**: whole stroke, circular or square, with adjustable size. The *Also PDF originals* option removes original images; the rest of the original content is covered with white (it stays underneath).
+- **Screen**: neighbouring pages, thumbnails and full screen with a draggable floating bar.
+- **Paper and notebook (7.7.1)**: blank pages can have ruled, grid or dotted paper (spacing in mm; vector lines in the PDF). The *Notebook* tab of the side panel shows sections (top-level bookmarks, with colour) and pages, which can be added, moved, duplicated and deleted.
+- **Advanced tools (7.7.2)**: *lasso* (select, move, copy, recolour); *auto shapes* (hold the pencil still at the end of a stroke and it becomes a line, rectangle, triangle or ellipse); *zoom window* (write large and the stroke lands at normal size); graphite-grain, chalk and brush *textures* (embedded as an image in the PDF); editable pencils and highlighters (5 + 5 presets).
+- **Voice notes**: record audio while you write; on playback the strokes reappear in time with the voice and the view follows the pages. The audio is attached to the PDF (`guaita-voz-*`) and the microphone is only used when you ask. When you reopen the PDF the voice follows the pages, but the strokes are already part of the page and do not reappear progressively.
+- **Links and video**: a clickable rectangle to a URL (standard `/URI` link, works in any viewer) and a *video card* (a thumbnail you upload, or a frame from a video file, linked to YouTube, Vimeo or any URL). In View mode a click opens the link with confirmation. Nothing is downloaded from the Internet.
 
 ## 03. Open, save and print
 
