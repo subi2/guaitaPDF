@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 7.5** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 7.6.2** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -203,11 +203,32 @@ At the top, always visible, **Merge** and **Final document**; below, the **Docum
 - Each node's options are on the node itself and in the right bar; right-click offers the quick ones.
 - In the preview strip, **Relative size** draws each page at true scale relative to the others (an A3 has twice the area of an A4); another click makes them all equal again.
 
+### New in 7.6 nodes
+
+Nodes: **Reduce size**, **Page labels** (numbering and prefixes per branch), **Signature sheet**, **Images → pages**, **Insert document** (every N pages or before a branch) and **Join pieces** (the inverse of Mosaic). **Pick order** accepts a manual order. **Print** adds binding, manual duplex, registration marks and rasterising; **Mosaic**, printer margin and rasterising. The zoom buttons are on the top bar and **Clear canvas** empties the tree.
+
+### Dossier structures
+
+**Structures…** (Composer toolbar) creates a **slot** for each item of a dossier structure, grouped with the matching bookmarks. There is a generic building-project structure and you can **import your own** from a JSON file (format `guaita-estructura`: `nom` and `arbre`, each element with `codi`, `titol`, `obligatori` and `fills`; «Download an example» gives you one). Imported structures are kept only in this browser. Each slot is filled with an open document (automatic assignment by the code or the title in the file name) and, if needed, a page range; if the document is missing the slot stays empty and adds no pages. Empty required slots are marked ⚠ and «Check slots» lists them. Everything is editable on the canvas.
+
+### Parameters and branches
+
+**Parameters…** defines reusable values (project, client…) that go into node texts as `[@project]` and into the file name pattern as `{@project}`; they are saved with the recipe. For branches (the groups made by “Group by”) there are three nodes: **Flatten branches** (removes the groups and keeps the order), **Put in branch** (puts all pages in one branch with the given name) and **Select branch** (splits off whole branches by position or by name, and the rest).
+
+### Automatic annotations
+
+**Highlight words** highlights every occurrence of the keywords in the final PDF (case- and accent-insensitive; one per line, with « @#RRGGBB» for its own colour). **«p. N» links** turns text references such as “p. 12” or “page 12” into links to the matching page of the final PDF. They only work on pages that are not rotated or scaled and have selectable text; the annotations are generated on saving.
+
+### Sign with certificate
+
+The **Sign with certificate** node (Document) signs the Final document with a `.p12`/`.pfx` certificate (PAdES, SHA-256, RSA or EC keys). It goes right before the Final document and is the last step when saving, after all other operations (Reduce too). You can choose the signature field (first empty or by name, among those created with «Signature») or make it invisible, add a reason and location (the reason accepts `[@parameters]`) and put the name, date, reason and your handwritten signature in the appearance. If the Final document is split into several files, each one is signed. The certificate is only kept in memory. If none is open, nothing is saved and you are asked for one.
+
 ### Output
 
 - **Final document**: one file per group or output, with a name pattern (`{file}` `{doc}` `{group}` `{n}`), nested bookmarks and the **Reduce size on saving** option.
 - **Multiple save** (right bar with no node selected): downloads, ZIP or straight into a folder, with a CSV report.
 - **Document batch**: the recipe is applied to each document separately (signed ones are excluded).
+- The **Final document** can also be split by maximum size (MB), saved into subfolders and exported to PNG, text, DXF or CSV. **File › Process in batches…** applies the canvas recipe to many PDFs.
 
 > 💡 Vector transformations (scale, crop, N-up…) keep the text; **Colour and raster** turns it into an image. Links and form fields of transformed pages are lost. The recipe is saved as JSON.
 
@@ -316,6 +337,10 @@ No. With the app installed, the new PDF opens as a new tab in the same window.
 **❓ Do my PDFs leave my computer?**
 
 No. Everything is processed locally in the browser, including the analyser and signing.
+**❓ Can I sign from Compose?**
+
+Yes: the **Sign with certificate** node signs the Final document on saving, as the last step. The certificate is only kept in memory.
+
 
 ---
 

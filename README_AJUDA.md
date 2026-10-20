@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 7.5** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 7.6.2** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -203,11 +203,32 @@ A dalt, sempre visibles, **Fusionar** i **Document final**; sota, les pestanyes 
 - Les opcions de cada node són al mateix node i a la barra de la dreta; el botó dret ofereix les ràpides.
 - A la franja de vista prèvia, **Mida relativa** dibuixa cada pàgina a escala real respecte de les altres (un A3 té el doble d'àrea que un A4); un altre clic les torna a posar totes iguals.
 
+### Nodes nous de la 7.6
+
+Nodes: **Reduir la mida**, **Etiquetes de pàgina** (numeració i prefixos per branca), **Full de signatures**, **Imatges → pàgines**, **Inserir document** (cada N pàgines o davant d'una branca) i **Unir peces** (inversa de Mosaic). **Triar ordre** admet ordre manual. **Imprimir** afegeix enquadernació, duplex manual, marques de registre i rasterització; **Mosaic**, marge d'impressora i rasterització. Els botons de zoom són a la barra superior i **Esborrar llenç** buida l'arbre.
+
+### Estructures de dossier
+
+**Estructures…** (barra de Composar) crea una **ranura** per a cada apartat d'una estructura de dossier, agrupades amb els marcadors corresponents. Hi ha una estructura genèrica de projecte d'edificació i pots **importar la teva** des d'un fitxer JSON (format `guaita-estructura`: `nom` i `arbre`, cada element amb `codi`, `titol`, `obligatori` i `fills`; «Descarregar un exemple» en dóna un). Les estructures importades es guarden només en aquest navegador. Cada ranura s'omple amb un document obert (assignació automàtica pel codi o el títol al nom del fitxer) i, si cal, un interval de pàgines; si el document no hi és, la ranura queda buida i no afegeix pàgines. Les obligatòries buides es marquen amb ⚠ i «Comprovar ranures» les llista. Tot és editable al llenç.
+
+### Paràmetres i branques
+
+**Paràmetres…** defineix valors reutilitzables (obra, promotor…) que es posen als textos dels nodes com `[@obra]` i al patró del nom del fitxer com `{@obra}`; es desen amb la recepta. Per a les branques (els grups d'«Agrupar per») hi ha tres nodes: **Aplanar branques** (treu els grups i manté l'ordre), **Posar a branca** (posa totes les pàgines en una branca amb el nom indicat) i **Triar branca** (separa branques senceres per posició o per nom, i la resta).
+
+### Anotacions automàtiques
+
+**Ressaltar paraules** ressalta al PDF final cada aparició de les paraules clau (sense distingir majúscules ni accents; una per línia, amb « @#RRGGBB» per donar-li color propi). **Enllaços «pàg. N»** converteix en enllaços les referències de text del tipus «pàg. 12», «pàgina 12» o «p. 12» cap a la pàgina corresponent del PDF final. Només funcionen en pàgines sense girar ni escalar i amb text seleccionable; les anotacions es generen en desar.
+
+### Signar amb certificat
+
+El node **Signar amb certificat** (Document) signa el Document final amb un certificat `.p12`/`.pfx` (PAdES, SHA-256, claus RSA o EC). Va just abans del Document final i és l'últim pas en desar, després de totes les altres operacions (també Reduir). Pots triar el camp de signatura (primer buit o pel nom, entre els creats amb «Signatura») o fer-la invisible, afegir motiu i lloc (el motiu admet `[@paràmetres]`) i posar a l'aparença el nom, la data, el motiu i la teva signatura manuscrita. Si el Document final es divideix en diversos fitxers, se signa cadascun. El certificat només es guarda en memòria. Si no n'hi ha cap d'obert, no es desa i se't demana.
+
 ### Sortida
 
 - **Document final**: un fitxer per grup o sortida, amb patró de nom (`{fitxer}` `{doc}` `{grup}` `{n}`), marcadors niats i opció **Reduir la mida en desar**.
 - **Desar múltiple** (barra de la dreta sense cap node seleccionat): descàrregues, ZIP o directament a una carpeta, amb informe CSV.
 - **Lot de documents**: la recepta s'aplica a cada document per separat (els signats s'exclouen).
+- **Document final** també pot dividir-se per pes màxim (MB), desar-se en subcarpetes i exportar a PNG, text, DXF o CSV. **Fitxer › Processar per lots…** aplica la recepta del llenç a molts PDF.
 
 > 💡 Les transformacions vectorials (escalar, retallar, N per full…) mantenen el text; **Color i ràster** el converteix en imatge. Els enllaços i camps de formulari de les pàgines transformades es perden. La recepta es desa en JSON.
 
@@ -316,6 +337,10 @@ No. Amb l'aplicació instal·lada, el PDF nou s'obre com una pestanya nova a la 
 **❓ Els meus PDF surten de l'ordinador?**
 
 No. Tot es processa localment al navegador, també l'analitzador i la signatura.
+**❓ Es pot signar des de Composar?**
+
+Sí: el node **Signar amb certificat** signa el Document final en desar, com a darrer pas. El certificat només es guarda en memòria.
+
 
 ---
 
