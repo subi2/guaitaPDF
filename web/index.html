@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 7.5.2p — Editor de PDF multidocument (suite Guaita Apps)
+  Guaita PDF Edit 7.5.5 — Editor de PDF multidocument (suite Guaita Apps)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   Aquest programa és programari lliure: el podeu redistribuir i/o modificar sota els termes de la
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v7.5.2p</title>
+<title>Guaita PDF Edit v7.5.5</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -571,6 +571,9 @@ input[type="color"] {
 #viewer-container.tool-erase { cursor: cell; }
 #viewer-container.tool-textin { cursor: text; }
 #txin { position: fixed; z-index: 400; }
+#edin { position: fixed; z-index: 400; }
+#edin input { display: block; box-sizing: content-box; margin: 0; padding: 0 2px; border: 0; outline: 1.5px dashed #0a84ff; outline-offset: 1px; line-height: 1; }
+#viewer-container.tool-edtin { cursor: text; }
 #txin .txb { position: absolute; left: 0; bottom: 100%; margin-bottom: 4px; display: flex; gap: 4px; align-items: center; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 7px; padding: 3px 5px; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
 #txin .txb select, #txin .txb input[type=color] { height: 24px; font-size: 12px; }
 #txin .txb input[type=color] { width: 30px; padding: 0; border: 1px solid var(--border); background: none; }
@@ -1635,6 +1638,47 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
 .cert-p { font-size: 12.5px; color: var(--text-mid); margin: 0 0 10px; }
 .cert-steps { margin: 0 0 6px 20px; font-size: 12.5px; color: var(--text-mid); line-height: 1.55; }
 .cert-steps li { margin-bottom: 6px; }
+
+/* v7.5.5: selector de color comú (16 bàsics + RGB / HSL / HEX) */
+#cpop { position: fixed; z-index: 100000; display: none; width: 236px; padding: 10px; background: var(--bg-panel); border: 1px solid var(--border-strong); border-radius: 8px; box-shadow: 0 8px 28px rgba(0,0,0,.5); font-size: 11px; color: var(--text-mid); }
+#cpop.on { display: block; }
+#cpop .cp16 { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; margin-bottom: 8px; }
+#cpop .cp16 button { height: 22px; border: 1px solid var(--border-strong); border-radius: 4px; cursor: pointer; padding: 0; }
+#cpop .cp16 button:hover { outline: 2px solid var(--accent); }
+#cpop .cp16 button.sel { outline: 2px solid var(--accent); outline-offset: 1px; }
+#cpop .cpr { display: flex; align-items: center; gap: 4px; margin-top: 5px; }
+#cpop .cpr b { width: 30px; font-weight: 600; color: var(--text-mut); }
+#cpop .cpr input[type=number] { width: 48px; }
+#cpop .cpr input[type=range] { flex: 1; min-width: 0; }
+#cpop .cpr input[type=text] { width: 84px; font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; }
+#cpop .cpsw { width: 28px; height: 20px; border: 1px solid var(--border-strong); border-radius: 4px; margin-left: auto; }
+
+/* v7.5.5: estil de text a la barra contextual */
+#txs-grp { gap: 6px; }
+#txs-grp .txp { min-width: 30px; padding: 2px 6px; }
+#txs-grp .txp.active, #txs-grp .txf.active { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+#txs-grp .txf { min-width: 26px; padding: 2px 6px; }
+#txs-grp select { height: 28px; }
+#txin .txb { margin-bottom: 4px; }
+
+/* v7.5.5: botons de l'organitzador de pàgines */
+#pg-tools { justify-content: center; gap: 6px; padding: 5px 6px; background: var(--bg-panel); border-bottom: 1px solid var(--border); }
+#pg-tools .btn { min-width: 30px; }
+/* v7.5.5: 5 ressaltadors configurables */
+#hlp-grp { gap: 6px; }
+#hlp-grp .hlpb { height: 26px; padding: 0 8px 0 6px; gap: 5px; font-size: 11.5px; }
+#hlp-grp .hlpb i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; box-shadow: 0 0 0 1px rgba(255,255,255,.35); }
+#hlp-grp .hlpb.active, #hlp-grp .hlm.active { border-color: var(--accent-line); background: var(--accent-soft2); color: var(--text); }
+
+/* v7.5.5: capa de text (seleccionar i copiar) */
+#text-layer { position: absolute; left: 0; top: 0; display: none; overflow: hidden; line-height: 1; z-index: 7; user-select: text; -webkit-user-select: text; text-align: initial; }
+#viewer-container.tool-seltext #text-layer, #viewer-container.tool-hlsel #text-layer { display: block; }
+#text-layer span, #text-layer br { color: transparent; position: absolute; white-space: pre; cursor: text; transform-origin: 0% 0%; user-select: text; -webkit-user-select: text; }
+#text-layer span.markedContent { top: 0; height: 0; }
+#text-layer .endOfContent { display: block; position: absolute; left: 0; right: 0; top: 100%; bottom: 0; z-index: -1; cursor: default; user-select: none; -webkit-user-select: none; }
+#text-layer .endOfContent.active { top: 0; }
+#text-layer ::selection { background: rgba(70, 130, 255, .38); }
+body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
 </style>
 </head>
 <body>
@@ -1752,6 +1796,7 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
         <button class="mi" onclick="setTool('pan')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 13V6.5a1.5 1.5 0 013 0V11V4.5a1.5 1.5 0 013 0V11V6.5a1.5 1.5 0 013 0V15a6 6 0 01-6 6c-2.6 0-4-1.5-5.4-3.6L4 14.8a1.5 1.5 0 012.4-1.8z"/></svg>Mà (navegar)</span><kbd>P</kbd></button>
         <button class="mi" onclick="setTool('measure')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg>Mesurar a escala</span><kbd>M</kbd></button>
         <button class="mi needs-doc" onclick="setTool('edit')" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6V4h12v2M11 4v16M8 20h6"/><path d="M19 13v8"/></svg>Editar contingut del PDF</span><kbd>X</kbd></button>
+        <button class="mi needs-doc" onclick="setTool('edtin')" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6V4h10v2M9 4v12M6.5 16h5"/><path d="M13 20l1-3.5 5.5-5.5 2.5 2.5-5.5 5.5z"/></svg>Editar text del PDF in situ</span><kbd>Maj+X</kbd></button>
         <button class="mi" onclick="setTool('select')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6z"/></svg>Seleccionar anotacions</span><kbd>V</kbd></button>
         <div class="msep"></div>
         <button class="mi needs-doc" onclick="showDxfModal()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19L19 5"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/><path d="M4 4h5M4 4v5M20 20h-5M20 20v-5"/></svg>Exportar a DXF…</span></button>
@@ -1781,7 +1826,7 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
     <button id="mode-compose" onclick="setMode('compose')" title="Composar: fusionar documents i pàgines amb un arbre de nodes (fonts → Fusionar → Document final)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Composar</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v7.5.2p</span>
+  <span class="tag">v7.5.5</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Canviar a tema clar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -1808,6 +1853,7 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
   <div class="grp">
     <span class="glab">Eina</span>
     <button class="btn ib" id="tool-pan" onclick="setTool('pan')" title="Mà: navegar i desplaçar (P)" aria-label="Mà: navegar i desplaçar (P)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 13V6.5a1.5 1.5 0 013 0V11V4.5a1.5 1.5 0 013 0V11V6.5a1.5 1.5 0 013 0V15a6 6 0 01-6 6c-2.6 0-4-1.5-5.4-3.6L4 14.8a1.5 1.5 0 012.4-1.8z"/></svg></button>
+    <button class="btn ib tb-seltext" onclick="setTool('seltext')" title="Seleccionar text: arrossega sobre el text per seleccionar-lo i copiar-lo (Ctrl+C) (I)" aria-label="Seleccionar text (I)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6M9 20h6M12 4v16"/><path d="M5 9h2M17 9h2"/></svg></button>
     <button class="btn ib" id="tool-measure" onclick="setTool('measure')" title="Mesurar distàncies a escala (M)" aria-label="Mesurar distàncies a escala (M)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg></button>
     <label class="fld" title="Escala de mesura (la mateixa que l'exportació DXF)">1:<input type="number" id="scale-input" value="1" min="0.001" step="any" onchange="updateMeasureInfo(true)"></label>
     <select id="measure-mode" title="Tipus de mesura"><option value="dist">Distància</option><option value="area">Àrea i perímetre</option><option value="cal">Calibrar escala</option></select>
@@ -1844,14 +1890,17 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
     <button class="btn ib" id="btn-info" onclick="showPageInfo()" disabled title="Mida real de la pàgina" aria-label="Mida real de la pàgina"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button>
   </div><span class="flab">Pàgines</span></div>
   <div class="fam"><div class="row">
+    <button class="btn ib tb-seltext" id="tool-seltext" onclick="setTool('seltext')" title="Seleccionar text: arrossega sobre el text per seleccionar-lo i copiar-lo (Ctrl+C) (I)" aria-label="Seleccionar text (I)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6M9 20h6M12 4v16"/><path d="M5 9h2M17 9h2"/></svg></button>
     <button class="btn ib" id="tool-edit" onclick="setTool('edit')" title="Editar el text i les imatges que ja hi ha al PDF (X)" aria-label="Editar el text i les imatges que ja hi ha al PDF (X)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6V4h12v2M11 4v16M8 20h6"/><path d="M19 13v8"/></svg></button>
+    <button class="btn ib" id="tool-edtin" onclick="setTool('edtin')" title="Editar el text del PDF in situ: escriu directament sobre el text existent; Intro obre el diàleg amb les opcions de font (Maj+X)" aria-label="Editar el text del PDF in situ (Maj+X)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6V4h10v2M9 4v12M6.5 16h5"/><path d="M13 20l1-3.5 5.5-5.5 2.5 2.5-5.5 5.5z"/></svg></button>
   </div><span class="flab">Contingut</span></div>
   <div class="fam"><div class="row">
     <button class="btn ib" id="tool-select" onclick="setTool('select')" title="Seleccionar, moure i editar anotacions (V)" aria-label="Seleccionar, moure i editar anotacions (V)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6z"/></svg></button>
     <button class="btn ib" id="tool-pencil" onclick="setTool('pencil')" title="Llapis (D)" aria-label="Llapis (D)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg></button>
     <button class="btn ib" id="tool-textin" onclick="setTool('textin')" title="Text in situ: escriu directament sobre la pàgina (Maj+T)" aria-label="Text in situ (Maj+T)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V4h11v3M8.5 4v11M6 15h5"/><path d="M17 10v10M14.5 10h5M14.5 20h5"/></svg></button>
     <button class="btn ib" id="tool-highlight" onclick="setTool('highlight')" title="Ressaltador (H)" aria-label="Ressaltador (H)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14l7-9 4 3-7 9z"/><path d="M9 14l-1 4 4-1"/><path d="M4 21h9"/></svg></button>
-    <button class="btn ib" id="tool-hltext" onclick="hlTextTool()" title="Ressaltar text: arrossega sobre el text per ressaltar-lo (Maj+H)" aria-label="Ressaltar text: arrossega sobre el text per ressaltar-lo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="6" rx="1" fill="currentColor" fill-opacity=".35"/><path d="M5 7h14M5 17h9"/></svg></button>
+    <button class="btn ib" id="tool-hlsel" onclick="setTool('hlsel')" title="Ressaltar text: arrossega sobre els caràcters i es ressalten seguint les línies de text (Maj+I)" aria-label="Ressaltar text (Maj+I)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h9"/><path d="M5 12h14" stroke-width="5" opacity=".45"/><path d="M5 8h14"/></svg></button>
+    <button class="btn ib" id="tool-hltext" onclick="hlTextTool()" title="Rectangle ressaltat: arrossega sobre el text per marcar-lo amb un rectangle de color (Maj+H)" aria-label="Rectangle ressaltat: arrossega sobre el text per marcar-lo amb un rectangle de color"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="6" rx="1" fill="currentColor" fill-opacity=".35"/><path d="M5 7h14M5 17h9"/></svg></button>
     <button class="btn ib" id="tool-text" onclick="setTool('text')" title="Afegir text (T)" aria-label="Afegir text (T)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M8 9h8M12 9v7"/></svg></button>
     <button class="btn ib" id="tool-shape" onclick="setTool('shape')" title="Dibuixar formes (R)" aria-label="Dibuixar formes (R)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9" width="11" height="11" rx="1"/><circle cx="16" cy="8" r="5"/></svg></button>
     <button class="btn ib" id="tool-erase" onclick="setTool('erase')" title="Goma d'esborrar anotacions (E)" aria-label="Goma d'esborrar anotacions (E)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 20h12"/><path d="M5 15l9-9 5 5-7 7H9z"/></svg></button>
@@ -1877,7 +1926,7 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
     <button class="btn ib" data-rv="callout" onclick="rvSetTool('callout')" title="Nota al marge amb fletxa" aria-label="Nota al marge amb fletxa"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="11" y="3" width="10" height="8" rx="1"/><path d="M11 9L4 19M4 19l.6-4M4 19l4-.6"/></svg></button>
   </div><span class="flab">Comentar</span></div>
   <div class="fam"><div class="row">
-    <button class="btn ib" data-rv="hl" onclick="rvSetTool('hl')" title="Ressaltar text" aria-label="Ressaltar text"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14l7-9 4 3-7 9z"/><path d="M9 14l-1 4 4-1"/><path d="M4 21h9"/></svg></button>
+    <button class="btn ib" data-rv="hl" onclick="rvSetTool('hl')" title="Rectangle ressaltat" aria-label="Rectangle ressaltat"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14l7-9 4 3-7 9z"/><path d="M9 14l-1 4 4-1"/><path d="M4 21h9"/></svg></button>
     <button class="btn ib" data-rv="ul" onclick="rvSetTool('ul')" title="Subratllar text" aria-label="Subratllar text"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v7a5 5 0 0010 0V4"/><path d="M5 20h14"/></svg></button>
     <button class="btn ib" data-rv="so" onclick="rvSetTool('so')" title="Ratllar text" aria-label="Ratllar text"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 6.5C15 5 13.6 4.5 12 4.5c-2.5 0-4 1.3-4 3 0 1.5 1 2.4 4 3"/><path d="M8 17c1 1.6 2.6 2.5 4.3 2.5 2.5 0 4.2-1.4 4.2-3.3 0-1-.4-1.8-1.3-2.4"/><path d="M4 12h16"/></svg></button>
   </div><span class="flab">Marcar text</span></div>
@@ -1958,6 +2007,24 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
     <button class="btn hlc" data-hlc="#FFE500" style="--c:#FFE500" title="Groc"></button><button class="btn hlc" data-hlc="#7CFC00" style="--c:#7CFC00" title="Verd"></button><button class="btn hlc" data-hlc="#FF69B4" style="--c:#FF69B4" title="Rosa"></button><button class="btn hlc" data-hlc="#00E5FF" style="--c:#00E5FF" title="Cian"></button><button class="btn hlc" data-hlc="#FFA040" style="--c:#FFA040" title="Taronja"></button>
     <input type="color" id="hlt-color" value="#FFE500" title="Un altre color">
   </div>
+  <div class="ctx-g" data-ctx="seltxt" id="stx-grp">
+    <button type="button" class="btn" onclick="tlCopy()" title="Copia el text seleccionat (Ctrl+C)">Copia</button>
+    <button type="button" class="btn" onclick="tlSelectAll()" title="Selecciona tot el text de la pàgina (Ctrl+A)">Selecciona-ho tot</button>
+  </div>
+  <div class="ctx-g" data-ctx="hlpens" id="hlp-grp">
+    <span id="hlp-btns"><button type="button" class="btn hlpb" data-hlp="0"><i></i>Ressaltador 1</button><button type="button" class="btn hlpb" data-hlp="1"><i></i>2</button><button type="button" class="btn hlpb" data-hlp="2"><i></i>3</button><button type="button" class="btn hlpb" data-hlp="3"><i></i>4</button><button type="button" class="btn hlpb" data-hlp="4"><i></i>5</button></span>
+    <input type="color" id="hl-color" value="#FFE500" title="Color">
+    <label class="fld" title="Gruix del ressaltador (px)">Gruix <input type="number" id="hl-width" min="2" max="80" step="1" value="12"></label>
+    <label class="fld" title="Opacitat (%)">Opac. <input type="number" id="hl-opacity" min="10" max="100" step="5" value="40"></label>
+    <button type="button" class="btn hlm" data-hlm="free" title="Traç lliure a mà alçada">Lliure</button><button type="button" class="btn hlm" data-hlm="line" title="Línia recta que segueix la línia de text (també amb Maj premut)">Recte</button>
+  </div>
+  <div class="ctx-g" data-ctx="textst" id="txs-grp">
+    <span id="txp-grp"><button type="button" class="btn txp" data-txp="0">Aa</button><button type="button" class="btn txp" data-txp="1">Aa</button><button type="button" class="btn txp" data-txp="2">Aa</button><button type="button" class="btn txp" data-txp="3">Aa</button></span>
+    <select id="tx-font" title="Font"><option value="helv">Helvetica</option><option value="times">Times</option><option value="cour">Courier</option></select>
+    <select id="tx-size" title="Mida (pt)"></select>
+    <button type="button" class="btn txf" id="tx-b" title="Negreta"><b>N</b></button><button type="button" class="btn txf" id="tx-i" title="Cursiva"><i>C</i></button><button type="button" class="btn txf" id="tx-s" title="Tatxat"><s>T</s></button><button type="button" class="btn txf" id="tx-u" title="Subratllat"><u>S</u></button>
+    <input type="color" id="tx-color" value="#000000" title="Color del text">
+  </div>
   <div class="ctx-g" data-ctx="sig">
     <button class="btn" onclick="showSignatureModal()" title="Crear o canviar la signatura" aria-label="Crear o canviar la signatura"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M6 15c2-4 3-6 4-5s-1 5 0 5 2-3 3-3 1 2 2 2 2-1 3-1"/></svg>Canviar signatura…</button>
   </div>
@@ -1981,6 +2048,13 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
       <button class="ptab needs-doc" id="tab-att" onclick="bmSetTab('att')" title="Fitxers adjunts" disabled><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11l-8.5 8.5a5 5 0 01-7-7L13 4a3.5 3.5 0 015 5l-8.5 8.5a2 2 0 01-3-3L14 7"/></svg><span class="lbl">Adjunts</span><span class="cnt" id="att-count"></span></button>
       <button class="ptab needs-doc" id="tab-oc" onclick="bmSetTab('oc')" title="Capes (contingut opcional)" disabled><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span class="lbl">Capes</span><span class="cnt" id="oc-count"></span></button>
       <button class="ptab needs-doc" id="tab-obj" onclick="bmSetTab('obj')" title="Objectes: imatges, fonts, vectors, text i anotacions" disabled><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"/><circle cx="17" cy="7" r="4"/><path d="M3 21l4-7 4 7z"/><path d="M14 14h7v7h-7z"/></svg></button>
+    </div>
+    <div class="tt-row" id="pg-tools">
+      <button class="btn ib" data-twin="btn-rccw" onclick="rotatePage(-90)" disabled title="Girar 90° a l'esquerra" aria-label="Girar 90° a l'esquerra"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 103-6.3"/><path d="M4 4v5h5"/></svg></button>
+      <button class="btn ib" data-twin="btn-rcw" onclick="rotatePage(90)" disabled title="Girar 90° a la dreta" aria-label="Girar 90° a la dreta"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 11-3-6.3"/><path d="M20 4v5h-5"/></svg></button>
+      <button class="btn ib" data-twin="btn-dup" onclick="duplicatePage()" disabled title="Duplicar les pàgines seleccionades" aria-label="Duplicar les pàgines seleccionades"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1"/><path d="M4 16V4h12"/></svg></button>
+      <button class="btn ib" data-twin="btn-extract" onclick="extractSelected()" disabled title="Extreure les pàgines seleccionades a un document nou" aria-label="Extreure les pàgines seleccionades a un document nou"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9"/><path d="M19 14v7H3V5h7"/></svg></button>
+      <button class="btn ib dang" data-twin="btn-del" onclick="deleteSelectedPages()" disabled title="Eliminar les pàgines seleccionades (Supr)" aria-label="Eliminar les pàgines seleccionades (Supr)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3"/><path d="M6 7l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg></button>
     </div>
     <div id="bm-panel" style="display:none">
       <div id="bm-bar">
@@ -2051,7 +2125,7 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 7.5.2p</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 7.5.5</small></div>
           <h1>Editor de PDF <em>local</em>, sense núvol.</h1>
           <p>Obre un o diversos PDF o arrossega'ls a la finestra. Tot es processa en aquest ordinador: cap fitxer surt del navegador.</p>
           <div class="wl-act">
@@ -2073,6 +2147,7 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
         <canvas id="annot-canvas"></canvas>
         <canvas id="overlay-canvas"></canvas>
         <div id="pc-frame"></div>
+        <div id="text-layer"></div>
       </div>
 
       <div id="book-wrapper" class="hidden"></div>
@@ -2268,7 +2343,7 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
   <span id="st-worker" class="hidden" title="Aquest entorn no permet els «workers» de pdf.js (visor incrustat o restriccions del navegador). Els PDF es processen al fil principal: tot funciona igual, però els documents grans van més lents. Obert directament a Chrome o Edge des del disc normalment no passa.">pdf.js · fil principal</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 7.5.2p · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 7.5.5 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -2364,6 +2439,19 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
     </div>
   </div>
 </div>
+<!-- ══ MODAL: tancar document amb canvis (v7.5.5) ══════════ -->
+<div class="modal-bg hidden" id="modal-close">
+  <div class="modal" style="max-width:480px">
+    <h2>Canvis sense desar</h2>
+    <p style="margin:6px 0 14px">El document <b id="cd-name"></b> té canvis que no s'han desat. Què vols fer?</p>
+    <div class="mactions">
+      <button class="btn" id="cd-cancel">Cancel·lar</button>
+      <button class="btn dang" id="cd-discard">Tancar sense desar</button>
+      <button class="btn primary" id="cd-save">Desar i tancar</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ MODAL: nou document (v7.5.2) ══════════════════════════ -->
 <div class="modal-bg hidden" id="modal-new">
   <div class="modal" style="max-width:560px">
@@ -2440,7 +2528,14 @@ body.mode-scan #sg-panel, body.mode-compose #sg-panel, body.mode-compose #mbar-s
       </select>
       <label style="min-width:auto">Color</label>
       <input type="color" id="text-color" value="#ff0000">
-      <label style="min-width:auto" title="Negreta (Helvetica Bold)"><input type="checkbox" id="text-bold" style="width:auto;height:auto;margin-right:4px"><b>N</b></label>
+      <label style="min-width:auto" title="Negreta"><input type="checkbox" id="text-bold" style="width:auto;height:auto;margin-right:4px"><b>N</b></label>
+    </div>
+    <div class="frow">
+      <label>Font</label>
+      <select id="text-font"><option value="helv">Helvetica</option><option value="times">Times</option><option value="cour">Courier</option></select>
+      <label style="min-width:auto" title="Cursiva"><input type="checkbox" id="text-italic" style="width:auto;height:auto;margin-right:4px"><i>C</i></label>
+      <label style="min-width:auto" title="Tatxat"><input type="checkbox" id="text-strike" style="width:auto;height:auto;margin-right:4px"><s>T</s></label>
+      <label style="min-width:auto" title="Subratllat"><input type="checkbox" id="text-under" style="width:auto;height:auto;margin-right:4px"><u>S</u></label>
     </div>
     <div class="mactions">
       <button class="btn" onclick="closeModal('modal-text')">Cancel·lar</button>
@@ -3059,14 +3154,15 @@ function updateTabsUI() {
     const tab = document.createElement('div');
     tab.className = 'tab' + (doc.id === activeDocId ? ' active' : '');
     tab.dataset.id = doc.id;
-    tab.textContent = doc.name;
+    tab.textContent = (docDirty(doc) ? '● ' : '') + doc.name;
+    if (docDirty(doc)) tab.title = 'Té canvis sense desar';
     tab.onclick = () => switchDoc(doc.id);
     
     const closeBtn = document.createElement('button');
     closeBtn.className = 'tab-close';
     closeBtn.innerHTML = '×';
     closeBtn.title = 'Tancar document';
-    closeBtn.onclick = (e) => { e.stopPropagation(); closeDoc(doc.id); };
+    closeBtn.onclick = (e) => { e.stopPropagation(); closeDocAsk(doc.id); };
     
     tab.appendChild(closeBtn);
     tb.appendChild(tab);
@@ -3102,6 +3198,25 @@ function closeDoc(id) {
     updateTabsUI();
   }
 }
+
+// Tanca un document; si té canvis sense desar, pregunta (Desar i tancar / Tancar sense desar / Cancel·lar). Retorna true si s'ha tancat.
+function closeDocAsk(id) {
+  const d = docs.find(x => x.id === id);
+  if (!d) return Promise.resolve(true);
+  if (!docDirty(d)) { closeDoc(id); return Promise.resolve(true); }
+  return new Promise(async res => {
+    if (activeDocId !== id) await switchDoc(id);
+    $('cd-name').textContent = d.name;
+    const done = async v => {
+      closeModal('modal-close');
+      if (v === 'save') { await savePdf(); if (docDirty(d)) { res(false); return; } }
+      if (v === 'save' || v === 'discard') { closeDoc(id); res(true); } else res(false);
+    };
+    $('cd-save').onclick = () => done('save'); $('cd-discard').onclick = () => done('discard'); $('cd-cancel').onclick = () => done('cancel');
+    openModal('modal-close'); $('cd-save').focus();
+  });
+}
+window.addEventListener('beforeunload', e => { if (docs.some(docDirty)) { e.preventDefault(); e.returnValue = ''; } });
 
 function setDis(id, dis) {
   const e = $(id); if (e) e.disabled = dis;
@@ -3140,9 +3255,16 @@ async function applySnap(doc, snap) {
   if (uiMode === 'review') rvRender(); else if (uiMode === 'sign') sgRender();
 }
 
+// ─── v7.5.5: canvis sense desar ───
+const docDirty = d => !!d && (d.rev || 0) !== (d.savedRev || 0);
+function dirtyRefresh(d) { if (d && !!d._ds !== docDirty(d)) { d._ds = docDirty(d); updateTabsUI(); } }
+function markSaved(d) { if (d) { d.savedRev = d.rev || 0; dirtyRefresh(d); } }
+function markNew(d) { d.rev = 1; d.savedRev = 0; d._ds = true; }   // document creat dins l'app: encara no desat
+
 function saveHistory() {
   const doc = getActiveDoc();
   if (!doc) return;
+  doc.rev = (doc.rev || 0) + 1; dirtyRefresh(doc);
   sgLockCheck(doc);
   doc.history.push(snapOf(doc));
   if (doc.history.length > MAX_HIST) doc.history.shift();
@@ -3161,7 +3283,8 @@ async function undo() {
   if (!doc || !doc.history.length) return;
   doc.redo.push(snapOf(doc));
   const snap = doc.history.pop();
-  await applySnap(doc, snap);
+  doc.rev = (doc.rev || 0) + 1;
+  await applySnap(doc, snap); dirtyRefresh(doc);
   toast('Acció desfeta');
 }
 
@@ -3171,7 +3294,8 @@ async function redo() {
   doc.history.push(snapOf(doc));
   if (doc.history.length > MAX_HIST) doc.history.shift();
   const snap = doc.redo.pop();
-  await applySnap(doc, snap);
+  doc.rev = (doc.rev || 0) + 1;
+  await applySnap(doc, snap); dirtyRefresh(doc);
   toast('Acció refeta');
 }
 
@@ -3729,6 +3853,7 @@ async function renderPage() {
   }
   redrawAnnotations();
   ribRefresh();
+  if (tool === 'seltext' || tool === 'hlsel') tlEnsure();
 }
 
 // ─── Zoom & Pan ──────────────────────────────────────────
@@ -3856,6 +3981,8 @@ vc.addEventListener('mousedown', e => {
     selDown(e);
   } else if (tool === 'edit') {
     editDown(e);
+  } else if (tool === 'edtin') {
+    edtinDown(e);
   } else if (tool === 'rv') {
     rvDown(e);
   }
@@ -3879,7 +4006,7 @@ vc.addEventListener('mousemove', e => {
     previewSig(e);
   } else if (tool === 'select') {
     selMove(e);
-  } else if (tool === 'edit') {
+  } else if (tool === 'edit' || tool === 'edtin') {
     editMove(e);
   } else if (tool === 'rv') {
     rvMove(e);
@@ -4050,6 +4177,16 @@ function cmViewer(e) {
       return;
     }
   }
+  if ((tool === 'seltext' || tool === 'hlsel') && viewMode === 'single') {   // v7.5.5: clic dret amb l'eina de text
+    const t = tlSelText();
+    CM.open(e.clientX, e.clientY, [
+      { head: 'Text' },
+      { label: 'Copia', icon: 'dup', kbd: 'Ctrl+C', disabled: !t, act: () => tlCopy(t) },
+      { label: 'Ressalta el text seleccionat', icon: 'rename', disabled: !t, act: () => tlHighlightSel() },
+      { label: 'Selecciona tot el text de la pàgina', kbd: 'Ctrl+A', act: () => tlSelectAll() }
+    ]);
+    return;
+  }
   // anotació sota el cursor (pàgina única)
   if (viewMode === 'single') {
     const p = scrToCanvas(e.clientX, e.clientY), a = pickAnnot(p);
@@ -4146,8 +4283,8 @@ function cmTab(e, id) {
     { label: 'Fusionar totes les pestanyes', icon: 'merge', disabled: docs.length < 2, act: () => mergeAllDocs() },
     { label: 'Afegir al mode Composar', icon: 'tree', act: () => cpOpen(id) },
     '-',
-    { label: 'Tancar', act: () => closeDoc(id) },
-    { label: 'Tancar les altres', disabled: docs.length < 2, act: () => { docs.filter(x => x.id !== id).map(x => x.id).forEach(closeDoc); } }
+    { label: 'Tancar', act: () => closeDocAsk(id) },
+    { label: 'Tancar les altres', disabled: docs.length < 2, act: async () => { for (const x of docs.filter(x => x.id !== id).map(x => x.id)) { if (!await closeDocAsk(x)) break; } } }
   ]);
 }
 
@@ -4164,7 +4301,7 @@ document.addEventListener('contextmenu', e => {
   if (t.closest('#viewer-container') && getActiveDoc()) { e.preventDefault(); cmViewer(e); return; }
 });
 // ─── v6.0: modes Veure / Editar / Escanejar ───
-const VIEW_TOOLS = ['pan', 'measure'];
+const VIEW_TOOLS = ['pan', 'measure', 'seltext'];
 let uiMode = 'view';
 function setMode(m, fromTool) {
   const prev = uiMode;
@@ -4193,14 +4330,17 @@ const CTX = {
   pan: ['Cap eina', 'Tria una eina de la barra superior.', []],
   select: ['Seleccionar', 'Clic per seleccionar una anotació · arrossega-la per moure-la · doble clic per editar un text · Supr per eliminar-la.', ['clear']],
   edit: ['Editar contingut', 'Passa el ratolí per sobre d\'un text o d\'una imatge del PDF i fes-hi clic per editar-los.', []],
+  edtin: ['Editar text in situ', 'Clic sobre un text del PDF i escriu-hi directament · Intro obre el diàleg (font, substitució, superposició) · Esc cancel·la · clic fora també obre el diàleg (Maj+X).', []],
   pencil: ['Llapis', 'Dibuixa a mà alçada. Tria un dels 3 llapis (translúcids, gruix variable) o 2 bolígrafs (opacs, gruix constant): cada un recorda color, gruix i opacitat.', ['pens', 'draw', 'penop', 'color']],
-  hltext: ['Ressaltar text', 'Arrossega sobre el text de la pàgina per ressaltar-lo (es manté el text seleccionable).', ['hltext']],
-  highlight: ['Ressaltador', 'Arrossega per ressaltar.', ['draw']],
-  text: ['Text', 'Clic a la pàgina per afegir-hi un text (finestra).', ['color']],
-  textin: ['Text in situ', 'Clic a la pàgina i escriu directament; clic a un text existent per editar-lo. Esc o clic fora per confirmar (Maj+T).', ['color']],
+  hltext: ['Rectangle ressaltat', 'Arrossega sobre el text de la pàgina per marcar-lo amb un rectangle de color (es manté el text seleccionable).', ['hltext']],
+  highlight: ['Ressaltador', 'Tria un dels 5 rotuladors (cada un recorda color, gruix i opacitat). Lliure: arrossega a mà alçada · Recte: línia recta que segueix la línia de text (també amb Maj premut).', ['hlpens']],
+  text: ['Text', 'Clic a la pàgina per afegir-hi un text (finestra). Font, mida, estil i color a la barra.', ['textst']],
+  textin: ['Text in situ', 'Clic a la pàgina i escriu directament; clic a un text existent per editar-lo. Esc o clic fora per confirmar (Maj+T). Font, mida, estil i color a la barra.', ['textst']],
   shape: ['Forma', 'Arrossega per dibuixar la forma.', ['shape', 'draw']],
-  erase: ['Goma', 'Clic sobre una anotació per esborrar-la.', ['clear']],
+  erase: ['Goma', 'Clic o arrossega sobre una anotació, un ressaltat o una marca de revisió per esborrar-la.', ['clear']],
   signature: ['Signatura', 'Clic a la pàgina per col·locar-hi la signatura.', ['sig']],
+  seltext: ['Seleccionar text', 'Arrossega sobre el text per seleccionar-lo · Ctrl+C el copia · Ctrl+A selecciona tot el text de la pàgina · clic dret: més opcions.', ['seltxt']],
+  hlsel: ['Ressaltar text', 'Arrossega sobre el text: es ressalta seguint les línies de caràcters amb el ressaltador triat (color i opacitat).', ['hlpens']],
   measure: ['Mesurar', '', []]
 };
 function ctxUpdate() {
@@ -4247,6 +4387,254 @@ function updateStatus() {
   paint();
 }
 
+
+// ─── v7.5.5: selector de color comú. Substitueix el diàleg natiu de tots els <input type="color">:
+//     16 colors bàsics + RGB, HSL i HEX. Dispara 'input' en directe i 'change' en tancar. ───
+const CLP16 = ['#000000','#808080','#C0C0C0','#FFFFFF','#FF0000','#800000','#FFFF00','#808000','#00FF00','#008000','#00FFFF','#008080','#0000FF','#000080','#FF00FF','#800080'];
+const CLP16N = ['Negre','Gris','Plata','Blanc','Vermell','Granat','Groc','Oliva','Llima','Verd','Cian','Verd blavós','Blau','Blau marí','Magenta','Porpra'];
+const clpHex2rgb = h => { h = String(h || '').replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); return /^[0-9a-f]{6}$/i.test(h) ? [0, 2, 4].map(i => parseInt(h.substr(i, 2), 16)) : null; };
+const clpRgb2hex = (r, g, b) => '#' + [r, g, b].map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join('').toUpperCase();
+function clpRgb2hsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn; let h = 0, s = 0; const l = (mx + mn) / 2;
+  if (d) { s = d / (1 - Math.abs(2 * l - 1)); h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h = (h * 60 + 360) % 360; }
+  return [Math.round(h), Math.round(s * 100), Math.round(l * 100)];
+}
+function clpHsl2rgb(h, s, l) {
+  s /= 100; l /= 100; const c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = l - c / 2;
+  const [r, g, b] = h < 60 ? [c, x, 0] : h < 120 ? [x, c, 0] : h < 180 ? [0, c, x] : h < 240 ? [0, x, c] : h < 300 ? [x, 0, c] : [c, 0, x];
+  return [(r + m) * 255, (g + m) * 255, (b + m) * 255].map(Math.round);
+}
+let clpIn = null, clpStart = '';
+function clpEnsure() {
+  let p = $('cpop'); if (p) return p;
+  p = document.createElement('div'); p.id = 'cpop';
+  p.innerHTML = `<div class="cp16">${CLP16.map((c, i) => `<button type="button" data-c="${c}" style="background:${c}" title="${CLP16N[i]} · ${c}"></button>`).join('')}</div>
+    <div class="cpr"><b>HEX</b><input type="text" id="cp-hex" maxlength="7" spellcheck="false"><span class="cpsw" id="cp-sw"></span></div>
+    <div class="cpr"><b>R</b><input type="range" id="cp-rr" min="0" max="255"><input type="number" id="cp-r" min="0" max="255"></div>
+    <div class="cpr"><b>G</b><input type="range" id="cp-gr" min="0" max="255"><input type="number" id="cp-g" min="0" max="255"></div>
+    <div class="cpr"><b>B</b><input type="range" id="cp-br" min="0" max="255"><input type="number" id="cp-b" min="0" max="255"></div>
+    <div class="cpr"><b>H</b><input type="range" id="cp-hr" min="0" max="360"><input type="number" id="cp-h" min="0" max="360"></div>
+    <div class="cpr"><b>S %</b><input type="range" id="cp-sr" min="0" max="100"><input type="number" id="cp-s" min="0" max="100"></div>
+    <div class="cpr"><b>L %</b><input type="range" id="cp-lr" min="0" max="100"><input type="number" id="cp-l" min="0" max="100"></div>`;
+  document.body.appendChild(p);
+  p.addEventListener('mousedown', e => e.stopPropagation());
+  p.querySelectorAll('.cp16 button').forEach(b => b.onclick = () => clpSet(b.dataset.c));
+  $('cp-hex').oninput = e => { const v = e.target.value.trim(); const rgb = clpHex2rgb(v.startsWith('#') ? v : '#' + v); if (rgb) clpSet(clpRgb2hex(...rgb), 'hex'); };
+  ['r', 'g', 'b'].forEach(k => ['', 'r'].forEach(x => $('cp-' + k + x).oninput = e => { const v = e.target.value; $('cp-' + k + (x ? '' : 'r')).value = v; clpSet(clpRgb2hex(+$('cp-r').value, +$('cp-g').value, +$('cp-b').value), 'rgb'); }));
+  ['h', 's', 'l'].forEach(k => ['', 'r'].forEach(x => $('cp-' + k + x).oninput = e => { const v = e.target.value; $('cp-' + k + (x ? '' : 'r')).value = v; clpSet(clpRgb2hex(...clpHsl2rgb(+$('cp-h').value, +$('cp-s').value, +$('cp-l').value)), 'hsl'); }));
+  return p;
+}
+function clpSet(hex, from) {
+  const rgb = clpHex2rgb(hex); if (!rgb || !clpIn) return;
+  hex = clpRgb2hex(...rgb); const hsl = clpRgb2hsl(...rgb);
+  if (from !== 'hex') $('cp-hex').value = hex;
+  if (from !== 'rgb') { ['r', 'g', 'b'].forEach((k, i) => { $('cp-' + k).value = rgb[i]; $('cp-' + k + 'r').value = rgb[i]; }); }
+  if (from !== 'hsl') { ['h', 's', 'l'].forEach((k, i) => { $('cp-' + k).value = hsl[i]; $('cp-' + k + 'r').value = hsl[i]; }); }
+  $('cp-sw').style.background = hex;
+  $('cpop').querySelectorAll('.cp16 button').forEach(b => b.classList.toggle('sel', b.dataset.c.toLowerCase() === hex.toLowerCase()));
+  if (clpIn.value.toLowerCase() !== hex.toLowerCase()) { clpIn.value = hex.toLowerCase(); clpIn.dispatchEvent(new Event('input', { bubbles: true })); }
+}
+function clpOpen(inp) {
+  const p = clpEnsure(); clpIn = inp; clpStart = inp.value;
+  p.classList.add('on'); clpSet(inp.value || '#000000');
+  const r = inp.getBoundingClientRect(), W = p.offsetWidth, H = p.offsetHeight;
+  p.style.left = Math.max(6, Math.min(innerWidth - W - 6, r.left)) + 'px';
+  p.style.top = (r.bottom + 6 + H > innerHeight ? Math.max(6, r.top - H - 6) : r.bottom + 6) + 'px';
+}
+function clpClose() {
+  const p = $('cpop'); if (!p || !p.classList.contains('on')) return;
+  p.classList.remove('on'); const i = clpIn; clpIn = null;
+  if (i && i.value.toLowerCase() !== clpStart.toLowerCase()) i.dispatchEvent(new Event('change', { bubbles: true }));
+}
+document.addEventListener('click', e => {
+  const t = e.target;
+  if (t && t.matches && t.matches('input[type="color"]')) { e.preventDefault(); if (clpIn === t) clpClose(); else { clpClose(); clpOpen(t); } return; }
+  if (clpIn && !e.target.closest('#cpop')) clpClose();
+}, true);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && clpIn) { const i = clpIn; i.value = clpStart; i.dispatchEvent(new Event('input', { bubbles: true })); clpIn = null; $('cpop').classList.remove('on'); } }, true);
+addEventListener('resize', clpClose);
+
+
+// ─── v7.5.5: estil de text (font, mida, N/C/T/S, color) a la barra contextual, amb 4 estils configurables.
+//     Compartit per «Text» i «Text in situ». El darrer estil triat i editat es recorda (localStorage). ───
+const TXF = {
+  helv:  { css: 'Helvetica, Arial, sans-serif',        std: ['Helvetica', 'HelveticaBold', 'HelveticaOblique', 'HelveticaBoldOblique'] },
+  times: { css: '"Times New Roman", Times, serif',     std: ['TimesRoman', 'TimesRomanBold', 'TimesRomanItalic', 'TimesRomanBoldItalic'] },
+  cour:  { css: '"Courier New", Courier, monospace',   std: ['Courier', 'CourierBold', 'CourierOblique', 'CourierBoldOblique'] }
+};
+const txFam = a => TXF[a && a.font] || TXF.helv;
+const txCss = a => (a.italic ? 'italic ' : '') + (a.bold ? 'bold ' : '') + a.size + 'px ' + txFam(a).css;
+const TXS_DEF = [
+  { font: 'helv', size: 12, color: '#000000', bold: false, italic: false, under: false, strike: false },
+  { font: 'helv', size: 24, color: '#000000', bold: true,  italic: false, under: false, strike: false },
+  { font: 'helv', size: 10, color: '#C62828', bold: false, italic: true,  under: false, strike: false },
+  { font: 'cour', size: 11, color: '#1E4FA8', bold: false, italic: false, under: false, strike: false }
+];
+const TX_SIZES = [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 36, 48, 64, 72, 96];
+let TXP = (() => { try { const j = JSON.parse(localStorage.getItem('guaita-txstyles-v1')); if (Array.isArray(j) && j.length === 4) return j.map((x, i) => ({ ...TXS_DEF[i], ...x })); } catch (e) {} return TXS_DEF.map(x => ({ ...x })); })();
+let txpIdx = (() => { try { const v = +localStorage.getItem('guaita-txstyle-i'); return v >= 0 && v < 4 ? v : 0; } catch (e) { return 0; } })();
+const txs = () => TXP[txpIdx];
+const txSave = () => { try { localStorage.setItem('guaita-txstyles-v1', JSON.stringify(TXP)); localStorage.setItem('guaita-txstyle-i', String(txpIdx)); } catch (e) {} };
+const txDesc = x => (({ helv: 'Helvetica', times: 'Times', cour: 'Courier' })[x.font] || 'Helvetica') + ' ' + x.size + ' pt' + (x.bold ? ' · negreta' : '') + (x.italic ? ' · cursiva' : '') + (x.strike ? ' · tatxat' : '') + (x.under ? ' · subratllat' : '') + ' · ' + x.color;
+function txSizeOpts(sel, pt) {
+  const v = Math.round(pt * 10) / 10, list = TX_SIZES.includes(v) ? TX_SIZES : [...TX_SIZES, v].sort((a, b) => a - b);
+  sel.innerHTML = list.map(n => `<option value="${n}">${n} pt</option>`).join(''); sel.value = String(v);
+}
+function txSetModal(x) {   // omple la finestra «Afegir text» amb un estil
+  txSizeOpts($('text-size'), x.size); $('text-color').value = x.color; $('text-bold').checked = !!x.bold;
+  $('text-font').value = x.font || 'helv'; $('text-italic').checked = !!x.italic; $('text-under').checked = !!x.under; $('text-strike').checked = !!x.strike;
+}
+const txFromModal = () => ({ font: $('text-font').value, size: parseFloat($('text-size').value) * RENDER_SCALE, color: $('text-color').value, bold: $('text-bold').checked, italic: $('text-italic').checked, under: $('text-under').checked, strike: $('text-strike').checked });
+function txsSync(x) {   // pinta la barra; x = estil transitori (text existent en edició), si no, l'estil actiu
+  const v = x || txs();
+  $('tx-font').value = v.font || 'helv'; txSizeOpts($('tx-size'), v.size); $('tx-color').value = v.color;
+  [['b', 'bold'], ['i', 'italic'], ['s', 'strike'], ['u', 'under']].forEach(([k, p]) => $('tx-' + k).classList.toggle('active', !!v[p]));
+  document.querySelectorAll('#txp-grp .txp').forEach(b => {
+    const i = +b.dataset.txp, P = TXP[i];
+    b.classList.toggle('active', !x && i === txpIdx);
+    b.style.color = P.color; b.style.fontWeight = P.bold ? '700' : '400'; b.style.fontStyle = P.italic ? 'italic' : 'normal';
+    b.style.fontFamily = txFam(P).css; b.style.textDecoration = [P.under ? 'underline' : '', P.strike ? 'line-through' : ''].join(' ').trim() || 'none';
+    b.title = 'Estil ' + (i + 1) + ' · ' + txDesc(P) + ' (es desa quan el canvies)';
+  });
+}
+function txsRead() {
+  return { font: $('tx-font').value, size: parseFloat($('tx-size').value) || 12, color: $('tx-color').value,
+    bold: $('tx-b').classList.contains('active'), italic: $('tx-i').classList.contains('active'), strike: $('tx-s').classList.contains('active'), under: $('tx-u').classList.contains('active') };
+}
+function txsApplyOpen(x) {   // aplica un estil (en pt) al quadre in situ obert
+  if (!txin) return;
+  Object.assign(txin, { font: x.font, size: x.size * RENDER_SCALE, color: x.color, bold: x.bold, italic: x.italic, under: x.under, strike: x.strike });
+  txin.fit(); txin.ta.focus();
+}
+function txsChanged() {
+  const x = txsRead();
+  if (txin && txin.a) { txsApplyOpen(x); txsSync(x); return; }   // text existent: només aquest text, no l'estil desat
+  Object.assign(txs(), x); txSave(); txsSync(); txsApplyOpen(txs());
+}
+(function txsInit() {
+  ['tx-font', 'tx-size'].forEach(id => $(id).onchange = txsChanged);
+  $('tx-color').oninput = txsChanged;
+  [['b', 'bold'], ['i', 'italic'], ['s', 'strike'], ['u', 'under']].forEach(([k]) => $('tx-' + k).onclick = e => { e.currentTarget.classList.toggle('active'); txsChanged(); });
+  document.querySelectorAll('#txp-grp .txp').forEach(b => b.onclick = () => { txpIdx = +b.dataset.txp; txSave(); if (txin && txin.a) { txsApplyOpen(txs()); txsSync(txs()); } else { txsSync(); txsApplyOpen(txs()); } });
+  txsSync();
+})();
+
+
+// ─── v7.5.5: 5 ressaltadors configurables (color, gruix, opacitat) i mode «recte» sobre la línia de text ───
+const HLS_DEF = [{ c: '#FFE500', w: 12, o: 40 }, { c: '#7CFC00', w: 12, o: 40 }, { c: '#FF2ECC', w: 12, o: 40 }, { c: '#00E5FF', w: 12, o: 40 }, { c: '#FF9100', w: 12, o: 40 }];
+let HLS = (() => { try { const j = JSON.parse(localStorage.getItem('guaita-hls-v1')); if (Array.isArray(j) && j.length === 5) return j.map((x, i) => ({ ...HLS_DEF[i], ...x })); } catch (e) {} return HLS_DEF.map(x => ({ ...x })); })();
+let hlIdx = (() => { try { const v = +localStorage.getItem('guaita-hl-i'); return v >= 0 && v < 5 ? v : 0; } catch (e) { return 0; } })();
+let hlMode = (() => { try { return localStorage.getItem('guaita-hl-mode') === 'line' ? 'line' : 'free'; } catch (e) { return 'free'; } })();
+const hlSave = () => { try { localStorage.setItem('guaita-hls-v1', JSON.stringify(HLS)); localStorage.setItem('guaita-hl-i', String(hlIdx)); localStorage.setItem('guaita-hl-mode', hlMode); } catch (e) {} };
+function hlSync() {
+  document.querySelectorAll('#hlp-btns .hlpb').forEach(b => {
+    const i = +b.dataset.hlp, P = HLS[i];
+    b.classList.toggle('active', i === hlIdx); b.firstElementChild.style.background = P.c;
+    b.title = 'Ressaltador ' + (i + 1) + ' · ' + P.c + ' · ' + P.w + ' px · ' + P.o + ' % (modifica el color, el gruix o l\'opacitat per recordar-ho)';
+  });
+  document.querySelectorAll('#hlp-grp .hlm').forEach(b => b.classList.toggle('active', b.dataset.hlm === hlMode));
+  $('hl-color').value = HLS[hlIdx].c; $('hl-width').value = HLS[hlIdx].w; $('hl-opacity').value = HLS[hlIdx].o;
+}
+function hlBandAt(p) {   // franja de la línia de text sota el punt (a partir dels blocs de text del PDF)
+  const doc = getActiveDoc(); if (!doc) return null;
+  const pd = doc.pages[doc.curIdx]; if (!pd || pd.type !== 'pdf') return null;
+  const key = gid(pd.pdfBytes) + ':' + pd.srcIdx + ':' + (pd.rotation || 0) + ':' + doc.curIdx;
+  if (!editItems || key !== editKey) { loadEditData(); return null; }
+  const runs = editItems.filter(i => i.kind === 'text'), tol = 2 * RENDER_SCALE;
+  const hit = runs.find(i => p.x >= i.box.x0 - tol && p.x <= i.box.x1 + tol && p.y >= i.box.y0 - tol && p.y <= i.box.y1 + tol);
+  if (!hit) return null;
+  let y0 = hit.box.y0, y1 = hit.box.y1; const h = y1 - y0;
+  runs.forEach(i => { const ov = Math.min(y1, i.box.y1) - Math.max(y0, i.box.y0); if (ov > 0.6 * Math.min(h, i.box.y1 - i.box.y0)) { y0 = Math.min(y0, i.box.y0); y1 = Math.max(y1, i.box.y1); } });
+  return { y0, y1 };
+}
+(function hlInit() {
+  document.querySelectorAll('#hlp-btns .hlpb').forEach(b => b.onclick = () => { hlIdx = +b.dataset.hlp; hlSave(); if (tool !== 'highlight') setTool('highlight'); else hlSync(); });
+  document.querySelectorAll('#hlp-grp .hlm').forEach(b => b.onclick = () => { hlMode = b.dataset.hlm; hlSave(); hlSync(); if (hlMode === 'line') loadEditData(); });
+  ['hl-color', 'hl-width', 'hl-opacity'].forEach(id => $(id).addEventListener('input', () => {
+    const c = $('hl-color').value, w = Math.max(2, Math.min(80, parseFloat($('hl-width').value) || HLS[hlIdx].w)), o = Math.max(10, Math.min(100, parseFloat($('hl-opacity').value) || HLS[hlIdx].o));
+    HLS[hlIdx] = { c, w, o }; hlSave(); hlSync();
+  }));
+  hlSync();
+})();
+
+
+// ─── v7.5.5: capa de text sobre la pàgina (seleccionar i copiar a Veure i a Editar) + «Ressaltar text» per selecció ───
+let tlKey = '', tlBusy = false;
+async function tlEnsure() {
+  const L = $('text-layer'), doc = getActiveDoc(); if (!L || !doc || viewMode !== 'single') return;
+  const pd = doc.pages[doc.curIdx]; if (!pd) return;
+  const key = pd.type === 'pdf' ? gid(pd.pdfBytes) + ':' + pd.srcIdx + ':' + (pd.rotation || 0) + ':' + doc.curIdx + ':' + JSON.stringify((pd.edits || []).map(e => [e.id, e.text])).length : 'blank:' + doc.curIdx;
+  if (key === tlKey && L.childNodes.length) return;
+  if (tlBusy) { tlKey = ''; setTimeout(tlEnsure, 120); return; }
+  tlBusy = true; L.textContent = ''; tlKey = key;
+  try {
+    if (pd.type === 'pdf') {
+      const pg = await getPdfPage(pd); if (!pg) return;
+      const vp = pg.getViewport({ scale: 1, rotation: pd.rotation || 0 });
+      L.style.width = vp.width + 'px'; L.style.height = vp.height + 'px'; L.style.setProperty('--scale-factor', '1');
+      const tc = await pg.getTextContent();
+      await pdfjsLib.renderTextLayer({ textContentSource: tc, container: L, viewport: vp, textDivs: [] }).promise;
+      const eoc = document.createElement('div'); eoc.className = 'endOfContent'; L.appendChild(eoc);   // evita que la selecció salti al final en passar per zones buides
+    }
+  } catch (e) { console.warn('Capa de text:', e.message); tlKey = ''; }
+  finally { tlBusy = false; }
+}
+function tlSelText() {
+  const sel = getSelection(), L = $('text-layer');
+  if (!sel || sel.isCollapsed || !sel.rangeCount || !L || !L.contains(sel.anchorNode)) return '';
+  return sel.toString();
+}
+function tlSelectAll() {
+  const L = $('text-layer'); if (!L) return;
+  tlEnsure().then(() => { const r = document.createRange(); r.selectNodeContents(L); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); });
+}
+async function tlCopy(txt) {
+  txt = typeof txt === 'string' ? txt : tlSelText();
+  if (!txt) { toast('No hi ha text seleccionat', true); return; }
+  let ok = false;
+  try { await navigator.clipboard.writeText(txt); ok = true; } catch (e) {}
+  if (!ok) { try { const ta = document.createElement('textarea'); ta.value = txt; ta.style.cssText = 'position:fixed;left:-9999px;top:0'; document.body.appendChild(ta); ta.select(); ok = document.execCommand('copy'); ta.remove(); } catch (e) {} }
+  toast(ok ? 'Text copiat al porta-retalls (' + txt.length + ' caràcters)' : 'No s\'ha pogut copiar el text', !ok);
+}
+function tlSelRects() {   // línies de la selecció en coordenades del canvas
+  const sel = getSelection(), L = $('text-layer'); if (!sel || sel.isCollapsed || !sel.rangeCount || !L) return [];
+  const lr = L.getBoundingClientRect(), pcv = $('page-canvas'), kx = pcv.width / lr.width, ky = pcv.height / lr.height, rects = [];
+  for (let i = 0; i < sel.rangeCount; i++) {
+    const r = sel.getRangeAt(i); if (!L.contains(r.commonAncestorContainer)) continue;
+    for (const q of r.getClientRects()) if (q.width > 1 && q.height > 1) rects.push({ x0: (q.left - lr.left) * kx, y0: (q.top - lr.top) * ky, x1: (q.right - lr.left) * kx, y1: (q.bottom - lr.top) * ky });
+  }
+  rects.sort((a, b) => ((a.y0 + a.y1) - (b.y0 + b.y1)) || a.x0 - b.x0);
+  const lines = [];
+  rects.forEach(r => {
+    const c = (r.y0 + r.y1) / 2, l = lines.find(l => Math.abs(c - (l.y0 + l.y1) / 2) < 0.5 * Math.min(l.y1 - l.y0, r.y1 - r.y0));
+    if (l) { l.x0 = Math.min(l.x0, r.x0); l.x1 = Math.max(l.x1, r.x1); l.y0 = Math.min(l.y0, r.y0); l.y1 = Math.max(l.y1, r.y1); } else lines.push({ ...r });
+  });
+  return lines;
+}
+function tlHighlightSel() {
+  const doc = getActiveDoc(); if (!doc) return;
+  const L = tlSelRects(); if (!L.length) return;
+  const H = HLS[hlIdx], op = Math.max(10, Math.min(100, parseFloat($('hl-opacity').value) || H.o)) / 100, col = $('hl-color').value;
+  saveHistory();
+  L.forEach(l => { const ym = (l.y0 + l.y1) / 2; doc.pages[doc.curIdx].annotations.push({ type: 'highlight', color: col, width: l.y1 - l.y0, op, cap: 'butt', line: true, points: [{ x: l.x0, y: ym }, { x: l.x1, y: ym }] }); });
+  try { getSelection().removeAllRanges(); } catch (e) {}
+  redrawAnnotations();
+}
+document.addEventListener('mousedown', e => { const eoc = e.target.closest && e.target.closest('#text-layer') && $('text-layer').querySelector('.endOfContent'); if (eoc) eoc.classList.add('active'); }, true);
+let tlPrev = null;
+document.addEventListener('selectionchange', () => {   // com pdf.js: el «final de contingut» se situa al costat de l'extrem mòbil de la selecció
+  const sel = getSelection(), L = $('text-layer'); if (!L || !sel || !sel.rangeCount) return;
+  const range = sel.getRangeAt(0), end = L.querySelector('.endOfContent');
+  if (!end || !L.contains(range.commonAncestorContainer)) { tlPrev = null; return; }
+  const modStart = tlPrev && (range.compareBoundaryPoints(Range.END_TO_END, tlPrev) === 0 || range.compareBoundaryPoints(Range.START_TO_END, tlPrev) === 0);
+  let anchor = modStart ? range.startContainer : range.endContainer; if (anchor.nodeType === 3) anchor = anchor.parentNode;
+  const par = anchor.parentElement;
+  if (par && par.closest('#text-layer') && anchor !== end) { end.style.width = L.style.width; end.style.height = L.style.height; par.insertBefore(end, modStart ? anchor : anchor.nextSibling); }
+  tlPrev = range.cloneRange();
+});
+document.addEventListener('mouseup', () => { const L = $('text-layer'), eoc = L && L.querySelector('.endOfContent'); if (eoc) { eoc.classList.remove('active'); eoc.style.width = ''; eoc.style.height = ''; L.appendChild(eoc); } tlPrev = null; }, true);
+document.addEventListener('mouseup', e => { if (tool === 'hlsel' && e.button === 0 && tlSelText()) setTimeout(tlHighlightSel, 0); });
+
 function setTool(t) {
   if (typeof txin !== 'undefined' && txin && t !== 'textin') textInCommit();
   if (t !== 'rv') rvHlEdit = false;
@@ -4260,12 +4648,17 @@ function setTool(t) {
     toast("Eines d'edició: tornem a la vista de pàgina única");
   }
   tool = t;
-  ['pan','select','edit','measure','pencil','highlight','text','textin','shape','erase','signature'].forEach(x =>
+  ['pan','select','edit','edtin','measure','pencil','highlight','text','textin','shape','erase','signature'].forEach(x =>
     $('tool-' + x).classList.toggle('active', x === t));
   vc.className = t !== 'pan' ? 'tool-' + t : '';
+  document.body.dataset.tool = t;
+  document.querySelectorAll('.tb-seltext').forEach(b => b.classList.toggle('active', t === 'seltext')); const hsb = $('tool-hlsel'); if (hsb) hsb.classList.toggle('active', t === 'hlsel');
+  if (t !== 'seltext' && t !== 'hlsel') { try { getSelection().removeAllRanges(); } catch (e) {} } else tlEnsure();
   if (t !== 'select') clearSel();
   if (t !== 'edit' && tool === 'edit') { editHover = null; }
+  if (t !== 'edtin') edtinClose(true);
   if (t === 'edit') { editHover = null; loadEditData(); toast('Passa el ratolí sobre un text o una imatge del PDF i fes-hi clic per editar-los'); }
+  if (t === 'edtin') { editHover = null; loadEditData(); toast('Clica un text del PDF i escriu-hi directament · Intro: diàleg amb opcions · Esc: cancel·la'); }
   vc.style.cursor = toolCursor();
   if (t !== 'measure') { mPts = []; clearOverlay(); updateMeasureInfo(); }
   if (t === 'signature' && !savedSignature) {
@@ -4278,6 +4671,7 @@ function setTool(t) {
   sgSyncBar();
   const hb = $('tool-hltext'); if (hb) hb.classList.toggle('active', t === 'rv' && rvHlEdit);
   penSync();
+  if (t === 'highlight') { hlSync(); if (hlMode === 'line') loadEditData(); }
 }
 
 // ─── Motor de contingut ───
@@ -4963,6 +5357,51 @@ $('ei-file').addEventListener('change', async e => {
   } catch (err) { console.error(err); toast("No s'ha pogut carregar la imatge: " + err.message, true); }
 });
 
+// ── v7.5.5: edició in situ del text existent (editor flotant sobre el text; Intro obre el diàleg) ──
+let eiin = null;
+function edtinClose(silent) { const st = eiin; if (!st) return; eiin = null; document.removeEventListener('mousedown', st.out, true); st.el.remove(); editHover = null; if (!silent) clearOverlay(); }
+function edtinDown(e) {
+  const it = editPick(scrToCanvas(e.clientX, e.clientY));
+  if (!it) return;
+  if (it.kind === 'image') { openEditImage(it); return; }
+  edtinOpen(it);
+}
+function edtinOpen(it) {
+  edtinClose(true); clearOverlay();
+  const run = it.run, op = run.ops && run.ops[0], b = it.box, ed = editHasEdit(it), f = zoom / RENDER_SCALE;
+  let horiz = !!op;
+  if (op) { const p0 = editMap(op.M[4], op.M[5]), p1 = editMap(op.M[4] + op.M[0] * 10, op.M[5] + op.M[1] * 10); horiz = Math.abs(Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI) <= 2; }
+  if (!horiz) { toast('Aquest text està girat: s\'obre el diàleg d\'edició', false); openEditText(it); return; }
+  const orig = ed ? ed.text : run.text, df = etDefaultFont(run.font && run.font.base).replace('std:', '');
+  const bold = /Bold/.test(df), ital = /Oblique|Italic/.test(df), fam = /Times/.test(df) ? "'Times New Roman', Times, serif" : /Courier/.test(df) ? "'Courier New', Courier, monospace" : "Helvetica, Arial, sans-serif";
+  const size = (op.eff * RENDER_SCALE) * f, sc = canvasToScr(b.x0, b.y0), w = document.createElement('div'); w.id = 'edin';
+  w.style.left = sc.x + 'px'; w.style.top = sc.y + 'px';
+  w.innerHTML = '<input type="text" spellcheck="false">';
+  document.body.appendChild(w);
+  const inp = w.querySelector('input'), cv = document.createElement('canvas').getContext('2d');
+  inp.value = orig;
+  Object.assign(inp.style, { fontSize: size + 'px', fontFamily: fam, fontWeight: bold ? '700' : '400', fontStyle: ital ? 'italic' : 'normal', color: fillToHex(run.fill), background: sampleBg(b), height: Math.max(size * 1.15, (b.y1 - b.y0) * f) + 'px' });
+  const fit = () => { cv.font = (ital ? 'italic ' : '') + (bold ? 'bold ' : '') + size + 'px ' + fam; inp.style.width = Math.max((b.x1 - b.x0) * f, cv.measureText(inp.value || ' ').width + 6) + 'px'; };
+  const st = { it, inp, el: w, orig };
+  st.out = ev => { if (w.contains(ev.target)) return; ev.stopPropagation(); ev.preventDefault(); edtinDialog(); };
+  document.addEventListener('mousedown', st.out, true);
+  inp.addEventListener('input', fit);
+  inp.addEventListener('keydown', ev => {
+    ev.stopPropagation();
+    if (ev.key === 'Enter') { ev.preventDefault(); edtinDialog(); }
+    else if (ev.key === 'Escape') { ev.preventDefault(); edtinClose(); }
+  });
+  eiin = st; fit(); setTimeout(() => { inp.focus(); inp.select(); }, 0);
+}
+function edtinDialog() {
+  const st = eiin; if (!st) return;
+  const txt = st.inp.value, it = st.it;
+  edtinClose();
+  if (txt === st.orig) return;           // sense canvis: no s'obre res
+  openEditText(it, txt);
+}
+vc.addEventListener('wheel', () => { if (eiin) edtinDialog(); }, { passive: true });
+
 // ── diàleg d'edició de text ──
 const STD_FONTS = [['Helvetica', 'Helvetica'], ['HelveticaBold', 'Helvetica negreta'], ['HelveticaOblique', 'Helvetica cursiva'], ['TimesRoman', 'Times'], ['TimesRomanBold', 'Times negreta'], ['Courier', 'Courier'], ['CourierBold', 'Courier negreta']];
 const WIN80S = '€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ';
@@ -4984,10 +5423,10 @@ function etDefaultFont(base) {
   if (/times|serif|georgia|garamond|minion/.test(b) && !/sans/.test(b)) return 'std:' + (bold ? 'TimesRomanBold' : 'TimesRoman');
   return 'std:' + (bold ? 'HelveticaBold' : (it ? 'HelveticaOblique' : 'Helvetica'));
 }
-function openEditText(it) {
+function openEditText(it, txt0) {
   const doc = getActiveDoc(), pd = doc.pages[doc.curIdx], run = it.run, ed = editHasEdit(it);
   etCur = it;
-  $('et-text').value = ed ? ed.text : run.text;
+  $('et-text').value = txt0 != null ? txt0 : (ed ? ed.text : run.text);
   const f = run.font;
   $('et-info').innerHTML = (f ? `Font: <b>${f.base || '(sense nom)'}</b> · ${f.sub}${f.embedded ? ' · incrustada' + (f.subset ? ' (subconjunt)' : '') : ' · no incrustada'}` : 'Font no trobada') +
     (run.ok ? '' : `<br><b>No es pot editar al contingut:</b> ${run.reason}. Només superposició.`);
@@ -5125,14 +5564,14 @@ function etApplyOverlay(pd, doc) {
 let selAnn = null, selDrag = null, editingTextAnn = null, nudgeT = 0;
 const SEL_COL = '#0a84ff';
 const su = () => RENDER_SCALE / Math.max(zoom, 0.05);   // píxels de canvas per píxel de pantalla
-function toolCursor() { return tool === 'pan' ? 'grab' : (tool === 'select' || tool === 'edit') ? 'default' : tool === 'erase' ? 'cell' : 'crosshair'; }
+function toolCursor() { return tool === 'pan' ? 'grab' : (tool === 'seltext' || tool === 'hlsel') ? 'text' : (tool === 'select' || tool === 'edit') ? 'default' : tool === 'erase' ? 'cell' : 'crosshair'; }
 function rotPt(px, py, cx, cy, th) {
   const c = Math.cos(th), s = Math.sin(th), dx = px - cx, dy = py - cy;
   return { x: cx + dx * c - dy * s, y: cy + dx * s + dy * c };
 }
 function textMetrics(a) {
   const c = textMetrics._c || (textMetrics._c = document.createElement('canvas').getContext('2d'));
-  c.font = (a.bold ? 'bold ' : '') + a.size + 'px Helvetica, Arial, sans-serif';
+  c.font = txCss(a);
   const lines = a.text.split('\n');
   return { w: Math.max(1, ...lines.map(l => c.measureText(l).width)), h: lines.length * a.size * 1.25 };
 }
@@ -5365,13 +5804,7 @@ function selEdit() {
   const a = selAnn; if (!a || a.type !== 'text') return;
   editingTextAnn = a; pendingTextPos = null;
   $('text-content').value = a.text;
-  $('text-color').value = a.color; $('text-bold').checked = !!a.bold;
-  const pt = Math.round(a.size / RENDER_SCALE * 10) / 10, sel = $('text-size');
-  if (![...sel.options].some(o => parseFloat(o.value) === pt)) {
-    const op = new Option(pt + ' pt', String(pt)); sel.add(op);
-    [...sel.options].sort((x, y) => x.value - y.value).forEach(o => sel.add(o));
-  }
-  sel.value = String(pt);
+  txSetModal({ font: a.font, size: a.size / RENDER_SCALE, color: a.color, bold: a.bold, italic: a.italic, under: a.under, strike: a.strike });
   openModal('modal-text');
   setTimeout(() => $('text-content').focus(), 50);
 }
@@ -5542,10 +5975,20 @@ function startDraw(e) {
   drawing = true;
   const hl = tool === 'highlight';
   const pos = scrToCanvas(e.clientX, e.clientY);
+  if (hl) {   // v7.5.5: ressaltador amb 5 rotuladors; mode lliure o recte sobre la línia de text
+    const H = HLS[hlIdx], op = Math.max(10, Math.min(100, parseFloat($('hl-opacity').value) || H.o)) / 100;
+    curStroke = { type: 'highlight', color: $('hl-color').value, width: Math.max(2, parseFloat($('hl-width').value) || H.w) * RENDER_SCALE, op, points: [pos] };
+    if (hlMode === 'line' || e.shiftKey) {
+      const band = hlBandAt(pos), ym = band ? (band.y0 + band.y1) / 2 : pos.y;
+      if (band) curStroke.width = band.y1 - band.y0;
+      curStroke.cap = 'butt'; curStroke.line = true; curStroke.points = [{ x: pos.x, y: ym }, { x: pos.x, y: ym }];
+    } else curStroke.pen = 'b';
+    return;
+  }
   curStroke = {
-    type: hl ? 'highlight' : 'stroke',
+    type: 'stroke',
     color: $('pencil-color').value,
-    width: (parseFloat($('pencil-width').value) || 2) * RENDER_SCALE * (hl ? 5 : 1),
+    width: (parseFloat($('pencil-width').value) || 2) * RENDER_SCALE,
     points: [pos],
   };
   if (!hl && tool === 'pencil') {   // v7.4.1: llapis (l) translúcid amb gruix variable · bolígraf (b) opac amb gruix constant
@@ -5561,7 +6004,8 @@ function continueDraw(e) {
     const pr = curStroke.points[curStroke.points.length - 1], sp = Math.hypot(q.x - pr.x, q.y - pr.y) / RENDER_SCALE;
     q.k = 0.55 * (pr.k == null ? 1 : pr.k) + 0.45 * Math.max(0.55, Math.min(1.3, 1.3 - sp / 18));
   }
-  curStroke.points.push(q);
+  if (curStroke.line) curStroke.points[1] = { x: q.x, y: curStroke.points[0].y };   // recte: només es mou l'extrem final, sobre la línia
+  else curStroke.points.push(q);
   redrawAnnotations();
 }
 
@@ -5599,7 +6043,7 @@ function drawStroke(stroke, ctx) {
   }
   ctx.strokeStyle = stroke.color;
   ctx.lineWidth   = stroke.width;
-  ctx.lineCap     = 'round';
+  ctx.lineCap     = stroke.cap || 'round';
   ctx.lineJoin    = 'round';
   ctx.beginPath();
   ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
@@ -5611,7 +6055,7 @@ function drawAnnot(a, ctx) {
   const t = a.type || 'stroke';
   if (t === 'stroke') drawStroke(a, ctx);
   else if (t === 'highlight') {
-    ctx.save(); ctx.globalAlpha = 0.35; drawStroke(a, ctx); ctx.restore();
+    ctx.save(); ctx.globalAlpha = a.op == null ? 0.35 : (penPoly(a) ? 1 : a.op); drawStroke(a, ctx); ctx.restore();
   }
   else if (t === 'text') drawTextA(a, ctx);
   else if (t === 'watermark') drawWatermarkA(a, ctx);
@@ -5819,12 +6263,19 @@ function drawTextA(a, ctx) {
   if (a._hid) return;   // s'està editant in situ
   ctx.save();
   ctx.fillStyle = a.color;
-  ctx.font = (a.bold ? 'bold ' : '') + a.size + 'px Helvetica, Arial, sans-serif';
+  ctx.font = txCss(a);
   ctx.textBaseline = 'alphabetic';
   ctx.textAlign = 'left';
   const lh = a.size * 1.25;
-  a.text.split('\n').forEach((ln, i) =>
-    ctx.fillText(ln, a.x, a.y + a.size * 0.9 + i * lh));
+  a.text.split('\n').forEach((ln, i) => {
+    const by = a.y + a.size * 0.9 + i * lh;
+    ctx.fillText(ln, a.x, by);
+    if (ln && (a.under || a.strike)) {   // v7.5.5: subratllat i tatxat
+      const w = ctx.measureText(ln).width, th = Math.max(1, a.size * 0.06);
+      if (a.under) ctx.fillRect(a.x, by + a.size * 0.12, w, th);
+      if (a.strike) ctx.fillRect(a.x, by - a.size * 0.28, w, th);
+    }
+  });
   ctx.restore();
 }
 
@@ -6169,7 +6620,7 @@ async function createNewDoc() {
     }
   } catch (err) { toast('No s\'ha pogut llegir una imatge: ' + err.message, true); return; }
   const nd = { id: generateId(), name: nm, pages, outline: [], history: [], redo: [], pageNums: null, curIdx: 0, selectedPages: [0] };
-  docs.push(nd);
+  markNew(nd); docs.push(nd);
   closeModal('modal-new');
   newImgs.forEach(x => URL.revokeObjectURL(x.url)); newImgs = [];
   await switchDoc(nd.id);
@@ -6389,7 +6840,7 @@ async function embedAnnotations(outPage, annotations, rot, font, fontB, out, sig
     if (t === 'stroke' || t === 'highlight') {
       if (!a.points || a.points.length < 2) continue;
       const thick = Math.max(0.5, a.width / RENDER_SCALE);
-      const op = t === 'highlight' ? 0.35 : 1;
+      const op = t === 'highlight' ? (a.op == null ? 0.35 : a.op) : 1;
       if (penPoly(a)) {   // traç de llapis/bolígraf: un sol contorn ple (amb opacitat sense enfosquir-se als creuaments)
         const P = penOutline(a.points, a.width, a.pen === 'l').map(q => v2p(q.x, q.y, g));
         const d = 'M ' + P.map(q => q.x.toFixed(2) + ' ' + (g.ph - q.y).toFixed(2)).join(' L ') + ' Z';
@@ -6403,11 +6854,11 @@ async function embedAnnotations(outPage, annotations, rot, font, fontB, out, sig
           thickness: thick,
           color: clr,
           opacity: op,
-          lineCap: LineCapStyle.Round,
+          lineCap: a.cap === 'butt' ? LineCapStyle.Butt : LineCapStyle.Round,
         });
       }
     } else if (t === 'text') {
-      drawPdfText(outPage, a.text, a.x, a.y + a.size * 0.9, a.size, clr, g, a.bold ? fontB : font, 1);
+      drawPdfText(outPage, a.text, a.x, a.y + a.size * 0.9, a.size, clr, g, await txPdfFont(out, a, font, fontB), 1, a);
     } else if (t === 'watermark') {
       drawPdfWatermark(outPage, a, g, fontB);
     } else if (t === 'shape') {
@@ -6471,7 +6922,13 @@ async function embedImageAnnot(outPage, a, g, out, cache) {
   } catch (err) { console.warn('Imatge no incrustable:', err.message); }
 }
 
-function drawPdfText(outPage, text, vx, vyBase, sizePx, clr, g, font, opacity) {
+async function txPdfFont(out, a, font, fontB) {   // v7.5.5: família, negreta i cursiva
+  const fam = txFam(a), i = (a.bold ? 1 : 0) + (a.italic ? 2 : 0);
+  if (fam === TXF.helv && !a.italic) return a.bold ? fontB : font;
+  const nm = fam.std[i], c = out._txf || (out._txf = {});
+  return c[nm] || (c[nm] = await out.embedFont(PDFLib.StandardFonts[nm]));
+}
+function drawPdfText(outPage, text, vx, vyBase, sizePx, clr, g, font, opacity, deco) {
   const size = sizePx / RENDER_SCALE;
   const lh   = sizePx * 1.25;
   String(text).split('\n').forEach((ln, i) => {
@@ -6482,6 +6939,12 @@ function drawPdfText(outPage, text, vx, vyBase, sizePx, clr, g, font, opacity) {
         x: p.x, y: p.y, size, font, color: clr, opacity,
         rotate: PDFLib.degrees(g.r),
       });
+      if (deco && (deco.under || deco.strike)) {   // v7.5.5: subratllat i tatxat com a línies
+        const wPx = font.widthOfTextAtSize(ln, size) * RENDER_SCALE, th = Math.max(0.5, size * 0.06);
+        const seg = dy => outPage.drawLine({ start: v2p(vx, vyBase + i * lh + dy, g), end: v2p(vx + wPx, vyBase + i * lh + dy, g), thickness: th, color: clr, opacity });
+        if (deco.under) seg(sizePx * 0.12);
+        if (deco.strike) seg(-sizePx * 0.28);
+      }
     } catch (err) { console.warn('Text no incrustable:', err.message); }
   });
 }
@@ -6579,7 +7042,7 @@ async function savePdf() {
   if (doc.signed) {   // document signat: es desa tal com és, byte a byte
     const u = URL.createObjectURL(new Blob([doc.signed.bytes], { type: 'application/pdf' })), a = document.createElement('a');
     a.href = u; a.download = doc.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 30000);
-    toast('PDF signat desat sense canvis (signatures intactes)'); return;
+    markSaved(doc); toast('PDF signat desat sense canvis (signatures intactes)'); return;
   }
   if (!LIB_PDFLIB) { toast("pdf-lib no està disponible: prova de tornar a desar/obrir el fitxer", true); return; }
   toast('Generant PDF…', false, 15000);
@@ -6591,6 +7054,7 @@ async function savePdf() {
     const a     = document.createElement('a');
     a.href = url; a.download = `Editat_${doc.name}`; a.click();
     URL.revokeObjectURL(url);
+    markSaved(doc);
     toast('PDF desat!');
   } catch (err) {
     console.error(err);
@@ -7002,7 +7466,7 @@ function openTextAt(e) {
   editingTextAnn = null;
   pendingTextPos = scrToCanvas(e.clientX, e.clientY);
   $('text-content').value = '';
-  $('text-color').value = $('pencil-color').value;
+  txSetModal(txs());
   openModal('modal-text');
   setTimeout(() => $('text-content').focus(), 50);
 }
@@ -7014,7 +7478,7 @@ function confirmText() {
     const a = editingTextAnn; editingTextAnn = null;
     if (doc && txt.trim()) {
       saveHistory();
-      a.text = txt; a.size = parseFloat($('text-size').value) * RENDER_SCALE; a.color = $('text-color').value; a.bold = $('text-bold').checked;
+      a.text = txt; Object.assign(a, txFromModal());
       redrawAnnotations();
     }
     closeModal('modal-text');
@@ -7026,9 +7490,7 @@ function confirmText() {
     type: 'text',
     x: pendingTextPos.x, y: pendingTextPos.y,
     text: txt,
-    size: parseFloat($('text-size').value) * RENDER_SCALE,
-    color: $('text-color').value,
-    bold: $('text-bold').checked,
+    ...txFromModal(),
   });
   pendingTextPos = null;
   closeModal('modal-text');
@@ -7044,32 +7506,30 @@ function textInDown(e) {
   textInOpen(a, p);
 }
 function textInOpen(a, p) {
-  const f = (zoom / RENDER_SCALE), size = a ? a.size : parseFloat($('text-size').value) * RENDER_SCALE;
-  if (!a) $('text-color').value = $('pencil-color').value;
-  const st = { a, p: a ? { x: a.x, y: a.y } : p, size, color: a ? a.color : $('text-color').value, bold: a ? !!a.bold : $('text-bold').checked };
+  const f = (zoom / RENDER_SCALE);
+  const s0 = a ? { font: a.font || 'helv', size: a.size / RENDER_SCALE, color: a.color, bold: !!a.bold, italic: !!a.italic, under: !!a.under, strike: !!a.strike } : { ...txs() };
+  const st = { a, p: a ? { x: a.x, y: a.y } : p, size: s0.size * RENDER_SCALE, color: s0.color, bold: s0.bold, italic: s0.italic, under: s0.under, strike: s0.strike, font: s0.font };
   const sc = canvasToScr(st.p.x, st.p.y), w = document.createElement('div'); w.id = 'txin';
   w.style.left = sc.x + 'px'; w.style.top = sc.y + 'px';
-  const opts = [...$('text-size').options].map(o => `<option value="${o.value}"${Math.abs(parseFloat(o.value) - size / RENDER_SCALE) < .05 ? ' selected' : ''}>${o.textContent}</option>`).join('');
-  w.innerHTML = `<div class="txb"><select title="Mida">${opts}</select><input type="color" value="${st.color}" title="Color"><button type="button" class="b${st.bold ? ' on' : ''}" title="Negreta">N</button><button type="button" class="ok" title="Confirmar (Esc)">✓</button><button type="button" class="no" title="Cancel·lar">✕</button></div><textarea spellcheck="false"></textarea>`;
+  w.innerHTML = `<div class="txb"><button type="button" class="ok" title="Confirmar (Esc)">✓</button><button type="button" class="no" title="Cancel·lar">✕</button></div><textarea spellcheck="false"></textarea>`;
   document.body.appendChild(w);
-  const ta = w.querySelector('textarea'), sel = w.querySelector('select'), col = w.querySelector('input'), bb = w.querySelector('.b');
+  const ta = w.querySelector('textarea');
   ta.value = a ? a.text : '';
   const fit = () => {
-    ta.style.fontSize = (st.size * f) + 'px'; ta.style.lineHeight = (st.size * 1.25 * f) + 'px'; ta.style.color = st.color; ta.style.fontWeight = st.bold ? '700' : '400';
-    const m = textMetrics({ text: ta.value || ' ', size: st.size, bold: st.bold });
+    ta.style.fontSize = (st.size * f) + 'px'; ta.style.lineHeight = (st.size * 1.25 * f) + 'px'; ta.style.color = st.color;
+    ta.style.fontWeight = st.bold ? '700' : '400'; ta.style.fontStyle = st.italic ? 'italic' : 'normal'; ta.style.fontFamily = txFam(st).css;
+    ta.style.textDecoration = [st.under ? 'underline' : '', st.strike ? 'line-through' : ''].join(' ').trim() || 'none';
+    const m = textMetrics({ text: ta.value || ' ', size: st.size, bold: st.bold, italic: st.italic, font: st.font });
     ta.style.width = Math.max(80, m.w * f + 14) + 'px'; ta.style.height = Math.max(st.size * 1.25 * f, m.h * f) + 'px';
   };
-  sel.onchange = () => { st.size = parseFloat(sel.value) * RENDER_SCALE; fit(); ta.focus(); };
-  col.oninput = () => { st.color = col.value; fit(); };
-  bb.onclick = () => { st.bold = !st.bold; bb.classList.toggle('on', st.bold); fit(); ta.focus(); };
   w.querySelector('.ok').onclick = () => textInCommit();
   w.querySelector('.no').onclick = () => textInCommit(true);
   ta.addEventListener('input', fit);
   ta.addEventListener('keydown', ev => { ev.stopPropagation(); if (ev.key === 'Escape' || (ev.key === 'Enter' && (ev.ctrlKey || ev.metaKey))) { ev.preventDefault(); textInCommit(); } });
-  st.out = ev => { if (!w.contains(ev.target)) textInCommit(); };
+  st.out = ev => { if (!w.contains(ev.target) && !ev.target.closest('#ctxbar') && !ev.target.closest('#cpop')) textInCommit(); };
   document.addEventListener('mousedown', st.out, true);
-  st.el = w; st.ta = ta; txin = st;
-  if (a) { a._hid = true; redrawAnnotations(); }
+  st.el = w; st.ta = ta; st.fit = fit; txin = st;
+  if (a) { a._hid = true; redrawAnnotations(); txsSync(s0); } else txsSync();
   fit(); setTimeout(() => { ta.focus(); ta.select(); }, 0);
 }
 function textInCommit(cancel) {
@@ -7078,17 +7538,16 @@ function textInCommit(cancel) {
   const txt = st.ta.value.replace(/\r/g, ''), doc = getActiveDoc(), a = st.a;
   st.el.remove();
   if (a) delete a._hid;
+  const sty = { font: st.font, size: st.size, color: st.color, bold: st.bold, italic: st.italic, under: st.under, strike: st.strike };
   if (!cancel && doc) {
-    const sz = String(Math.round(st.size / RENDER_SCALE * 10) / 10), S = $('text-size');
-    if (![...S.options].some(o => parseFloat(o.value) === parseFloat(sz))) { S.add(new Option(sz + ' pt', sz)); [...S.options].sort((x, y) => x.value - y.value).forEach(o => S.add(o)); }
-    S.value = sz; $('text-color').value = st.color; $('text-bold').checked = st.bold;
     if (a) {
       if (!txt.trim()) { saveHistory(); const arr = doc.pages[doc.curIdx].annotations, i = arr.indexOf(a); if (i >= 0) arr.splice(i, 1); if (selAnn === a) selAnn = null; }
-      else if (txt !== a.text || st.size !== a.size || st.color !== a.color || st.bold !== !!a.bold) { saveHistory(); a.text = txt; a.size = st.size; a.color = st.color; a.bold = st.bold; }
+      else if (txt !== a.text || Object.keys(sty).some(k => (k === 'font' ? (a.font || 'helv') : k === 'size' || k === 'color' ? a[k] : !!a[k]) !== sty[k])) { saveHistory(); a.text = txt; Object.assign(a, sty); }
     } else if (txt.trim()) {
-      saveHistory(); doc.pages[doc.curIdx].annotations.push({ type: 'text', x: st.p.x, y: st.p.y, text: txt, size: st.size, color: st.color, bold: st.bold });
+      saveHistory(); doc.pages[doc.curIdx].annotations.push({ type: 'text', x: st.p.x, y: st.p.y, text: txt, ...sty });
     }
   }
+  txsSync();
   redrawAnnotations();
 }
 vc.addEventListener('wheel', () => { if (txin) textInCommit(); }, { passive: true });
@@ -7145,9 +7604,7 @@ function annotHit(a, p, tol) {
     return a.points.length === 1 && segDist(p, a.points[0], a.points[0]) < r;
   }
   if (t === 'text') {
-    const lines = a.text.split('\n');
-    const w = Math.max(...lines.map(l => l.length)) * a.size * 0.6;
-    const h = lines.length * a.size * 1.25;
+    const { w, h } = textMetrics(a);   // v7.5.5: mida real segons font i estil
     return p.x > a.x - tol && p.x < a.x + w + tol && p.y > a.y - tol && p.y < a.y + h + tol;
   }
   if (t === 'shape') {
@@ -7172,12 +7629,22 @@ function eraseAt(e) {
   const p = scrToCanvas(e.clientX, e.clientY);
   const tol = 10 * RENDER_SCALE / Math.max(zoom, 0.15);
   const anns = doc.pages[doc.curIdx].annotations;
-  const keep = anns.filter(a => !annotHit(a, p, tol));
+  const keep = anns.filter(a => !(annotHit(a, p, tol) || eraseRvHit(a, p, tol)));
   if (keep.length !== anns.length) {
     if (!eraseDirty) { saveHistory(); eraseDirty = true; }
+    const hadRv = anns.some(a => a.type === 'rv' && !keep.includes(a));
     doc.pages[doc.curIdx].annotations = keep;
     redrawAnnotations();
+    if (hadRv) { try { if (rvSel && !rvFind(rvSel)) rvSel = null; rvRender(); rvDrawSel(); } catch (err) {} }
   }
+}
+// v7.5.5: la goma també esborra les marques de revisió (rectangle ressaltat, subratllat, ratllat, formes, notes…)
+function eraseRvHit(a, p, tol) {
+  if (a.type !== 'rv' || a.sub === 'sigfield') return false;
+  if (a.quads) return a.quads.some(q => p.x > Math.min(q[0], q[2]) - tol / 2 && p.x < Math.max(q[0], q[2]) + tol / 2 && p.y > Math.min(q[1], q[3]) - tol / 2 && p.y < Math.max(q[1], q[3]) + tol / 2);
+  if (a.sub === 'arrow') return segDist(p, { x: a.x1, y: a.y1 }, { x: a.x2, y: a.y2 }) < tol + 4 * RENDER_SCALE;
+  const b = rvBBox(a), ex = a.sub === 'note' ? 20 * RENDER_SCALE : a.sub === 'file' ? 18 * RENDER_SCALE : 0;
+  return p.x > b.x1 - tol / 2 && p.x < b.x2 + ex + tol / 2 && p.y > b.y1 - tol / 2 && p.y < b.y2 + ex + tol / 2;
 }
 
 function endErase() { erasing = false; eraseDirty = false; }
@@ -7245,6 +7712,7 @@ async function extractSelected() {
     history: [], redo: [], pageNums: null,
     curIdx: 0, selectedPages: [0],
   };
+  markNew(nd);
   docs.push(nd);
   await switchDoc(nd.id);
   toast(`${copies.length} pàgina(es) extretes a un document nou`);
@@ -7270,6 +7738,7 @@ async function mergeAllDocs() {
     history: [], redo: [], pageNums: null,
     curIdx: 0, selectedPages: [0],
   };
+  markNew(nd);
   docs.push(nd);
   await switchDoc(nd.id);
   toast(`${n} documents fusionats · ${pages.length} pàgines`);
@@ -8178,13 +8647,21 @@ const HELP = {
 <h3>Obrir, desar i imprimir</h3>
 <p>Obre un o més PDF amb <b>Fitxer › Obrir</b> o arrossegant-los a la finestra; cada document té la seva pestanya. <b>Desar PDF actual</b> genera un PDF nou amb totes les modificacions (pàgines, anotacions, edicions de contingut i marcadors). <b>Imprimir</b> mostra una vista prèvia que compara la mida del paper amb la del PDF i permet triar paper, orientació i escala.</p>
 <h3>Pàgines</h3>
-<p>Les miniatures de l'esquerra permeten seleccionar (Ctrl+clic), reordenar arrossegant, girar, duplicar, extreure, eliminar i inserir pàgines en blanc o d'un altre PDF. Ctrl+C / Ctrl+X / Ctrl+V copien, retallen i enganxen pàgines entre documents. <b>Fusionar tot</b> crea un document amb totes les pestanyes.</p>
+<p>Les miniatures de l'esquerra permeten seleccionar (Ctrl+clic), reordenar arrossegant, girar, duplicar, extreure, eliminar i inserir pàgines en blanc o d'un altre PDF. Sobre les miniatures hi ha els botons de girar a l'esquerra i a la dreta, duplicar, extreure a un document nou i eliminar. Ctrl+C / Ctrl+X / Ctrl+V copien, retallen i enganxen pàgines entre documents. <b>Fusionar tot</b> crea un document amb totes les pestanyes.</p>
 <h3>Visualització</h3>
 <p>Pàgina única (per editar), llibre a doble pàgina amb gir de full, contínua d'una o dues columnes, <b>doble pàgina enquadernada</b> (llom, ombres i marca de relligat opcional), <b>anvers-revers</b> (costat a costat, per transparència a contrallum amb opacitat regulable, o girant el full per la vora llarga o curta) i <b>organitzador de pàgines</b> (totes les pàgines, per triar i reordenar arrossegant). <b>Presentació</b> (Ctrl+L) mostra les pàgines a pantalla completa, i la <b>pantalla dividida</b> obre a la dreta el mateix document o un altre, amb desplaçament sincronitzat. La <b>rodeta</b> sempre avança: en pàgina única recorre la pàgina ampliada i, a la vora, passa a la següent; en llibre passa full; en contínua desplaça. <b>Maj+rodeta</b> (o Ctrl+rodeta) fa zoom on hi ha el ratolí. La mida de les miniatures es canvia arrossegant la vora de la columna o amb Maj+rodeta sobre les miniatures. El <b>botó dret</b> obre un menú amb les accions de cada lloc: miniatures (inserir, girar, pujar, baixar, duplicar, eliminar…), pàgina, anotacions, marcadors i pestanyes.</p>
 <h3>Anotacions</h3>
-<p>Llapis, ressaltador, text, formes, signatura, imatges, marca d'aigua i números de pàgina. Amb l'eina <b>Selecciona</b> (V) es mouen, s'escalen, es giren i se'n canvia l'ordre o l'opacitat. L'eina <b>Mesurar</b> (M) dona distàncies a l'escala indicada.</p>
+<p>Llapis (3 llapis i 2 bolígrafs), ressaltador (5 rotuladors), text, formes, signatura, imatges, marca d'aigua i números de pàgina. Amb l'eina <b>Selecciona</b> (V) es mouen, s'escalen, es giren i se'n canvia l'ordre o l'opacitat. L'eina <b>Mesurar</b> (M) dona distàncies a l'escala indicada.</p>
+<p>Els colors de totes les eines es trien amb un selector comú: <b>16 colors bàsics</b> i els camps <b>RGB</b>, <b>HSL</b> i <b>HEX</b>.</p>
+<h3>Estil del text</h3>
+<p>Amb les eines <b>Text</b> (T) i <b>Text in situ</b> (Maj+T), la barra de sota la barra d'eines mostra la <b>font</b> (Helvetica, Times o Courier), la mida, <b>negreta</b>, <b>cursiva</b>, <b>tatxat</b>, <b>subratllat</b> i el color. Hi ha <b>4 estils preconfigurats</b>: tria'n un i, si en canvies alguna opció, es recorda per a la propera vegada. Quan edites un text que ja has col·locat, els canvis només s'apliquen a aquest text.</p>
+<h3>Ressaltadors</h3>
+<p>L'eina <b>Ressaltador</b> (H) té <b>5 rotuladors</b> que recorden color, gruix i opacitat. El mode <b>Lliure</b> dibuixa a mà alçada; el mode <b>Recte</b> (o Maj mentre arrossegues) traça una línia recta que segueix la línia de text sota el cursor. L'eina <b>Ressaltar text</b> (Maj+I) ressalta, línia a línia, els caràcters que arrossegues. <b>Rectangle ressaltat</b> (Maj+H) marca el text amb un rectangle de color com a anotació de revisió. La <b>goma</b> (E) esborra anotacions, ressaltats i marques de revisió.</p>
+<h3>Seleccionar i copiar text</h3>
+<p>L'eina <b>Seleccionar text</b> (I), disponible als modes Veure i Editar, deixa seleccionar el text del PDF arrossegant-hi el cursor. <b>Ctrl+C</b> el copia al porta-retalls i <b>Ctrl+A</b> selecciona tot el text de la pàgina; també ho pots fer amb el botó dret. Funciona en la vista de pàgina única i amb els PDF que tenen text (no amb imatges escanejades).</p>
 <h3>Editar el contingut original</h3>
 <p>Amb l'eina <b>✎ Contingut</b> (X), clica un text del PDF per canviar-lo. Si a la font incrustada li falten lletres, el mode <i>Combinar</i> manté les originals i completa les que falten amb una font de reemplaçament (estàndard, un fitxer .ttf/.otf o una font instal·lada). També pots clicar una imatge del PDF per eliminar-la, substituir-la o convertir-la en un objecte mòbil.</p>
+<p>Amb l'eina <b>Editar text in situ</b> (Maj+X) el text del PDF s'edita directament sobre la pàgina: clica'l, escriu, i prem <b>Intro</b> (o clica fora) per obrir el diàleg amb les opcions de font, combinació de lletres i superposició; <b>Esc</b> cancel·la. L'eina anterior (X) continua disponible.</p>
 <h3>Marcadors</h3>
 <p>La pestanya <b>🔖 Marcadors</b> de la columna esquerra mostra l'arbre de marcadors del PDF. Ctrl+B n'afegeix un a la pàgina actual; doble clic o F2 per reanomenar; arrossega per reordenar o niuar; Alt+↑/↓ salta al marcador anterior o següent. Es desen dins el PDF.</p>
 <h3>Exportar a DXF</h3>
@@ -8215,8 +8692,11 @@ const HELP = {
 <tr><td><kbd>P</kbd></td><td>Desplaçar (mà)</td></tr>
 <tr><td><kbd>V</kbd></td><td>Seleccionar anotacions</td></tr>
 <tr><td><kbd>X</kbd></td><td>Editar el contingut (text i imatges del PDF)</td></tr>
+<tr><td><kbd>Maj</kbd>+<kbd>X</kbd></td><td>Editar el text del PDF in situ (Intro obre el diàleg, Esc cancel·la)</td></tr>
 <tr><td><kbd>M</kbd></td><td>Mesurar</td></tr>
+<tr><td><kbd>I</kbd> / <kbd>Maj</kbd>+<kbd>I</kbd></td><td>Seleccionar text (Ctrl+C copia, Ctrl+A ho selecciona tot) / ressaltar text</td></tr>
 <tr><td><kbd>D</kbd> <kbd>H</kbd> <kbd>T</kbd> <kbd>R</kbd> <kbd>E</kbd> <kbd>S</kbd></td><td>Llapis · ressaltador · text · forma · goma · signatura</td></tr>
+<tr><td><kbd>Maj</kbd>+<kbd>H</kbd> / <kbd>Maj</kbd>+<kbd>T</kbd></td><td>Rectangle ressaltat / text in situ</td></tr>
 <tr><td><kbd>F2</kbd></td><td>Reanomenar el marcador seleccionat</td></tr>
 <tr><td><kbd>Esc</kbd></td><td>Tancar diàlegs i menús, cancel·lar</td></tr>
 <tr><td><kbd>F11</kbd></td><td>Pantalla completa</td></tr>
@@ -8230,7 +8710,7 @@ const HELP = {
 <h3>Si no apareix l'opció</h3>
 <p>Cal obrir l'adreça web (https) de l'aplicació, no el fitxer des del disc. Firefox i Safari d'escriptori no instal·len PWA; a Safari de l'iPhone: <b>Comparteix › Afegeix a la pantalla d'inici</b>.</p>`],
   about: ['Quant a Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 7.5.2p</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 7.5.5</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -8336,6 +8816,7 @@ function bmSetTab(t) {
   ['thumbs', 'bm', 'att', 'oc', 'obj'].forEach(k => $('tab-' + k).classList.toggle('active', t === k));
   $('thumb-list').style.display = t === 'thumbs' ? '' : 'none'; $('pcl').style.display = t === 'thumbs' ? '' : 'none'; $('bm-panel').style.display = t === 'bm' ? '' : 'none';
   $('att-panel').style.display = t === 'att' ? '' : 'none'; $('oc-panel').style.display = t === 'oc' ? '' : 'none';
+  $('pg-tools').style.display = t === 'thumbs' ? '' : 'none';   // v7.5.5: botons de l'organitzador de pàgines
   $('obj-panel').style.display = t === 'obj' ? '' : 'none';
   if (t === 'att') attRender(); if (t === 'oc') ocRender(); if (t === 'obj') objRender();
   const mk = $('mi-bm') && $('mi-bm').querySelector('.mk'); if (mk) mk.textContent = t === 'bm' ? '✓' : '';
@@ -8797,6 +9278,8 @@ document.addEventListener('keydown', e => {
   
   // Shortcuts Multidocument (Copy/Paste)
   if (e.ctrlKey || e.metaKey) {
+    if ((e.key === 'a' || e.key === 'A') && (tool === 'seltext' || tool === 'hlsel') && viewMode === 'single') { e.preventDefault(); tlSelectAll(); return; }
+    if ((e.key === 'c' || e.key === 'C') && tlSelText()) { e.preventDefault(); tlCopy(); return; }
     if (e.key === 'c' || e.key === 'C') { e.preventDefault(); copyPage(); return; }
     if (e.key === 'x' || e.key === 'X') { e.preventDefault(); cutPage(); return; }
     if (e.key === 'v' || e.key === 'V') { e.preventDefault(); pastePage(); return; }
@@ -8841,6 +9324,7 @@ document.addEventListener('keydown', e => {
     case '-':           addZoom(-0.2); break;
     case 'f': case 'F': fitPage(); break;
     case 'p': case 'P': setTool('pan'); break;
+    case 'i': case 'I': setTool(e.shiftKey ? 'hlsel' : 'seltext'); break;
     case 'm': case 'M': setTool('measure'); break;
     case 'd': case 'D': setTool('pencil'); break;
     case 'h': case 'H': if (e.shiftKey) hlTextTool(); else setTool('highlight'); break;
@@ -8849,7 +9333,7 @@ document.addEventListener('keydown', e => {
     case 'e': case 'E': setTool('erase'); break;
     case 's': case 'S': setTool('signature'); break;
     case 'v': case 'V': setTool('select'); break;
-    case 'x': case 'X': setTool('edit'); break;
+    case 'x': case 'X': setTool(e.shiftKey ? 'edtin' : 'edit'); break;
     case 'Enter': if (tool === 'measure') areaClose(); break;
     case 'Escape':
       mPts = []; mClosed = false; clearOverlay(); updateMeasureInfo();
@@ -12481,7 +12965,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 7.5.2p · pdf-lib';
+  const prod = 'Guaita PDF Edit 7.5.5 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -12520,7 +13004,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'metadades XMP'); del(cat, 'PieceInfo', 'dades privades d\'aplicacions');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 7.5.2p') })); rep.cleaned.push('informació del document'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 7.5.5') })); rep.cleaned.push('informació del document'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'miniatures'));
@@ -14993,7 +15477,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 7.5.2p · pdf-lib');
+    out.setProducer('Guaita PDF Edit 7.5.5 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadades:', e); }
 }
