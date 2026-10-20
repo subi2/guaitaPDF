@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 7.7.2** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 7.7.3b** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -59,6 +59,9 @@ El commutador de la capçalera separa les maneres de treballar:
 - **Pantalla**: pàgines veïnes, miniatures i pantalla completa amb barra flotant que es pot arrossegar.
 - **Paper i llibreta (7.7.1)**: les pàgines en blanc poden tenir paper pautat, quadriculat o de punts (separació en mm; línies vectorials al PDF). La pestanya *Llibreta* del tauler lateral mostra seccions (marcadors de primer nivell, amb color) i pàgines, que es poden afegir, moure, duplicar i esborrar.
 - **Eines avançades (7.7.2)**: *llaç* (selecciona, mou, copia, canvia el color); *formes automàtiques* (el llapis quiet al final del traç el converteix en recta, rectangle, triangle o el·lipse); *finestra de zoom* (s'escriu gran i el traç queda a mida normal); *textures* de gra de grafit, guix i pinzell (s'incrusten com a imatge al PDF); ressaltadors i llapis editables (5 + 5 preajustos).
+- **Barres en vertical (7.7.3)**: a pantalla completa, el botó d'orientació de la barra flotant la canvia entre horitzontal, vertical a l'esquerra i vertical a la dreta; també es pot arrossegar la nansa cap a un marge.
+- **Llibreta i pàgines noves (7.7.3a)**: la pestanya *Llibreta* és entre *Pàgines* i *Marcadors*; permet triar mida A4 o A5 i afegir pàgines en blanc o quadriculades (també des de la barra de Notes).
+- **Notes de pàgina (7.7.3b)**: com les notes de l'orador de PowerPoint, un text per pàgina escrit amb el teclat i invisible (botó a la barra d'estat o de Notes, **Ctrl+Alt+N**; Esc torna a la pàgina, Alt+↑/↓ canvia de pàgina). Es desa dins el PDF com a anotació oculta que només Guaita llegeix; una marca groga a la miniatura indica les pàgines amb notes. *Incloure-les en desar* es pot desmarcar per compartir sense notes. *Elevar a nota visible* les converteix en una nota adhesiva (comentari PDF) i *Elevar a pàgina de notes* en pàgines de text noves, visibles en qualsevol visor.
 - **Notes de veu**: grava àudio mentre escrius; en reproduir-lo, els traços reapareixen al ritme de la veu i la vista segueix les pàgines. L'àudio s'adjunta al PDF (`guaita-voz-*`) i el micròfon només s'usa quan tu ho demanes. En reobrir el PDF se segueix la veu pàgina a pàgina, però els traços ja formen part de la pàgina i no reapareixen progressivament.
 - **Enllaços i vídeo**: rectangle clicable cap a una URL (enllaç estàndard `/URI`, funciona a qualsevol visor) i *targeta de vídeo* (miniatura pujada per tu o un fotograma d'un fitxer de vídeo, amb enllaç a YouTube, Vimeo o qualsevol URL). En mode Veure, un clic obre l'enllaç amb confirmació. No es descarrega res d'Internet.
 
