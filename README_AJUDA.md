@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 7.7.3b** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 7.9.3c** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -44,6 +44,7 @@ El commutador de la capçalera separa les maneres de treballar:
 | Mode | Per a què serveix |
 |---|---|
 | **Veure** | Navegació, vistes de pàgina, mà, mesura a escala, cerca, exportació i impressió. |
+| **Explora** | Navegador de PDF d'una carpeta (amb subcarpetes): miniatures de la primera pàgina sense obrir els fitxers, cerca, ullada i obertura selectiva. Al costat de Veure. |
 | **Notes** | Per prendre apunts amb llapis òptic o dit: llapis, ressaltadors, text, formes i goma, paper de llibreta, llaç, veu i enllaços. Entre Veure i Editar; també a Eines › Mode Notes. |
 | **Editar** | Eines per famílies (Historial, Pàgines, Contingut, Anotar, Inserir) i, a sota, les opcions de l'eina activa. Les dreceres d'una eina d'edició et porten sols a aquest mode. |
 | **Revisar** | Anotacions PDF reals (notes, marques de text, núvols, segells, adjunts) amb llista, filtres i exportació. |
@@ -62,8 +63,20 @@ El commutador de la capçalera separa les maneres de treballar:
 - **Barres en vertical (7.7.3)**: a pantalla completa, el botó d'orientació de la barra flotant la canvia entre horitzontal, vertical a l'esquerra i vertical a la dreta; també es pot arrossegar la nansa cap a un marge.
 - **Llibreta i pàgines noves (7.7.3a)**: la pestanya *Llibreta* és entre *Pàgines* i *Marcadors*; permet triar mida A4 o A5 i afegir pàgines en blanc o quadriculades (també des de la barra de Notes).
 - **Notes de pàgina (7.7.3b)**: com les notes de l'orador de PowerPoint, un text per pàgina escrit amb el teclat i invisible (botó a la barra d'estat o de Notes, **Ctrl+Alt+N**; Esc torna a la pàgina, Alt+↑/↓ canvia de pàgina). Es desa dins el PDF com a anotació oculta que només Guaita llegeix; una marca groga a la miniatura indica les pàgines amb notes. *Incloure-les en desar* es pot desmarcar per compartir sense notes. *Elevar a nota visible* les converteix en una nota adhesiva (comentari PDF) i *Elevar a pàgina de notes* en pàgines de text noves, visibles en qualsevol visor.
+- **Calaix de notes (7.9.3–7.9.3c)**: el botó de les notes de pàgina és al mig de la barra d'estat, centrat sota el visor. Amb el calaix obert, un botonet verd a la línia que el separa del visor el tanca i l'obre, i a pantalla completa es queda a la vora inferior; el calaix segueix l'alçada triada. Un selector **Mida** (A4/A5, el mateix de la pestanya Llibreta) decideix la mida de les pàgines que crea *Elevar a pàgina de notes*.
 - **Notes de veu**: grava àudio mentre escrius; en reproduir-lo, els traços reapareixen al ritme de la veu i la vista segueix les pàgines. L'àudio s'adjunta al PDF (`guaita-voz-*`) i el micròfon només s'usa quan tu ho demanes. En reobrir el PDF se segueix la veu pàgina a pàgina, però els traços ja formen part de la pàgina i no reapareixen progressivament.
 - **Enllaços i vídeo**: rectangle clicable cap a una URL (enllaç estàndard `/URI`, funciona a qualsevol visor) i *targeta de vídeo* (miniatura pujada per tu o un fotograma d'un fitxer de vídeo, amb enllaç a YouTube, Vimeo o qualsevol URL). En mode Veure, un clic obre l'enllaç amb confirmació. No es descarrega res d'Internet.
+
+### Mode Explora
+
+- **Triar la carpeta**: *Triar carpeta…* (amb Chrome o Edge se'n pot tornar a obrir l'última), arrossegar-la a la finestra o, en altres navegadors, el selector de carpetes. S'inclouen les subcarpetes (es pot desactivar) i es veuen en un arbre amb el recompte de PDF.
+- **Miniatures sense obrir**: cada targeta mostra la primera pàgina, el nombre de pàgines, la mida i el format (A4, A3, plànols…). Es fan en un fil a part, de les visibles cap a les amagades, i es desen al navegador (memòria cau) perquè la propera vegada surtin a l'instant. Els fitxers molt grans, xifrats o malmesos mostren una targeta simulada (*Generar igualment* per forçar-la; el límit és configurable).
+- **Desplegar i ullada**: *doble clic* o la tecla **E** desplega la targeta i mostra totes les pàgines; **Espai** obre l'*ullada* gran (←/→ canvia de pàgina, ↑/↓ de fitxer, Retorn obre el document, Esc tanca).
+- **Cercar i filtrar**: per nom, títol o autor, o **dins el text** dels PDF (s'indexa en segon pla i es desa al navegador; només troba text real, no escanejats), per format de la primera pàgina i només els que tenen **avisos de seguretat** (JavaScript, accions automàtiques, fitxers adjunts, execució de programes…). Guaita mai no executa res d'això; per analitzar-ho i desarmar-ho s'obre el PDF al mode Escanejar.
+- **Seleccionar i obrir**: Ctrl/Maj + clic o la caixa de cada targeta; *Obrir* carrega només els seleccionats com a documents. *Descartar* (**Supr**) els treu de la llista sense esborrar-los del disc (Ctrl+Z ho desfà).
+- **Menú contextual** (botó dret) a les targetes, a les pàgines, a l'arbre i a la graella: obrir, ullada, obrir a la pàgina d'una coincidència, copiar el nom o la ruta, anar a la seva carpeta, descartar o recuperar, enviar al Compositor, processar per lots una carpeta…
+- **Amb el Compositor**: *Enviar al Compositor* afegeix els PDF triats com a nodes de **Previsualització** (primera pàgina plegada o totes les pàgines desplegades, per descartar-ne) que s'obren sols en connectar-los; i el node **Carpeta** alimenta un **Lot**: en desar, cada PDF s'obre, es processa i es tanca d'un en un, amb l'estructura de subcarpetes si cal.
+- **Privadesa**: tot passa a l'ordinador; cap fitxer no en surt. *Buidar la memòria* esborra les miniatures i el text indexat.
 
 ## 03. Obrir, desar i imprimir
 

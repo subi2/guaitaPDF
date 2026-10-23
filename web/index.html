@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 7.7.3b — Editor de PDF multidocument (suite Guaita Apps)
+  Guaita PDF Edit 7.9.3c — Editor de PDF multidocument (suite Guaita Apps)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   Aquest programa és programari lliure: el podeu redistribuir i/o modificar sota els termes de la
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v7.7.3b</title>
+<title>Guaita PDF Edit v7.9.3c</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -1428,6 +1428,148 @@ body:not(.mode-notes) #nt-zbox { display: none !important; }
 .vp-s { flex: 1; min-width: 60px; }
 .vp-t { font-variant-numeric: tabular-nums; color: var(--text-mut); }
 .vp-e { padding: 10px; color: var(--text-mut); font-size: 12px; }
+/* ── v7.9.3: botó de notes de pàgina centrat i pestanya a pantalla completa ── */
+#status-bar { position: relative; }
+#pn-st { position: absolute; left: var(--pncx, 50%); top: 50%; transform: translate(-50%, -50%); z-index: 1; }
+@media (max-width: 1100px) { #pn-st { position: static; transform: none; } }
+#st-info > span { flex: none; } #st-info > span.bmk { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+#pn-tab { display: none; position: fixed; left: 50%; bottom: 3px; transform: translateX(-50%); z-index: 299; height: 20px; width: 46px; padding: 0; border: 1px solid var(--accent-line); border-radius: 10px; background: linear-gradient(var(--accent-soft2), var(--accent-soft2)), var(--bg-panel); color: var(--accent-text); opacity: .9; cursor: pointer; align-items: center; justify-content: center; gap: 4px; transition: opacity .15s; touch-action: none; }
+#pn-tab .ic { width: 13px; height: 13px; }
+#pn-tab i { display: none; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+#pn-tab.has i { display: block; }
+#pn-tab:hover, #pn-tab:focus-visible, #pn-tab:not(.line):hover { opacity: 1; }
+#pn-tab.show { display: flex; }
+#pn-tab.line { transform: translate(-50%, 0); }
+#pn-tab:not(.line) { opacity: .75; }
+/* ── v7.9.2: Explora · cerca de text ── */
+#fd-stat { max-width: 300px; overflow: hidden; text-overflow: ellipsis; }
+#fd-q { width: 200px; }
+@media (max-width: 1720px) { #fd-bar #fd-q { width: 160px; } #fd-bar #fd-fmt { max-width: 130px; } #fd-sz { width: 70px; } #fd-stat { max-width: 190px; } #fd-cmp, #fd-tag { font-size: 0; gap: 0; } #fd-cmp { padding: 0 8px; } }
+#fd-qm { display: inline-flex; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; height: 28px; }
+#fd-qm button { border: 0; background: var(--bg-control); color: var(--text-mut); font: 500 11.5px 'IBM Plex Sans', sans-serif; padding: 0 9px; cursor: pointer; }
+#fd-qm button.on { background: var(--accent-soft2); color: var(--accent); }
+#fd-qm + #fd-q { border-radius: 0 4px 4px 0; margin-left: -7px; }
+.fd-hit { font-size: 11px; color: var(--text-mid); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-top: 2px; }
+.fd-hit mark { background: var(--accent-soft2); color: var(--accent); border-radius: 2px; padding: 0 1px; }
+.fd-hitp { font-size: 10.5px; color: var(--text-mut); }
+.fd-hitp a { color: var(--accent); cursor: pointer; text-decoration: none; padding: 0 1px; }
+.fd-hitp a:hover { text-decoration: underline; }
+/* ── v7.9.1: Explora · seguretat i format ── */
+#fd-fmt { height: 28px; background: var(--bg-control); color: var(--text); border: 1px solid var(--border); border-radius: 4px; font-size: 12px; max-width: 170px; }
+#fd-rk.on { background: var(--accent-soft2); color: var(--warn); }
+.fd-risk { position: absolute; left: 6px; bottom: 6px; display: flex; align-items: center; gap: 3px; padding: 2px 5px; border-radius: 3px; font: 600 10px/1 'IBM Plex Mono', monospace; color: #fff; }
+.fd-risk .ic { width: 12px; height: 12px; }
+.fd-risk.high { background: var(--danger); } .fd-risk.mid { background: #D9822B; } .fd-risk.info { background: rgba(0,0,0,.65); color: var(--cyan); }
+/* ── v7.8.1: node Previsualització ── */
+.cp-node.pv { border-style: dashed; }
+.cp-pvtag { display: flex; align-items: center; gap: 5px; padding: 2px 8px 0; font-size: 10px; color: var(--cyan); letter-spacing: .02em; }
+.cp-pvtag .ic { width: 12px; height: 12px; }
+.cp-pvtag b { margin-left: auto; color: var(--accent); font-weight: 600; }
+.cp-pvc { display: flex; gap: 8px; padding: 6px 8px 8px; align-items: flex-start; }
+.cp-pv1 { position: relative; width: 64px; height: 84px; flex: none; display: flex; align-items: center; justify-content: center; background: var(--bg-deep); border-radius: 3px; }
+.cp-pv1 img { max-width: 60px; max-height: 80px; background: #fff; box-shadow: 0 0 0 1px var(--border); }
+.cp-pv1 img:not([src]) { display: none; }
+.cp-pv1 i { display: none; font: 700 10px 'IBM Plex Mono', monospace; font-style: normal; letter-spacing: .1em; color: var(--text-mut); }
+.cp-pv1:not(:has(img[src])) i { display: block; }
+.cp-pv1.sim-enc i::after { content: ' 🔒'; } .cp-pv1.sim-err i { color: var(--danger); }
+.cp-pvm { display: flex; flex-direction: column; gap: 4px; min-width: 0; font-size: 10.5px; color: var(--text-mut); }
+.cp-pvm .mono { white-space: normal; word-break: break-word; }
+.cp-pvm .btn { align-self: flex-start; }
+.cp-pvw { font-size: 10.5px; color: var(--warn); padding: 0 8px 6px; }
+.cp-pvm .cp-pvw { padding: 0; }
+.cp-pg img { max-width: 36px; max-height: 40px; background: #fff; box-shadow: 0 0 0 1px var(--border); }
+.cp-pg img:not([src]) { width: 28px; height: 38px; background: var(--bg-surface); }
+.cp-pg:hover img { box-shadow: 0 0 0 2px var(--accent-line); }
+.cp-pg.off img { opacity: .22; }
+.cp-pvfoot { display: flex; align-items: center; gap: 8px; padding: 4px 8px 8px; font-size: 10.5px; color: var(--text-mut); }
+.cp-pvfoot .mono { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cp-pvins { border: 1px dashed var(--border-strong); border-radius: 6px; padding: 8px; margin: 6px 0 10px; font-size: 12px; color: var(--text-mid); }
+.cp-pvins p { margin: 0 0 6px; } .cp-pvins .mono { font-size: 11px; word-break: break-all; }
+/* ── v7.8.0: mode Carpeta ── */
+#fd-pane { display: none; flex: 1; flex-direction: column; min-width: 0; min-height: 0; position: relative; background: var(--bg); }
+body.mode-folder #fd-pane { display: flex; }
+body.mode-folder #thumb-panel, body.mode-folder #thumb-resizer, body.mode-folder #viewer-panel, body.mode-folder #scan-pane, body.mode-folder #composer,
+body.mode-folder #mbar-view, body.mode-folder #mbar-edit, body.mode-folder #mbar-review, body.mode-folder #mbar-notes, body.mode-folder #mbar-sign, body.mode-folder #ctxbar, body.mode-folder #tabs-bar,
+body.mode-folder #rv-panel, body.mode-folder #sg-panel, body.mode-folder #split-pane, body.mode-folder #split-resizer { display: none !important; }
+body.mode-folder #status-bar .sgrp, body.mode-folder #st-info, body.mode-folder #pn-st { display: none; }
+#fd-bar { display: flex; align-items: center; gap: 6px; padding: 6px 10px; border-bottom: 1px solid var(--border); background: var(--bg-deep2); flex-wrap: wrap; }
+#fd-tag { display: inline-flex; align-items: center; gap: 6px; font: 600 11px/1 'IBM Plex Mono', monospace; letter-spacing: .08em; color: var(--accent); margin-right: 4px; }
+#fd-bar .fd-sep { width: 1px; height: 20px; background: var(--border); margin: 0 2px; }
+#fd-q { width: 230px; height: 28px; padding: 0 8px; background: var(--bg-control); color: var(--text); border: 1px solid var(--border); border-radius: 4px; font-size: 12px; }
+#fd-sort { height: 28px; background: var(--bg-control); color: var(--text); border: 1px solid var(--border); border-radius: 4px; font-size: 12px; }
+#fd-desc.on { background: var(--accent-soft2); color: var(--accent); }
+#fd-sz { width: 90px; accent-color: var(--accent); }
+#fd-stat { font-size: 11px; color: var(--text-mut); margin-right: 6px; white-space: nowrap; }
+#fd-body { flex: 1; display: flex; min-height: 0; }
+#fd-body.hidden, #fd-empty.hidden { display: none; }
+#fd-side { width: 240px; flex: none; display: flex; flex-direction: column; border-right: 1px solid var(--border); background: var(--bg-panel); min-height: 0; }
+#fd-root { padding: 8px 10px 4px; font-size: 11px; color: var(--text-mut); text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#fd-tree { flex: 1; overflow: auto; padding: 2px 0 8px; }
+.fd-tr { display: flex; align-items: center; gap: 5px; height: 26px; padding-right: 8px; cursor: pointer; font-size: 12.5px; color: var(--text-mid); white-space: nowrap; user-select: none; }
+.fd-tr:hover { background: var(--bg-hover); }
+.fd-tr.on { background: var(--accent-soft2); color: var(--text); }
+.fd-tr .ic { width: 14px; height: 14px; flex: none; color: var(--text-mut); }
+.fd-tr.on .ic { color: var(--accent); }
+.fd-tg { width: 12px; flex: none; text-align: center; color: var(--text-mut); font-size: 10px; }
+.fd-tn { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+.fd-tc { font-size: 10.5px; color: var(--text-dim); }
+.fd-thid { margin-top: 8px; border-top: 1px solid var(--border-soft); color: var(--text-mut); }
+#fd-opts { border-top: 1px solid var(--border); padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; font-size: 11.5px; color: var(--text-mut); }
+#fd-opts select { margin-left: 4px; background: var(--bg-control); color: var(--text); border: 1px solid var(--border); border-radius: 4px; font-size: 11.5px; }
+#fd-grid { --fd-sz: 170px; flex: 1; overflow: auto; padding: 14px; display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--fd-sz), 1fr)); gap: 14px; align-content: start; outline: none; }
+.fd-wait { grid-column: 1 / -1; padding: 40px; text-align: center; color: var(--text-mut); font-size: 13px; }
+.fd-card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-panel); cursor: default; user-select: none; min-width: 0; }
+.fd-card:hover { border-color: var(--border-hov); }
+.fd-card.sel { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.fd-card.foc { outline: 2px dashed var(--accent-soft2); outline-offset: 2px; }
+.fd-card.hid { opacity: .6; }
+.fd-th { position: relative; height: calc(var(--fd-sz) * 1.18); display: flex; align-items: center; justify-content: center; padding: 10px; background: var(--bg-deep); border-radius: 6px 6px 0 0; overflow: hidden; }
+.fd-th img { max-width: 100%; max-height: 100%; box-shadow: 0 1px 6px rgba(0,0,0,.45); background: #fff; }
+.fd-skel { width: 70%; height: 86%; border-radius: 2px; background: linear-gradient(100deg, var(--bg-surface) 30%, var(--bg-hover) 50%, var(--bg-surface) 70%); background-size: 300% 100%; animation: fdsk 1.4s linear infinite; }
+@keyframes fdsk { to { background-position: -150% 0; } }
+.fd-sim { width: 72%; height: 88%; border: 1px dashed var(--border-strong); border-radius: 3px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; color: var(--text-mut); font-size: 11px; padding: 6px; background: var(--bg-surface); }
+.fd-sim .ic { width: 28px; height: 28px; }
+.fd-sim b { font: 700 12px/1 'IBM Plex Mono', monospace; letter-spacing: .12em; color: var(--text-mid); }
+.fd-sim-enc .ic { color: var(--warn); } .fd-sim-err .ic { color: var(--danger); }
+.fd-pgs { position: absolute; right: 6px; bottom: 6px; font-size: 10.5px; padding: 1px 5px; border-radius: 3px; background: rgba(0,0,0,.65); color: #fff; }
+.fd-chk { position: absolute; left: 6px; top: 6px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 3px; background: rgba(0,0,0,.45); opacity: 0; transition: opacity .12s; }
+.fd-chk input { margin: 0; accent-color: var(--accent); cursor: pointer; }
+.fd-card:hover .fd-chk, .fd-card.sel .fd-chk, #fd-grid.selmode .fd-chk { opacity: 1; }
+.fd-exb, .fd-qlb { position: absolute; top: 6px; width: 24px; height: 24px; border: 0; border-radius: 4px; background: rgba(0,0,0,.55); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: opacity .12s; padding: 0; }
+.fd-exb { right: 6px; } .fd-qlb { right: 34px; }
+.fd-exb .ic, .fd-qlb .ic { width: 14px; height: 14px; }
+.fd-card:hover .fd-exb, .fd-card:hover .fd-qlb, .fd-card.exp .fd-exb { opacity: 1; }
+.fd-exb:hover, .fd-qlb:hover { background: var(--accent); color: var(--on-accent); }
+.fd-meta { padding: 6px 8px 8px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.fd-nm { font-size: 12.5px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fd-mi, .fd-mi2 { font-size: 11px; color: var(--text-mut); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fd-mi2:empty { display: none; }
+.fd-meta .btn { align-self: flex-start; margin-top: 4px; }
+.fd-card.exp { grid-column: 1 / -1; display: grid; grid-template-columns: var(--fd-sz) 1fr; grid-template-rows: auto 1fr; border-color: var(--accent-line); }
+.fd-card.exp .fd-th { grid-row: 1; border-radius: 6px 0 0 0; }
+.fd-card.exp .fd-meta { grid-row: 2; grid-column: 1; }
+.fd-strip { grid-row: 1 / 3; grid-column: 2; display: flex; flex-wrap: wrap; gap: 10px; align-content: flex-start; padding: 10px; max-height: 70vh; overflow: auto; border-left: 1px solid var(--border-soft); }
+.fd-strip .fd-wait { padding: 20px; }
+.fd-sp { position: relative; width: 120px; height: 150px; display: flex; align-items: center; justify-content: center; background: var(--bg-deep); border-radius: 4px; cursor: zoom-in; }
+.fd-sp img { max-width: 108px; max-height: 138px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.45); }
+.fd-sp img:not([src]) { width: 80px; height: 110px; background: var(--bg-surface); box-shadow: none; }
+.fd-sp i { position: absolute; bottom: 3px; right: 4px; font: 10px 'IBM Plex Mono', monospace; font-style: normal; padding: 0 4px; border-radius: 3px; background: rgba(0,0,0,.6); color: #fff; }
+.fd-sp:hover { outline: 2px solid var(--accent); }
+.fd-sp.err { opacity: .4; }
+#fd-empty { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; overflow: auto; }
+#fd-empty .fd-note { font-size: 12px; color: var(--text-mut); }
+#fd-pane.fd-drop::after { content: 'Deixa anar la carpeta'; position: absolute; inset: 8px; border: 2px dashed var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--accent); background: rgba(0,0,0,.35); pointer-events: none; z-index: 5; }
+#fd-ql { position: fixed; inset: 0; z-index: 600; background: rgba(6,8,10,.92); display: flex; flex-direction: column; }
+#fd-ql.hidden { display: none; }
+#fd-ql-bar { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--bg-deep2); border-bottom: 1px solid var(--border); color: var(--text); font-size: 13px; }
+#fd-ql-bar b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 45vw; }
+#fd-ql-pg { color: var(--text-mut); font-size: 12px; }
+.fd-ql-hint { color: var(--text-dim); font-size: 11px; margin-right: 6px; }
+#fd-ql-cv { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 0; overflow: hidden; }
+#fd-ql-cv canvas { box-shadow: 0 4px 30px rgba(0,0,0,.6); background: #fff; }
+@media (max-width: 1560px) { #mode-seg button { padding: 0 9px; gap: 5px; } #mode-seg .mode-sep { margin: 4px 4px; } }
+@media (max-width: 1400px) { #mode-seg button:not(.on) { font-size: 0; gap: 0; padding: 0 8px; } }
+@media (max-width: 900px) { #fd-side { width: 170px; } #fd-q { width: 150px; } .fd-ql-hint { display: none; } }
 /* ── v7.7.3b: notes de pàgina ── */
 #pn-drawer { flex: none; display: flex; flex-direction: column; background: var(--bg-panel); border-top: 1px solid var(--border); position: relative; min-height: 80px; }
 #pn-drawer.hidden { display: none; }
@@ -1787,6 +1929,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
       <button class="menu-btn">Fitxer </button>
       <div class="menu-list">
         <button class="mi" onclick="triggerOpen()"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><path d="M3 11h18"/></svg>Obrir PDF…</span></button>
+        <button class="mi" onclick="setMode('folder')" title="Mode Explora: veure els PDF d'una carpeta amb miniatures sense obrir-los"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><rect x="7" y="12" width="4" height="5" rx=".5"/><rect x="13" y="12" width="4" height="5" rx=".5"/></svg>Explorar una carpeta…</span></button>
         <button class="mi" onclick="showNewModal()"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M12 11v6M9 14h6"/></svg>Nou document…</span></button>
         <button class="mi" data-twin="btn-save" onclick="savePdf()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7V3M8 21v-7h8v7"/></svg>Desar PDF actual</span></button>
         <button class="mi needs-doc" onclick="showReduceModal()" disabled title="Reduir la mida: imatges, metadades, miniatures, JavaScript…"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12l3 3 3-3M12 9v6"/></svg>Reduir la mida…</span></button>
@@ -1912,6 +2055,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
   <div id="mode-seg" role="group" aria-label="Mode de treball">
     <button id="mode-scan" onclick="setMode('scan')" title="Escanejar: analitzar i desarmar un PDF sospitós amb guaitaPDFscan, aïllat de l'editor"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Escanejar</button>
     <span class="mode-sep" aria-hidden="true"></span>
+    <button id="mode-folder" onclick="setMode('folder')" title="Explora: navegar pels PDF d'una carpeta (i subcarpetes) amb miniatures, sense obrir-los, i triar quins obrir"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><rect x="7" y="12" width="4" height="5" rx=".5"/><rect x="13" y="12" width="4" height="5" rx=".5"/></svg>Explora</button>
     <button id="mode-view" class="on" onclick="setMode('view')" title="Veure: navegar, vistes, zoom, cercar, mesurar, imprimir"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Veure</button>
     <button id="mode-notes" onclick="setMode('notes')" title="Notes: prendre apunts sobre el PDF (llapis, bolígrafs, ressaltadors, formes, text i gomes), pensat per a tauleta i llapis òptic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5z"/><path d="M9 11h6M9 15h4"/><path d="M14 18l4-4"/></svg>Notes</button>
     <button id="mode-edit" onclick="setMode('edit')" title="Editar: pàgines, contingut, anotacions i insercions"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg>Editar</button>
@@ -1920,7 +2064,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <button id="mode-compose" onclick="setMode('compose')" title="Composar: fusionar documents i pàgines amb un arbre de nodes (fonts → Fusionar → Document final)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Composar</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v7.7.3b</span>
+  <span class="tag">v7.9.3c</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Canviar a tema clar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2288,11 +2432,12 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 7.7.3b</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 7.9.3c</small></div>
           <h1>Editor de PDF <em>local</em>, sense núvol.</h1>
           <p>Obre un o diversos PDF o arrossega'ls a la finestra. Tot es processa en aquest ordinador: cap fitxer surt del navegador.</p>
           <div class="wl-act">
             <button class="btn primary" onclick="triggerOpen()"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><path d="M3 11h18"/></svg>Obrir PDF…</button>
+            <button class="btn" onclick="setMode('folder')" title="Veure els PDF d'una carpeta amb miniatures, sense obrir-los"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><rect x="7" y="12" width="4" height="5" rx=".5"/><rect x="13" y="12" width="4" height="5" rx=".5"/></svg>Explorar una carpeta…</button>
             <button class="btn" onclick="setMode('scan')"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Escanejar PDF sospitós…</button>
             <button class="btn hidden" id="wl-install" onclick="pwaInstall()"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg>Instal·lar l'app</button>
           </div>
@@ -2353,13 +2498,15 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
         </div>
       </div>
     </div>
+    <button id="pn-tab" onclick="pnToggle()" title="Notes de la pàgina (Ctrl+Alt+N)" aria-label="Obrir o tancar les notes de la pàgina"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v14l-4 4H5z"/><path d="M15 21v-4h4"/><path d="M8 8h8M8 12h5"/></svg><i></i></button>
     <div id="pn-drawer" class="hidden">
       <div id="pn-resizer" title="Arrossega per canviar l'alçada"></div>
       <div class="pn-bar"><b>Notes de la pàgina <span id="pn-pg"></span></b><span class="pn-n" id="pn-n"></span>
         <label class="chk" title="Les notes viatgen dins el PDF com a anotació oculta: desmarca-ho si el fitxer s'ha de compartir sense elles"><input type="checkbox" id="pn-out" checked onchange="pnOutSet(this.checked)"> Incloure-les en desar</label>
         <span class="spacer"></span>
         <button class="btn sm" onclick="pnToVisible()" title="Converteix la nota en una nota adhesiva visible a la pàgina (comentari PDF)">Elevar a nota visible</button>
-        <button class="btn sm" onclick="pnToPage()" title="Converteix la nota en una o més pàgines de notes noves després d'aquesta">Elevar a pàgina de notes</button>
+        <span class="nb-pp" title="Mida de les pàgines de notes noves (la mateixa que al mode Notes)">Mida <select id="pn-size" onchange="nbSizeSave(this.value)"><option value="A4">A4</option><option value="A5">A5</option></select></span>
+        <button class="btn sm" onclick="pnToPage()" title="Converteix la nota en una o més pàgines de notes noves després d'aquesta, amb la mida triada">Elevar a pàgina de notes</button>
         <button class="btn sm" onclick="pnToggle(false)" title="Tancar (Ctrl+Alt+N)">✕</button></div>
       <textarea id="pn-text" spellcheck="true" placeholder="Escriu les notes d'aquesta pàgina: no es veuen a la pàgina, però queden associades i es desen dins el PDF.  Esc torna a la pàgina · Alt+↑/↓ canvia de pàgina"></textarea>
     </div>
@@ -2419,6 +2566,62 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
           <button class="btn" onclick="openScan()"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9"/><path d="M19 14v7H3V5h7"/></svg>Obrir en una finestra a part</button>
         </div>
       </div>
+    </div>
+  </section>
+  <section id="fd-pane" aria-label="Explora: navegador de PDF">
+    <div id="fd-bar">
+      <span id="fd-tag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><rect x="7" y="12" width="4" height="5" rx=".5"/><rect x="13" y="12" width="4" height="5" rx=".5"/></svg>EXPLORA</span>
+      <button class="btn" onclick="fdPick()" title="Triar la carpeta que vols explorar (amb les subcarpetes)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><rect x="7" y="12" width="4" height="5" rx=".5"/><rect x="13" y="12" width="4" height="5" rx=".5"/></svg>Triar carpeta…</button>
+      <button class="btn ib" onclick="fdRescan()" title="Tornar a llegir la carpeta (fitxers nous o canviats)" aria-label="Tornar a llegir la carpeta"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 11-3-6.3"/><path d="M20 4v5h-5"/></svg></button>
+      <span class="fd-sep"></span>
+      <span id="fd-qm" role="group" aria-label="On cercar"><button data-v="name" class="on" title="Cercar al nom, títol o autor">Nom</button><button data-v="text" title="Cercar dins el text dels PDF (s'indexa en segon pla i es desa al navegador)">Text</button></span>
+      <input type="search" id="fd-q" placeholder="Filtrar per nom, títol o autor (Ctrl+F)" autocomplete="off" spellcheck="false">
+      <label class="chk" title="Mostrar també els PDF de les subcarpetes de la carpeta triada"><input type="checkbox" id="fd-sub" checked> Subcarpetes</label>
+      <select id="fd-sort" title="Ordenar"><option value="name">Nom</option><option value="date">Data</option><option value="size">Mida</option><option value="pages">Pàgines</option></select>
+      <select id="fd-fmt" title="Filtrar per format de la primera pàgina"><option value="">Tots els formats</option></select>
+      <button class="btn ib" id="fd-rk" title="Mostrar només els PDF amb avisos de seguretat (JavaScript, accions automàtiques, fitxers adjunts…)" aria-label="Només amb avisos"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v5M12 16h.01"/></svg></button>
+      <button class="btn ib" id="fd-desc" title="Ordre invers" aria-label="Ordre invers"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M3 16l4 4 4-4"/><path d="M17 20V4M13 8l4-4 4 4"/></svg></button>
+      <input type="range" id="fd-sz" min="110" max="320" step="10" title="Mida de les miniatures (+ / −)" aria-label="Mida de les miniatures">
+      <span class="spacer"></span>
+      <span id="fd-stat" class="mono"></span>
+      <button class="btn" id="fd-hide" onclick="fdHideSel(true)" disabled title="Descartar els seleccionats de la llista (Supr): no s'esborren del disc">Descartar</button>
+      <button class="btn hidden" id="fd-unhide" onclick="fdHideSel(false)" disabled title="Tornar a la llista els descartats seleccionats">Recuperar</button>
+      <button class="btn" id="fd-cmp" onclick="fdToCmp()" disabled title="Afegir els seleccionats al Compositor com a previsualitzacions, sense obrir-los (C)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Enviar al Compositor</button>
+      <button class="btn primary" id="fd-open" onclick="fdOpen()" disabled title="Obrir els seleccionats com a documents (Retorn)"><span>Obrir</span></button>
+    </div>
+    <div id="fd-body" class="hidden">
+      <aside id="fd-side">
+        <div id="fd-root" class="mono"></div>
+        <div id="fd-tree"></div>
+        <div id="fd-opts">
+          <label title="Els PDF més grans no es dibuixen automàticament: es mostra una targeta simulada amb el botó «Generar igualment»">Previsualitzar fins a
+            <select id="fd-lim"><option value="20">20 MB</option><option value="40">40 MB</option><option value="80">80 MB</option><option value="200">200 MB</option><option value="0">sense límit</option></select></label>
+          <button class="btn sm" onclick="fdClearCache()" title="Esborrar les miniatures i el text indexat desats al navegador">Buidar la memòria (miniatures i text)</button>
+        </div>
+      </aside>
+      <div id="fd-grid" tabindex="0" aria-label="PDF de la carpeta"></div>
+    </div>
+    <div id="fd-empty">
+      <div class="wl-card">
+        <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EXPLORA</small></div>
+        <h1>Navega pels PDF d'una carpeta <em>sense obrir-los</em>.</h1>
+        <p>Tria una carpeta (amb les subcarpetes) o arrossega-la aquí. Veuràs la primera pàgina de cada PDF; desplega una targeta per veure'n totes les pàgines, fes-ne una ullada gran amb la tecla espai i obre només els que necessitis.</p>
+        <div class="wl-act">
+          <button class="btn primary" onclick="fdPick()"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><rect x="7" y="12" width="4" height="5" rx=".5"/><rect x="13" y="12" width="4" height="5" rx=".5"/></svg>Triar carpeta…</button>
+          <button class="btn hidden" id="fd-recent" onclick="fdReopen()" title="Tornar a obrir l'última carpeta (el navegador et demanarà permís)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><rect x="7" y="12" width="4" height="5" rx=".5"/><rect x="13" y="12" width="4" height="5" rx=".5"/></svg><span>Reobrir</span></button>
+        </div>
+        <p class="fd-note">Les miniatures es fan en aquest ordinador i es desen al navegador per anar més de pressa la propera vegada; cap fitxer surt de l'equip. Descartar només treu un PDF de la llista: no l'esborra del disc.</p>
+      </div>
+    </div>
+    <input type="file" id="fd-input" webkitdirectory multiple hidden>
+    <div id="fd-ql" class="hidden" role="dialog" aria-label="Ullada">
+      <div id="fd-ql-bar"><b id="fd-ql-nm"></b><span id="fd-ql-pg" class="mono"></span><span class="spacer"></span>
+        <span class="fd-ql-hint">← → pàgina · ↑ ↓ fitxer · Retorn obre · Esc tanca</span>
+        <button class="btn ib" onclick="fdQlStep(-1)" title="Pàgina anterior (←)" aria-label="Pàgina anterior"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button class="btn ib" onclick="fdQlStep(1)" title="Pàgina següent (→)" aria-label="Pàgina següent"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button class="btn primary" onclick="(f => { fdQlClose(); fdOpen([f]); })(FD.ql.f)" title="Obrir aquest document (Retorn)">Obrir</button>
+        <button class="btn ib" onclick="fdQlClose()" title="Tancar (Esc)" aria-label="Tancar">✕</button></div>
+      <div id="fd-ql-cv"></div>
     </div>
   </section>
   <section id="composer" aria-label="Composar: fusionar i processar documents">
@@ -2521,7 +2724,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
   <span id="st-worker" class="hidden" title="Aquest entorn no permet els «workers» de pdf.js (visor incrustat o restriccions del navegador). Els PDF es processen al fil principal: tot funciona igual, però els documents grans van més lents. Obert directament a Chrome o Edge des del disc normalment no passa.">pdf.js · fil principal</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 7.7.3b · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 7.9.3c · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -3593,13 +3796,14 @@ document.body.addEventListener('dragenter', e => {
   e.preventDefault();
   dragCounter++;
   if (uiMode === 'scan') return;
+  if (uiMode === 'folder') { if (e.dataTransfer.types.includes('Files')) $('fd-pane').classList.add('fd-drop'); return; }
   if (uiMode === 'compose') { if (e.dataTransfer.types.includes('Files')) document.body.classList.add('cp-dropping'); return; }
   if (e.dataTransfer.types.includes('Files')) $('dropzone').classList.remove('hidden');
 });
 document.body.addEventListener('dragleave', e => {
   e.preventDefault();
   dragCounter--;
-  if (dragCounter <= 0) { dragCounter = 0; $('dropzone').classList.add('hidden'); document.body.classList.remove('cp-dropping'); }
+  if (dragCounter <= 0) { dragCounter = 0; $('dropzone').classList.add('hidden'); document.body.classList.remove('cp-dropping'); $('fd-pane').classList.remove('fd-drop'); }
 });
 document.body.addEventListener('dragover', e => {
   e.preventDefault();
@@ -3609,7 +3813,9 @@ document.body.addEventListener('drop', async e => {
   e.preventDefault();
   dragCounter = 0;
   $('dropzone').classList.add('hidden'); document.body.classList.remove('cp-dropping'); $('cp-pal').classList.remove('drop-hot'); $('cp-cv').classList.remove('drop-hot');
+  $('fd-pane').classList.remove('fd-drop');
   if (uiMode === 'scan') { toast("Mode Escanejar: deixa anar el PDF sospitós dins l'analitzador, no a l'editor", true, 5000); return; }
+  if (uiMode === 'folder') { fdDrop(e); return; }
   const files = e.dataTransfer.files;
   if (files.length > 0) {
     if (uiMode === 'compose') { await cpDropFiles(files, e); return; }
@@ -4574,17 +4780,19 @@ const VIEW_TOOLS = ['pan', 'measure', 'seltext'];
 let uiMode = 'view';
 function setMode(m, fromTool) {
   const prev = uiMode;
-  uiMode = ['edit', 'scan', 'review', 'sign', 'compose', 'notes'].includes(m) ? m : 'view';
-  ['view', 'edit', 'notes', 'scan', 'review', 'sign', 'compose'].forEach(k => {
+  uiMode = ['edit', 'scan', 'review', 'sign', 'compose', 'notes', 'folder'].includes(m) ? m : 'view';
+  ['view', 'edit', 'notes', 'scan', 'review', 'sign', 'compose', 'folder'].forEach(k => {
     document.body.classList.toggle('mode-' + k, uiMode === k);
     $('mode-' + k).classList.toggle('on', uiMode === k); $('mode-' + k).setAttribute('aria-pressed', uiMode === k);
   });
   if (prev === 'compose' && uiMode !== 'compose') cpHide();
+  if (prev === 'folder' && uiMode !== 'folder') fdHide();
   if (prev === 'notes' && uiMode !== 'notes') ntLeave();
   if (prev !== 'notes' && uiMode === 'notes') ntEnter();
   if (uiMode === 'compose') { cpShow(); updateStatus(); return; }
   if (uiMode === 'scan') { scanEnsure(); updateStatus(); return; }
-  if ((prev === 'scan' || prev === 'compose') && getActiveDoc()) setTimeout(() => (viewMode === 'single' ? fitPage() : bkFit(false)), 30);
+  if (uiMode === 'folder') { fdShow(); updateStatus(); return; }
+  if ((prev === 'scan' || prev === 'compose' || prev === 'folder') && getActiveDoc()) setTimeout(() => (viewMode === 'single' ? fitPage() : bkFit(false)), 30);
   if (!fromTool) {
     if (uiMode === 'view' && !VIEW_TOOLS.includes(tool)) setTool('pan');
     else if (uiMode === 'edit' && (VIEW_TOOLS.includes(tool) || tool === 'rv' || tool === 'signature')) setTool('select');
@@ -4631,7 +4839,7 @@ function stPaper(w, h) {
   return '';
 }
 function updateStatus() {
-  $('st-mode').textContent = '● ' + ({ edit: 'EDITAR', notes: 'NOTES', scan: 'ESCANEJAR', view: 'VEURE', review: 'REVISAR', sign: 'SIGNAR', compose: 'COMPOSAR' }[uiMode]);
+  $('st-mode').textContent = '● ' + ({ edit: 'EDITAR', notes: 'NOTES', scan: 'ESCANEJAR', view: 'VEURE', review: 'REVISAR', sign: 'SIGNAR', compose: 'COMPOSAR', folder: 'EXPLORA' }[uiMode]);
   const doc = getActiveDoc(), info = $('st-info');
   if (!doc) { info.textContent = ''; $('pg-count').textContent = ''; $('bm-count').textContent = ''; stKey = ''; return; }
   $('pg-count').textContent = doc.pages.length;
@@ -6137,7 +6345,7 @@ async function addImageFromFile(file) {
   }
 }
 document.addEventListener('paste', e => {
-  if (!getActiveDoc() || document.querySelector('.modal-bg:not(.hidden)') || uiMode === 'scan') return;
+  if (!getActiveDoc() || document.querySelector('.modal-bg:not(.hidden)') || uiMode === 'scan' || uiMode === 'folder') return;
   if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
   const it = [...((e.clipboardData && e.clipboardData.items) || [])].find(i => i.type.startsWith('image/'));
   if (!it) return;
@@ -7041,6 +7249,19 @@ async function generatePdfBytes(pagesList, pageNums = null, outline = null, extr
   const loadedPdfs = new Map();
   const sigCache = new Map(); // dataUrl → PDFImage incrustada (reutilitzada entre pàgines)
   const pidRef = new Map(), outPagesL = [], rotsL = [];
+  // v7.9.0: les pàgines d'un mateix PDF d'origen es copien d'una sola vegada, perquè comparteixin fonts i imatges (abans es duplicaven a cada pàgina)
+  const preCp = new Map();
+  {
+    const use = new Map();
+    for (const pd of pagesList) if (pd.type === 'pdf' && pd.pdfBytes) { let m = use.get(pd.pdfBytes); if (!m) use.set(pd.pdfBytes, m = new Set()); m.add(pd.srcIdx); }
+    for (const [bytes, set] of use) {
+      try {
+        if (!loadedPdfs.has(bytes)) { loadedPdfs.set(bytes, (ppCacheOn && PPLD.get(bytes)) || await PDFDocument.load(bytes)); if (ppCacheOn) PPLD.set(bytes, loadedPdfs.get(bytes)); }
+        const idx = [...set], cps = await out.copyPages(loadedPdfs.get(bytes), idx);
+        preCp.set(bytes, new Map(idx.map((i, k) => [i, cps[k]])));
+      } catch (e) { console.warn('Còpia agrupada de pàgines no disponible:', e); }
+    }
+  }
 
   for (let pi = 0; pi < pagesList.length; pi++) {
     const pd = pagesList[pi];
@@ -7051,8 +7272,9 @@ async function generatePdfBytes(pagesList, pageNums = null, outline = null, extr
         loadedPdfs.set(pd.pdfBytes, (ppCacheOn && PPLD.get(pd.pdfBytes)) || await PDFDocument.load(pd.pdfBytes));
         if (ppCacheOn) PPLD.set(pd.pdfBytes, loadedPdfs.get(pd.pdfBytes));
       }
-      const src = loadedPdfs.get(pd.pdfBytes);
-      const [cp] = await out.copyPages(src, [pd.srcIdx]);
+      const src = loadedPdfs.get(pd.pdfBytes), pm = preCp.get(pd.pdfBytes);
+      let cp = pm && pm.get(pd.srcIdx);
+      if (cp) pm.delete(pd.srcIdx); else [cp] = await out.copyPages(src, [pd.srcIdx]);
       stripSignedWidgets(cp);
       cp.setRotation(degrees(pd.rotation || 0)); // sempre: així el PDF desat coincideix amb la vista
       out.addPage(cp);
@@ -9011,7 +9233,7 @@ const HELP = {
 <h3>Si no apareix l'opció</h3>
 <p>Cal obrir l'adreça web (https) de l'aplicació, no el fitxer des del disc. Firefox i Safari d'escriptori no instal·len PWA; a Safari de l'iPhone: <b>Comparteix › Afegeix a la pantalla d'inici</b>.</p>`],
   about: ['Quant a Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 7.7.3b</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 7.9.3c</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -9560,7 +9782,7 @@ document.addEventListener('keydown', e => {
   if (['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)) return;
   // Amb un diàleg obert, les dreceres de pàgina/eines queden bloquejades
   if (document.querySelector('.modal-bg:not(.hidden)')) return;
-  if (uiMode === 'scan' || cpIsOpen) return;
+  if (uiMode === 'scan' || uiMode === 'folder' || cpIsOpen) return;
   if (tool === 'rv') {
     if ((e.key === 'Delete' || e.key === 'Backspace') && rvSel) { e.preventDefault(); rvDelete(rvSel); return; }
     if (e.key === 'Escape' && rvEsc()) return;
@@ -10445,7 +10667,7 @@ $('book-wrapper').addEventListener('mousedown', e => {
 });
 // finestra de selecció sobre l'espai buit de l'organitzador (Maj o Ctrl: s'afegeix a la selecció)
 addEventListener('mousedown', e => {
-  if (viewMode !== 'light' || e.button !== 0 || lbDrag || uiMode === 'compose' || uiMode === 'scan') return;
+  if (viewMode !== 'light' || e.button !== 0 || lbDrag || uiMode === 'compose' || uiMode === 'scan' || uiMode === 'folder') return;
   const vcEl = $('viewer-container'), doc = getActiveDoc();
   if (!doc || !vcEl.contains(e.target) || e.target.closest('.ct-cell, #lb-chip, button, input, select, #minimap')) return;
   e.preventDefault(); e.stopPropagation();
@@ -11095,6 +11317,7 @@ function cpNodeEl(n) {
   if (!doc) el.classList.add('err');
   if (n.fold) el.classList.add('folded');
   el.innerHTML = `<div class="cp-head">${fold(n.fold)}<span class="cp-dot"></span><span class="cp-title">${cpEsc(n.label || n.docName)}</span>${ins.tot > 1 ? '<span class="cp-inst mono" title="Còpia ' + ins.k + ' de ' + ins.tot + ' d\'aquest document">#' + ins.k + '</span>' : ''}<span class="cnt">${on}/${n.pages.length}</span><span class="port out" data-from="${n.id}" data-p="out" title="Sortida: arrossega fins a un port d'un Fusionar, d'una operació o d'un Document final"></span></div>`;
+  if (!doc && n.pv) return cpPvEl(n, el);
   if (!doc) { el.insertAdjacentHTML('beforeend', '<div class="cp-miss">Document no obert: «' + cpEsc(n.docName) + '»</div>'); return el; }
   if (n.fold) { el.insertAdjacentHTML('beforeend', `<div class="cp-sum"><span class="mono">${on ? 'p. ' + cpEsc(cpRange(n)) : 'cap pàgina'}</span>${n.label ? '<span class="cp-sumd">' + cpEsc(n.docName) + '</span>' : ''}</div>`); return el; }
   const strip = document.createElement('div'); strip.className = 'cp-strip';
@@ -11438,7 +11661,7 @@ async function cpSaveAll() {
 
 // ── recepta JSON (v2; llegeix també la v1 de la 6.3–6.5)
 function cpRecipeNow() {
-  const nodes = [...CP.nodes.values()].map(n => n.kind === 'src' ? { id: n.id, kind: 'src', x: n.x, y: n.y, doc: n.docName, label: n.label, pages: n.pages.map(p => [p.i, p.on ? 1 : 0]), fold: !!n.fold }
+  const nodes = [...CP.nodes.values()].map(n => n.kind === 'src' ? { id: n.id, kind: 'src', x: n.x, y: n.y, doc: n.docName, label: n.label, pages: n.pages.map(p => [p.i, p.on ? 1 : 0]), fold: !!n.fold, ...(n.pv ? { pv: { root: n.pv.root, path: n.pv.path, name: n.pv.name, size: n.pv.size, mtime: n.pv.mtime } } : {}) }
     : n.kind === 'mrg' ? { id: n.id, kind: 'mrg', x: n.x, y: n.y, label: n.label, ins: n.ins.slice() }
     : n.kind === 'out' ? { id: n.id, kind: 'out', x: n.x, y: n.y, name: n.name, in: n.in, fold: !!n.fold, optSeg: n.optSeg, optOrig: n.optOrig, reduce: n.reduce || '', split: !!n.split, pattern: n.pattern || '', maxMB: n.maxMB || '', ofmt: n.ofmt || '', odpi: n.odpi || '', sub: !!n.sub }
     : (({ id, kind, x, y, op, inp, ins, fold, _idoc, ...p }) => ({ id, kind, x, y, op, inp: { ...inp }, ins: ins.slice(), p: JSON.parse(JSON.stringify(p)) }))(n));
@@ -11502,9 +11725,9 @@ async function cpLoad(file, jIn) {
         else if (o.kind === 'mrg') CP.nodes.set(id, { id, kind: 'mrg', x, y, label: String(o.label || '').slice(0, 200), ins: (Array.isArray(o.ins) ? o.ins : []).map(ref).filter(Boolean) });
         else if (o.kind === 'out') CP.nodes.set(id, { id, kind: 'out', x, y, name: cpFileName(o.name, 'Composicio'), in: ref(o.in), fold: !!o.fold, optSeg: o.optSeg !== false, optOrig: o.optOrig !== false, reduce: RED_PROFILES[o.reduce] ? o.reduce : '', split: !!o.split, pattern: String(o.pattern || ''), maxMB: String(o.maxMB || ''), ofmt: ['png', 'txt', 'csv', 'dxf'].includes(o.ofmt) ? o.ofmt : '', odpi: String(o.odpi || ''), sub: !!o.sub });
         else {
-          const d = docs.find(q => q.name === o.doc); if (!d) miss++;
+          const d = docs.find(q => q.name === o.doc); if (!d && !(o.pv && o.pv.path)) miss++;
           const pages = (Array.isArray(o.pages) ? o.pages : []).map(p => ({ i: +p[0] | 0, on: !!p[1] })).filter(p => p.i >= 0 && (!d || p.i < d.pages.length));
-          CP.nodes.set(id, { id, kind: 'src', x, y, docId: d ? d.id : null, docName: String(o.doc || ''), label: String(o.label || '').slice(0, 200), pages, fold: !!o.fold });
+          CP.nodes.set(id, { id, kind: 'src', x, y, docId: d ? d.id : null, docName: String(o.doc || ''), label: String(o.label || '').slice(0, 200), pages, fold: !!o.fold, ...(!d && o.pv && typeof o.pv === 'object' && o.pv.path ? { pv: { root: String(o.pv.root || ''), path: String(o.pv.path), name: String(o.pv.name || o.doc || ''), size: +o.pv.size || 0, mtime: +o.pv.mtime || 0 } } : {}) });
         }
       });
       // entrades no vàlides (fonts com a destí, cicles)
@@ -13294,7 +13517,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 7.7.3b · pdf-lib';
+  const prod = 'Guaita PDF Edit 7.9.3c · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -13333,7 +13556,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'metadades XMP'); del(cat, 'PieceInfo', 'dades privades d\'aplicacions');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 7.7.3b') })); rep.cleaned.push('informació del document'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 7.9.3c') })); rep.cleaned.push('informació del document'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'miniatures'));
@@ -15419,8 +15642,8 @@ function nbRename(span) {
 { const _br = bmRender; bmRender = function () { _br.apply(this, arguments); if (bmTab === 'nb') nbRender(); }; }
 // pàgina nova ràpida al mode Notes (copia la mida i el paper de la pàgina actual)
 const nbSizeSel = () => { const e = $('nb-size'); return e && DIN[e.value] ? e.value : 'A4'; };
-function nbSizeSave(v) { try { localStorage.setItem('guaita-nb-size', v); } catch (e) { } }
-(() => { const e = $('nb-size'); let v = 'A4'; try { v = localStorage.getItem('guaita-nb-size') || 'A4'; } catch (x) { } if (e) e.value = DIN[v] ? v : 'A4'; })();
+function nbSizeSave(v) { try { localStorage.setItem('guaita-nb-size', v); } catch (e) { } ['nb-size', 'pn-size'].forEach(i => { const e = $(i); if (e && e.value !== v) e.value = v; }); }
+(() => { const e = $('nb-size'); let v = 'A4'; try { v = localStorage.getItem('guaita-nb-size') || 'A4'; } catch (x) { } if (e) e.value = DIN[v] ? v : 'A4'; const q = $('pn-size'); if (q) q.value = e ? e.value : 'A4'; })();
 async function ntAddPage(kind) {
   const doc = getActiveDoc(); if (!doc) return; saveHistory();
   const cur = doc.pages[doc.curIdx], sz = nbSizeSel(), k = kind === 'grid' ? 'grid' : kind === 'blank' ? '' : paperLast.k, mm = $('nb-mm') ? +$('nb-mm').value : paperLast.mm;
@@ -15883,19 +16106,45 @@ ntOrientSet(NT.orient);
 
 // ═══ v7.7.3b: notes de pàgina (notes de l'orador): text per pàgina, invisible, desat com a anotació oculta ═══
 const PN = { open: ntLoad('guaita-pn-open') === '1', h: Math.max(80, Math.min(500, +ntLoad('guaita-pn-h') || 150)), burst: false, t: 0 };
+document.body.style.setProperty('--pnh', PN.h + 'px');
+// v7.9.3: el text de la barra d'estat no passa per sota del botó centrat
+function pnStFit() {
+  const b = $('pn-st'), i = $('st-info'); if (!b || !i) return;
+  if (getComputedStyle(b).position !== 'absolute' || !b.offsetWidth) { i.style.maxWidth = ''; return; }
+  i.style.maxWidth = Math.max(0, b.getBoundingClientRect().left - i.getBoundingClientRect().left - 12) + 'px';
+}
+addEventListener('resize', pnStFit);
+// v7.9.3c: pestanya de les notes — sobre la línia del calaix quan és obert (a qualsevol vista) i a la vora inferior a pantalla completa
+function pnTabPos() {
+  const t = $('pn-tab'), d = $('pn-drawer'), vp = $('viewer-panel'), sb = $('status-bar'); if (!t || !d) return;
+  let cx = null; if (vp && sb) { const a = vp.getBoundingClientRect(), b = sb.getBoundingClientRect(); if (a.width) cx = Math.round(a.left + a.width / 2); sb.style.setProperty('--pncx', cx == null ? '50%' : (cx - b.left) + 'px'); }
+  const fs = document.body.classList.contains('nt-full') || !!document.fullscreenElement;
+  const vis = !!getActiveDoc() && ['view', 'edit', 'notes', 'review', 'sign'].includes(uiMode);
+  if (!vis || (!PN.open && !fs)) { t.classList.remove('show', 'line'); return; }
+  t.classList.add('show');
+  const r = PN.open ? d.getBoundingClientRect() : null;
+  if (r && r.height) { t.classList.add('line'); t.style.left = Math.round(r.left + r.width / 2) + 'px'; t.style.top = Math.round(r.top - 9) + 'px'; t.style.bottom = 'auto'; }
+  else { t.classList.remove('line'); t.style.left = (cx == null ? 50 + '%' : cx + 'px'); t.style.top = 'auto'; t.style.bottom = '3px'; }
+}
+const pnTabSoon = () => requestAnimationFrame(pnTabPos);
+addEventListener('resize', pnTabSoon); document.addEventListener('fullscreenchange', () => setTimeout(pnTabPos, 60));
+try { const ro = new ResizeObserver(pnTabSoon); ro.observe($('pn-drawer')); ro.observe($('viewer-panel')); } catch (e) { }
+{ const _us = updateStatus; updateStatus = function () { const r = _us.apply(this, arguments); requestAnimationFrame(() => { pnStFit(); pnTabPos(); }); return r; }; }
+{ const _a = ntFullOn, _b = ntFullOff; ntFullOn = function () { const r = _a.apply(this, arguments); setTimeout(pnTabPos, 60); return r; }; ntFullOff = function () { const r = _b.apply(this, arguments); setTimeout(pnTabPos, 60); return r; }; }
 const pnPd = () => { const d = getActiveDoc(); return d ? d.pages[d.curIdx] : null; };
 function pnToggle(v) {
   PN.open = v == null ? !PN.open : !!v; try { localStorage.setItem('guaita-pn-open', PN.open ? '1' : '0'); } catch (e) { }
   $('pn-drawer').classList.toggle('hidden', !PN.open); document.body.classList.toggle('pn-open', PN.open);
-  ['pn-st', 'pn-nt'].forEach(i => { const b = $(i); if (b) b.classList.toggle('on', PN.open); });
-  $('pn-drawer').style.height = PN.h + 'px'; pnSync(true);
+  ['pn-st', 'pn-nt', 'pn-tab'].forEach(i => { const b = $(i); if (b) b.classList.toggle('on', PN.open); });
+  $('pn-drawer').style.height = PN.h + 'px'; document.body.style.setProperty('--pnh', PN.h + 'px'); pnSync(true);
   if (PN.open) setTimeout(() => $('pn-text').focus(), 40);
+  pnTabSoon();
   setTimeout(() => { if (getActiveDoc() && viewMode === 'single') fitPage(); }, 80);
 }
 function pnSync(force) {
   const d = getActiveDoc(), pd = pnPd(), ta = $('pn-text'); if (!ta) return;
   const has = !!(pd && pd.notes);
-  ['pn-st', 'pn-nt'].forEach(i => { const b = $(i); if (b) b.classList.toggle('has', has); });
+  ['pn-st', 'pn-nt', 'pn-tab'].forEach(i => { const b = $(i); if (b) b.classList.toggle('has', has); });
   if (!PN.open) return;
   $('pn-pg').textContent = d ? '· pàgina ' + (d.curIdx + 1) : '';
   ta.disabled = !pd; $('pn-out').checked = !d || d.notesOut !== false;
@@ -15923,7 +16172,7 @@ document.addEventListener('keydown', e => { if (e.ctrlKey && e.altKey && (e.key 
 (() => {   // alçada del calaix
   const r = $('pn-resizer'); let d = null;
   r.addEventListener('pointerdown', e => { d = { y: e.clientY, h: PN.h }; r.setPointerCapture(e.pointerId); e.preventDefault(); });
-  r.addEventListener('pointermove', e => { if (!d) return; PN.h = Math.max(80, Math.min(Math.round(innerHeight * 0.6), d.h + d.y - e.clientY)); $('pn-drawer').style.height = PN.h + 'px'; });
+  r.addEventListener('pointermove', e => { if (!d) return; PN.h = Math.max(80, Math.min(Math.round(innerHeight * 0.6), d.h + d.y - e.clientY)); $('pn-drawer').style.height = PN.h + 'px'; document.body.style.setProperty('--pnh', PN.h + 'px'); pnTabPos(); });
   const up = () => { if (!d) return; d = null; try { localStorage.setItem('guaita-pn-h', String(PN.h)); } catch (e) { } if (getActiveDoc() && viewMode === 'single') fitPage(); };
   r.addEventListener('pointerup', up); r.addEventListener('pointercancel', up);
 })();
@@ -16001,6 +16250,1039 @@ async function pnToPage() {
   await renderThumbs(); await goTo(at); bmRender(); pnSync(true); pnMarks();
   toast(news.length > 1 ? 'Notes elevades a ' + news.length + ' pàgines de notes' : 'Notes elevades a una pàgina de notes');
 }
+
+// ═══ v7.8.0: mode Carpeta — navegador de PDF per carpetes, sense obrir-los ═══
+const FD_TH = 340, FD_MAX = 10000;
+const FD = {
+  root: '', dirH: null, files: [], byId: new Map(), cur: '', openDirs: new Set(['']), seq: 0, scanning: 0,
+  sub: ntLoad('guaita-fd-sub') !== '0', q: '', sort: ntLoad('guaita-fd-sort') || 'name', desc: ntLoad('guaita-fd-desc') === '1',
+  sz: Math.max(110, Math.min(320, +ntLoad('guaita-fd-sz') || 170)), lim: +(ntLoad('guaita-fd-lim') || 80),
+  showHid: false, sel: new Set(), last: null, exp: null, undo: [], queue: [], busy: 0, pdfs: new Map(), pgImg: new Map(), recent: null, io: null, pio: null, ql: null
+};
+const fdSave = (k, v) => { try { localStorage.setItem(k, String(v)); } catch (e) { } };
+// ── memòria cau (IndexedDB): miniatura de la pàgina 1 i metadades, per ruta + mida + data
+const fdDB = (() => {
+  let p = null;
+  return () => p || (p = new Promise(res => {
+    try {
+      const r = indexedDB.open('guaita-fd', 2);
+      r.onupgradeneeded = () => { const d = r.result; if (!d.objectStoreNames.contains('th')) d.createObjectStore('th'); if (!d.objectStoreNames.contains('kv')) d.createObjectStore('kv'); if (!d.objectStoreNames.contains('tx')) d.createObjectStore('tx'); };
+      r.onsuccess = () => res(r.result); r.onerror = () => res(null); r.onblocked = () => res(null);
+    } catch (e) { res(null); }
+  }));
+})();
+async function fdIdb(st, mode, fn) {
+  const d = await fdDB(); if (!d) return null;
+  return new Promise(res => { try { const tx = d.transaction(st, mode), q = fn(tx.objectStore(st)); tx.oncomplete = () => res(q && 'result' in q ? q.result : true); tx.onerror = tx.onabort = () => res(null); } catch (e) { res(null); } });
+}
+const fdGet = (st, k) => fdIdb(st, 'readonly', s => s.get(k));
+const fdPut = (st, k, v) => fdIdb(st, 'readwrite', s => s.put(v, k));
+const fdKey = f => f.key || (FD.root + '/' + f.path + '|' + f.size + '|' + f.mtime);
+const fdNorm = s => cpNorm(s, true);
+const fdDate = t => t ? new Date(t).toLocaleDateString('ca-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '';
+const fdFmt = f => f.wmm ? (stPaper(f.wmm, f.hmm).replace(/ · $/, '') || Math.round(Math.min(f.wmm, f.hmm)) + '×' + Math.round(Math.max(f.wmm, f.hmm)) + ' mm') : '';
+const FDI = {
+  dir: '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/></svg>',
+  lock: '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>',
+  big: '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 17h6"/></svg>',
+  err: '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg>',
+  exp: '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
+  col: '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>',
+  eye: '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>'
+};
+
+// ── entrada al mode
+function fdShow() {
+  $('fd-sub').checked = FD.sub; $('fd-sort').value = FD.sort; $('fd-sz').value = FD.sz; $('fd-lim').value = String(FD.lim);
+  $('fd-desc').classList.toggle('on', FD.desc); fdApplySz();
+  if (!FD.files.length && !FD.scanning) fdEmpty(); else fdRender();
+  setTimeout(() => { if (uiMode === 'folder' && !document.activeElement.closest('#fd-bar')) $('fd-grid').focus({ preventScroll: true }); }, 30);
+}
+function fdHide() { fdQlClose(); }
+async function fdEmpty() {
+  $('fd-empty').classList.remove('hidden'); $('fd-body').classList.add('hidden');
+  const r = await fdGet('kv', 'last'); FD.recent = r && r.h ? r : null;
+  const b = $('fd-recent'); b.classList.toggle('hidden', !FD.recent || !window.showDirectoryPicker);
+  if (FD.recent) b.querySelector('span').textContent = 'Reobrir «' + FD.recent.name + '»';
+  fdStat();
+}
+
+// ── triar la carpeta
+async function fdPick() {
+  if (window.showDirectoryPicker) {
+    let dh;
+    try { dh = await window.showDirectoryPicker({ id: 'guaita-fd', mode: 'read' }); }
+    catch (e) { if (e && e.name === 'AbortError') return; $('fd-input').click(); return; }
+    return fdFromHandle(dh);
+  }
+  $('fd-input').click();
+}
+async function fdReopen() {
+  const r = FD.recent; if (!r) return;
+  try {
+    let p = await r.h.queryPermission({ mode: 'read' });
+    if (p !== 'granted') p = await r.h.requestPermission({ mode: 'read' });
+    if (p !== 'granted') { toast('Sense permís per llegir la carpeta', true); return; }
+    await fdFromHandle(r.h);
+  } catch (e) { toast('No s\'ha pogut reobrir la carpeta: tria-la de nou', true); fdPut('kv', 'last', null); }
+}
+async function fdFromHandle(dh) {
+  const seq = ++FD.seq, out = []; fdScanning(true, dh.name);
+  const walk = async (h, base, depth) => {
+    for await (const [name, e] of h.entries()) {
+      if (seq !== FD.seq || out.length >= FD_MAX) return;
+      if (name.startsWith('.') || name.startsWith('~$')) continue;
+      if (e.kind === 'directory') { if (depth < 16) await walk(e, base ? base + '/' + name : name, depth + 1); }
+      else if (/\.pdf$/i.test(name)) {
+        try { const f = await e.getFile(); out.push({ name, dir: base, file: f, fh: e }); } catch (er) { }
+        if (out.length % 50 === 0) fdScanMsg(out.length);
+      }
+    }
+  };
+  try { await walk(dh, '', 0); } catch (e) { if (seq === FD.seq) { fdScanning(false); toast('No s\'ha pogut llegir la carpeta: ' + (e.message || e), true); } return; }
+  if (seq !== FD.seq) return;
+  fdPut('kv', 'last', { h: dh, name: dh.name });
+  fdLoad(dh.name, out, dh);
+}
+$('fd-input').addEventListener('change', e => {
+  const fs = [...(e.target.files || [])]; e.target.value = '';
+  if (!fs.length) return;
+  const root = (fs[0].webkitRelativePath || '').split('/')[0] || 'Carpeta', out = [];
+  fs.forEach(f => {
+    if (!/\.pdf$/i.test(f.name)) return;
+    const parts = (f.webkitRelativePath || f.name).split('/'); parts.shift(); parts.pop();
+    if (parts.some(p => p.startsWith('.'))) return;
+    out.push({ name: f.name, dir: parts.join('/'), file: f, fh: null });
+  });
+  ++FD.seq; fdLoad(root, out.slice(0, FD_MAX), null);
+});
+function fdDrop(e) {
+  const its = [...(e.dataTransfer.items || [])].filter(i => i.kind === 'file');
+  const ents = its.map(i => (i.webkitGetAsEntry ? i.webkitGetAsEntry() : null));
+  const hds = its.map(i => (i.getAsFileSystemHandle ? i.getAsFileSystemHandle() : null));
+  const loose = [...(e.dataTransfer.files || [])];
+  (async () => {
+    const di = ents.findIndex(x => x && x.isDirectory);
+    if (di >= 0) {
+      if (hds[di]) { try { const h = await hds[di]; if (h && h.kind === 'directory') return fdFromHandle(h); } catch (er) { } }
+      const seq = ++FD.seq, out = []; fdScanning(true, ents[di].name);
+      const rd = d => new Promise(r => { const R = d.createReader(), acc = []; const step = () => R.readEntries(b => { if (!b.length) r(acc); else { acc.push(...b); step(); } }, () => r(acc)); step(); });
+      const walk = async (d, base, depth) => {
+        for (const x of await rd(d)) {
+          if (seq !== FD.seq || out.length >= FD_MAX) return;
+          if (x.name.startsWith('.') || x.name.startsWith('~$')) continue;
+          if (x.isDirectory) { if (depth < 16) await walk(x, base ? base + '/' + x.name : x.name, depth + 1); }
+          else if (/\.pdf$/i.test(x.name)) { const f = await new Promise(r => x.file(r, () => r(null))); if (f) out.push({ name: x.name, dir: base, file: f, fh: null }); if (out.length % 50 === 0) fdScanMsg(out.length); }
+        }
+      };
+      await walk(ents[di], '', 0); if (seq !== FD.seq) return;
+      return fdLoad(ents[di].name, out, null);
+    }
+    const pdfs = loose.filter(isPdfFile);
+    if (!pdfs.length) { toast('Deixa anar una carpeta o fitxers PDF', true); return; }
+    ++FD.seq; fdLoad('Fitxers deixats', pdfs.map(f => ({ name: f.name, dir: '', file: f, fh: null })), null);
+  })();
+}
+function fdScanning(on, name) {
+  FD.scanning = on ? 1 : 0;
+  if (on) { $('fd-empty').classList.add('hidden'); $('fd-body').classList.remove('hidden'); $('fd-grid').innerHTML = '<div class="fd-wait">Llegint «' + escHtml(name || '') + '»…</div>'; $('fd-tree').innerHTML = ''; }
+  fdStat();
+}
+function fdScanMsg(n) { const w = document.querySelector('#fd-grid .fd-wait'); if (w) w.textContent = 'Llegint la carpeta… ' + n + ' PDF'; }
+function fdLoad(root, list, dirH) {
+  FD.scanning = 0; FD.pdfs.forEach(x => { try { x.pdf.destroy(); } catch (e) { } }); FD.pdfs.clear();
+  FD.files.forEach(f => { if (f.url) URL.revokeObjectURL(f.url); }); FD.pgImg.forEach(u => URL.revokeObjectURL(u)); FD.pgImg.clear();
+  FD.root = root; FD.dirH = dirH; FD.cur = ''; FD.sel.clear(); FD.last = null; FD.anchor = null; FD.exp = null; FD.undo = []; FD.queue = []; FD.showHid = false;
+  let k = 0;
+  FD.files = list.map(x => ({ id: 'f' + (++k), name: x.name, dir: x.dir, path: x.dir ? x.dir + '/' + x.name : x.name, size: x.file ? x.file.size : 0, mtime: x.file ? x.file.lastModified : 0, file: x.file, fh: x.fh, st: '', hid: false }));
+  FD.byId = new Map(FD.files.map(f => [f.id, f]));
+  FD.openDirs = new Set(['']);
+  if (list.length >= FD_MAX) toast('Carpeta molt gran: es mostren els primers ' + FD_MAX + ' PDF', true, 6000);
+  if (!FD.files.length) toast('No s\'ha trobat cap PDF a «' + root + '»', true, 5000);
+  $('fd-empty').classList.add('hidden'); $('fd-body').classList.remove('hidden');
+  $('fd-root').textContent = root; $('fd-root').title = root;
+  fdRender();
+}
+
+// ── llista visible
+function fdInDir(f) { return FD.cur === '' ? (FD.sub || f.dir === '') : (f.dir === FD.cur || (FD.sub && f.dir.startsWith(FD.cur + '/'))); }
+function fdVisible() {
+  const q = fdNorm(FD.q.trim()), qs = q ? q.split(/\s+/) : [];
+  const tq = FD.qm === 'text' && qs.length;
+  const L = FD.files.filter(f => (FD.showHid ? f.hid : !f.hid) && fdInDir(f) && (!FD.fmt || fdFmtKey(f) === FD.fmt) && (!FD.onlyRisk || (f.risk && f.risk.lvl)) && (tq ? !!(f.hits && f.hits.q === FD.q.trim() && f.hits.p.length) : !qs.length || qs.every(w => fdNorm(f.path + ' ' + (f.title || '') + ' ' + (f.author || '')).includes(w))));
+  const by = FD.sort, d = FD.desc ? -1 : 1, nm = (a, b) => a.path.localeCompare(b.path, 'ca', { numeric: true, sensitivity: 'base' });
+  L.sort((a, b) => {
+    let r = 0;
+    if (by === 'date') r = a.mtime - b.mtime; else if (by === 'size') r = a.size - b.size;
+    else if (by === 'pages') { const pa = a.pages || 0, pb = b.pages || 0; if (!pa !== !pb) return pa ? -1 : 1; r = pa - pb; }
+    return (r || nm(a, b)) * d;
+  });
+  return L;
+}
+
+// ── arbre de carpetes
+function fdTree() {
+  const root = { name: FD.root, path: '', kids: new Map(), n: 0, t: 0 };
+  FD.files.forEach(f => {
+    if (f.hid) return;
+    let node = root; root.t++;
+    if (f.dir) f.dir.split('/').forEach((p, i, a) => {
+      const path = a.slice(0, i + 1).join('/');
+      if (!node.kids.has(p)) node.kids.set(p, { name: p, path, kids: new Map(), n: 0, t: 0 });
+      node = node.kids.get(p); node.t++;
+    });
+    node.n++;
+  });
+  const nh = FD.files.filter(f => f.hid).length;
+  const row = (n, depth) => {
+    const kids = [...n.kids.values()].sort((a, b) => a.name.localeCompare(b.name, 'ca', { numeric: true, sensitivity: 'base' }));
+    const op = FD.openDirs.has(n.path);
+    let h = `<div class="fd-tr${FD.cur === n.path ? ' on' : ''}" data-p="${escHtml(n.path)}" style="padding-left:${6 + depth * 14}px" title="${escHtml(n.path || n.name)}">`
+      + `<span class="fd-tg">${kids.length ? (op ? '▾' : '▸') : ''}</span>${FDI.dir}<span class="fd-tn">${escHtml(n.name)}</span><span class="fd-tc mono">${n.t}</span></div>`;
+    if (op) kids.forEach(k => { h += row(k, depth + 1); });
+    return h;
+  };
+  $('fd-tree').innerHTML = row(root, 0) + (nh ? `<div class="fd-tr fd-thid${FD.showHid ? ' on' : ''}" data-hid="1" title="Fitxers descartats: no s'han esborrat del disc"><span class="fd-tg"></span>✕<span class="fd-tn">Descartats</span><span class="fd-tc mono">${nh}</span></div>` : '');
+}
+$('fd-tree').addEventListener('click', e => {
+  const r = e.target.closest('.fd-tr'); if (!r) return;
+  if (r.dataset.hid) { FD.showHid = !FD.showHid; FD.sel.clear(); fdRender(); return; }
+  const p = r.dataset.p;
+  if (e.target.closest('.fd-tg') && e.target.textContent) { FD.openDirs.has(p) ? FD.openDirs.delete(p) : FD.openDirs.add(p); fdTree(); return; }
+  FD.showHid = false; FD.cur = p; FD.openDirs.add(p); FD.exp = null; fdRender();
+});
+$('fd-tree').addEventListener('dblclick', e => {
+  const r = e.target.closest('.fd-tr'); if (!r || r.dataset.hid) return;
+  const p = r.dataset.p; if (p === '') return;
+  FD.openDirs.has(p) ? FD.openDirs.delete(p) : FD.openDirs.add(p); fdTree();
+});
+
+// ── graella
+function fdApplySz() { $('fd-grid').style.setProperty('--fd-sz', FD.sz + 'px'); }
+function fdSim(f) {
+  const t = f.st === 'enc' ? [FDI.lock, 'Protegit amb contrasenya', ''] : f.st === 'big' ? [FDI.big, 'Fitxer gran · ' + fmtMB(f.size), '<button class="btn sm" data-a="force">Generar igualment</button>'] : f.st === 'err' ? [FDI.err, 'No es pot llegir', ''] : null;
+  if (!t) return '<div class="fd-skel"></div>';
+  return `<div class="fd-sim fd-sim-${f.st}">${t[0]}<b>PDF</b><span>${t[1]}</span>${t[2]}</div>`;
+}
+function fdCardHtml(f) {
+  const sel = FD.sel.has(f.id), ex = FD.exp === f.id;
+  const meta = [f.dir && FD.cur !== f.dir ? escHtml(f.dir) : '', fmtMB(f.size), fdDate(f.mtime)].filter(Boolean).join(' · ');
+  const pg = f.pages ? `<span class="fd-pgs mono">${f.pages} p.</span>` : '';
+  const th = f.url ? `<img src="${f.url}" alt="" draggable="false">` : fdSim(f);
+  return `<div class="fd-card${sel ? ' sel' : ''}${ex ? ' exp' : ''}${f.hid ? ' hid' : ''}${FD.last === f.id ? ' foc' : ''}" data-id="${f.id}">`
+    + `<div class="fd-th">${th}${pg}${fdRiskBadge(f)}<label class="fd-chk" title="Seleccionar"><input type="checkbox"${sel ? ' checked' : ''}></label>`
+    + `<button class="fd-exb" data-a="exp" title="${ex ? 'Plegar' : 'Veure totes les pàgines'}">${ex ? FDI.col : FDI.exp}</button>`
+    + `<button class="fd-qlb" data-a="ql" title="Ullada (espai)">${FDI.eye}</button></div>`
+    + `<div class="fd-meta"><b class="fd-nm" title="${escHtml(f.path)}">${escHtml(f.name.replace(/\.pdf$/i, ''))}</b><span class="fd-mi">${meta}</span>`
+    + `<span class="fd-mi2">${[fdFmt(f), f.title ? escHtml(f.title) : '', f.author ? escHtml(f.author) : ''].filter(Boolean).join(' · ')}</span>`
+    + fdHitHtml(f) + (f.hid ? '<button class="btn sm" data-a="unhide">Recuperar</button>' : '') + '</div>'
+    + (ex ? '<div class="fd-strip" data-id="' + f.id + '"></div>' : '') + '</div>';
+}
+function fdRender() {
+  if (FD.scanning) return;
+  fdTree();
+  const L = fdVisible(), g = $('fd-grid');
+  if (FD.io) FD.io.disconnect(); if (FD.pio) FD.pio.disconnect();
+  if (!L.length) g.innerHTML = `<div class="fd-wait">${FD.files.length ? (FD.showHid ? 'Cap fitxer descartat aquí' : 'Cap PDF coincideix amb el filtre en aquesta carpeta') : 'Cap PDF'}</div>`;
+  else g.innerHTML = L.map(fdCardHtml).join('');
+  FD.order = L;
+  FD.io = new IntersectionObserver(es => es.forEach(en => { const f = FD.byId.get(en.target.dataset.id); if (!f) return; f.vis = en.isIntersecting; if (f.vis && !f.st) fdEnq(f); }), { root: g, rootMargin: '400px 0px' });
+  g.querySelectorAll('.fd-card').forEach(c => FD.io.observe(c));
+  if (FD.exp) fdStripBuild();
+  fdStat(); fdPump();
+}
+function fdCardUpd(f) {
+  const c = $('fd-grid').querySelector(`.fd-card[data-id="${f.id}"]`); if (!c) return;
+  const n = document.createElement('div'); n.innerHTML = fdCardHtml(f); const nc = n.firstChild;
+  const st = c.querySelector('.fd-strip'); if (st) nc.replaceChild(st, nc.querySelector('.fd-strip'));
+  if (FD.io) FD.io.unobserve(c); c.replaceWith(nc); if (FD.io) FD.io.observe(nc);
+}
+function fdStat() {
+  const s = $('fd-stat'); if (!s) return;
+  if (FD.scanning) { s.textContent = ''; } else if (!FD.files.length) s.textContent = '';
+  else {
+    const L = fdVisible(), tot = L.reduce((a, f) => a + f.size, 0), ns = FD.sel.size;
+    s.textContent = L.length + ' PDF · ' + fmtMB(tot) + (ns ? ' · ' + ns + ' seleccionat' + (ns > 1 ? 's' : '') : '');
+  }
+  const ns = FD.sel.size;
+  $('fd-open').disabled = !ns; $('fd-open').querySelector('span').textContent = ns > 1 ? 'Obrir (' + ns + ')' : 'Obrir';
+  $('fd-hide').disabled = !ns || FD.showHid; $('fd-unhide').classList.toggle('hidden', !FD.showHid); $('fd-unhide').disabled = !ns;
+  const cs = $('fd-cmp'); if (cs) cs.disabled = !ns;
+}
+
+// ── cua de miniatures (2 alhora; prioritat a les visibles)
+function fdEnq(f, front) { if (f.st && !f.force) return; if (!FD.queue.includes(f)) front ? FD.queue.unshift(f) : FD.queue.push(f); fdPump(); }
+function fdPump() {
+  FD.queue = FD.queue.filter(x => !x.st || x.force);
+  while (FD.busy < 2 && FD.queue.length) {
+    const i = FD.queue.findIndex(f => (f.vis || f.force) && (!f.st || f.force));
+    let f = i >= 0 ? FD.queue.splice(i, 1)[0] : null;
+    if (!f && FD.busy === 0 && uiMode === 'folder') f = (FD.order || []).slice(0, 1500).find(x => !x.st) || ((FD.fmt || FD.onlyRisk) ? FD.files.find(x => !x.st && !x.hid && fdInDir(x)) : null);   // en segon pla, d'una en una
+    if (!f) return;
+    FD.busy++; const seq = FD.seq;
+    fdThumb(f, seq).catch(() => { }).finally(() => { FD.busy--; if (seq === FD.seq) { fdCardUpd(f); fdFilterSoon(f); } fdPump(); });
+  }
+}
+async function fdOpenJs(bytes) {
+  if (!pdfMainThreadWorker && !(await workerProbe)) { enableMainThreadWorker(); updateWorkerBadge(); }
+  if (!FD.worker) FD.worker = new pdfjsLib.PDFWorker({ name: 'guaita-fd' });
+  return pdfjsLib.getDocument({ data: bytes, worker: FD.worker, verbosity: 0 }).promise;
+}
+async function fdBytes(f) {
+  let file = f.file;
+  try { return new Uint8Array(await file.arrayBuffer()); }
+  catch (e) { if (!f.fh) throw e; file = f.file = await f.fh.getFile(); f.size = file.size; f.mtime = file.lastModified; return new Uint8Array(await file.arrayBuffer()); }
+}
+async function fdThumb(f, seq) {
+  f.st = 'work';
+  const key = fdKey(f), c = await fdGet('th', key);
+  if (seq !== FD.seq) return;
+  if (c && c.st && (c.v === 2 || c.st !== 'ok')) {
+    Object.assign(f, { st: c.st, pages: c.pages, title: c.title, author: c.author, wmm: c.wmm, hmm: c.hmm, risk: c.risk || null });
+    if (c.blob) f.url = URL.createObjectURL(c.blob);
+    return;
+  }
+  if (f.size > FD.lim * 1048576 && FD.lim > 0 && !f.force) { f.st = 'big'; return; }
+  f.force = false;
+  let pdf = null;
+  try {
+    const bytes = await fdBytes(f); if (seq !== FD.seq) return;
+    fdRiskRaw(f, bytes);
+    pdf = await fdOpenJs(bytes);
+    const info = await pdf.getMetadata().then(m => m && m.info).catch(() => null) || {};
+    const pg = await pdf.getPage(1), v1 = pg.getViewport({ scale: 1 });
+    const k = FD_TH / Math.max(v1.width, v1.height), v = pg.getViewport({ scale: k });
+    const cv = document.createElement('canvas'); cv.width = Math.max(1, Math.round(v.width)); cv.height = Math.max(1, Math.round(v.height));
+    const cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, cv.width, cv.height);
+    await pg.render({ canvasContext: cx, viewport: v }).promise;
+    const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', 0.82));
+    const str = x => (typeof x === 'string' ? x.trim().slice(0, 200) : '');
+    Object.assign(f, { st: 'ok', pages: pdf.numPages, title: str(info.Title), author: str(info.Author), wmm: v1.width * 25.4 / 72, hmm: v1.height * 25.4 / 72, risk: fdRiskLvl({ ...(f._rraw || {}), ...(await fdRisk(pdf)) }) }); delete f._rraw;
+    if (blob) f.url = URL.createObjectURL(blob);
+    fdPut('th', key, { v: 2, st: 'ok', pages: f.pages, title: f.title, author: f.author, wmm: f.wmm, hmm: f.hmm, risk: f.risk, blob, t: Date.now() });
+  } catch (e) {
+    if (e && e.name === 'PasswordException') { f.st = 'enc'; fdPut('th', key, { st: 'enc', t: Date.now() }); }
+    else if (e && (e.name === 'InvalidPDFException' || e.name === 'FormatError')) { f.st = 'err'; fdPut('th', key, { st: 'err', t: Date.now() }); }
+    else f.st = 'err';
+  } finally { if (pdf) try { pdf.destroy(); } catch (e) { } }
+}
+
+// ── documents oberts per a la tira i l'ullada (màxim 3)
+async function fdPdf(f) {
+  const key = fdKey(f), x = FD.pdfs.get(key);
+  if (x) { x.t = Date.now(); return x.pdf; }
+  if (f.st === 'enc') throw Object.assign(new Error('Protegit amb contrasenya'), { name: 'PasswordException' });
+  if (f.size > 100 * 1048576) toast('Carregant un fitxer gran (' + fmtMB(f.size) + ')…', false, 4000);
+  const pdf = await fdOpenJs(await fdBytes(f));
+  FD.pdfs.set(key, { pdf, t: Date.now() });
+  if (FD.pdfs.size > 3) { const old = [...FD.pdfs.entries()].sort((a, b) => a[1].t - b[1].t)[0]; FD.pdfs.delete(old[0]); try { old[1].pdf.destroy(); } catch (e) { } }
+  if (!f.pages) { f.pages = pdf.numPages; }
+  return pdf;
+}
+async function fdRenderPage(pdf, i, maxPx, dpr) {
+  const pg = await pdf.getPage(i + 1), v1 = pg.getViewport({ scale: 1 });
+  const k = maxPx / Math.max(v1.width, v1.height) * (dpr || 1), v = pg.getViewport({ scale: k });
+  const cv = document.createElement('canvas'); cv.width = Math.max(1, Math.round(v.width)); cv.height = Math.max(1, Math.round(v.height));
+  const cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, cv.width, cv.height);
+  await pg.render({ canvasContext: cx, viewport: v }).promise; return cv;
+}
+// ── tira de pàgines (targeta desplegada)
+let fdStripQ = Promise.resolve();
+async function fdStripBuild() {
+  const f = FD.byId.get(FD.exp), st = $('fd-grid').querySelector('.fd-strip'); if (!f || !st) return;
+  st.innerHTML = '<div class="fd-wait">Llegint les pàgines…</div>';
+  let pdf;
+  try { pdf = await fdPdf(f); } catch (e) { st.innerHTML = '<div class="fd-wait">' + (e.name === 'PasswordException' ? 'Protegit amb contrasenya: obre\'l per veure\'n les pàgines' : 'No es poden llegir les pàgines') + '</div>'; return; }
+  if (FD.exp !== f.id || !st.isConnected) return;
+  const key = fdKey(f), n = pdf.numPages;
+  st.innerHTML = Array.from({ length: n }, (_, i) => `<span class="fd-sp" data-i="${i}" title="Pàgina ${i + 1} · clic: ullada"><img alt=""${FD.pgImg.has(key + '#' + i) ? ' src="' + FD.pgImg.get(key + '#' + i) + '"' : ''}><i>${i + 1}</i></span>`).join('');
+  if (f.pages !== n) { f.pages = n; }
+  FD.pio = new IntersectionObserver(es => es.forEach(en => {
+    if (!en.isIntersecting) return; const sp = en.target, i = +sp.dataset.i, im = sp.querySelector('img'), k2 = key + '#' + i;
+    FD.pio.unobserve(sp); if (im.getAttribute('src')) return;
+    fdStripQ = fdStripQ.then(async () => {
+      if (!sp.isConnected) return;
+      try {
+        if (!FD.pgImg.has(k2)) { const cv = await fdRenderPage(await fdPdf(f), i, 220); const b = await new Promise(r => cv.toBlob(r, 'image/jpeg', 0.8)); if (b) FD.pgImg.set(k2, URL.createObjectURL(b)); }
+        if (FD.pgImg.has(k2)) im.src = FD.pgImg.get(k2);
+      } catch (e) { sp.classList.add('err'); }
+      if (FD.pgImg.size > 600) { const [k0, u0] = FD.pgImg.entries().next().value; URL.revokeObjectURL(u0); FD.pgImg.delete(k0); }
+    });
+  }), { root: $('fd-grid'), rootMargin: '300px' });
+  st.querySelectorAll('.fd-sp').forEach(s => FD.pio.observe(s));
+}
+function fdToggleExp(f) {
+  if (!f) return;
+  FD.exp = FD.exp === f.id ? null : f.id; fdRender();
+  if (FD.exp) requestAnimationFrame(() => { const c = $('fd-grid').querySelector('.fd-card.exp'); if (c) c.scrollIntoView({ block: 'nearest' }); });
+}
+
+// ── selecció i accions
+function fdSelect(id, e) {
+  const L = fdVisible().map(f => f.id);
+  if (e && e.shiftKey && L.includes(FD.anchor || id)) {
+    const a = L.indexOf(FD.anchor || id), b = L.indexOf(id); if (!(e.ctrlKey || e.metaKey)) FD.sel.clear();
+    L.slice(Math.min(a, b), Math.max(a, b) + 1).forEach(x => FD.sel.add(x)); if (!FD.anchor) FD.anchor = id;
+  } else if (e && (e.ctrlKey || e.metaKey || e.toggle)) { FD.sel.has(id) ? FD.sel.delete(id) : FD.sel.add(id); FD.anchor = id; }
+  else { FD.sel.clear(); FD.sel.add(id); FD.anchor = id; }
+  FD.last = id; fdSelPaint();
+}
+function fdSelPaint() {
+  $('fd-grid').querySelectorAll('.fd-card').forEach(c => { const on = FD.sel.has(c.dataset.id); c.classList.toggle('sel', on); c.classList.toggle('foc', FD.last === c.dataset.id); const ch = c.querySelector('.fd-chk input'); if (ch) ch.checked = on; });
+  fdStat();
+}
+const fdSelFiles = () => fdVisible().filter(f => FD.sel.has(f.id));
+async function fdOpen(list) {
+  list = list || fdSelFiles(); if (!list.length) return;
+  if (list.length > 8 && !confirm('Obrir ' + list.length + ' documents?')) return;
+  const files = [];
+  for (const f of list) { try { if (f.fh) { const x = await f.fh.getFile(); f.file = x; } files.push(f.file); } catch (e) { toast('No s\'ha pogut llegir ' + f.name, true); } }
+  if (!files.length) return;
+  const { opened } = await openPdfFiles(files);
+  if (opened.length) setMode('view');
+}
+function fdHideSel(v) {
+  const L = fdSelFiles(); if (!L.length) return;
+  L.forEach(f => { f.hid = v; }); FD.undo.push({ ids: L.map(f => f.id), v }); if (FD.undo.length > 50) FD.undo.shift();
+  if (L.some(f => f.id === FD.exp)) FD.exp = null;
+  FD.sel.clear(); fdRender();
+  toast(v ? L.length + ' descartat' + (L.length > 1 ? 's' : '') + ' (no s\'esborren del disc) · Ctrl+Z per desfer' : L.length + ' recuperat' + (L.length > 1 ? 's' : ''));
+}
+function fdUndo() { const u = FD.undo.pop(); if (!u) return; u.ids.forEach(id => { const f = FD.byId.get(id); if (f) f.hid = !u.v; }); fdRender(); toast('Desfet'); }
+
+$('fd-grid').addEventListener('click', e => {
+  const c = e.target.closest('.fd-card'); if (!c) return; const f = FD.byId.get(c.dataset.id); if (!f) return;
+  const a = e.target.closest('[data-a]'), sp = e.target.closest('.fd-sp');
+  if (sp) { fdQlOpen(f, +sp.dataset.i); return; }
+  if (e.target.closest('.fd-chk')) { e.preventDefault(); fdSelect(f.id, { toggle: true }); return; }
+  if (a) {
+    e.stopPropagation(); const k = a.dataset.a;
+    if (k === 'exp') fdToggleExp(f);
+    else if (k === 'ql') { FD.last = f.id; fdSelPaint(); fdQlOpen(f); }
+    else if (k === 'force') { f.st = ''; f.force = true; f.vis = true; fdCardUpd(f); fdEnq(f, true); }
+    else if (k === 'unhide') { f.hid = false; FD.sel.delete(f.id); fdRender(); }
+    else if (k === 'pg') { FD.last = f.id; fdSelPaint(); fdQlOpen(f, +a.dataset.pg - 1); }
+    return;
+  }
+  fdSelect(f.id, e);
+});
+$('fd-grid').addEventListener('dblclick', e => {
+  const c = e.target.closest('.fd-card'); if (!c || e.target.closest('[data-a],.fd-chk,.fd-strip')) return;
+  fdToggleExp(FD.byId.get(c.dataset.id));
+});
+
+// ── teclat
+function fdCols() {
+  const cs = [...$('fd-grid').querySelectorAll('.fd-card:not(.exp)')]; if (cs.length < 2) return 1;
+  const t = cs[0].offsetTop; let n = 0; for (const c of cs) { if (c.offsetTop !== t) break; n++; } return Math.max(1, n);
+}
+function fdMove(d, e) {
+  const L = fdVisible(); if (!L.length) return;
+  let i = L.findIndex(f => f.id === FD.last); if (i < 0) i = d > 0 ? -1 : L.length;
+  const j = Math.max(0, Math.min(L.length - 1, i + d)), id = L[j].id;
+  fdSelect(id, e && e.shiftKey ? { shiftKey: true } : null);
+  const c = $('fd-grid').querySelector(`.fd-card[data-id="${id}"]`); if (c) c.scrollIntoView({ block: 'nearest' });
+}
+document.addEventListener('keydown', e => {
+  if (uiMode !== 'folder') return;
+  if (FD.ql) { fdQlKey(e); return; }
+  if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName) || document.querySelector('.modal-bg:not(.hidden)')) {
+    if (e.key === 'Escape' && e.target.id === 'fd-q') { e.target.value = ''; FD.q = ''; fdRender(); $('fd-grid').focus(); }
+    return;
+  }
+  const k = e.key, c = e.ctrlKey || e.metaKey;
+  if (e.target.tagName === 'BUTTON' && (k === 'Enter' || k === ' ')) return;
+  if (k === 'ArrowRight') { e.preventDefault(); fdMove(1, e); }
+  else if (k === 'ArrowLeft') { e.preventDefault(); fdMove(-1, e); }
+  else if (k === 'ArrowDown') { e.preventDefault(); fdMove(fdCols(), e); }
+  else if (k === 'ArrowUp') { e.preventDefault(); fdMove(-fdCols(), e); }
+  else if (k === 'Home' || k === 'End') { e.preventDefault(); const L = fdVisible(); if (L.length) { FD.last = L[k === 'Home' ? 0 : L.length - 1].id; fdMove(0, e); } }
+  else if (k === ' ') { e.preventDefault(); const f = FD.byId.get(FD.last) || fdSelFiles()[0]; if (f) fdQlOpen(f); }
+  else if (k === 'Enter') { e.preventDefault(); if (!FD.sel.size && FD.last) FD.sel.add(FD.last); fdOpen(); }
+  else if (k === 'Delete' || k === 'Backspace') { e.preventDefault(); fdHideSel(!FD.showHid); }
+  else if (c && (k === 'a' || k === 'A')) { e.preventDefault(); fdVisible().forEach(f => FD.sel.add(f.id)); fdSelPaint(); }
+  else if (c && (k === 'z' || k === 'Z')) { e.preventDefault(); fdUndo(); }
+  else if (c && (k === 'f' || k === 'F')) { e.preventDefault(); $('fd-q').focus(); $('fd-q').select(); }
+  else if (k === 'Escape') { if (FD.exp) { FD.exp = null; fdRender(); } else { FD.sel.clear(); fdSelPaint(); } }
+  else if (k === 'e' || k === 'E') { fdToggleExp(FD.byId.get(FD.last)); }
+  else if ((k === 'c' || k === 'C') && !c) { if (!FD.sel.size && FD.last) FD.sel.add(FD.last); fdToCmp(); }
+  else if (k === '+' || k === '-') { FD.sz = Math.max(110, Math.min(320, FD.sz + (k === '+' ? 20 : -20))); $('fd-sz').value = FD.sz; fdSave('guaita-fd-sz', FD.sz); fdApplySz(); }
+});
+
+// ── ullada (vista gran)
+async function fdQlOpen(f, i) {
+  if (f.st === 'enc') { toast('Protegit amb contrasenya: obre\'l per veure\'l', true); return; }
+  FD.ql = { f, i: i || 0, n: f.pages || 1, tok: 0 };
+  $('fd-ql').classList.remove('hidden'); fdQlPaint();
+}
+function fdQlClose() { if (!FD.ql) return; FD.ql = null; $('fd-ql').classList.add('hidden'); $('fd-ql-cv').innerHTML = ''; const g = $('fd-grid'); if (g) g.focus({ preventScroll: true }); }
+async function fdQlPaint() {
+  const q = FD.ql; if (!q) return; const tok = ++q.tok, f = q.f;
+  $('fd-ql-nm').textContent = f.path; $('fd-ql-pg').textContent = 'carregant…';
+  let pdf;
+  try { pdf = await fdPdf(f); } catch (e) { if (FD.ql === q) { $('fd-ql-pg').textContent = 'no es pot llegir'; $('fd-ql-cv').innerHTML = ''; } return; }
+  if (FD.ql !== q || tok !== q.tok) return;
+  q.n = pdf.numPages; q.i = Math.max(0, Math.min(q.n - 1, q.i));
+  $('fd-ql-pg').textContent = 'pàgina ' + (q.i + 1) + ' / ' + q.n;
+  const box = $('fd-ql-cv'), W = box.clientWidth - 24, H = box.clientHeight - 24;
+  try {
+    const pg = await pdf.getPage(q.i + 1), v1 = pg.getViewport({ scale: 1 }), k = Math.min(W / v1.width, H / v1.height);
+    const cv = await fdRenderPage(pdf, q.i, Math.max(v1.width, v1.height) * k, Math.min(2, devicePixelRatio || 1));
+    if (FD.ql !== q || tok !== q.tok) return;
+    cv.style.width = Math.round(v1.width * k) + 'px'; cv.style.height = Math.round(v1.height * k) + 'px';
+    box.innerHTML = ''; box.appendChild(cv);
+  } catch (e) { if (FD.ql === q) $('fd-ql-pg').textContent = 'error en dibuixar la pàgina'; }
+}
+function fdQlStep(d) { const q = FD.ql; if (!q) return; const j = Math.max(0, Math.min(q.n - 1, q.i + d)); if (j !== q.i) { q.i = j; fdQlPaint(); } }
+function fdQlFile(d) {
+  const q = FD.ql; if (!q) return; const L = fdVisible().filter(f => f.st !== 'enc'); let i = L.findIndex(f => f.id === q.f.id); if (i < 0) return;
+  i = Math.max(0, Math.min(L.length - 1, i + d)); if (L[i].id === q.f.id) return;
+  q.f = L[i]; q.i = 0; FD.last = q.f.id; FD.sel.clear(); FD.sel.add(q.f.id); fdSelPaint(); fdQlPaint();
+}
+function fdQlKey(e) {
+  const k = e.key;
+  if (k === 'Escape' || k === ' ') { e.preventDefault(); fdQlClose(); }
+  else if (k === 'ArrowRight' || k === 'PageDown') { e.preventDefault(); fdQlStep(1); }
+  else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); fdQlStep(-1); }
+  else if (k === 'ArrowDown') { e.preventDefault(); fdQlFile(1); }
+  else if (k === 'ArrowUp') { e.preventDefault(); fdQlFile(-1); }
+  else if (k === 'Home') { e.preventDefault(); fdQlStep(-1e9); }
+  else if (k === 'End') { e.preventDefault(); fdQlStep(1e9); }
+  else if (k === 'Enter') { e.preventDefault(); const f = FD.ql.f; fdQlClose(); fdOpen([f]); }
+}
+$('fd-ql').addEventListener('click', e => { if (e.target.id === 'fd-ql' || e.target.id === 'fd-ql-cv') fdQlClose(); });
+window.addEventListener('resize', () => { if (FD.ql) { clearTimeout(fdQlPaint._t); fdQlPaint._t = setTimeout(fdQlPaint, 150); } });
+
+// ── barra
+$('fd-q').addEventListener('input', () => { FD.q = $('fd-q').value; clearTimeout(FD._qt); FD._qt = setTimeout(fdRender, 160); });
+$('fd-sort').addEventListener('change', () => { FD.sort = $('fd-sort').value; fdSave('guaita-fd-sort', FD.sort); fdRender(); });
+$('fd-desc').addEventListener('click', () => { FD.desc = !FD.desc; fdSave('guaita-fd-desc', FD.desc ? 1 : 0); $('fd-desc').classList.toggle('on', FD.desc); fdRender(); });
+$('fd-sub').addEventListener('change', () => { FD.sub = $('fd-sub').checked; fdSave('guaita-fd-sub', FD.sub ? 1 : 0); fdRender(); });
+$('fd-sz').addEventListener('input', () => { FD.sz = +$('fd-sz').value; fdSave('guaita-fd-sz', FD.sz); fdApplySz(); });
+$('fd-lim').addEventListener('change', () => {
+  FD.lim = +$('fd-lim').value; fdSave('guaita-fd-lim', FD.lim);
+  FD.files.forEach(f => { if (f.st === 'big' && (FD.lim === 0 || f.size <= FD.lim * 1048576)) f.st = ''; }); fdRender();
+});
+async function fdClearCache() {
+  if (!confirm('Buidar les miniatures i el text indexat de totes les carpetes?')) return;
+  await fdIdb('th', 'readwrite', s => s.clear()); await fdIdb('tx', 'readwrite', s => s.clear()); FD.txt.clear(); FD.files.forEach(f => { delete f.hits; delete f.tx; }); toast('Memòria buidada');
+}
+async function fdRescan() {
+  if (FD.dirH) return fdFromHandle(FD.dirH);
+  toast('Torna a triar la carpeta per actualitzar-la', false, 4000); fdPick();
+}
+
+// ═══ v7.8.1: Compositor — node «Previsualització»: un PDF de la carpeta sense obrir ═══
+// És un node font (kind 'src') sense document obert (docId null) amb el camp pv {root, path, name, size, mtime}.
+// Plegat: primera pàgina; desplegat: totes les pàgines (marcar/descartar). Es carrega sol en connectar-lo o en generar.
+const CP_PVIMG = new Map(), CP_PVDOC = new Map();
+const cpPvKey = pv => pv.root + '/' + pv.path + '|' + pv.size + '|' + pv.mtime;
+function cpPvF(n) {
+  if (!n._f || n._f.key !== cpPvKey(n.pv)) n._f = { key: cpPvKey(n.pv), path: n.pv.path, name: n.pv.name, size: n.pv.size, mtime: n.pv.mtime, file: null, fh: null, st: '' };
+  const f = n._f;
+  if (!f.file && FD.root === n.pv.root) { const g = FD.files.find(x => x.path === n.pv.path); if (g) { f.file = g.file; f.fh = g.fh; } }
+  return f;
+}
+const cpPvAvail = n => !!cpPvF(n).file;
+async function cpPvThumb(n, img) {
+  const f = cpPvF(n);
+  if (!f.url) {
+    const c = await fdGet('th', f.key);
+    if (c && c.blob) { f.url = URL.createObjectURL(c.blob); if (c.pages && !n.pages.length) { n.pages = Array.from({ length: c.pages }, (_, i) => ({ i, on: true })); cpRender(); return; } }
+    else if (c && c.st) f.st = c.st;
+    else if (f.file && f.st !== 'work') { await fdThumb(f, FD.seq); }
+  }
+  if (f.url) img.src = f.url;
+  else if (f.st === 'enc' || f.st === 'err' || f.st === 'big') img.closest('.cp-pv1').classList.add('sim', 'sim-' + f.st);
+}
+let cpPvQ = Promise.resolve();
+function cpPvStrip(n, el) {
+  const f = cpPvF(n), sps = [...el.querySelectorAll('.cp-pg[data-pvi]')];
+  sps.forEach(sp => {
+    const i = +sp.dataset.pvi, k = f.key + '#' + i, im = sp.querySelector('img');
+    if (CP_PVIMG.has(k)) { im.src = CP_PVIMG.get(k); return; }
+    if (!f.file) return;
+    cpPvQ = cpPvQ.then(async () => {
+      if (!im.isConnected) return;
+      if (!CP_PVIMG.has(k)) { try { const cv = await fdRenderPage(await fdPdf(f), i, 120); const b = await new Promise(r => cv.toBlob(r, 'image/jpeg', 0.8)); if (b) CP_PVIMG.set(k, URL.createObjectURL(b)); } catch (e) { sp.classList.add('err'); } }
+      if (CP_PVIMG.has(k) && im.isConnected) im.src = CP_PVIMG.get(k);
+    });
+  });
+}
+function cpPvEl(n, el) {
+  el.classList.remove('err'); el.classList.add('pv');
+  const f = cpPvF(n), av = !!f.file, on = n.pages.filter(p => p.on).length;
+  const dir = n.pv.path.includes('/') ? n.pv.path.slice(0, n.pv.path.lastIndexOf('/')) : '';
+  const meta = [n.pages.length ? n.pages.length + ' p.' : '', fmtMB(n.pv.size), dir ? cpEsc(n.pv.root + '/' + dir) : cpEsc(n.pv.root)].filter(Boolean).join(' · ');
+  el.insertAdjacentHTML('beforeend', `<div class="cp-pvtag">${FDI.eye}<span>Previsualització · sense obrir</span>${n.pvBusy ? '<b>obrint…</b>' : ''}</div>`);
+  if (!n.pages.length && av && !n._pgReq) {
+    n._pgReq = true;
+    fdPdf(f).then(pdf => { if (!n.pages.length) { n.pages = Array.from({ length: pdf.numPages }, (_, i) => ({ i, on: true })); cpRender(); } }).catch(() => { });
+  }
+  if (n.fold || !n.pages.length) {
+    el.insertAdjacentHTML('beforeend', `<div class="cp-pvc"><span class="cp-pv1"><img alt=""><i>PDF</i></span><div class="cp-pvm"><span class="mono">${on && on < n.pages.length ? 'p. ' + cpEsc(cpRange(n)) + ' · ' : ''}${meta}</span>${av ? '' : '<span class="cp-pvw">Carpeta no disponible: torna-la a triar al mode Explora</span>'}<button class="btn sm" data-pvopen ${av ? '' : 'disabled'} title="Obrir el PDF com a document (també s'obre sol en connectar-lo)">Obrir</button></div></div>`);
+    cpPvThumb(n, el.querySelector('.cp-pv1 img'));
+    return el;
+  }
+  const strip = document.createElement('div'); strip.className = 'cp-strip';
+  strip.innerHTML = n.pages.map((p, k) => `<span class="cp-pg${p.on ? '' : ' off'}" data-k="${k}" data-pvi="${p.i}" title="Pàgina ${p.i + 1}${p.on ? ' · clic per descartar-la' : ' · descartada: clic per recuperar-la'}"><img alt=""><i>${p.i + 1}</i></span>`).join('');
+  el.appendChild(strip);
+  el.insertAdjacentHTML('beforeend', `<div class="cp-pvfoot"><span class="mono">${meta}</span><button class="btn sm" data-pvopen ${av ? '' : 'disabled'}>Obrir</button></div>`);
+  if (av) cpPvStrip(n, el); else strip.insertAdjacentHTML('afterend', '<div class="cp-pvw">Carpeta no disponible: torna-la a triar al mode Explora</div>');
+  return el;
+}
+// càrrega: el node passa a ser una font normal (conserva les pàgines triades)
+async function cpPvLoad(n) {
+  if (!n || !n.pv) return true;
+  if (n.pvBusy) return n.pvBusy;
+  const run = (async () => {
+    const f = cpPvF(n), key = f.key;
+    let d = CP_PVDOC.has(key) ? docs.find(q => q.id === CP_PVDOC.get(key)) : null;
+    if (!d) {
+      if (!f.file) { toast('No es troba «' + n.pv.path + '»: torna a triar la carpeta «' + n.pv.root + '» al mode Explora', true, 6000); return false; }
+      let file = f.file; if (f.fh) { try { file = f.file = await f.fh.getFile(); } catch (e) { } }
+      const auto = CP.auto, n0 = docs.length; CP.auto = false;
+      try { await loadPdfFile(file); } finally { CP.auto = auto; }
+      d = docs.length > n0 ? docs[docs.length - 1] : null;
+      if (!d) return false;
+      CP_PVDOC.set(key, d.id);
+    }
+    const N = d.pages.length;
+    n.pages = n.pages.filter(p => p.i < N); if (!n.pages.length) n.pages = d.pages.map((_, i) => ({ i, on: true }));
+    n.docId = d.id; n.docName = d.name; delete n.pv; delete n._f; delete n._pgReq;
+    return true;
+  })();
+  n.pvBusy = run; if (uiMode === 'compose') cpRender();
+  try { return await run; } finally { delete n.pvBusy; if (uiMode === 'compose') { cpPalette(); cpRender(); } }
+}
+async function cpPvEnsure() {
+  const used = new Set(); for (const n of CP.nodes.values()) cpInRefs(n).forEach(r => used.add(cpRefId(r)));
+  const L = [...CP.nodes.values()].filter(n => n.pv && used.has(n.id));
+  if (L.length) toast('Obrint ' + L.length + ' PDF de la carpeta…', false, 3000);
+  for (const n of L) await cpPvLoad(n);
+}
+// connexions i generació
+{ const _l = cpLink; cpLink = function (from) { const r = _l.apply(this, arguments); if (r) { const a = CP.nodes.get(cpRefId(from)); if (a && a.pv) cpPvLoad(a); } return r; }; }
+{ const _p = cpPreview; cpPreview = async function () { await cpPvEnsure(); return _p.apply(this, arguments); }; }
+{ const _s = cpSaveNode; cpSaveNode = async function () { await cpPvEnsure(); return _s.apply(this, arguments); }; }
+{ const _a = cpSaveAll; cpSaveAll = async function () { await cpPvEnsure(); return _a.apply(this, arguments); }; }
+{ const _m = cpSaveMany; cpSaveMany = async function () { await cpPvEnsure(); return _m.apply(this, arguments); }; }
+// botó «Obrir» dins el node
+$('cp-cv').addEventListener('click', e => {
+  const b = e.target.closest('[data-pvopen]'); if (!b) return;
+  e.stopPropagation(); e.preventDefault();
+  const n = CP.nodes.get(b.closest('.cp-node').dataset.id); if (n) cpPvLoad(n).then(ok => { if (ok) toast('Obert: ' + n.docName); });
+}, true);
+// inspector: informació i accions de la previsualització
+{
+  const _i = cpInspector;
+  cpInspector = function () {
+    const r = _i.apply(this, arguments), n = CP.nodes.get(CP.sel);
+    if (n && n.kind === 'src' && n.pv && cpSelIds().length <= 1) {
+      const box = $('cp-insp'), h = box.querySelector('h3'), av = cpPvAvail(n);
+      const d = document.createElement('div'); d.className = 'cp-pvins';
+      d.innerHTML = `<p><b>Previsualització</b> d'un PDF de la carpeta <b>${cpEsc(n.pv.root)}</b>, encara no obert:<br><span class="mono">${cpEsc(n.pv.path)}</span> · ${fmtMB(n.pv.size)}</p>
+        <p>Es carrega sol en connectar-lo a un Fusionar, a una operació o a un Document final, o en generar.${av ? '' : ' <b>La carpeta no està disponible</b>: torna-la a triar al mode Explora.'}</p>
+        <div class="cp-row"><button class="btn" id="cp-pvo" ${av ? '' : 'disabled'}>Obrir el document</button><button class="btn" id="cp-pvf">${FDI.dir}Mode Explora</button></div>`;
+      if (h) h.after(d); else box.prepend(d);
+      $('cp-pvo').onclick = () => cpPvLoad(n);
+      $('cp-pvf').onclick = () => setMode('folder');
+      const sel = $('cp-doc'); if (sel) sel.addEventListener('change', () => { delete n.pv; delete n._f; });
+    }
+    return r;
+  };
+}
+// enviar la selecció del mode Carpeta al Compositor
+function fdToCmp(list, pgs) {
+  const L = list || fdSelFiles(); if (!L.length) return;
+  if (!CP.built) { if (docs.length) cpReset(); else { CP.nodes.clear(); cpSeq = 0; CP.groups = []; CP.notes = []; CP.built = true; CP.auto = false; } }
+  if (![...CP.nodes.values()].some(n => n.kind === 'out')) { const m = cpNewMrg(420, 60), o = cpNewOut(700, 60); CP.nodes.get(o).in = m; CP.sel = o; }
+  const ns = [...CP.nodes.values()], x0 = ns.length ? Math.min(...ns.map(n => n.x)) - 340 : 40, y0 = ns.length ? Math.min(...ns.map(n => n.y)) : 40;
+  const ids = L.map((f, k) => {
+    const id = 'n' + (++cpSeq);
+    CP.nodes.set(id, { id, kind: 'src', x: x0, y: y0 + k * 150, docId: null, docName: f.name, label: '', pages: pgs ? pgs.map(i => ({ i, on: true })) : f.pages ? Array.from({ length: f.pages }, (_, i) => ({ i, on: true })) : [], fold: true, pv: { root: FD.root, path: f.path, name: f.name, size: f.size, mtime: f.mtime } });
+    return id;
+  });
+  CP.fitted = false; setMode('compose'); cpSelSet(ids); cpRender();
+  requestAnimationFrame(() => cpFitIfNeeded());
+  toast(ids.length + ' previsualitzaci' + (ids.length > 1 ? 'ons' : 'ó') + ' al Compositor · connecta-les a un Fusionar per afegir-les (s\'obriran soles)', false, 6000);
+}
+
+// ═══ v7.8.2: Explora — menú contextual (targetes, pàgines, arbre i graella) ═══
+Object.assign(CMI, {
+  fdexp: FDI.exp, fdcol: FDI.col, fddir: FDI.dir,
+  fdcmp: '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>',
+  fdcopy: '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/></svg>',
+  fdre: '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 11-3-6.3"/><path d="M20 4v5h-5"/></svg>'
+});
+function fdCopy(t, what) {
+  const ok = () => toast(what + ' copiat al porta-retalls'), ko = () => toast('No s\'ha pogut copiar', true);
+  try { navigator.clipboard.writeText(t).then(ok, ko); } catch (e) { ko(); }
+}
+function fdGoDir(dir) {
+  FD.showHid = false; FD.cur = dir; FD.exp = null; FD.openDirs.add('');
+  if (dir) dir.split('/').reduce((a, p) => { const x = a ? a + '/' + p : p; FD.openDirs.add(x); return x; }, '');
+  fdRender();
+}
+function fdDirFiles(p) { return FD.files.filter(f => !f.hid && (p === '' || f.dir === p || f.dir.startsWith(p + '/'))); }
+function fdRethumb(f) {
+  fdIdb('th', 'readwrite', st => st.delete(fdKey(f)));
+  if (f.url) URL.revokeObjectURL(f.url);
+  Object.assign(f, { url: null, st: '', force: true, vis: true }); fdCardUpd(f); fdEnq(f, true);
+}
+function fdCmCard(e, f) {
+  if (!FD.sel.has(f.id)) fdSelect(f.id); else { FD.last = f.id; fdSelPaint(); }
+  const n = FD.sel.size, ex = FD.exp === f.id;
+  CM.open(e.clientX, e.clientY, [
+    { head: n > 1 ? n + ' PDF seleccionats' : f.name },
+    { label: n > 1 ? 'Obrir els ' + n + ' seleccionats' : 'Obrir', icon: 'open', kbd: 'Retorn', act: () => fdOpen() },
+    f.hits && FD.qm === 'text' && f.hits.q === FD.q.trim() && f.hits.p.length ? { label: 'Obrir a la pàgina ' + f.hits.p[0] + ' (primera coincidència)', icon: 'open', act: () => fdOpenAt(f, f.hits.p[0]) } : null,
+    { label: 'Ullada', icon: 'eye', kbd: 'Espai', disabled: f.st === 'enc', act: () => fdQlOpen(f) },
+    { label: ex ? 'Plegar les pàgines' : 'Veure totes les pàgines', icon: ex ? 'fdcol' : 'fdexp', kbd: 'E', act: () => fdToggleExp(f) },
+    '-',
+    { label: n > 1 ? 'Enviar els ' + n + ' al Compositor' : 'Enviar al Compositor', icon: 'fdcmp', kbd: 'C', act: () => fdToCmp() },
+    FD.showHid ? { label: n > 1 ? 'Recuperar els ' + n : 'Recuperar', icon: 'eye', act: () => fdHideSel(false) }
+      : { label: n > 1 ? 'Descartar els ' + n : 'Descartar', icon: 'eyeoff', kbd: 'Supr', act: () => fdHideSel(true) },
+    '-',
+    f.st === 'big' ? { label: 'Generar la miniatura igualment', icon: 'fdre', act: () => { f.st = ''; f.force = true; f.vis = true; fdCardUpd(f); fdEnq(f, true); } }
+      : { label: 'Tornar a fer la miniatura', icon: 'fdre', disabled: !f.st || f.st === 'work', act: () => fdRethumb(f) },
+    { label: 'Anar a la seva carpeta', icon: 'fddir', disabled: FD.cur === f.dir && !FD.showHid, act: () => fdGoDir(f.dir) },
+    { label: f.wmm ? 'Mostrar només el format ' + FD_FMTN[fdFmtKey(f)] : 'Mostrar només aquest format', icon: 'layout', disabled: !f.wmm, act: () => { FD.fmt = fdFmtKey(f); fdRender(); } },
+    f.risk && f.risk.lvl ? { label: 'Seguretat: ' + f.risk.txt, icon: 'shield', act: () => toast('«' + f.name + '»: ' + f.risk.txt + '. Guaita no executa el JavaScript ni les accions del PDF; per analitzar-lo i desarmar-lo, obre\'l al mode Escanejar.', !!(f.risk.lvl !== 'info'), 9000) } : null,
+    '-',
+    { label: 'Copiar el nom', icon: 'fdcopy', act: () => fdCopy(f.name, 'Nom') },
+    { label: 'Copiar la ruta', icon: 'fdcopy', act: () => fdCopy(FD.root + '/' + f.path, 'Ruta') }
+  ]);
+}
+function fdCmPage(e, f, i) {
+  CM.open(e.clientX, e.clientY, [
+    { head: f.name + ' · pàgina ' + (i + 1) },
+    { label: 'Ullada d\'aquesta pàgina', icon: 'eye', act: () => fdQlOpen(f, i) },
+    { label: 'Enviar només aquesta pàgina al Compositor', icon: 'fdcmp', act: () => fdToCmp([f], [i]) },
+    { label: 'Enviar d\'aquesta pàgina al final al Compositor', icon: 'fdcmp', disabled: !f.pages || i >= f.pages - 1, act: () => fdToCmp([f], Array.from({ length: f.pages - i }, (_, k) => i + k)) },
+    '-',
+    { label: 'Obrir el document en aquesta pàgina', icon: 'open', act: () => fdOpenAt(f, i + 1) },
+    { label: 'Plegar les pàgines', icon: 'fdcol', act: () => fdToggleExp(f) }
+  ]);
+}
+function fdCmDir(e, tr) {
+  if (tr.dataset.hid) {
+    const H = FD.files.filter(f => f.hid);
+    CM.open(e.clientX, e.clientY, [
+      { head: 'Descartats · ' + H.length },
+      { label: FD.showHid ? 'Tornar a la carpeta' : 'Mostrar els descartats', icon: 'eye', act: () => { FD.showHid = !FD.showHid; FD.sel.clear(); fdRender(); } },
+      { label: 'Recuperar-los tots', icon: 'eye', act: () => { FD.undo.push({ ids: H.map(f => f.id), v: true }); H.forEach(f => { f.hid = false; }); FD.showHid = false; FD.sel.clear(); fdRender(); toast(H.length + ' recuperats'); } }
+    ]);
+    return;
+  }
+  const p = tr.dataset.p, L = fdDirFiles(p), name = p ? p.split('/').pop() : FD.root;
+  const kids = [...new Set(FD.files.filter(f => !f.hid && f.dir.startsWith(p ? p + '/' : '') && f.dir !== p).map(f => f.dir))];
+  const desc = new Set(); kids.forEach(d => d.split('/').reduce((a, x) => { const y = a ? a + '/' + x : x; if (!p || y.startsWith(p + '/')) desc.add(y); return y; }, ''));
+  const selAll = () => { fdGoDir(p); FD.sel.clear(); fdVisible().forEach(f => FD.sel.add(f.id)); fdSelPaint(); return fdSelFiles(); };
+  CM.open(e.clientX, e.clientY, [
+    { head: name + ' · ' + L.length + ' PDF' },
+    { label: 'Mostrar aquesta carpeta', icon: 'fddir', act: () => fdGoDir(p) },
+    { label: 'Seleccionar-ne tots els PDF', icon: 'select', disabled: !L.length, act: selAll },
+    { label: 'Enviar-los tots al Compositor', icon: 'fdcmp', disabled: !L.length, act: () => { if (L.length > 30 && !confirm('Enviar ' + L.length + ' PDF al Compositor?')) return; const S = selAll(); fdToCmp(S); } },
+    { label: 'Obrir-los tots', icon: 'open', disabled: !L.length, act: () => { const S = selAll(); fdOpen(S); } },
+    { label: 'Processar per lots aquesta carpeta…', icon: 'fdcmp', disabled: !L.length, act: () => fdBatch(p) },
+    '-',
+    { label: 'Desplegar les subcarpetes', icon: 'fdexp', disabled: !desc.size, act: () => { FD.openDirs.add(p); desc.forEach(d => FD.openDirs.add(d)); fdTree(); } },
+    { label: 'Plegar les subcarpetes', icon: 'fdcol', disabled: !desc.size, act: () => { desc.forEach(d => FD.openDirs.delete(d)); if (p) FD.openDirs.delete(p); fdTree(); } },
+    '-',
+    { label: 'Copiar la ruta', icon: 'fdcopy', act: () => fdCopy(FD.root + (p ? '/' + p : ''), 'Ruta') }
+  ]);
+}
+function fdCmGrid(e) {
+  const nh = FD.files.filter(f => f.hid).length, srt = k => () => { FD.sort = k; fdSave('guaita-fd-sort', k); $('fd-sort').value = k; fdRender(); };
+  CM.open(e.clientX, e.clientY, [
+    { label: 'Triar carpeta…', icon: 'fddir', act: fdPick },
+    { label: 'Tornar a llegir la carpeta', icon: 'fdre', disabled: !FD.files.length, act: fdRescan },
+    '-',
+    { label: 'Seleccionar tot', icon: 'select', kbd: 'Ctrl+A', disabled: !FD.files.length, act: () => { fdVisible().forEach(f => FD.sel.add(f.id)); fdSelPaint(); } },
+    { label: 'Treure la selecció', disabled: !FD.sel.size, kbd: 'Esc', act: () => { FD.sel.clear(); fdSelPaint(); } },
+    '-',
+    { head: 'Ordenar per' },
+    { label: 'Nom', on: FD.sort === 'name', act: srt('name') },
+    { label: 'Data', on: FD.sort === 'date', act: srt('date') },
+    { label: 'Mida', on: FD.sort === 'size', act: srt('size') },
+    { label: 'Pàgines', on: FD.sort === 'pages', act: srt('pages') },
+    { label: 'Ordre invers', on: FD.desc, act: () => $('fd-desc').click() },
+    '-',
+    { label: 'Incloure les subcarpetes', on: FD.sub, act: () => { $('fd-sub').checked = !FD.sub; $('fd-sub').dispatchEvent(new Event('change')); } },
+    { label: 'Mostrar els descartats' + (nh ? ' (' + nh + ')' : ''), on: FD.showHid, disabled: !nh && !FD.showHid, act: () => { FD.showHid = !FD.showHid; FD.sel.clear(); fdRender(); } }
+  ]);
+}
+$('fd-pane').addEventListener('contextmenu', e => {
+  if (e.target.closest('input, select, textarea, #fd-ql')) return;
+  const card = e.target.closest('.fd-card'), sp = e.target.closest('.fd-sp'), tr = e.target.closest('.fd-tr'), grid = e.target.closest('#fd-grid');
+  if (!card && !tr && !grid) return;
+  e.preventDefault(); e.stopPropagation();
+  if (sp && card) fdCmPage(e, FD.byId.get(card.dataset.id), +sp.dataset.i);
+  else if (card) fdCmCard(e, FD.byId.get(card.dataset.id));
+  else if (tr) fdCmDir(e, tr);
+  else fdCmGrid(e);
+});
+
+// ═══ v7.9.0: Compositor — node «Carpeta» (PDF del mode Explora) com a entrada del node Lot ═══
+CPT_COL.dir = '#6EE7A8'; CPT_NAME.dir = 'carpeta';
+OPS.fdir = { fam: 'ins', t: 'Carpeta', ins: () => [], outs: () => [['out', 'PDF de la carpeta', 'dir']], def: { root: '', dir: '', sub: true, q: '', keep: true } };
+OP_ORDER.ins.unshift('fdir');
+OPS.lot.ins = () => [['d', 'carpeta (opcional)', 'dir']];
+CP_TIPS722.fdir = 'Els PDF d\'una carpeta del mode Explora, sense obrir-los. Connecta\'l a l\'entrada «carpeta» d\'un Lot: en desar, cada PDF s\'obre, es processa i es tanca, d\'un en un.';
+function fdDirOpts() {
+  if (!FD.files.length) return { '': '(cap carpeta: tria-la al mode Explora)' };
+  const o = { '': FD.root + ' (tota)' };
+  [...new Set(FD.files.filter(f => !f.hid && f.dir).flatMap(f => f.dir.split('/').map((_, i, a) => a.slice(0, i + 1).join('/'))))]
+    .sort((a, b) => a.localeCompare(b, 'ca', { numeric: true, sensitivity: 'base' })).forEach(d => { o[d] = d; });
+  return o;
+}
+function fdDirList(n) {
+  if (!n.root && FD.files.length) n.root = FD.root;
+  if (!FD.files.length || n.root !== FD.root) return [];
+  const q = fdNorm(String(n.q || '').trim()), p = n.dir || '';
+  return FD.files.filter(f => !f.hid && (p === '' ? (n.sub || f.dir === '') : (f.dir === p || (n.sub && f.dir.startsWith(p + '/')))) && (!q || fdNorm(f.name).includes(q)))
+    .sort((a, b) => a.path.localeCompare(b.path, 'ca', { numeric: true, sensitivity: 'base' }));
+}
+function fdDirNote(n) {
+  if (n.root && FD.files.length && n.root !== FD.root || (n.root && !FD.files.length)) return '<b>Carpeta «' + cpEsc(n.root) + '» no disponible</b>: torna-la a triar al mode Explora.';
+  if (!FD.files.length) return 'Tria una carpeta al mode <b>Explora</b>.';
+  const L = fdDirList(n); return L.length + ' PDF · ' + fmtMB(L.reduce((a, f) => a + f.size, 0));
+}
+FIELDS.fdir = [
+  { f: 'dir', l: 'Carpeta', t: 'sel', o: () => fdDirOpts(), inl: 1 },
+  { f: 'sub', l: 'Incloure les subcarpetes', il: 'subcarpetes', t: 'chk', inl: 1 },
+  { f: 'q', l: 'Només els que contenen al nom', il: 'nom', t: 'txt' },
+  { f: 'keep', l: 'En desar, mantenir l\'estructura de subcarpetes', t: 'chk' },
+  { f: '_n', l: n => fdDirNote(n), t: 'note', inl: 1 }
+];
+{ const s = FIELDS.lot.find(x => x.f === 'sel'); if (s) { const sh = s.show; s.show = n => !(n.inp && n.inp.d) && (!sh || sh(n)); } }
+{ const _c = cpCompute; cpCompute = function (n) { if (n.kind === 'op' && n.op === 'fdir') return { out: { t: 'dir', v: fdDirList(n) } }; return _c.apply(this, arguments); }; }
+{ const _ld = cpLotDocs; cpLotDocs = function (n) { if (n && n.inp && n.inp.d) return n._fdCur ? [n._fdCur] : []; return _ld.apply(this, arguments); }; }
+function fdLotDir(lot) { return lot && lot.inp && lot.inp.d ? CP.nodes.get(cpRefId(lot.inp.d)) : null; }
+function fdLotFiles(lot) {
+  const r = cpEval(lot.inp.d), L = r && r.t === 'dir' ? r.v : [];
+  const q = fdNorm(String(lot.q || '').trim()), num = v => { const x = parseFloat(String(v).replace(',', '.')); return isFinite(x) ? x : null; };
+  const mn = num(lot.mbmin), mx = num(lot.mbmax), pn = num(lot.pgmin), px = num(lot.pgmax), mb = f => f.size / 1048576;
+  return L.filter(f => (!q || fdNorm(f.name).includes(q)) && (mn == null || mb(f) >= mn) && (mx == null || mb(f) <= mx)
+    && (pn == null || !f.pages || f.pages >= pn) && (px == null || !f.pages || f.pages <= px));
+}
+{ const _ll = cpLotList; cpLotList = function (n) { if (n.inp && n.inp.d) { const k = fdLotFiles(n).length; return `<label>Documents del lot</label><div class="cp-fhelp">Els <b>${k} PDF</b> de la carpeta connectada (no cal obrir-los: en desar s'obren i es tanquen d'un en un).</div>`; } return _ll.apply(this, arguments); }; }
+{ const _ob = cpOutBadge; cpOutBadge = function (n) { const lot = cpLotOf(n.id); if (lot && lot.inp && lot.inp.d) { const k = fdLotFiles(lot).length; return `<div class="cp-obadge">Lot · carpeta · ${k} PDF → ${k} fitxer${k === 1 ? '' : 's'}${n.split ? ' (o més, un per grup)' : ''}</div>`; } return _ob.apply(this, arguments); }; }
+// document temporal (sense pestanya ni vista): s'obre, es processa i es tanca
+async function fdTempDoc(f) {
+  let file = f.file; if (f.fh) { try { file = f.file = await f.fh.getFile(); } catch (e) { } }
+  const bytes = new Uint8Array(await file.arrayBuffer()), pdfJs = await openPdfJs(bytes);
+  const rots = await pageRotations(pdfJs);
+  const pages = Array.from({ length: pdfJs.numPages }, (_, i) => ({ type: 'pdf', srcIdx: i, rotation: rots[i] || 0, annotations: [], pdfJs, pdfBytes: bytes, sourceName: f.name }));
+  let outline = []; try { outline = await readOutline(pdfJs, pages); } catch (e) { }
+  let ex = { attachments: [], meta: {} }; try { ex = await readDocExtras(pdfJs, bytes); } catch (e) { }
+  try { const pcs = await readPageColors(pdfJs); delete pcs.__names; Object.keys(pcs).forEach(k => { if (pages[+k]) pages[+k].pcol = pcs[k]; }); } catch (e) { }
+  const d = { id: generateId(), name: f.name, pages, outline, history: [], redo: [], pageNums: null, curIdx: 0, selectedPages: [0], attachments: ex.attachments, meta: ex.meta, ocOff: new Set(), _tmp: true };
+  if (bytesHas(bytes, '/ByteRange')) { try { const s = await sigScan(bytes); if (s.some(x => x.signed)) d.signed = { bytes, fields: s, count: s.filter(x => x.signed).length, verified: null }; } catch (e) { } }
+  try { await pnRead(pages, pdfJs); } catch (e) { }
+  fixPids(d);
+  return d;
+}
+const fdTempDrop = d => { try { d.pages[0].pdfJs.destroy(); } catch (e) { } };
+{
+  const _ff = cpFilesFor;
+  cpFilesFor = async function (id) {
+    const n = CP.nodes.get(id), lot = n && n.kind === 'out' ? cpLotOf(id) : null;
+    if (!lot || !(lot.inp && lot.inp.d)) return _ff.apply(this, arguments);
+    const F = fdLotFiles(lot), fd = fdLotDir(lot), out = [];
+    if (!F.length) { toast('El lot no té cap PDF: tria la carpeta al mode Explora (o revisa els filtres)', true, 6000); return []; }
+    for (let j = 0; j < F.length; j++) {
+      const f = F[j];
+      toast('Lot · carpeta · ' + (j + 1) + ' de ' + F.length + ' · ' + f.path, false, 30000);
+      let d;
+      try { d = await fdTempDoc(f); } catch (e) { out.push({ name: f.name, error: e && e.name === 'PasswordException' ? 'protegit amb contrasenya' : 'no s\'ha pogut obrir: ' + (e.message || e), src: f.path }); continue; }
+      const N = d.pages.length, num = v => { const x = parseFloat(String(v).replace(',', '.')); return isFinite(x) ? x : null; };
+      if ((lot.nosig && d.signed) || (lot.onlysig && !d.signed) || (num(lot.pgmin) != null && N < num(lot.pgmin)) || (num(lot.pgmax) != null && N > num(lot.pgmax))) { fdTempDrop(d); continue; }
+      if (!f.pages) f.pages = N;
+      docs.push(d); lot._fdCur = d; cpEvalReset();
+      try {
+        const rel = fd && fd.keep ? (fd.dir ? (f.dir === fd.dir ? '' : f.dir.slice(fd.dir.length + 1)) : f.dir) : '';
+        (await _ff.call(this, id)).forEach(x => out.push({ ...x, name: rel ? rel + '/' + x.name : x.name, src: f.path }));
+      } catch (e) { out.push({ name: f.name, error: e.message || String(e), src: f.path }); }
+      finally { lot._fdCur = null; const k = docs.indexOf(d); if (k >= 0) docs.splice(k, 1); fdTempDrop(d); cpEvalReset(); }
+      await new Promise(r => setTimeout(r, 0));
+    }
+    return out;
+  };
+}
+// des del mode Explora: «Processar per lots aquesta carpeta»
+function fdBatch(p) {
+  if (!FD.files.length) return;
+  if (!CP.built) { CP.nodes.clear(); cpSeq = 0; CP.groups = []; CP.notes = []; CP.built = true; }
+  CP.auto = false;
+  const ns = [...CP.nodes.values()], y0 = ns.length ? Math.max(...ns.map(n => n.y)) + 320 : 40, x0 = ns.length ? Math.min(...ns.map(n => n.x)) : 40;
+  const a = cpNewOp('fdir', x0, y0); Object.assign(CP.nodes.get(a), { root: FD.root, dir: p, sub: FD.sub });
+  const l = cpNewOp('lot', x0 + 320, y0); cpLink(a, l, 'd');
+  const o = cpNewOut(x0 + 640, y0, 'Lot.pdf'); Object.assign(CP.nodes.get(o), { pattern: '{doc}_processat' }); cpLink(l, o, 0);
+  CP.fitted = false; setMode('compose'); cpSelSet([l]); cpRender(); requestAnimationFrame(() => cpFitIfNeeded());
+  toast('Lot de la carpeta: posa operacions entre el Lot i el Document final (p. ex. Reduir mida, Capçalera i peu) i desa', false, 7000);
+}
+
+// ═══ v7.9.1: Explora — avisos de seguretat i filtre per format ═══
+// Lectura lleugera: marques al fitxer (sense descomprimir) + el que pdf.js en sap (JavaScript del document, acció d'obertura, adjunts).
+const FD_RX = { js: /\/(JavaScript|JS)\b/, launch: /\/Launch\b/, aa: /\/AA\s*(<<|\d+\s+\d+\s+R)/, oa: /\/OpenAction\s*(<<[^>]*\/S\s*\/(JavaScript|Launch|SubmitForm|ImportData|URI))/, submit: /\/(SubmitForm|ImportData)\b/, rich: /\/(RichMedia|XFA)\b/, emb: /\/EmbeddedFile\b/ };
+function fdRiskRaw(f, bytes) {
+  try {
+    const n = Math.min(bytes.length, 64 * 1048576), t = new TextDecoder('latin1').decode(bytes.subarray(0, n)), r = {};
+    for (const k in FD_RX) if (FD_RX[k].test(t)) r[k] = 1;
+    f._rraw = r;
+  } catch (e) { f._rraw = {}; }
+}
+async function fdRisk(pdf) {
+  const r = {};
+  try { const js = await pdf.getJSActions(); if (js && Object.keys(js).length) r.js = 1; } catch (e) { }
+  try { const oa = await pdf.getOpenAction(); if (oa && oa.action) r.oa = 1; } catch (e) { }
+  try { const at = await pdf.getAttachments(); if (at && Object.keys(at).length) r.att = Object.keys(at).length; } catch (e) { }
+  return r;
+}
+function fdRiskLvl(r) {
+  const a = [];
+  if (r.js) a.push('JavaScript'); if (r.launch) a.push('obre programes (Launch)');
+  if (r.oa || r.aa) a.push('accions automàtiques'); if (r.submit) a.push('envia dades de formulari'); if (r.rich) a.push('contingut multimèdia o XFA');
+  if (r.att || r.emb) a.push('fitxers adjunts' + (r.att ? ' (' + r.att + ')' : ''));
+  r.lvl = r.js || r.launch ? 'high' : r.oa || r.aa || r.submit || r.rich ? 'mid' : r.att || r.emb ? 'info' : '';
+  r.txt = a.join(' · ');
+  return r;
+}
+function fdRiskBadge(f) {
+  const r = f.risk; if (!r || !r.lvl) return '';
+  const ic = r.lvl === 'info' ? '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11l-8.5 8.5a5 5 0 01-7-7L14 4a3.5 3.5 0 015 5l-8.5 8.5a2 2 0 01-3-3L15 7"/></svg>' : '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v5M12 16h.01"/></svg>';
+  const tip = (r.lvl === 'info' ? 'Conté ' : 'Avís de seguretat: ') + r.txt + '. Guaita no executa el JavaScript ni les accions del PDF; per analitzar-lo i desarmar-lo, obre\'l al mode Escanejar.';
+  return `<span class="fd-risk ${r.lvl}" title="${escHtml(tip)}">${ic}${r.js ? 'JS' : r.launch ? 'EXE' : r.lvl === 'mid' ? 'ACC' : ''}</span>`;
+}
+// formats
+function fdFmtKey(f) {
+  if (!f.wmm) return 'unk';
+  const k = stPaper(f.wmm, f.hmm).replace(/ · $/, ''), mx = Math.max(f.wmm, f.hmm);
+  if (k === 'A4') return 'A4'; if (k === 'A3') return 'A3'; if (k === 'Letter') return 'letter';
+  if (k === 'A2' || k === 'A1' || k === 'A0' || mx >= 590) return 'big';
+  return 'oth';
+}
+const FD_FMTN = { A4: 'A4', A3: 'A3', big: 'Plànols (A2 o més gran)', letter: 'Carta (Letter)', oth: 'Altres formats', unk: 'Encara sense dades' };
+function fdFmtOpts() {
+  const sel = $('fd-fmt'); if (!sel) return;
+  const c = {}; FD.files.forEach(f => { if (f.hid || !fdInDir(f)) return; const k = fdFmtKey(f); c[k] = (c[k] || 0) + 1; });
+  const h = '<option value="">Tots els formats</option>' + Object.keys(FD_FMTN).filter(k => c[k] || FD.fmt === k).map(k => `<option value="${k}"${FD.fmt === k ? ' selected' : ''}>${FD_FMTN[k]} · ${c[k] || 0}</option>`).join('');
+  if (sel.innerHTML !== h) sel.innerHTML = h;
+  sel.value = FD.fmt || '';
+  const nr = FD.files.filter(f => !f.hid && fdInDir(f) && f.risk && f.risk.lvl).length;
+  $('fd-rk').classList.toggle('on', !!FD.onlyRisk); $('fd-rk').title = 'Mostrar només els PDF amb avisos de seguretat (' + nr + ' en aquesta carpeta): JavaScript, accions automàtiques, fitxers adjunts…';
+}
+let fdFmtT = 0, fdFiltT = 0;
+{ const _s = fdStat; fdStat = function () { _s.apply(this, arguments); clearTimeout(fdFmtT); fdFmtT = setTimeout(fdFmtOpts, 120); }; }
+function fdFilterSoon(f) {
+  clearTimeout(fdFmtT); fdFmtT = setTimeout(fdFmtOpts, 300);
+  if (!(FD.fmt || FD.onlyRisk)) return;
+  const shown = !!$('fd-grid').querySelector(`.fd-card[data-id="${f.id}"]`), pass = (!FD.fmt || fdFmtKey(f) === FD.fmt) && (!FD.onlyRisk || (f.risk && f.risk.lvl));
+  if (shown !== pass) { clearTimeout(fdFiltT); fdFiltT = setTimeout(() => { const g = $('fd-grid'), st = g.scrollTop; fdRender(); g.scrollTop = st; }, 700); }
+}
+$('fd-fmt').addEventListener('change', () => { FD.fmt = $('fd-fmt').value; FD.exp = null; fdRender(); });
+$('fd-rk').addEventListener('click', () => { FD.onlyRisk = !FD.onlyRisk; FD.exp = null; fdRender(); });
+// en obrir un PDF amb avisos, recordar que Guaita no executa res
+{ const _o = fdOpen; fdOpen = async function (list) { const L = list || fdSelFiles(), R = L.filter(f => f.risk && (f.risk.lvl === 'high' || f.risk.lvl === 'mid')); const r = await _o.apply(this, arguments); if (R.length) toast((R.length > 1 ? R.length + ' PDF tenen' : '«' + R[0].name + '» té') + ' avisos de seguretat (' + R[0].risk.txt + '): Guaita no executa el JavaScript ni les accions. Per desarmar-lo, mode Escanejar.', true, 8000); return r; }; }
+
+// ═══ v7.9.2: Explora — cerca de text dins els PDF de la carpeta ═══
+// El text de cada PDF s'extreu una vegada (pdf.js), es desa a IndexedDB (magatzem «tx») i se cerca sense accents ni majúscules.
+FD.txt = new Map(); FD.qm = 'name'; FD.txQ = []; FD.txBusy = false; FD.txDone = 0;
+const FD_TXMAXP = 3000, FD_TXMAXC = 40000;
+async function fdTxLoad(f) {
+  const key = fdKey(f); if (FD.txt.has(key)) return FD.txt.get(key);
+  let c = await fdGet('tx', key);
+  if (!c) {
+    if (f.st === 'enc' || f.st === 'err') return null;
+    if (FD.lim > 0 && f.size > FD.lim * 1048576 && !f.force) return null;
+    let pdf = null;
+    try {
+      pdf = await fdOpenJs(await fdBytes(f));
+      const N = Math.min(pdf.numPages, FD_TXMAXP), t = [];
+      for (let i = 1; i <= N; i++) {
+        try {
+          const tc = await (await pdf.getPage(i)).getTextContent();
+          let s = ''; for (const it of tc.items) { if (it.str) s += it.str; s += it.hasEOL ? '\n' : (it.str && !/\s$/.test(it.str) ? ' ' : ''); }
+          t.push(s.replace(/[ \t]+/g, ' ').slice(0, FD_TXMAXC));
+        } catch (e) { t.push(''); }
+        if (i % 25 === 0) await new Promise(r => setTimeout(r, 0));
+      }
+      c = { v: 1, n: pdf.numPages, t };
+      fdPut('tx', key, c);
+    } catch (e) { return null; } finally { if (pdf) try { pdf.destroy(); } catch (e) { } }
+  }
+  const x = { t: c.t, n: c.n, z: c.t.map(p => fdNorm(p)) };
+  FD.txt.set(key, x); if (FD.txt.size > 3000) FD.txt.delete(FD.txt.keys().next().value);
+  return x;
+}
+function fdTxHits(f, x) {
+  const q = FD.q.trim(), ws = fdNorm(q).split(/\s+/).filter(Boolean);
+  if (!x || !ws.length) { f.hits = { q, p: [] }; return; }
+  const all = ws.every(w => x.z.some(p => p.includes(w)));
+  let p = []; if (all) { x.z.forEach((z, i) => { if (ws.every(w => z.includes(w))) p.push(i + 1); }); if (!p.length) x.z.forEach((z, i) => { if (ws.some(w => z.includes(w))) p.push(i + 1); }); }
+  let snip = '';
+  if (p.length) {
+    const i = p[0] - 1, z = x.z[i], t = x.t[i], k = z.indexOf(ws[0]);
+    // z i t tenen la mateixa llargada si la normalització no canvia el nombre de caràcters (NFD + treure diacrítics: s'aproxima)
+    const a = Math.max(0, k - 70), b = Math.min(t.length, k + ws[0].length + 110);
+    const raw = (a ? '…' : '') + t.slice(a, b).replace(/\s+/g, ' ') + (b < t.length ? '…' : '');
+    snip = escHtml(raw);
+    ws.forEach(w => { if (w.length < 2) return; const rx = new RegExp('(' + fdRxAcc(w) + ')', 'gi'); snip = snip.replace(rx, '<mark>$1</mark>'); });
+  }
+  f.hits = { q, p, snip, scan: x.z.every(z => !z.trim()) };
+}
+const FD_ACC = { a: 'aàáâä', e: 'eèéêë', i: 'iìíîï', o: 'oòóôö', u: 'uùúûü', c: 'cç', n: 'nñ', l: 'l·?' };
+function fdRxAcc(w) { return [...w].map(ch => { const c = ch.toLowerCase(); return FD_ACC[c] && c !== 'l' ? '[' + FD_ACC[c] + ']' : ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }).join(''); }
+function fdHitHtml(f) {
+  if (FD.qm !== 'text' || !f.hits || f.hits.q !== FD.q.trim() || !f.hits.p.length) return '';
+  const P = f.hits.p, sh = P.slice(0, 12).map(n => `<a data-a="pg" data-pg="${n}" title="Ullada a la pàgina ${n}">${n}</a>`).join(', ') + (P.length > 12 ? ' … (' + P.length + ')' : '');
+  return `<span class="fd-hit">${f.hits.snip}</span><span class="fd-hitp">p. ${sh}</span>`;
+}
+// cua d'indexació (d'un en un), només mentre la cerca és de text
+function fdTxScope() { return FD.files.filter(f => !f.hid && fdInDir(f)); }
+function fdTxRun() {
+  if (FD.qm !== 'text' || FD.txBusy || uiMode !== 'folder') return;
+  const q = FD.q.trim(); if (!q) { fdStat(); return; }
+  const f = fdTxScope().find(x => !(x.hits && x.hits.q === q) && !x._txSkip);
+  if (!f) { fdStat(); return; }
+  FD.txBusy = true; const seq = FD.seq;
+  fdTxLoad(f).then(x => { if (seq !== FD.seq) return; if (!x) f._txSkip = true; fdTxHits(f, x); })
+    .catch(() => { f._txSkip = true; })
+    .finally(() => { FD.txBusy = false; if (seq !== FD.seq) return; fdTxSoon(); fdTxRun(); });
+}
+let fdTxT = 0;
+function fdTxSoon() { clearTimeout(fdTxT); fdTxT = setTimeout(() => { const g = $('fd-grid'), st = g.scrollTop; fdRender(); g.scrollTop = st; }, 500); }
+function fdTxSearch() {   // recalcula amb el text ja en memòria i continua indexant la resta
+  const q = FD.q.trim();
+  FD.files.forEach(f => { delete f._txSkip; const x = FD.txt.get(fdKey(f)); if (x && q) fdTxHits(f, x); });
+  fdRender(); fdTxRun();
+}
+$('fd-qm').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  FD.qm = b.dataset.v; $('fd-qm').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+  $('fd-q').placeholder = FD.qm === 'text' ? 'Cercar dins el text dels PDF (Ctrl+F)' : 'Filtrar per nom, títol o autor (Ctrl+F)';
+  FD.exp = null; if (FD.qm === 'text') fdTxSearch(); else fdRender(); $('fd-q').focus();
+});
+// el camp de cerca: en mode text, esperar una mica més abans de cercar
+$('fd-q').addEventListener('input', () => { if (FD.qm !== 'text') return; clearTimeout(FD._tq); FD._tq = setTimeout(fdTxSearch, 350); });
+{ const _s = fdStat; fdStat = function () {
+  _s.apply(this, arguments);
+  const s = $('fd-stat'); if (!s || FD.qm !== 'text' || !FD.q.trim() || !FD.files.length) return;
+  const q = FD.q.trim(), S = fdTxScope(), done = S.filter(f => (f.hits && f.hits.q === q) || f._txSkip).length, hit = S.filter(f => f.hits && f.hits.q === q && f.hits.p.length).length, sk = S.filter(f => f._txSkip).length;
+  s.title = s.textContent = hit + ' PDF amb «' + q + '»' + (done < S.length ? ' · indexant ' + done + ' de ' + S.length + '…' : ' · ' + S.length + ' revisats') + (sk ? ' · ' + sk + ' sense poder llegir' : '') + (FD.sel.size ? ' · ' + FD.sel.size + ' seleccionat' + (FD.sel.size > 1 ? 's' : '') : '');
+}; }
+// si canvia la carpeta o el filtre de carpeta, continuar indexant
+{ const _r = fdRender; fdRender = function () { const r = _r.apply(this, arguments); if (FD.qm === 'text' && FD.q.trim()) setTimeout(fdTxRun, 0); return r; }; }
+{ const _l = fdLoad; fdLoad = function () { const r = _l.apply(this, arguments); FD.txBusy = false; return r; }; }
+// obrir a la pàgina de la coincidència
+async function fdOpenAt(f, n) {
+  await fdOpen([f]);
+  const d = getActiveDoc(); if (d && d.name === f.name && n > 0) setTimeout(() => goTo(n - 1), 300);
+}
+// ullada: començar a la primera coincidència
+{ const _q = fdQlOpen; fdQlOpen = function (f, i) { if (i == null && FD.qm === 'text' && f.hits && f.hits.q === FD.q.trim() && f.hits.p.length) i = f.hits.p[0] - 1; return _q.call(this, f, i); }; }
 
 // v7.6.0: Fitxer › Processar per lots…: munta la recepta d'un node Lot (un fitxer de sortida per document obert)
 function cpBatch() {
@@ -16460,7 +17742,7 @@ function ribPaint(host, list, Hd, s, pd, small) {
 function ribRefresh() {
   const doc = getActiveDoc();
   document.querySelectorAll('#viewer-container .bm-ribs').forEach(x => x.remove());
-  if (!doc || !ribOn || uiMode === 'compose' || uiMode === 'scan') return;
+  if (!doc || !ribOn || uiMode === 'compose' || uiMode === 'scan' || uiMode === 'folder') return;
   const M = ribMap(doc); if (!M.size) return;
   if (viewMode === 'single') {
     const pcv = $('page-canvas'), pd = doc.pages[doc.curIdx]; if (!pd || !pcv.width) return;
@@ -17321,7 +18603,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 7.7.3b · pdf-lib');
+    out.setProducer('Guaita PDF Edit 7.9.3c · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadades:', e); }
 }

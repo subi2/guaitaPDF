@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 7.7.3b** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 7.9.3c** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -44,6 +44,7 @@ The switch in the header separates the ways of working:
 | Mode | What it is for |
 |---|---|
 | **View** | Navigation, page views, hand, scaled measuring, search, export and printing. |
+| **Explore** | Browser for the PDFs in a folder (with subfolders): first-page thumbnails without opening the files, search, peek and selective opening. Next to View. |
 | **Notes** | For taking notes with a stylus or finger: pencils, highlighters, text, shapes and eraser, notebook paper, lasso, voice and links. Between View and Edit; also in Tools › Notes mode. |
 | **Edit** | Tools by family (History, Pages, Content, Annotate, Insert) and, below, the options of the active tool. Editing-tool shortcuts take you to this mode by themselves. |
 | **Review** | Real PDF annotations (notes, text markups, clouds, stamps, attachments) with list, filters and export. |
@@ -62,8 +63,20 @@ The switch in the header separates the ways of working:
 - **Vertical bars (7.7.3)**: in full screen, the orientation button of the floating bar cycles between horizontal, vertical on the left and vertical on the right; the grip can also be dragged to a screen edge.
 - **Notebook and new pages (7.7.3a)**: the *Notebook* tab sits between *Pages* and *Bookmarks*; choose A4 or A5 and add blank or grid pages (also from the Notes bar).
 - **Page notes (7.7.3b)**: like PowerPoint's speaker notes, one keyboard-typed, invisible text per page (button in the status bar or Notes bar, **Ctrl+Alt+N**; Esc returns to the page, Alt+↑/↓ changes page). It is saved inside the PDF as a hidden annotation that only Guaita reads; a yellow mark on the thumbnail shows pages with notes. *Include them when saving* can be unticked to share without notes. *Raise to visible note* turns them into a sticky note (PDF comment) and *Raise to notes page* into new text pages, visible in any viewer.
+- **Notes drawer (7.9.3–7.9.3c)**: the page-notes button sits in the middle of the status bar, centred under the viewer. With the drawer open, a small green button on the line that separates it from the viewer closes and opens it, and in full screen it stays at the bottom edge; the drawer keeps the height you chose. A **Size** selector (A4/A5, the same as in the Notebook tab) sets the size of the pages created by *Raise to notes page*.
 - **Voice notes**: record audio while you write; on playback the strokes reappear in time with the voice and the view follows the pages. The audio is attached to the PDF (`guaita-voz-*`) and the microphone is only used when you ask. When you reopen the PDF the voice follows the pages, but the strokes are already part of the page and do not reappear progressively.
 - **Links and video**: a clickable rectangle to a URL (standard `/URI` link, works in any viewer) and a *video card* (a thumbnail you upload, or a frame from a video file, linked to YouTube, Vimeo or any URL). In View mode a click opens the link with confirmation. Nothing is downloaded from the Internet.
+
+### Explore mode
+
+- **Choosing the folder**: *Choose folder…* (in Chrome or Edge the last one can be reopened), drag it onto the window or, in other browsers, the folder picker. Subfolders are included (this can be switched off) and shown in a tree with PDF counts.
+- **Thumbnails without opening**: each card shows the first page, page count, size and format (A4, A3, plans…). They are made in a separate thread, visible ones first, and saved in the browser (cache) so they appear instantly next time. Very large, encrypted or damaged files show a placeholder card (*Generate anyway* forces it; the limit is configurable).
+- **Expand and peek**: *double-click* or the **E** key expands the card and shows all its pages; **Space** opens the big *peek* (←/→ changes page, ↑/↓ file, Enter opens the document, Esc closes).
+- **Search and filter**: by name, title or author, or **inside the text** of the PDFs (indexed in the background and saved in the browser; it only finds real text, not scans), by first-page format, and only those with **security warnings** (JavaScript, automatic actions, attached files, program launch…). Guaita never runs any of that; to analyse and disarm it, open the PDF in Scan mode.
+- **Select and open**: Ctrl/Shift + click or each card's checkbox; *Open* loads only the selected ones as documents. *Discard* (**Del**) removes them from the list without deleting them from disk (Ctrl+Z undoes it).
+- **Context menu** (right button) on cards, pages, the tree and the grid: open, peek, open at a match's page, copy the name or path, go to its folder, discard or restore, send to the Composer, batch-process a folder…
+- **With the Composer**: *Send to the Composer* adds the chosen PDFs as **Preview** nodes (first page folded, or all pages unfolded, to discard some) that open by themselves when connected; and the **Folder** node feeds a **Batch**: when saving, each PDF is opened, processed and closed one at a time, keeping the subfolder structure if wanted.
+- **Privacy**: everything happens on your computer; no file leaves it. *Clear the cache* deletes the thumbnails and the indexed text.
 
 ## 03. Open, save and print
 
