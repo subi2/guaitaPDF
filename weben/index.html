@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 7.9.3c — Multi-document PDF editor (Guaita Apps suite)
+  Guaita PDF Edit 7.9.4 — Multi-document PDF editor (Guaita Apps suite)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v7.9.3c (EN)</title>
+<title>Guaita PDF Edit v7.9.4 (EN)</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -1931,7 +1931,8 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
         <button class="mi" onclick="triggerOpen()"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><path d="M3 11h18"/></svg>Open PDF…</span></button>
         <button class="mi" onclick="setMode('folder')" title="Explore mode: view the PDFs in a folder as thumbnails without opening them"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><rect x="7" y="12" width="4" height="5" rx=".5"/><rect x="13" y="12" width="4" height="5" rx=".5"/></svg>Explore a folder…</span></button>
         <button class="mi" onclick="showNewModal()"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M12 11v6M9 14h6"/></svg>New document…</span></button>
-        <button class="mi" data-twin="btn-save" onclick="savePdf()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7V3M8 21v-7h8v7"/></svg>Save current PDF</span></button>
+        <button class="mi" data-twin="btn-save" onclick="savePdf()" disabled title="Ctrl+S"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7V3M8 21v-7h8v7"/></svg>Save current PDF</span></button>
+        <button class="mi" data-twin="btn-save" onclick="savePdf(true)" disabled title="Ctrl+Shift+S: choose the name and location"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7V3M8 21v-7h8v7"/><path d="M14 14h6M17 11v6"/></svg>Save as…</span></button>
         <button class="mi needs-doc" onclick="showReduceModal()" disabled title="Reduce size: images, metadata, thumbnails, JavaScript…"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12l3 3 3-3M12 9v6"/></svg>Reduce size…</span></button>
         <div class="msep"></div>
         <button class="mi" data-twin="btn-print-doc" onclick="printPdf('current')" disabled title="Generates and prints the current document"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9V3h10v6"/><path d="M7 17H4v-7h16v7h-3"/><path d="M7 14h10v7H7z"/></svg>Print…</span><kbd>Ctrl+P</kbd></button>
@@ -2064,7 +2065,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <button id="mode-compose" onclick="setMode('compose')" title="Compose: merge documents and pages with a node tree (sources → Merge → Final document)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Compose</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v7.9.3c</span>
+  <span class="tag">v7.9.4</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Switch to light theme"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2432,7 +2433,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 7.9.3c</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 7.9.4</small></div>
           <h1>PDF editor <em>local</em>, no cloud.</h1>
           <p>Open one or more PDFs or drag them onto the window. Everything is processed on this computer: no file leaves the browser.</p>
           <div class="wl-act">
@@ -2724,7 +2725,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
   <span id="st-worker" class="hidden" title="This environment does not allow pdf.js workers (embedded viewer or browser restrictions). PDFs are processed on the main thread: everything works the same, but large documents are slower. Opened directly in Chrome or Edge from disk, this does not normally happen.">pdf.js · main thread</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 7.9.3c · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 7.9.4 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -3439,7 +3440,7 @@ const APP_MODE = false;
 if (APP_MODE) {
   document.body.classList.add('app-mode');
   // Sense pestanyes ni barra del navegador, tancar la finestra per error faria perdre la feina
-  window.addEventListener('beforeunload', e => { if (docs.length) { e.preventDefault(); e.returnValue = ''; } });
+  window.addEventListener('beforeunload', e => { if (docs.some(docDirty)) { e.preventDefault(); e.returnValue = ''; } });
 }
 
 // ─── PDF.js worker ───────────────────────────────────────
@@ -4573,7 +4574,7 @@ async function moveSel(kind) {
 async function pasteAt(at) {
   const doc = getActiveDoc(); if (!doc || !clipboardPages.length) return;
   saveHistory();
-  const np = clipboardPages.map(p => ({ ...p, annotations: p.annotations.map(a => ({ ...a })) }));
+  const np = clipboardPages.map(p => pageClone(p));
   at = Math.max(0, Math.min(at, doc.pages.length));
   doc.pages.splice(at, 0, ...np); doc.selectedPages = np.map((_, i) => at + i); doc.curIdx = at;
   await renderThumbs(); await goTo(at, true); toast(np.length + ' page(s) pasted');
@@ -4639,6 +4640,8 @@ function cmViewer(e) {
       CM.open(e.clientX, e.clientY, [
         { head: (RV_NAMES[a.sub] || 'Mark') + ' · ' + (a.author || '') },
         { label: 'Edit the comment', icon: 'rename', act: rvFocusText },
+        { label: 'Copy', icon: 'dup', kbd: 'Ctrl+C', act: () => annCopy(false) },
+        { label: 'Duplicate', icon: 'dup', kbd: 'Ctrl+D', act: () => annDup() },
         AP_SKIP.has(a.sub) ? null : { label: 'Apply to other pages…', icon: 'thumbs', act: () => apShow(a) },
         a.apGrp ? { label: 'Delete the copies on the other pages', icon: 'trash', act: () => apDeleteCopies(a) } : null,
         '-',
@@ -4682,7 +4685,8 @@ function cmViewer(e) {
         '-',
         { label: 'Bring to front', icon: 'front', act: () => selOrder(1) },
         { label: 'Send to back', icon: 'back', act: () => selOrder(-1) },
-        { label: 'Duplicate', icon: 'dup', act: () => selDup() },
+        { label: 'Copy', icon: 'dup', kbd: 'Ctrl+C', act: () => annCopy(false) },
+        { label: 'Duplicate', icon: 'dup', kbd: 'Ctrl+D', act: () => selDup() },
         { label: 'Apply to other pages…', icon: 'thumbs', act: () => apShow(a) },
         a.apGrp ? { label: 'Delete the copies on the other pages', icon: 'trash', act: () => apDeleteCopies(a) } : null,
         '-',
@@ -4694,6 +4698,7 @@ function cmViewer(e) {
   const n = doc.pages.length, c = doc.curIdx;
   CM.open(e.clientX, e.clientY, [
     { head: 'Page ' + (c + 1) + ' of ' + n },
+    annClip ? { label: 'Paste the annotation', icon: 'import', kbd: clipLast === 'ann' ? 'Ctrl+V' : undefined, act: () => annPaste() } : null,
     { label: 'Previous page', icon: 'prev', kbd: '←', disabled: c === 0, act: () => navStep(-1) },
     { label: 'Next page', icon: 'next', kbd: '→', disabled: c >= n - 1, act: () => navStep(1) },
     { label: 'First page', icon: 'first', kbd: 'Home', act: () => bkJump('first') },
@@ -6266,7 +6271,7 @@ function selDelete() {
 function selDup() {
   if (!selAnn) return;
   saveHistory();
-  const c = { ...selAnn }, off = 24;
+  const c = annClone(selAnn), off = 24;
   if (c.points) c.points = c.points.map(q => ({ ...q, x: q.x + off, y: q.y + off }));
   else if (c.type === 'text') { c.x += off; c.y += off; }
   else { c.x1 += off; c.x2 += off; c.y1 += off; c.y2 += off; }
@@ -6348,8 +6353,8 @@ document.addEventListener('paste', e => {
   if (!getActiveDoc() || document.querySelector('.modal-bg:not(.hidden)') || uiMode === 'scan' || uiMode === 'folder') return;
   if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
   const it = [...((e.clipboardData && e.clipboardData.items) || [])].find(i => i.type.startsWith('image/'));
-  if (!it) return;
-  e.preventDefault();
+  if (!it) { if (pasteKbd) { clearTimeout(pasteKbd); pasteKbd = 0; e.preventDefault(); pasteInternal(); } return; }
+  e.preventDefault(); if (pasteKbd) { clearTimeout(pasteKbd); pasteKbd = 0; }   // v7.9.4: una imatge del sistema té prioritat i no s'enganxen també les pàgines
   addImageFromFile(it.getAsFile());
 });
 
@@ -6926,10 +6931,7 @@ async function duplicatePage() {
   saveHistory();
   
   const indices = [...doc.selectedPages].sort((a,b)=>a-b);
-  const copies = indices.map(idx => ({
-    ...doc.pages[idx], 
-    annotations: doc.pages[idx].annotations.map(a=>({...a}))
-  }));
+  const copies = indices.map(idx => pageClone(doc.pages[idx]));
   
   const insertAt = indices[indices.length - 1] + 1;
   doc.pages.splice(insertAt, 0, ...copies);
@@ -6988,15 +6990,24 @@ async function deleteSpecificPage(idx) {
 }
 
 // ─── Copy / Cut / Paste (Ara Multipàgina) ─────────────────
+// v7.9.4: còpia independent d'una anotació (llistes internes copiades i id nou a les notes de revisió)
+function annClone(a) {
+  const c = { ...a };
+  ['points', 'pts'].forEach(k => { if (Array.isArray(a[k])) c[k] = a[k].map(q => ({ ...q })); });
+  if (Array.isArray(a.quads)) c.quads = a.quads.map(q => Array.isArray(q) ? q.slice() : { ...q });
+  if (a.tip) c.tip = { ...a.tip };
+  if (c.type === 'rv') { c.id = rvId(); c.replies = (a.replies || []).map(r => ({ ...r, id: rvId() })); }
+  return c;
+}
+function pageClone(p, keepPid) { const q = { ...p, annotations: p.annotations.map(annClone) }; if (p.ed) q.ed = p.ed.map(e => ({ ...e })); if (!keepPid) q.pid = newPid(); return q; }
+let clipLast = 'pages', annClip = null;
 function copyPage() {
   const doc = getActiveDoc();
   if (!doc || doc.selectedPages.length === 0) return;
   
   const indices = [...doc.selectedPages].sort((a,b) => a-b);
-  clipboardPages = indices.map(idx => ({ 
-    ...doc.pages[idx], 
-    annotations: doc.pages[idx].annotations.map(a=>({...a}))
-  }));
+  clipboardPages = indices.map(idx => pageClone(doc.pages[idx]));
+  clipLast = 'pages';
   toast(`${clipboardPages.length} page(s) copied (Ctrl+C)`);
 }
 
@@ -7018,10 +7029,7 @@ async function pastePage() {
   if (!doc || clipboardPages.length === 0) return;
   
   saveHistory();
-  const newPages = clipboardPages.map(p => ({ 
-    ...p, 
-    annotations: p.annotations.map(a=>({...a}))
-  }));
+  const newPages = clipboardPages.map(p => pageClone(p));
   
   // Inserim després de l'actual
   doc.pages.splice(doc.curIdx + 1, 0, ...newPages);
@@ -7034,6 +7042,41 @@ async function pastePage() {
   await goTo(doc.curIdx, true);
   toast(`${newPages.length} page(s) pasted (Ctrl+V)`);
 }
+
+// v7.9.4: Ctrl+C / Ctrl+X / Ctrl+V / Ctrl+D sobre l'anotació o la nota seleccionada
+function annSelected() {
+  const doc = getActiveDoc(); if (!doc || viewMode !== 'single') return null;
+  if (uiMode === 'review' && rvSel) { const f = rvFind(rvSel); if (f && f.pd === doc.pages[doc.curIdx]) return { a: f.a, rv: true }; }
+  if (tool === 'select' && selAnn && doc.pages[doc.curIdx].annotations.includes(selAnn)) return { a: selAnn, rv: false };
+  return null;
+}
+function annCopy(cut) {
+  const s = annSelected(); if (!s) return false;
+  const doc = getActiveDoc();
+  annClip = { a: annClone(s.a), pid: pidOf(doc.pages[doc.curIdx]), n: 0 }; clipLast = 'ann';
+  if (cut) { if (s.rv) rvDelete(s.a.id); else selDelete(); toast('Annotation cut (Ctrl+X)'); }
+  else toast('Annotation copied (Ctrl+C)');
+  return true;
+}
+function annShift(a, d) {
+  if (!d) return;
+  if (a.type === 'rv') rvShift(a, d, d); else selShift(a, selSnapshot(a), d, d);
+}
+function annPut(c) {
+  const doc = getActiveDoc(); saveHistory();
+  doc.pages[doc.curIdx].annotations.push(c);
+  if (c.type === 'rv') { rvSel = c.id; redrawAnnotations(); rvRender(true); rvDrawSel(); }
+  else { if (tool !== 'select') setTool('select'); selAnn = c; redrawAnnotations(); drawSel(); }
+}
+function annPaste() {
+  const doc = getActiveDoc(); if (!doc || !annClip || viewMode !== 'single') return false;
+  const c = annClone(annClip.a), same = pidOf(doc.pages[doc.curIdx]) === annClip.pid;
+  annShift(c, same ? 24 * (++annClip.n) : 0);
+  annPut(c); toast('Annotation pasted (Ctrl+V)'); return true;
+}
+function annDup() { const s = annSelected(); if (!s) return false; const c = annClone(s.a); annShift(c, 24); annPut(c); return true; }
+let pasteKbd = 0;
+function pasteInternal() { if (clipLast === 'ann' && annPaste()) return; if (clipboardPages.length) pastePage(); else annPaste(); }
 
 // ─── Add blank page ───────────────────────────────────────
 function showBlankModal() { $('blank-paper').value = ''; $('blank-mm').value = paperLast.mm; paperFields('blank'); openModal('modal-blank'); }
@@ -7542,26 +7585,47 @@ function hexToRgb(hex) {
 }
 
 // ─── Save & Print ─────────────────────────────────────────
-async function savePdf() {
+// v7.9.4: Desar (Ctrl+S) i Desar com… (Ctrl+Shift+S). Amb Chrome/Edge s'obre el diàleg del sistema, el document pren el nom triat
+// i els següents desaments sobreescriuen el mateix fitxer; només es marca com a desat si el fitxer s'ha escrit de debò.
+const SAVE_FSA = typeof window.showSaveFilePicker === 'function';
+async function saveTarget(doc, as) {
+  if (!SAVE_FSA) return { dl: true };
+  if (!as && doc.fh) return { h: doc.fh };
+  try {
+    const h = await window.showSaveFilePicker({ suggestedName: doc.name, id: 'guaita-save', types: [{ description: 'Document PDF', accept: { 'application/pdf': ['.pdf'] } }] });
+    return { h };
+  } catch (e) { return e && e.name === 'AbortError' ? null : { dl: true }; }
+}
+async function saveWrite(doc, t, bytes) {
+  const blob = new Blob([bytes], { type: 'application/pdf' });
+  if (t.h) {
+    if (t.h.queryPermission && (await t.h.queryPermission({ mode: 'readwrite' })) !== 'granted' && (await t.h.requestPermission({ mode: 'readwrite' })) !== 'granted') throw new Error('no permission to write the file');
+    const w = await t.h.createWritable(); await w.write(blob); await w.close();
+    doc.fh = t.h;
+    if (t.h.name && t.h.name !== doc.name) { doc.name = t.h.name; updateTabsUI(); }
+    return;
+  }
+  const url = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = url; a.download = doc.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);
+}
+async function savePdf(as) {
   const doc = getActiveDoc();
   if (!doc || !doc.pages.length) return;
+  if (!doc.signed && !LIB_PDFLIB) { toast("pdf-lib is not available: try saving/opening the file again", true); return; }
+  const t = await saveTarget(doc, as === true);
+  if (!t) return;   // diàleg cancel·lat: el document continua sense desar
   if (doc.signed) {   // document signat: es desa tal com és, byte a byte
-    const u = URL.createObjectURL(new Blob([doc.signed.bytes], { type: 'application/pdf' })), a = document.createElement('a');
-    a.href = u; a.download = doc.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 30000);
-    markSaved(doc); toast('Signed PDF saved unchanged (signatures intact)'); return;
+    try { await saveWrite(doc, t, doc.signed.bytes); markSaved(doc); toast('Signed PDF saved unchanged (signatures intact)'); }
+    catch (err) { toast('Error saving: ' + err.message, true); }
+    return;
   }
-  if (!LIB_PDFLIB) { toast("pdf-lib is not available: try saving/opening the file again", true); return; }
   toast('Generating PDF…', false, 15000);
   try {
     fixPids(doc);
     const bytes = await generatePdfBytes(doc.pages, doc.pageNums ? { ...doc.pageNums, ctx: hfCtx(doc) } : null, doc.outline || [], { noNotes: doc.notesOut === false, attachments: doc.attachments || [], meta: doc.meta || {}, ocOff: doc.ocOff });
-    const blob  = new Blob([bytes], { type: 'application/pdf' });
-    const url   = URL.createObjectURL(blob);
-    const a     = document.createElement('a');
-    a.href = url; a.download = `Edited_${doc.name}`; a.click();
-    URL.revokeObjectURL(url);
+    await saveWrite(doc, t, bytes);
     markSaved(doc);
-    toast('PDF saved!');
+    toast(t.h ? 'Saved to ' + doc.name : 'PDF saved!');
   } catch (err) {
     console.error(err);
     toast('Error saving: ' + err.message, true);
@@ -8207,10 +8271,7 @@ async function extractSelected() {
   const doc = getActiveDoc();
   if (!doc || !doc.selectedPages.length) return;
   const indices = [...doc.selectedPages].sort((a, b) => a - b);
-  const copies = indices.map(i => ({
-    ...doc.pages[i],
-    annotations: doc.pages[i].annotations.map(a => ({ ...a })),
-  }));
+  const copies = indices.map(i => pageClone(doc.pages[i], true));
   const nd = {
     id: generateId(),
     name: 'Extract_' + doc.name,
@@ -9198,7 +9259,9 @@ const HELP = {
 <tr><td><kbd>Ctrl+Z</kbd> / <kbd>Ctrl+Y</kbd></td><td>Undo / redo</td></tr>
 <tr><td><kbd>Ctrl+F</kbd></td><td>Find text</td></tr>
 <tr><td><kbd>Ctrl+P</kbd></td><td>Print</td></tr>
-<tr><td><kbd>Ctrl+C</kbd> / <kbd>Ctrl+X</kbd> / <kbd>Ctrl+V</kbd></td><td>Copy / cut / paste pages (Ctrl+V also pastes an image)</td></tr>
+<tr><td><kbd>Ctrl+S</kbd> / <kbd>Ctrl+Shift+S</kbd></td><td>Save / Save as… (in Chrome and Edge the document takes the chosen name and later saves overwrite the same file)</td></tr>
+<tr><td><kbd>Ctrl+C</kbd> / <kbd>Ctrl+X</kbd> / <kbd>Ctrl+V</kbd></td><td>Copy / cut / paste the selected annotation or note; with nothing selected, the pages (Ctrl+V also pastes an image)</td></tr>
+<tr><td><kbd>Ctrl+D</kbd></td><td>Duplicate the selected annotation or note</td></tr>
 <tr><td><kbd>Ctrl+B</kbd></td><td>Add a bookmark at the current page</td></tr>
 <tr><td><kbd>Alt+↑</kbd> / <kbd>Alt+↓</kbd></td><td>Previous / next bookmark</td></tr>
 <tr><td><kbd>Del</kbd></td><td>Delete the selected pages (or the selected object or bookmark)</td></tr>
@@ -9233,7 +9296,7 @@ const HELP = {
 <h3>If the option does not appear</h3>
 <p>You need to open the app's web address (https), not the file from disk. Desktop Firefox and Safari do not install PWAs; on iPhone Safari: <b>Share › Add to Home Screen</b>.</p>`],
   about: ['About Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 7.9.3c</b> — multi-document PDF editor from the Guaita Apps suite. A single, self-contained HTML file: it installs nothing, connects to no server and works offline.</p>
+<p><b>Guaita PDF Edit 7.9.4</b> — multi-document PDF editor from the Guaita Apps suite. A single, self-contained HTML file: it installs nothing, connects to no server and works offline.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Licence <b>AGPL-3.0-only</b>.</p>
 <p>Included components: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) and @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Related program: guaitaPDFscan 1.3 (suspicious PDF analyser), built into Scan mode.</p>`]
@@ -9775,6 +9838,11 @@ $('sig-pad').addEventListener('touchend', sigPadEnd);
 
 // ─── Keyboard shortcuts ───────────────────────────────────
 document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === 's' || e.key === 'S' || e.code === 'KeyS')) {   // v7.9.4: mai el «Desa la pàgina» del navegador
+    e.preventDefault();
+    if (getActiveDoc() && !document.querySelector('.modal-bg:not(.hidden)')) savePdf(e.shiftKey);
+    return;
+  }
   if (e.key === 'Escape') {
     closeMenus(); CM.close();
     document.querySelectorAll('.modal-bg:not(.hidden)').forEach(m => m.classList.add('hidden'));
@@ -9803,9 +9871,12 @@ document.addEventListener('keydown', e => {
   if (e.ctrlKey || e.metaKey) {
     if ((e.key === 'a' || e.key === 'A') && (tool === 'seltext' || tool === 'hlsel') && viewMode === 'single') { e.preventDefault(); tlSelectAll(); return; }
     if ((e.key === 'c' || e.key === 'C') && tlSelText()) { e.preventDefault(); tlCopy(); return; }
+    if ((e.key === 'c' || e.key === 'C') && annCopy(false)) { e.preventDefault(); return; }
+    if ((e.key === 'x' || e.key === 'X') && annCopy(true)) { e.preventDefault(); return; }
+    if ((e.key === 'd' || e.key === 'D') && !e.shiftKey && annDup()) { e.preventDefault(); return; }
     if (e.key === 'c' || e.key === 'C') { e.preventDefault(); copyPage(); return; }
     if (e.key === 'x' || e.key === 'X') { e.preventDefault(); cutPage(); return; }
-    if (e.key === 'v' || e.key === 'V') { e.preventDefault(); pastePage(); return; }
+    if (e.key === 'v' || e.key === 'V') { clearTimeout(pasteKbd); pasteKbd = setTimeout(() => { pasteKbd = 0; pasteInternal(); }, 120); return; }   // v7.9.4: l'esdeveniment paste decideix (imatge o porta-retalls intern)
     if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
     if (e.key === 'y' || e.key === 'Y') { e.preventDefault(); redo(); return; }
     if (e.key === 'f' || e.key === 'F') { e.preventDefault(); showSearchModal(); return; }
@@ -9816,6 +9887,7 @@ document.addEventListener('keydown', e => {
 
   if (e.altKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown') && getActiveDoc()) { e.preventDefault(); bmStep(e.key === 'ArrowDown' ? 1 : -1); return; }
 
+  if ((e.key === 'Delete' || e.key === 'Backspace') && uiMode === 'review' && rvSel && rvFind(rvSel)) { e.preventDefault(); rvDelete(rvSel); return; }
   // Delete
   if (e.key === 'Delete') {
       if (doc) { e.preventDefault(); deleteSelectedPages(); }
@@ -13519,7 +13591,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 7.9.3c · pdf-lib';
+  const prod = 'Guaita PDF Edit 7.9.4 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -13558,7 +13630,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'XMP metadata'); del(cat, 'PieceInfo', 'private application data');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 7.9.3c') })); rep.cleaned.push('document information'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 7.9.4') })); rep.cleaned.push('document information'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'thumbnails'));
@@ -16116,7 +16188,7 @@ function pnStFit() {
   i.style.maxWidth = Math.max(0, b.getBoundingClientRect().left - i.getBoundingClientRect().left - 12) + 'px';
 }
 addEventListener('resize', pnStFit);
-// v7.9.3c: pestanya de les notes — sobre la línia del calaix quan és obert (a qualsevol vista) i a la vora inferior a pantalla completa
+// v7.9.4: pestanya de les notes — sobre la línia del calaix quan és obert (a qualsevol vista) i a la vora inferior a pantalla completa
 function pnTabPos() {
   const t = $('pn-tab'), d = $('pn-drawer'), vp = $('viewer-panel'), sb = $('status-bar'); if (!t || !d) return;
   let cx = null; if (vp && sb) { const a = vp.getBoundingClientRect(), b = sb.getBoundingClientRect(); if (a.width) cx = Math.round(a.left + a.width / 2); sb.style.setProperty('--pncx', cx == null ? '50%' : (cx - b.left) + 'px'); }
@@ -18605,7 +18677,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 7.9.3c · pdf-lib');
+    out.setProducer('Guaita PDF Edit 7.9.4 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadata:', e); }
 }
