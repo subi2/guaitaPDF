@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 8.1.3 — Editor de PDF multidocument (suite Guaita Apps)
+  Guaita PDF Edit 8.1.4 — Editor de PDF multidocument (suite Guaita Apps)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   Aquest programa és programari lliure: el podeu redistribuir i/o modificar sota els termes de la
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v8.1.3</title>
+<title>Guaita PDF Edit v8.1.4</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -740,6 +740,10 @@ body.mode-view #mbar-edit, body.mode-view #ctxbar, body.mode-edit #mbar-view { d
 .thumb-rib.on { display: block; }
 .thumb-pg.pcol canvas { outline: 3px solid var(--pc); outline-offset: -3px; }
 .thumb-pg.pcol::before { content: ''; position: absolute; left: -5px; top: 6px; bottom: 6px; width: 3px; background: var(--pc); border-radius: 2px; }
+/* v8.1.4: reordenar pestanyes */
+.tab.tab-ins-l { box-shadow: inset 3px 0 0 var(--accent-line); }
+.tab.tab-ins-r { box-shadow: inset -3px 0 0 var(--accent-line); }
+.tab.tab-dragging { opacity: .45; }
 #pcl { padding: 6px 10px 8px; border-bottom: 1px solid var(--border-soft); flex: none; }
 #pcl.hidden { display: none; }
 .pcl-h { display: flex; align-items: center; gap: 4px; height: 22px; font: 600 9.5px 'IBM Plex Mono', monospace; letter-spacing: .12em; color: var(--text-dim2); text-transform: uppercase; cursor: pointer; user-select: none; }
@@ -2130,6 +2134,7 @@ body.th-dragging #bin-drops .bh { display: block; }
         <button class="mi needs-doc" id="mi-bm" onclick="bmSetTab('bm')" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10v18l-5-4-5 4z"/></svg>Panell de marcadors</span><span class="rt"><span class="mk"></span></span></button>
         <button class="mi needs-doc" id="mi-rib" onclick="ribToggle()" disabled title="Una cinta vermella al costat de cada pàgina que té un marcador"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10v18l-5-4-5 4z"/><path d="M15 7h5l-2 3 2 3h-5"/></svg>Cintes de marcadors a les pàgines</span><span class="rt"><span class="mk">✓</span></span></button>
         <button class="mi" id="mi-minimap" onclick="toggleMinimap()"><span><span class="ic-ph"></span>Minimapa (pàgina única)</span><span class="rt"><span class="mk"></span></span></button>
+        <button class="mi" id="mi-thumbrel" onclick="toggleThumbRel()" title="A la tira de miniatures, les pàgines de format gran es veuen més grans que les petites (escala real entre formats)"><span><span class="ic-ph"></span>Miniatures a mida relativa</span><span class="rt"><span class="mk"></span></span></button>
         <button class="mi" id="mi-sharp" onclick="toggleSharp()" title="Torna a dibuixar la part visible de la pàgina a la resolució de la pantalla perquè els traços vectorials es vegin nítids a qualsevol zoom"><span><span class="ic-ph"></span>Nitidesa vectorial (zoom alt)</span><span class="rt"><span class="mk"></span></span></button>
         <button class="mi" onclick="toggleFullscreen()"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg>Pantalla completa</span><span class="rt"><kbd>F11</kbd></span></button>
       </div>
@@ -2182,7 +2187,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <button id="mode-compose" onclick="setMode('compose')" title="Composar: fusionar documents i pàgines amb un arbre de nodes (fonts → Fusionar → Document final)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Composar</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v8.1.3</span>
+  <span class="tag">v8.1.4</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Canviar a tema clar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2556,7 +2561,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.1.3</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.1.4</small></div>
           <div id="wl-inst" class="hidden"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg><div class="wi-t"><b>Instal·la Guaita PDF Edit com a aplicació</b><span>Finestra pròpia, funciona sense connexió i obre els PDF des de l'Explorador de fitxers.</span></div><button class="btn primary" onclick="pwaInstall()">Instal·lar</button><button class="wi-x" onclick="wlInstHide()" title="Amagar aquest avís" aria-label="Amagar aquest avís">×</button></div>
           <h1>Editor de PDF <em>local</em>, sense núvol.</h1>
           <p>Obre un o diversos PDF o arrossega'ls a la finestra. Tot es processa en aquest ordinador: cap fitxer surt del navegador.</p>
@@ -2871,7 +2876,7 @@ body.th-dragging #bin-drops .bh { display: block; }
   <span id="st-worker" class="hidden" title="Aquest entorn no permet els «workers» de pdf.js (visor incrustat o restriccions del navegador). Els PDF es processen al fil principal: tot funciona igual, però els documents grans van més lents. Obert directament a Chrome o Edge des del disc normalment no passa.">pdf.js · fil principal</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 8.1.3 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 8.1.4 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -2938,6 +2943,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <p class="mnote" id="bcl-msg"></p>
     <div class="mactions">
       <button class="btn" onclick="closeModal('modal-binclose')">Cancel·lar</button>
+      <button class="btn" id="bcl-h2" title="Tanca la pestanya sense perdre cap pàgina; es torna a obrir clicant la zona de la safata o la paperera">Amagar</button>
       <button class="btn dang" id="bcl-a"></button>
       <button class="btn primary" id="bcl-b">Desar com a PDF i buidar</button>
     </div>
@@ -3748,6 +3754,8 @@ let bkSig = '', bkSW = 0, bkSH = 0, bkSpread = 0, bkBusy = false, bkPending = nu
 let bkEls = null, ctGeom = [], ctIO = null, bkRaf = 0, bkSharpTimer = 0;
 const bkCache = new Map();
 let tz = 1, thumbMul = 1, tzTimer = 0;
+// v8.1.4: miniatures a mida relativa (A3 el doble d'ample que A4) a la tira de pàgines
+let thumbRel = (() => { try { return localStorage.getItem('guaita-thumb-rel') !== '0'; } catch (e) { return true; } })();
 let renderTask = null;
 
 // ─── DOM shortcuts ───────────────────────────────────────
@@ -3790,6 +3798,17 @@ function generateId() {
   return Math.random().toString(36).substr(2, 9);
 }
 
+let dragTab = null;
+function tabInsClear() { document.querySelectorAll('#tabs-bar .tab-ins-l, #tabs-bar .tab-ins-r').forEach(t => t.classList.remove('tab-ins-l', 'tab-ins-r')); }
+function tabMove(fromId, toId, before) {
+  const a = docs.findIndex(d => d.id === fromId), b0 = docs.findIndex(d => d.id === toId);
+  if (a < 0 || b0 < 0 || fromId === toId) return;
+  const [d] = docs.splice(a, 1);
+  let b = docs.findIndex(x => x.id === toId); if (!before) b++;
+  docs.splice(b, 0, d);
+  if (a === b) { updateTabsUI(); return; }
+  updateTabsUI(); sessSave();
+}
 function updateTabsUI() {
   if (typeof cpDocsChanged === 'function') cpDocsChanged();
   if (typeof sgLockUi === 'function') setTimeout(sgLockUi, 0);
@@ -3803,7 +3822,7 @@ function updateTabsUI() {
     $('thumb-list').innerHTML = ''; $('bm-list').innerHTML = '';
     $('measure-info').style.display = 'none';
     enableUI(false); updateStatus(); if (splitOn) splitToggle(false);
-    if (binOn && (PBIN.length || binView)) { tb.classList.remove('hidden'); binTabsTo(tb); }   // v8.1.1: la paperera continua accessible sense documents
+    if (binOn && (binTabVis('park') || binTabVis('trash'))) { tb.classList.remove('hidden'); binTabsTo(tb); }   // v8.1.1: la paperera continua accessible sense documents
     return;
   }
   
@@ -3815,6 +3834,23 @@ function updateTabsUI() {
     tab.textContent = (docDirty(doc) ? '● ' : '') + doc.name;
     if (docDirty(doc)) tab.title = 'Té canvis sense desar';
     tab.onclick = () => switchDoc(doc.id);
+    // v8.1.4: arrossegar la pestanya per canviar l'ordre dels documents
+    tab.draggable = true;
+    tab.addEventListener('dragstart', ev => { dragTab = doc.id; tab.classList.add('tab-dragging'); ev.dataTransfer.effectAllowed = 'move'; try { ev.dataTransfer.setData('application/x-guaita-tab', doc.id); } catch (_) { } });
+    tab.addEventListener('dragend', () => { dragTab = null; tabInsClear(); tab.classList.remove('tab-dragging'); });
+    tab.addEventListener('dragover', ev => {
+      if (!dragTab || dragTab === doc.id) return;
+      ev.preventDefault(); ev.dataTransfer.dropEffect = 'move';
+      const r = tab.getBoundingClientRect(), left = ev.clientX < r.left + r.width / 2;
+      tabInsClear(); tab.classList.add(left ? 'tab-ins-l' : 'tab-ins-r');
+    });
+    tab.addEventListener('dragleave', () => tab.classList.remove('tab-ins-l', 'tab-ins-r'));
+    tab.addEventListener('drop', ev => {
+      if (!dragTab) return;
+      ev.preventDefault(); ev.stopPropagation();
+      const r = tab.getBoundingClientRect(), left = ev.clientX < r.left + r.width / 2, from = dragTab; dragTab = null; tabInsClear();
+      tabMove(from, doc.id, left);
+    });
     
     const closeBtn = document.createElement('button');
     closeBtn.className = 'tab-close';
@@ -3831,7 +3867,8 @@ function updateTabsUI() {
   if (binOn && (PBIN.length || binView)) binTabsTo(tb);
 }
 // v8.1.3: dues pestanyes (Safata i Paperera), cada una amb la seva ×
-function binTabsTo(tb) { ['park', 'trash'].forEach(k => { if (binOf(k).length || (binView && binTab === k)) tb.appendChild(binTabEl(k)); }); }
+const binTabVis = k => (binOf(k).length && !BHID[k]) || (binView && binTab === k);   // v8.1.4
+function binTabsTo(tb) { ['park', 'trash'].forEach(k => { if (binTabVis(k)) tb.appendChild(binTabEl(k)); }); }
 function binTabEl(k) {
   const bt = document.createElement('div'), on = binView && binTab === k;
   bt.className = 'tab bin-tab bt-' + k + (on ? ' active' : ''); bt.dataset.bin = k;
@@ -4235,6 +4272,23 @@ async function getPdfPage(pageData) {
 }
 
 // ─── Thumbnails & Multi-Select ───────────────────────────
+async function thumbRelApply() {
+  const doc = getActiveDoc(); if (!doc) return;
+  const items = [...document.querySelectorAll('#thumb-list .thumb-item')];
+  const setW = (it, w) => { const p = it.querySelector('.thumb-pg'); if (p) p.style.width = w; };
+  if (!thumbRel) { items.forEach(it => setW(it, '')); return; }
+  const ds = await Promise.all(doc.pages.map(pd => bkDims(pd).catch(() => null)));
+  if (doc !== getActiveDoc()) return;
+  const ok = ds.filter(Boolean); if (!ok.length) return;
+  const mw = Math.max(...ok.map(d => d.w));
+  items.forEach(it => { const d = ds[+it.dataset.idx]; setW(it, d ? Math.max(26, Math.min(100, Math.round(d.w / mw * 100))) + '%' : ''); });
+}
+function toggleThumbRel() {
+  thumbRel = !thumbRel;
+  try { localStorage.setItem('guaita-thumb-rel', thumbRel ? '1' : '0'); } catch (e) { }
+  syncViewMenu(); thumbRelApply();
+  toast(thumbRel ? 'Miniatures a mida relativa: un A3 es veu més gran que un A4' : 'Miniatures a la mateixa amplada');
+}
 async function renderThumbs() {
   const doc = getActiveDoc();
   if (!doc) return;
@@ -4246,6 +4300,7 @@ async function renderThumbs() {
     list.appendChild(item);
     renderThumbCanvas(doc.pages[i], item.querySelector('canvas')).catch(() => {});
   }
+  thumbRelApply();   // v8.1.4
   bkCache.clear(); bkSig = '';
   thumbBmMarks(); updateStatus(); attCounts(); ocCountRefresh();
   if (bmTab === 'att') attRender(); if (bmTab === 'oc') ocRender(); if (bmTab === 'obj') objRender();
@@ -7397,6 +7452,7 @@ async function rotatePage(deg) {
     const thumb = document.querySelector(`.thumb-item[data-idx="${idx}"] canvas`);
     if (thumb) await renderThumbCanvas(doc.pages[idx], thumb).catch(() => {});
   }
+  thumbRelApply();   // v8.1.4: en girar, canvia l'ample relatiu
   if (viewMode !== 'single') { bkCache.clear(); bkSig = ''; await bkGoTo(doc.curIdx); } else await renderPage();
   toast(`Girada(es) ${doc.selectedPages.length} pàgina(es)`);
 }
@@ -7561,6 +7617,7 @@ function pasteInternal() { if (clipLast === 'ann' && annPaste()) return; if (cli
 
 // ─── v8.1.0: paperera de pàgines (PDF temporal en memòria, no es desa sola) ───
 // v8.1.3: dues llistes: «park» (safata, aparcades per traslladar-les) i «trash» (paperera, descartades)
+let BHID = { park: false, trash: false };   // v8.1.4: pestanyes amagades (les pàgines es conserven)
 let PBIN = [], binSeq = 0, binView = false, binSel = [], dragBin = null, binTab = 'trash', BINU = [];
 const BK = {
   park: { n: 'Safata', l: 'Aparcades', ic: '📥', file: 'Safata_guaitaPDF.pdf' },
@@ -7573,7 +7630,7 @@ function binFrom(doc, idx) { return { docId: doc.id, docName: doc.name, idx, pid
 // Cada operació de paperera queda al registre d'historial de la pàgina que l'ha provocat, per poder desfer-la amb Ctrl+Z
 function binApply(op, dir) {
   if (op.kind === 'add') {
-    if (dir > 0) PBIN.push(...op.items); else PBIN = PBIN.filter(e => !op.items.includes(e));
+    if (dir > 0) { PBIN.push(...op.items); op.items.forEach(e => { BHID[e.kind] = false; }); } else PBIN = PBIN.filter(e => !op.items.includes(e));   // v8.1.4: en afegir-hi pàgines, la pestanya torna a sortir
   } else {
     op.items.forEach(e => { e.taken = dir > 0; });   // v8.1.1: recordar que s'ha recuperat
     if (dir > 0) PBIN = PBIN.filter(e => !op.items.includes(e));
@@ -7587,6 +7644,7 @@ function binDo(op) {
   if (h) (h.bin || (h.bin = [])).push(op);
 }
 function binChanged() {
+  ['park', 'trash'].forEach(k => { if (!binOf(k).length) BHID[k] = false; });   // v8.1.4
   const np = binOf('park').length, nt = binOf('trash').length;
   [['bin-count', 'bin-drop', nt], ['park-count', 'park-drop', np], ['lb-bin-count', 'lb-bin', nt], ['lb-park-count', 'lb-park', np]].forEach(([c, d, n]) => {
     if ($(c)) $(c).textContent = n; if ($(d)) $(d).classList.toggle('full', n > 0);
@@ -7603,6 +7661,7 @@ function binLeave(refresh = true) {
 }
 function binOpen(k) {
   if (!binOn) return;
+  if (k) BHID[k] = false;   // v8.1.4
   if (k && k !== binTab) { binTab = k; binSel = []; }
   if (!binView) { binView = true; binSel = []; BINU = []; }
   $('bin-view').classList.remove('hidden'); $('viewer-container').classList.add('bin-open');
@@ -7738,6 +7797,7 @@ function binCloseTab(k) {
   $('bcl-msg').textContent = (park ? 'La safata' : 'La paperera') + ' conté ' + pgN(L.length) + '. Per tancar-la cal buidar-la; si no la deses com a PDF, ' + (park ? 'les pàgines passaran a la paperera.' : 'es perdran.');
   $('bcl-a').textContent = park ? 'Passar-les a la paperera' : 'Buidar';
   $('bcl-a').onclick = () => { closeModal('modal-binclose'); if (park) binSwap(L.map(e => e.id)); else binPurge(L.map(e => e.id)); if (binView && binTab === k) binLeave(); };
+  $('bcl-h2').onclick = () => { closeModal('modal-binclose'); BHID[k] = true; if (binView && binTab === k) binLeave(); else updateTabsUI(); toast((park ? 'Safata' : 'Paperera') + ' amagada: les pàgines hi continuen (clica la zona per obrir-la)'); };
   $('bcl-b').onclick = async () => { closeModal('modal-binclose'); if (!(await binSave(k))) return; PBIN = PBIN.filter(e => !L.includes(e)); BINU = []; binChanged(); if (binView && binTab === k) binLeave(); };
   openModal('modal-binclose');
 }
@@ -10023,7 +10083,7 @@ const HELP = {
 <h3>Si no apareix l'opció</h3>
 <p>Cal obrir l'adreça web (https) de l'aplicació, no el fitxer des del disc. Firefox i Safari d'escriptori no instal·len PWA; a Safari de l'iPhone: <b>Comparteix › Afegeix a la pantalla d'inici</b>.</p>`],
   about: ['Quant a Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 8.1.3</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 8.1.4</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -10728,7 +10788,7 @@ function syncViewMenu() {
     const mk = el.querySelector('.mk'); if (mk) mk.textContent = on ? '●' : '';
   });
   const set = (id, v) => { const m = $(id).querySelector('.mk'); if (m) m.textContent = v ? '✔' : ''; };
-  set('mi-cover', bkCover); set('mi-anim', bkAnim); set('mi-minimap', minimapOn); set('mi-sharp', sharpOn);
+  set('mi-cover', bkCover); set('mi-anim', bkAnim); set('mi-minimap', minimapOn); set('mi-sharp', sharpOn); set('mi-thumbrel', thumbRel);
   set('mi-thumbs', !$('thumb-panel').classList.contains('hidden'));
   document.querySelectorAll('.mi.dxk').forEach(el => { const k = el.querySelector('.mk'); if (k) k.textContent = viewMode === 'duplex' && el.dataset.dxk === dxKind ? '●' : ''; });
   syncVwCtl();
@@ -14407,7 +14467,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 8.1.3 · pdf-lib';
+  const prod = 'Guaita PDF Edit 8.1.4 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -14446,7 +14506,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'metadades XMP'); del(cat, 'PieceInfo', 'dades privades d\'aplicacions');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.1.3') })); rep.cleaned.push('informació del document'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.1.4') })); rep.cleaned.push('informació del document'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'miniatures'));
@@ -19493,7 +19553,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 8.1.3 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 8.1.4 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadades:', e); }
 }
