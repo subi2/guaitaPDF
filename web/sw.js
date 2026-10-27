@@ -1,6 +1,6 @@
 /* Guaita PDF Edit 7.5.5 · service worker: fa funcionar l'app sense connexió.
    Estratègia: xarxa primer per a la pàgina (així sempre veus l'última versió) i memòria cau com a reserva. */
-const CACHE = 'guaita-pdf-edit-812';
+const CACHE = 'guaita-pdf-edit-813';
 const SHELL = ['./', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-512-maskable.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE && k.startsWith('guaita-pdf-edit')).map(k => caches.delete(k)))).then(() => self.clients.claim())); });

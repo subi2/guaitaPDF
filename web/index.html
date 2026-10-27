@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 8.1.2 — Editor de PDF multidocument (suite Guaita Apps)
+  Guaita PDF Edit 8.1.3 — Editor de PDF multidocument (suite Guaita Apps)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   Aquest programa és programari lliure: el podeu redistribuir i/o modificar sota els termes de la
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v8.1.2</title>
+<title>Guaita PDF Edit v8.1.3</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -901,6 +901,31 @@ body.mode-scan #st-scan { display: inline; color: var(--text-soft); }
 body.mode-scan #status-bar .sgrp, body.mode-scan #st-info { display: none; }
 #st-worker:not(.hidden) { display: inline; color: var(--warn); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; margin-right: 8px; cursor: help; }
 .wl-modes.three { grid-template-columns: repeat(3, 1fr); }
+/* v8.1.3: pantalla d'inici — avís d'instal·lació i quatre accions directes */
+#wl-inst { display: flex; align-items: center; gap: 12px; margin: 16px 0 4px; padding: 12px 12px 12px 14px; border-radius: 10px; border: 1.5px solid var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--bg-panel)); }
+#wl-inst.hidden { display: none; }
+#wl-inst > svg.ic { width: 26px; height: 26px; flex: none; color: var(--accent-text); }
+#wl-inst .wi-t { flex: 1; display: flex; flex-direction: column; gap: 2px; font-size: 12px; line-height: 1.45; color: var(--text-mut); }
+#wl-inst .wi-t b { font-size: 13.5px; color: var(--text); }
+#wl-inst .btn { height: 34px; padding: 0 16px; font-size: 13px; flex: none; }
+#wl-inst .wi-x { flex: none; align-self: flex-start; background: none; border: 0; color: var(--text-dim); font-size: 16px; line-height: 1; cursor: pointer; padding: 2px 4px; }
+#wl-inst .wi-x:hover { color: var(--text); }
+.wl-go { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0 18px; }
+.wl-b { display: grid; grid-template-columns: 26px 1fr; grid-template-rows: auto auto; column-gap: 10px; row-gap: 2px; align-items: center; text-align: left; padding: 12px 14px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-surface); color: var(--text); cursor: pointer; font: inherit; transition: border-color .15s, background .15s; }
+.wl-b:hover { border-color: var(--accent); }
+.wl-b svg.ic { grid-row: 1 / 3; width: 22px; height: 22px; color: var(--accent-text); }
+.wl-b b { font-size: 13.5px; font-weight: 600; }
+.wl-b span { font-size: 11.5px; line-height: 1.4; color: var(--text-mut); }
+.wl-b.primary { background: var(--accent); border-color: var(--accent); }
+.wl-b.primary b, .wl-b.primary svg.ic { color: var(--on-accent); }
+.wl-b.primary span { color: var(--on-accent); opacity: .75; }
+.wl-modes.four { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.wl-modes.four div { padding: 8px 10px; font-size: 11px; }
+@media (max-width: 640px) { .wl-go, .wl-modes.four { grid-template-columns: 1fr 1fr; } }
+.wl-sess-it .st { flex: none; width: 16px; text-align: center; font-size: 12px; cursor: help; }
+.wl-sess-it .st-ok { color: #3DDC84; }
+.wl-sess-it .st-name, .wl-sess-it .st-lock, .wl-sess-it .st-perm { color: #F5A524; }
+.wl-sess-it .st-gone { color: #FF5E5E; }
 .wl-card { width: min(600px, 92%); }
 
 /* ── v6.1: menú contextual ── */
@@ -1926,6 +1951,20 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
 /* v8.1.0: paperera de pàgines */
 #thumb-panel { position: relative; }
 #thumb-list.bin-on { padding-bottom: 84px; }
+/* v8.1.3: safata (aparcar) i paperera (descartar), dues zones sòlides a la tira */
+#bin-drops { position: absolute; left: 8px; right: 8px; bottom: 8px; z-index: 6; display: flex; gap: 6px; }
+#bin-drops.hidden { display: none; }
+#bin-drops .bdz { position: static; flex: 1; width: auto; height: 54px; }
+#bin-drops .bl { font: 600 10px var(--mono, monospace); letter-spacing: .03em; }
+#bin-drops .bh { display: none; font-size: 10px; font-weight: 600; }
+body.th-dragging #bin-drops .bdz { height: 78px; }
+body.th-dragging #bin-drops .bh { display: block; }
+#park-drop { border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: var(--bg-panel); border: 1.5px dashed #F5A524; color: #F5A524; cursor: pointer; user-select: none; box-shadow: 0 4px 14px rgba(0,0,0,.35); transition: transform .18s, background .18s, height .15s; }
+#park-drop svg { width: 22px; height: 22px; }
+#park-drop .bn { font: 700 10px var(--mono, monospace); letter-spacing: .04em; }
+#park-drop.full { border-style: solid; }
+#park-drop.on { background: #F5A524; color: #1a1200; border-style: solid; transform: scale(1.04); }
+#bin-drop.on { background: #FF5E5E !important; color: #1a0000 !important; }
 #bin-drop { position: absolute; right: 10px; bottom: 10px; z-index: 6; width: 58px; height: 58px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: var(--bg-panel); border: 1.5px dashed #FF5E5E; color: #FF5E5E; cursor: pointer; user-select: none; box-shadow: 0 4px 14px rgba(0,0,0,.35); transition: transform .18s, background .18s; }
 #bin-drop svg { width: 22px; height: 22px; }
 #bin-drop .bn { font: 700 10px var(--mono, monospace); letter-spacing: .04em; }
@@ -1938,6 +1977,33 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
 #bin-view { position: absolute; inset: 0; z-index: 35; overflow: auto; background: var(--viewport); }
 #viewer-container.bin-open > :not(#bin-view) { visibility: hidden !important; }
 #bin-bar .bn-title { display: flex; align-items: center; gap: 6px; font-weight: 600; color: #FF5E5E; }
+#bin-bar .bn-tabs { display: flex; gap: 4px; }
+#bin-bar .bnt { display: flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border-radius: 7px; border: 1px solid var(--border); background: var(--bg-surface); color: var(--text-mut); font: 600 12px inherit; cursor: pointer; }
+#bin-bar .bnt svg { width: 15px; height: 15px; }
+#bin-bar .bnt b { font: 700 11px var(--mono, monospace); }
+#bin-bar .bnt.on.k-park { background: #F5A524; border-color: #F5A524; color: #1a1200; }
+#bin-bar .bnt.on.k-trash { background: #FF5E5E; border-color: #FF5E5E; color: #1a0000; }
+.bin-card { position: relative; }
+.bin-card.k-park { border-left: 3px solid #F5A524; }
+.bin-card.k-park.selected { border-color: #F5A524; }
+.bin-card.k-trash canvas { filter: grayscale(.55) brightness(.92); }
+.bin-card.k-park .bc-n { color: #F5A524; }
+.bin-card .bc-x { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%; border: 0; background: rgba(0,0,0,.6); color: #fff; font-size: 14px; line-height: 22px; cursor: pointer; opacity: 0; transition: opacity .12s; }
+.bin-card:hover .bc-x, .bin-card.selected .bc-x { opacity: 1; }
+.bin-card .bc-x:hover { background: #FF5E5E; }
+.tab.bin-tab::before { display: none; }
+.bin-note { padding: 9px 12px; border-radius: 8px; background: var(--bg-panel); border: 1px solid var(--border); color: var(--text-mut); }
+.bin-note b { color: var(--text); }
+.tab.bin-tab.bt-park, .tab.bin-tab.bt-park.active { color: #F5A524; }
+#lb-park { position: absolute; right: 84px; bottom: 14px; z-index: 21; width: 58px; height: 58px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: var(--bg-panel); border: 1.5px dashed #F5A524; color: #F5A524; cursor: pointer; user-select: none; box-shadow: 0 4px 14px rgba(0,0,0,.35); transition: transform .18s, background .18s; }
+#lb-park.hidden { display: none; }
+#lb-park svg { width: 22px; height: 22px; }
+#lb-park .bn { font: 700 10px var(--mono, monospace); letter-spacing: .04em; }
+#lb-park.on { transform: scale(1.12) translateY(-3px); background: #F5A524; color: #1a1200; border-style: solid; }
+#lb-park.full { border-style: solid; }
+#th-ghost { position: fixed; left: -1000px; top: 0; width: 56px; padding: 3px; background: var(--bg-panel); border: 1px solid var(--accent); border-radius: 6px; }
+#th-ghost canvas { display: block; width: 100%; height: auto; background: #fff; }
+#th-ghost b { position: absolute; right: -8px; top: -8px; min-width: 18px; height: 18px; border-radius: 9px; background: var(--accent); color: var(--on-accent); font: 700 10px/18px var(--mono, monospace); text-align: center; padding: 0 4px; }
 #bin-bar .bn-title svg { width: 16px; height: 16px; }
 .bin-note { margin: 10px 16px 0; font-size: 11.5px; line-height: 1.5; color: var(--text-mut); }
 #bin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; padding: 14px 16px 24px; align-items: start; }
@@ -2084,7 +2150,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
         <button class="mi" onclick="setTool('measure')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg>Mesurar a escala</span><kbd>M</kbd></button>
         <button class="mi needs-doc" onclick="setTool('edit')" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6V4h12v2M11 4v16M8 20h6"/><path d="M19 13v8"/></svg>Editar contingut del PDF</span><kbd>X</kbd></button>
         <button class="mi needs-doc" onclick="setTool('edtin')" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6V4h10v2M9 4v12M6.5 16h5"/><path d="M13 20l1-3.5 5.5-5.5 2.5 2.5-5.5 5.5z"/></svg>Editar text del PDF in situ</span><kbd>Maj+X</kbd></button>
-        <button class="mi" id="mi-bin" onclick="binToggle()" title="PDF temporal que recull les pàgines eliminades"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3"/><path d="M6 7l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg>Paperera de pàgines</span><span class="rt"><span class="mk"></span></span></button>
+        <button class="mi" id="mi-bin" onclick="binToggle()" title="Safata per traslladar pàgines entre documents i paperera per a les descartades"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3"/><path d="M6 7l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg>Safata i paperera de pàgines</span><span class="rt"><span class="mk"></span></span></button>
         <button class="mi" onclick="setTool('select')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6z"/></svg>Seleccionar anotacions</span><kbd>V</kbd></button>
         <div class="msep"></div>
         <button class="mi needs-doc" onclick="showDxfModal()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19L19 5"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/><path d="M4 4h5M4 4v5M20 20h-5M20 20v-5"/></svg>Exportar a DXF…</span></button>
@@ -2116,7 +2182,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <button id="mode-compose" onclick="setMode('compose')" title="Composar: fusionar documents i pàgines amb un arbre de nodes (fonts → Fusionar → Document final)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Composar</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v8.1.2</span>
+  <span class="tag">v8.1.3</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Canviar a tema clar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2476,7 +2542,10 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     </div>
     <div id="pcl" class="hidden"></div>
     <div id="thumb-list"></div>
-    <div id="bin-drop" class="hidden" title="Paperera de pàgines: arrossega-hi les pàgines seleccionades (Supr)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3"/><path d="M6 7l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg><span class="bn" id="bin-count">0</span></div>
+    <div id="bin-drops" class="hidden">
+      <div id="park-drop" class="bdz" title="Safata: arrossega-hi pàgines per aparcar-les i passar-les a un altre document (amb Ctrl, es copien)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13l2.5-8h13L21 13v6H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/></svg><span class="bl">Safata</span><span class="bh">Deixa-les aquí</span><span class="bn" id="park-count">0</span></div>
+      <div id="bin-drop" class="bdz" title="Paperera: arrossega-hi les pàgines que vols descartar (Supr)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3"/><path d="M6 7l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg><span class="bl">Paperera</span><span class="bh">Deixa-les aquí</span><span class="bn" id="bin-count">0</span></div>
+    </div>
   </div>
   <div id="thumb-resizer" title="Arrossega per canviar l'amplada de les miniatures"></div>
 
@@ -2487,24 +2556,26 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.1.2</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.1.3</small></div>
+          <div id="wl-inst" class="hidden"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg><div class="wi-t"><b>Instal·la Guaita PDF Edit com a aplicació</b><span>Finestra pròpia, funciona sense connexió i obre els PDF des de l'Explorador de fitxers.</span></div><button class="btn primary" onclick="pwaInstall()">Instal·lar</button><button class="wi-x" onclick="wlInstHide()" title="Amagar aquest avís" aria-label="Amagar aquest avís">×</button></div>
           <h1>Editor de PDF <em>local</em>, sense núvol.</h1>
           <p>Obre un o diversos PDF o arrossega'ls a la finestra. Tot es processa en aquest ordinador: cap fitxer surt del navegador.</p>
-          <div class="wl-act">
-            <button class="btn primary" onclick="triggerOpen()"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><path d="M3 11h18"/></svg>Obrir PDF…</button>
-            <button class="btn" onclick="setMode('folder')" title="Veure els PDF d'una carpeta amb miniatures, sense obrir-los"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><rect x="7" y="12" width="4" height="5" rx=".5"/><rect x="13" y="12" width="4" height="5" rx=".5"/></svg>Explorar una carpeta…</button>
-            <button class="btn" onclick="setMode('scan')"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Escanejar PDF sospitós…</button>
-            <button class="btn hidden" id="wl-install" onclick="pwaInstall()"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg>Instal·lar l'app</button>
+          <div class="wl-go">
+            <button class="wl-b primary" onclick="triggerOpen()"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><path d="M3 11h18"/></svg><b>Obrir PDF…</b><span>Un o diversos PDF; també pots arrossegar-los aquí</span></button>
+            <button class="wl-b" onclick="setMode('folder')"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><rect x="7" y="12" width="4" height="5" rx=".5"/><rect x="13" y="12" width="4" height="5" rx=".5"/></svg><b>Explorar una carpeta…</b><span>Miniatures dels PDF d'una carpeta, sense obrir-los</span></button>
+            <button class="wl-b" onclick="setMode('scan')"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><b>Escanejar PDF sospitós…</b><span>Analitzar-lo i desarmar-lo abans d'obrir-lo</span></button>
+            <button class="wl-b" onclick="setMode('compose')"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg><b>Composar…</b><span>Muntar un PDF nou amb un arbre de nodes</span></button>
           </div>
           <div id="wl-session" class="hidden">
             <h2>Documents de l'última sessió</h2>
             <div id="wl-session-list"></div>
             <button class="btn" onclick="sessReopenAll()"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><path d="M3 11h18"/></svg>Reobrir-los tots</button>
           </div>
-          <div class="wl-modes three">
-            <div><b><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Veure</b>Navegar, vistes de pàgina, llibre i contínua, zoom, cercar, mesurar a escala i imprimir.</div>
-            <div><b><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg>Editar</b>Pàgines, text i imatges originals, anotacions, signatura, marques i marcadors.</div>
-            <div><b><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Escanejar</b>Analitzar i desarmar PDF sospitosos, aïllats de l'editor, abans d'obrir-los.</div>
+          <div class="wl-modes four">
+            <div><b><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Veure</b>Vistes, zoom, cercar, mesurar i imprimir.</div>
+            <div><b><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg>Editar</b>Pàgines, text, anotacions i signatura.</div>
+            <div><b><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Escanejar</b>PDF sospitosos, aïllats de l'editor.</div>
+            <div><b><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Composar</b>Fusionar documents i pàgines.</div>
           </div>
           <div class="wl-foot"><span>offline · 0 CDN · AGPL-3.0-only</span><span>Ctrl+clic: selecció múltiple</span></div>
         </div>
@@ -2523,14 +2594,15 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
       <div id="book-wrapper" class="hidden"></div>
       <div id="bin-view" class="hidden">
         <div id="bin-bar">
-          <span class="bn-title"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3"/><path d="M6 7l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg>Paperera</span>
+          <div class="bn-tabs"><button class="bnt k-park" data-k="park" onclick="binOpen('park')" title="Pàgines aparcades per passar-les a un altre document"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13l2.5-8h13L21 13v6H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/></svg>Aparcades <b id="bnt-park">0</b></button><button class="bnt k-trash" data-k="trash" onclick="binOpen('trash')" title="Pàgines descartades (es poden recuperar)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3"/><path d="M6 7l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg>Descartades <b id="bnt-trash">0</b></button></div>
           <span class="bn-info" id="bin-info"></span>
-          <button class="btn" onclick="binRecoverSel()" title="Recuperar les pàgines seleccionades al final del document actiu">Recuperar</button>
-          <button class="btn" onclick="binSave()" title="Desar tota la paperera com a PDF nou">Desar com a PDF…</button>
-          <button class="btn dang" onclick="binPurgeSel()" title="Eliminar definitivament les seleccionades (Supr)">Buidar</button>
+          <button class="btn" id="bn-put" onclick="binRecoverSel()" title="Posar les seleccionades (o totes) al final del document actiu">Posar al document</button>
+          <button class="btn" id="bn-swap" onclick="binSwapSel()">Passar a descartades</button>
+          <button class="btn" onclick="binSave()" title="Desar les pàgines d'aquesta llista com a PDF nou">Desar com a PDF…</button>
+          <button class="btn dang" onclick="binEmptyAsk()" title="Buidar aquesta llista">Buidar</button>
           <button class="btn" onclick="binLeave()" title="Tornar al document (Esc)">Tornar</button>
         </div>
-        <p class="bin-note">PDF temporal en memòria amb totes les pàgines eliminades. No es desa sol: desa'l com a PDF si el vols conservar. Arrossega pàgines a la tira de miniatures o a la pestanya d'un document per recuperar-les (doble clic: al final del document actiu).</p>
+        <p class="bin-note" id="bin-note"></p>
         <div id="bin-grid"></div>
       </div>
       <div id="sel-pop" class="hidden">
@@ -2799,7 +2871,7 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
   <span id="st-worker" class="hidden" title="Aquest entorn no permet els «workers» de pdf.js (visor incrustat o restriccions del navegador). Els PDF es processen al fil principal: tot funciona igual, però els documents grans van més lents. Obert directament a Chrome o Edge des del disc normalment no passa.">pdf.js · fil principal</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 8.1.2 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 8.1.3 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -2833,30 +2905,41 @@ body[data-tool="hlsel"] #hlp-grp .hlm { display: none; }
 <!-- v8.1.1: paperera de pàgines opcional -->
 <div class="modal-bg hidden" id="modal-bin">
   <div class="modal">
-    <h2>Paperera de pàgines</h2>
-    <p class="mnote">La paperera és un <b>PDF temporal en memòria</b> que recull, en un compendi, totes les pàgines que elimines: amb Supr, des dels menús, amb la × de la miniatura o arrossegant-les a la icona de la paperera (a la tira de miniatures i a l'angle de l'Organitzador de pàgines).</p>
+    <h2>Safata i paperera de pàgines</h2>
+    <p class="mnote">Dues llistes temporals en memòria per a les pàgines que treus dels documents. Cada pàgina recorda el document i la pàgina d'origen.</p>
     <ul class="mnote">
-      <li><b>No es desa sola</b>: es perd en tancar l'app si no la deses abans; en tancar, el navegador t'avisarà.</li>
-      <li><b>Veure-la</b>: clica la icona o la pestanya «Paperera»; s'obre al visor com un document temporal. Esc o «Tornar» en surten.</li>
-      <li><b>Recuperar</b>: arrossega pàgines a una posició de la tira de miniatures o a la pestanya d'un document, o fes doble clic o «Recuperar».</li>
-      <li><b>Desfer</b>: Ctrl+Z torna la pàgina al document i la treu de la paperera.</li>
-      <li><b>Desar com a PDF</b>: totes les pàgines en un PDF nou; cada pàgina porta a les notes el document i la pàgina d'origen.</li>
+      <li><b>Safata (aparcades)</b>: per <b>traslladar fulls</b> d'un document a un altre. Arrossega-hi pàgines des de la tira de miniatures o l'Organitzador; amb <b>Ctrl</b> es copien sense treure-les del document. Després, arrossega-les a la tira o a la pestanya del document de destí.</li>
+      <li><b>Paperera (descartades)</b>: el que <b>renuncies</b>. Supr, la × de la miniatura i la icona de la paperera hi envien les pàgines; encara les pots recuperar.</li>
+      <li><b>Veure-les</b>: clica la zona o la pestanya «Safata» o «Paperera»; s'obren al visor amb dues pestanyes. Esc o «Tornar» en surten; la × de la pestanya la tanca.</li>
+      <li><b>Desfer</b>: Ctrl+Z torna la pàgina al document. Dins de la vista, Ctrl+Z desfà l'últim canvi de les llistes.</li>
+      <li><b>No es desen soles</b>: es perden en tancar l'app; desa-les com a PDF si les vols conservar. En tancar, el navegador t'avisarà.</li>
     </ul>
-    <p class="mnote">Amb la paperera desactivada, eliminar pàgines funciona com sempre: amb confirmació i Ctrl+Z.</p>
+    <p class="mnote">Amb aquesta opció desactivada, eliminar pàgines funciona com sempre: amb confirmació i Ctrl+Z.</p>
     <div class="mactions">
       <button class="btn" onclick="closeModal('modal-bin')">Cancel·lar</button>
-      <button class="btn primary" onclick="binActivate()">Activar la paperera</button>
+      <button class="btn primary" onclick="binActivate()">Activar</button>
     </div>
   </div>
 </div>
 <div class="modal-bg hidden" id="modal-binoff">
   <div class="modal">
-    <h2>Desactivar la paperera</h2>
-    <p class="mnote">La paperera conté <b id="binx-n"></b>. Si la desactives sense desar-la, es perdran.</p>
+    <h2>Desactivar la safata i la paperera</h2>
+    <p class="mnote">Hi ha <b id="binx-n"></b>. Si ho desactives sense desar, es perdran.</p>
     <div class="mactions">
       <button class="btn" onclick="closeModal('modal-binoff')">Cancel·lar</button>
       <button class="btn dang" onclick="binOffEmpty()">Buidar i desactivar</button>
       <button class="btn primary" onclick="binOffSave()">Desar com a PDF i desactivar</button>
+    </div>
+  </div>
+</div>
+<div class="modal-bg hidden" id="modal-binclose">
+  <div class="modal">
+    <h2 id="bcl-h"></h2>
+    <p class="mnote" id="bcl-msg"></p>
+    <div class="mactions">
+      <button class="btn" onclick="closeModal('modal-binclose')">Cancel·lar</button>
+      <button class="btn dang" id="bcl-a"></button>
+      <button class="btn primary" id="bcl-b">Desar com a PDF i buidar</button>
     </div>
   </div>
 </div>
@@ -3599,7 +3682,11 @@ window.addEventListener('DOMContentLoaded', () => {
   sessLoadList().then(l => { SESS_PREV = l; sessRenderWelcome(); });   // v8.1.0
   const mu = $('measure-unit'); if (mu) mu.value = measUnit();   // v8.1.0
   binUiSync();   // v8.1.1
-  ['mousedown', 'pointerdown', 'wheel', 'dblclick', 'contextmenu'].forEach(t => $('bin-view').addEventListener(t, ev => ev.stopPropagation()));
+  ['mousedown', 'pointerdown', 'wheel', 'dblclick'].forEach(t => $('bin-view').addEventListener(t, ev => ev.stopPropagation()));
+  $('bin-view').addEventListener('contextmenu', ev => {   // v8.1.3: menú propi, no el del navegador
+    ev.preventDefault(); ev.stopPropagation();
+    const c = ev.target.closest('.bin-card'); if (c) cmBinCard(ev, +c.dataset.bid); else cmBin(ev, binTab, true);
+  });
 });
 
 // ─── Constants ───────────────────────────────────────────
@@ -3716,7 +3803,7 @@ function updateTabsUI() {
     $('thumb-list').innerHTML = ''; $('bm-list').innerHTML = '';
     $('measure-info').style.display = 'none';
     enableUI(false); updateStatus(); if (splitOn) splitToggle(false);
-    if (binOn && (PBIN.length || binView)) { tb.classList.remove('hidden'); tb.appendChild(binTabEl()); }   // v8.1.1: la paperera continua accessible sense documents
+    if (binOn && (PBIN.length || binView)) { tb.classList.remove('hidden'); binTabsTo(tb); }   // v8.1.1: la paperera continua accessible sense documents
     return;
   }
   
@@ -3741,14 +3828,19 @@ function updateTabsUI() {
     tab.addEventListener('dragover', e => { if (dragBin) e.preventDefault(); });
     tab.addEventListener('drop', async e => { if (!dragBin) return; e.preventDefault(); const ids = dragBin; dragBin = null; await switchDoc(doc.id); binRecover(ids, null); });
   });
-  if (binOn && (PBIN.length || binView)) tb.appendChild(binTabEl());
+  if (binOn && (PBIN.length || binView)) binTabsTo(tb);
 }
-function binTabEl() {   // v8.1.1
-  const bt = document.createElement('div');
-  bt.className = 'tab bin-tab' + (binView ? ' active' : '');
-  bt.title = 'Paperera de pàgines: PDF temporal amb les pàgines eliminades';
-  bt.textContent = '🗑 Paperera (' + PBIN.length + ')';
-  bt.onclick = () => (binView ? binLeave() : binOpen());
+// v8.1.3: dues pestanyes (Safata i Paperera), cada una amb la seva ×
+function binTabsTo(tb) { ['park', 'trash'].forEach(k => { if (binOf(k).length || (binView && binTab === k)) tb.appendChild(binTabEl(k)); }); }
+function binTabEl(k) {
+  const bt = document.createElement('div'), on = binView && binTab === k;
+  bt.className = 'tab bin-tab bt-' + k + (on ? ' active' : ''); bt.dataset.bin = k;
+  bt.title = k === 'park' ? 'Safata: pàgines aparcades per passar-les a un altre document' : 'Paperera: pàgines descartades';
+  bt.textContent = BK[k].ic + ' ' + BK[k].n + ' (' + binOf(k).length + ')';
+  bt.onclick = () => (on ? binLeave() : binOpen(k));
+  const x = document.createElement('button'); x.className = 'tab-close'; x.innerHTML = '×'; x.title = 'Tancar';
+  x.onclick = ev => { ev.stopPropagation(); binCloseTab(k); };
+  bt.appendChild(x);
   return bt;
 }
 
@@ -3920,7 +4012,7 @@ function sessOpenDB() {
 async function sessSave() {
   try {
     const db = await sessOpenDB();
-    const list = docs.map(d => ({ name: d.name, handle: d.fsHandle || null }));
+    const list = docs.map(d => ({ name: d.name, handle: d.fh || d.fsHandle || null }));   // v8.1.3: la darrera ubicació desada té prioritat
     await new Promise((res, rej) => {
       const tx = db.transaction('s', 'readwrite');
       tx.objectStore('s').put(list, 'docs');
@@ -3939,36 +4031,67 @@ async function sessLoadList() {
     });
   } catch (e) { return []; }
 }
+// v8.1.3: cada fila diu si es pot reobrir, si cal permís o si només se'n recorda el nom
+const SESS_ST = {
+  ok: ['✓', 'Es pot reobrir directament'],
+  lock: ['🔒', 'Cal donar permís de lectura: el navegador t\'ho preguntarà en clicar'],
+  name: ['⚠', 'Només se\'n recorda el nom: obre\'l un cop amb «Obrir PDF…» (Chrome o Edge) i la propera vegada se\'n recordarà la ubicació'],
+  gone: ['✗', 'No s\'ha trobat: potser s\'ha mogut, reanomenat o esborrat'],
+  perm: ['🔒', 'Sense permís de lectura: torna-ho a provar i accepta el permís']
+};
 function sessRenderWelcome() {
   const box = $('wl-session'); if (!box) return;
   if (!SESS_PREV.length || docs.length) { box.classList.add('hidden'); return; }
   $('wl-session-list').innerHTML = SESS_PREV.map((e, i) =>
-    `<div class="wl-sess-it"><span title="${escHtml(e.name)}">${escHtml(e.name)}</span><button class="btn ib" onclick="sessReopenOne(${i})" title="Obrir ${escHtml(e.name)}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><path d="M3 11h18"/></svg></button></div>`
+    `<div class="wl-sess-it"><b class="st" data-i="${i}"></b><span title="${escHtml(e.name)}">${escHtml(e.name)}</span><button class="btn ib" onclick="sessReopenOne(${i})" title="Obrir ${escHtml(e.name)}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V19h18V9.5H11.5l-2-2.5H3z"/><path d="M3 11h18"/></svg></button></div>`
   ).join('');
   box.classList.remove('hidden');
+  SESS_PREV.forEach(async (e, i) => {
+    if (!e.st) {
+      if (!e.handle) e.st = 'name';
+      else { try { e.st = !e.handle.queryPermission || (await e.handle.queryPermission({ mode: 'read' })) === 'granted' ? 'ok' : 'lock'; } catch (er) { e.st = 'lock'; } }
+    }
+    sessMark(i);
+  });
 }
+function sessMark(i) {
+  const e = SESS_PREV[i], b = document.querySelector('#wl-session-list .st[data-i="' + i + '"]'); if (!e || !b) return;
+  const v = SESS_ST[e.st] || ['', '']; b.textContent = v[0]; b.title = v[1]; b.className = 'st st-' + (e.st || '');
+}
+// Retorna { file } o { err: 'name' | 'perm' | 'gone' }
 async function sessGetFile(entry) {
-  if (!entry.handle) return null;
+  if (!entry.handle) return { err: 'name' };
   try {
     if (entry.handle.queryPermission && (await entry.handle.queryPermission({ mode: 'read' })) !== 'granted') {
-      if ((await entry.handle.requestPermission({ mode: 'read' })) !== 'granted') return null;
+      if ((await entry.handle.requestPermission({ mode: 'read' })) !== 'granted') return { err: 'perm' };
     }
-    return await entry.handle.getFile();
-  } catch (e) { return null; }
+  } catch (e) { return { err: 'perm' }; }
+  try { const f = await entry.handle.getFile(); f.fsHandle = entry.handle; return { file: f }; }   // v8.1.3: el document reobert conserva la ubicació per a la propera sessió
+  catch (e) { return { err: 'gone' }; }
 }
 async function sessReopenOne(i) {
   const e = SESS_PREV[i]; if (!e) return;
-  const f = await sessGetFile(e);
-  if (f) { await openPdfFiles([f]); return; }
-  toast('Tria «' + e.name + '» amb el diàleg d\'Obre', false, 5000);
-  triggerOpen();
+  const r = await sessGetFile(e);
+  if (r.file) { e.st = 'ok'; await openPdfFiles([r.file]); return; }
+  e.st = r.err; sessMark(i);
+  if (r.err === 'name') { toast('Tria «' + e.name + '» amb el diàleg d\'Obre', false, 5000); triggerOpen(); }
+  else if (r.err === 'gone') toast('No s\'ha trobat «' + e.name + '»: potser s\'ha mogut o esborrat', true, 6000);
+  else toast('Sense permís per llegir «' + e.name + '»', true, 5000);
 }
 async function sessReopenAll() {
-  let n = 0;
-  for (const e of SESS_PREV) { const f = await sessGetFile(e); if (f) { await openPdfFiles([f]); n++; } }
-  const missing = SESS_PREV.length - n;
-  if (n) toast(n + (n === 1 ? ' document reobert' : ' documents reoberts') + (missing ? ' · ' + missing + ' s\'han de triar a mà (Obrir PDF…)' : ''), !!missing, 6000);
-  else toast("Cap document s'ha pogut reobrir sol: tria'ls amb Obrir PDF…", true, 6000);
+  // v8.1.3: els permisos es demanen tots dins del mateix clic (abans, després del primer el navegador ja no deixava preguntar)
+  const ents = SESS_PREV.slice(), rs = await Promise.all(ents.map(e => sessGetFile(e)));
+  let n = 0; const why = { name: 0, perm: 0, gone: 0 };
+  for (let k = 0; k < ents.length; k++) {
+    const r = rs[k]; ents[k].st = r.file ? 'ok' : r.err; sessMark(k);
+    if (r.file) { await openPdfFiles([r.file]); n++; } else why[r.err]++;
+  }
+  const m = [];
+  if (why.name) m.push(why.name + ' només amb el nom (tria\'ls amb Obrir PDF…)');
+  if (why.perm) m.push(why.perm + ' sense permís');
+  if (why.gone) m.push(why.gone + ' no trobats');
+  if (n) toast(n + (n === 1 ? ' document reobert' : ' documents reoberts') + (m.length ? ' · ' + m.join(' · ') : ''), !!m.length, 7000);
+  else toast('Cap document s\'ha pogut reobrir: ' + m.join(' · '), true, 7000);
 }
 
 // ─── v7.4.0: PWA (instal·lar com a aplicació, obrir PDFs des del sistema, funcionament sense connexió) ───
@@ -3976,9 +4099,11 @@ let pwaEvt = null;
 const pwaStandalone = () => { try { return matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: window-controls-overlay)').matches || navigator.standalone === true; } catch (e) { return false; } };
 function pwaUi() {
   const inst = pwaStandalone();
-  const w = $('wl-install'); if (w) w.classList.toggle('hidden', !pwaEvt || inst);
+  const w = $('wl-inst'); if (w) w.classList.toggle('hidden', inst || !/^https?:$/.test(location.protocol) || wlInstOff());   // v8.1.3: avís destacat a la pantalla d'inici
   const m = $('mi-install'); if (m) m.style.display = inst ? 'none' : '';
 }
+function wlInstOff() { try { return localStorage.getItem('guaita-wl-inst') === '0'; } catch (e) { return false; } }
+function wlInstHide() { try { localStorage.setItem('guaita-wl-inst', '0'); } catch (e) { } pwaUi(); toast('Pots instal·lar-la quan vulguis des del menú Ajuda › Instal·lar com a aplicació'); }
 async function pwaInstall() {
   if (pwaEvt) {
     const e = pwaEvt; pwaEvt = null; pwaUi();
@@ -3988,7 +4113,7 @@ async function pwaInstall() {
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); pwaEvt = e; pwaUi(); });
 addEventListener('appinstalled', () => { pwaEvt = null; pwaUi(); toast('Guaita PDF Edit instal·lat. Ja pots obrir-lo des del menú d\'aplicacions.'); });
 if ('launchQueue' in window) launchQueue.setConsumer(async lp => {
-  const files = []; for (const h of lp.files || []) { try { files.push(await h.getFile()); } catch (e) { } }
+  const files = []; for (const h of lp.files || []) { try { const f = await h.getFile(); f.fsHandle = h; files.push(f); } catch (e) { } }   // v8.1.3: amb la ubicació
   if (files.length) await openPdfFiles(files);
 });
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => { }); });
@@ -4028,10 +4153,14 @@ document.body.addEventListener('drop', async e => {
   if (uiMode === 'scan') { toast("Mode Escanejar: deixa anar el PDF sospitós dins l'analitzador, no a l'editor", true, 5000); return; }
   if (uiMode === 'folder') { fdDrop(e); return; }
   if (!e.dataTransfer) return;   // v8.1.0: drop sintètic (sense dades de fitxers)
+  const hP = [...(e.dataTransfer.items || [])].filter(it => it.kind === 'file').map(it => { try { return it.getAsFileSystemHandle ? it.getAsFileSystemHandle() : null; } catch (er) { return null; } });   // v8.1.3
   const files = e.dataTransfer.files;
   if (files.length > 0) {
     if (uiMode === 'compose') { await cpDropFiles(files, e); return; }
-    const { rest } = await openPdfFiles(files);
+    const fl = [...files];
+    const hs = await Promise.all(hP.map(p => p ? p.catch(() => null) : null));
+    fl.forEach(f => { const h = hs.find(x => x && x.kind === 'file' && x.name === f.name); if (h) f.fsHandle = h; });   // v8.1.3: per reobrir-lo a la propera sessió
+    const { rest } = await openPdfFiles(fl);
     for (let file of rest) {
       if (file.type.startsWith('image/') && getActiveDoc()) await addImageFromFile(file);
       else toast(`L'arxiu ${file.name} no és un PDF${getActiveDoc() ? ' ni una imatge' : ''}`, true);
@@ -4395,15 +4524,23 @@ function scrollThumbIntoView(i) {
 // ─── Drag & drop (thumbnails) ─────────────────────────────
 let dragSrc = -1;
 
-// v8.1.0: zona de paperera (angle inferior dret de l'organitzador)
-$('bin-drop').addEventListener('dragover', e => { if (!dragBin) { e.preventDefault(); $('bin-drop').classList.add('on'); } });
-$('bin-drop').addEventListener('dragleave', () => $('bin-drop').classList.remove('on'));
-$('bin-drop').addEventListener('drop', e => {
-  e.preventDefault(); $('bin-drop').classList.remove('on');
-  if (dragBin || !binOn) return;
-  const doc = getActiveDoc(); if (!doc || typeof dragSrc !== 'number' || !doc.pages[dragSrc]) return;
+// v8.1.0: zona de paperera; v8.1.3: i safata (amb Ctrl, copia)
+function thDropSel() {
+  const doc = getActiveDoc(); if (!doc || typeof dragSrc !== 'number' || !doc.pages[dragSrc]) return null;
   if (!doc.selectedPages.includes(dragSrc)) doc.selectedPages = [dragSrc];
-  deleteSelectedPages(false);
+  return [...doc.selectedPages];
+}
+['park-drop', 'bin-drop'].forEach(id => {
+  const el = $(id), park = id === 'park-drop';
+  el.addEventListener('dragover', e => { if (dragBin || dragSrc < 0) return; e.preventDefault(); e.dataTransfer.dropEffect = park && (e.ctrlKey || e.metaKey) ? 'copy' : 'move'; el.classList.add('on'); });
+  el.addEventListener('dragleave', () => el.classList.remove('on'));
+  el.addEventListener('drop', e => {
+    e.preventDefault(); el.classList.remove('on');
+    if (dragBin || !binOn) return;
+    const sel = thDropSel(); if (!sel) return;
+    if (park) binPark(sel, e.ctrlKey || e.metaKey); else deleteSelectedPages(false);
+  });
+  el.addEventListener('click', () => binOpen(park ? 'park' : 'trash'));   // clicar la zona obre la llista
 });
 // v8.1.1: pàgines de la paperera deixades a l'espai buit de la tira: al final del document
 $('thumb-list').addEventListener('dragover', e => { if (dragBin) e.preventDefault(); });
@@ -4411,11 +4548,22 @@ $('thumb-list').addEventListener('drop', e => {
   if (!dragBin || e.target.closest('.thumb-item')) return;
   e.preventDefault(); const ids = dragBin; dragBin = null; binRecover(ids, null, true);
 });
-$('bin-drop').addEventListener('click', () => binOpen());   // v8.1.0: clicar la icona obre/visualitza la paperera
 function dStart(e) {
   dragSrc = +e.currentTarget.dataset.idx;
   e.currentTarget.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.effectAllowed = 'copyMove';   // v8.1.3: Ctrl copia a la safata
+  document.body.classList.add('th-dragging');
+  // v8.1.3: fantasma petit i desplaçat del cursor perquè no tapi la safata ni la paperera
+  try {
+    const src = e.currentTarget.querySelector('canvas'), doc = getActiveDoc();
+    const n = doc && doc.selectedPages.includes(dragSrc) ? doc.selectedPages.length : 1;
+    const g = document.createElement('div'); g.id = 'th-ghost';
+    if (src && src.width) { const c = document.createElement('canvas'); c.width = 52; c.height = Math.max(8, Math.round(52 * src.height / src.width)); c.getContext('2d').drawImage(src, 0, 0, c.width, c.height); g.appendChild(c); }
+    if (n > 1) { const b = document.createElement('b'); b.textContent = n; g.appendChild(b); }
+    document.body.appendChild(g);
+    e.dataTransfer.setDragImage(g, -14, -14);
+    setTimeout(() => g.remove(), 0);
+  } catch (er) { }
 }
 function dOver(e) {
   e.preventDefault();
@@ -4466,6 +4614,7 @@ function dDrop(e) {
 }
 function dEnd(e) {
   dragSrc = -1;   // v8.1.1
+  document.body.classList.remove('th-dragging'); ['park-drop', 'bin-drop'].forEach(id => $(id).classList.remove('on'));   // v8.1.3
   document.querySelectorAll('.thumb-item').forEach(el =>
     el.classList.remove('drag-over', 'dragging'));
 }
@@ -4925,6 +5074,9 @@ function cmThumb(e, i) {
     { label: 'Inserir des d\'un PDF després…', icon: 'import', act: () => { doc.curIdx = sel[k - 1]; showImportModal(); pre('import-pos', 'after')(); } },
     clipboardPages.length ? { label: 'Enganxar ' + clipboardPages.length + ' pàgina(es) abans', icon: 'import', act: () => pasteAt(sel[0]) } : null,
     clipboardPages.length ? { label: 'Enganxar ' + clipboardPages.length + ' pàgina(es) després', icon: 'import', kbd: 'Ctrl+V', act: () => pasteAt(sel[k - 1] + 1) } : null,
+    binOn ? '-' : null,
+    binOn ? { label: 'Aparcar a la safata', act: () => binPark(sel, false) } : null,
+    binOn ? { label: 'Copiar a la safata', act: () => binPark(sel, true) } : null,
     '-',
     { label: 'Girar 90° a la dreta', icon: 'rcw', act: () => rotatePage(90) },
     { label: 'Girar 90° a l\'esquerra', icon: 'rccw', act: () => rotatePage(-90) },
@@ -5093,6 +5245,8 @@ document.addEventListener('contextmenu', e => {
   const t = e.target;
   if (t.closest('input, textarea, select, #cmenu, #composer, #cmp, #rv-panel')) return;
   if (document.querySelector('.modal-bg:not(.hidden)')) return;
+  const bz = t.closest('#tabs-bar .bin-tab, #park-drop, #bin-drop, #lb-park, #lb-bin');   // v8.1.3: safata i paperera
+  if (bz) { e.preventDefault(); cmBin(e, bz.dataset.bin || (/park/.test(bz.id) ? 'park' : 'trash')); return; }
   const th = t.closest('#thumb-list .thumb-item'), bm = t.closest('#bm-list .bm-row'), tab = t.closest('#tabs-bar .tab');
   if (th) { e.preventDefault(); cmThumb(e, +th.dataset.idx); return; }
   if (bm) { e.preventDefault(); cmBookmark(e, bm.dataset.id); return; }
@@ -7406,8 +7560,15 @@ let pasteKbd = 0;
 function pasteInternal() { if (clipLast === 'ann' && annPaste()) return; if (clipboardPages.length) pastePage(); else annPaste(); }
 
 // ─── v8.1.0: paperera de pàgines (PDF temporal en memòria, no es desa sola) ───
-let PBIN = [], binSeq = 0, binView = false, binSel = [], dragBin = null;
-function binEntry(pd, from) { return { id: ++binSeq, pd: pageClone(pd, true), from }; }
+// v8.1.3: dues llistes: «park» (safata, aparcades per traslladar-les) i «trash» (paperera, descartades)
+let PBIN = [], binSeq = 0, binView = false, binSel = [], dragBin = null, binTab = 'trash', BINU = [];
+const BK = {
+  park: { n: 'Safata', l: 'Aparcades', ic: '📥', file: 'Safata_guaitaPDF.pdf' },
+  trash: { n: 'Paperera', l: 'Descartades', ic: '🗑', file: 'Paperera_guaitaPDF.pdf' }
+};
+const binOf = k => PBIN.filter(e => e.kind === k);
+const pgN = n => n + (n === 1 ? ' pàgina' : ' pàgines');
+function binEntry(pd, from, kind = 'trash') { return { id: ++binSeq, pd: pageClone(pd, true), from, kind }; }
 function binFrom(doc, idx) { return { docId: doc.id, docName: doc.name, idx, pid: doc.pages[idx].pid }; }
 // Cada operació de paperera queda al registre d'historial de la pàgina que l'ha provocat, per poder desfer-la amb Ctrl+Z
 function binApply(op, dir) {
@@ -7426,24 +7587,24 @@ function binDo(op) {
   if (h) (h.bin || (h.bin = [])).push(op);
 }
 function binChanged() {
-  const n = PBIN.length, c = $('bin-count'), d = $('bin-drop');
-  if (c) c.textContent = n;
-  if (d) d.classList.toggle('full', n > 0);
-  const lc = $('lb-bin-count'), lb = $('lb-bin');   // v8.1.0: paperera també a l'organitzador de pàgines
-  if (lc) lc.textContent = n;
-  if (lb) lb.classList.toggle('full', n > 0);
+  const np = binOf('park').length, nt = binOf('trash').length;
+  [['bin-count', 'bin-drop', nt], ['park-count', 'park-drop', np], ['lb-bin-count', 'lb-bin', nt], ['lb-park-count', 'lb-park', np]].forEach(([c, d, n]) => {
+    if ($(c)) $(c).textContent = n; if ($(d)) $(d).classList.toggle('full', n > 0);
+  });
+  if ($('bnt-park')) { $('bnt-park').textContent = np; $('bnt-trash').textContent = nt; }
   updateTabsUI();
   if (binView) binRender();
 }
 function binLeave(refresh = true) {
   if (!binView) return;
-  binView = false; binSel = [];
+  binView = false; binSel = []; BINU = [];
   $('bin-view').classList.add('hidden'); $('viewer-container').classList.remove('bin-open');
   if (refresh) { updateTabsUI(); lbChip(); }
 }
-function binOpen() {
+function binOpen(k) {
   if (!binOn) return;
-  binView = true; binSel = [];
+  if (k && k !== binTab) { binTab = k; binSel = []; }
+  if (!binView) { binView = true; binSel = []; BINU = []; }
   $('bin-view').classList.remove('hidden'); $('viewer-container').classList.add('bin-open');
   $('bin-view').scrollTop = 0;
   updateTabsUI(); binRender();
@@ -7451,7 +7612,7 @@ function binOpen() {
 // v8.1.1: Eines › Paperera de pàgines (desactivada per defecte; s'explica en activar-la)
 let binOn = (() => { try { return localStorage.getItem('guaita-bin') === '1'; } catch (e) { return false; } })();
 function binUiSync() {
-  $('bin-drop').classList.toggle('hidden', !binOn);
+  $('bin-drops').classList.toggle('hidden', !binOn);
   $('thumb-list').classList.toggle('bin-on', binOn);
   const k = $('mi-bin') && $('mi-bin').querySelector('.mk'); if (k) k.textContent = binOn ? '✔' : '';
   lbChip(); updateTabsUI();
@@ -7465,25 +7626,32 @@ function binSetOn(v) {
 function binToggle() {
   if (typeof closeMenus === 'function') closeMenus();
   if (!binOn) { openModal('modal-bin'); return; }
-  if (!PBIN.length) { binSetOn(false); toast('Paperera de pàgines desactivada'); return; }
-  $('binx-n').textContent = PBIN.length + (PBIN.length === 1 ? ' pàgina' : ' pàgines');
+  if (!PBIN.length) { binSetOn(false); toast('Safata i paperera desactivades'); return; }
+  $('binx-n').textContent = pgN(binOf('park').length) + ' a la safata i ' + pgN(binOf('trash').length) + ' a la paperera';
   openModal('modal-binoff');
 }
-function binActivate() { closeModal('modal-bin'); binSetOn(true); toast('Paperera de pàgines activada'); }
-function binOffEmpty() { closeModal('modal-binoff'); PBIN = []; binSetOn(false); binChanged(); toast('Paperera buidada i desactivada'); }
+function binActivate() { closeModal('modal-bin'); binSetOn(true); toast('Safata i paperera activades'); }
+function binOffEmpty() { closeModal('modal-binoff'); PBIN = []; binSetOn(false); binChanged(); toast('Llistes buidades i desactivades'); }
 async function binOffSave() {
   closeModal('modal-binoff');
-  if (!(await binSave())) return;
-  PBIN = []; binSetOn(false); binChanged(); toast('Paperera desada i desactivada');
+  for (const k of ['park', 'trash']) if (binOf(k).length && !(await binSave(k))) return;   // un PDF per llista
+  PBIN = []; binSetOn(false); binChanged(); toast('Desades i desactivades');
 }
 function binRender() {
-  const list = $('bin-grid');
+  const list = $('bin-grid'), k = binTab, L = binOf(k), park = k === 'park';
   list.innerHTML = '';
-  $('bin-info').textContent = PBIN.length ? PBIN.length + (PBIN.length === 1 ? ' pàgina' : ' pàgines') + ' · arrossega-les a un document o a una pestanya' : 'La paperera és buida';
-  if (!PBIN.length) { list.innerHTML = '<div class="bin-empty">La paperera és buida.<br>Les pàgines que elimines apareixen aquí.</div>'; return; }
-  PBIN.forEach((e, i) => {
+  document.querySelectorAll('#bin-bar .bnt').forEach(b => b.classList.toggle('on', b.dataset.k === k));
+  $('bn-put').textContent = park ? 'Posar al document' : 'Recuperar';
+  $('bn-swap').textContent = park ? 'Passar a descartades' : 'Passar a aparcades';
+  $('bn-swap').title = park ? 'Enviar les seleccionades a la paperera' : 'Tornar les seleccionades a la safata';
+  $('bin-info').textContent = L.length ? pgN(L.length) + ' · arrossega-les a la tira de miniatures o a la pestanya d\'un document' : (park ? 'La safata és buida' : 'La paperera és buida');
+  $('bin-note').innerHTML = park
+    ? '<b>Safata</b>: pàgines aparcades per traslladar-les a un altre document. Arrossega-les a la tira de miniatures o a la pestanya del document de destí; doble clic: al final del document actiu. <b>Es perden en tancar l\'app</b> si no les deses com a PDF.'
+    : '<b>Paperera</b>: pàgines descartades. Encara les pots recuperar (arrossegant-les, doble clic o «Recuperar»); la × les elimina definitivament (Ctrl+Z ho desfà mentre la vista és oberta). <b>Es perden en tancar l\'app</b> si no les deses com a PDF.';
+  if (!L.length) { list.innerHTML = '<div class="bin-empty">' + (park ? 'La safata és buida.<br>Arrossega-hi pàgines des de la tira de miniatures o l\'Organitzador (amb Ctrl, es copien).' : 'La paperera és buida.<br>Les pàgines que elimines apareixen aquí.') + '</div>'; return; }
+  L.forEach((e, i) => {
     const item = document.createElement('div');
-    item.className = 'bin-card' + (binSel.includes(e.id) ? ' selected' : '');
+    item.className = 'bin-card k-' + k + (binSel.includes(e.id) ? ' selected' : '');
     item.dataset.bid = e.id;
     item.draggable = true;
     const cv = document.createElement('canvas');
@@ -7491,7 +7659,11 @@ function binRender() {
     lbl.innerHTML = '<span class="bc-n">' + (i + 1) + '</span>';
     lbl.append((e.from.docName || 'PDF') + ' · pàg. ' + (e.from.idx + 1));
     lbl.title = 'Des de «' + e.from.docName + '», pàgina ' + (e.from.idx + 1);
-    item.append(cv, lbl);
+    const x = document.createElement('button'); x.className = 'bc-x'; x.textContent = '×';
+    x.title = park ? 'Passar a la paperera' : 'Eliminar definitivament (Ctrl+Z ho desfà)';
+    x.addEventListener('click', ev => { ev.stopPropagation(); park ? binSwap([e.id]) : binPurge([e.id]); });
+    x.addEventListener('dblclick', ev => ev.stopPropagation());
+    item.append(cv, lbl, x);
     item.addEventListener('click', ev => binClick(e.id, ev));
     item.addEventListener('dblclick', () => binRecover([e.id], null));
     item.addEventListener('dragstart', ev => { dragBin = binSel.includes(e.id) ? [...binSel] : [e.id]; ev.dataTransfer.effectAllowed = 'move'; ev.dataTransfer.setData('text/plain', 'bin'); });
@@ -7503,17 +7675,18 @@ function binRender() {
 function binClick(id, ev) {
   if (ev.ctrlKey || ev.metaKey) binSel = binSel.includes(id) ? binSel.filter(x => x !== id) : [...binSel, id];
   else if (ev.shiftKey && binSel.length) {
-    const ids = PBIN.map(x => x.id), a = ids.indexOf(binSel[binSel.length - 1]), b = ids.indexOf(id);
+    const ids = binOf(binTab).map(x => x.id), a = ids.indexOf(binSel[binSel.length - 1]), b = ids.indexOf(id);
     binSel = ids.slice(Math.min(a, b), Math.max(a, b) + 1);
   } else binSel = [id];
-  document.querySelectorAll('#bin-grid .bin-card').forEach(c => c.classList.toggle('selected', binSel.includes(+c.dataset.bid)));   // v8.1.1
+  binMarkSel();
 }
+function binMarkSel() { document.querySelectorAll('#bin-grid .bin-card').forEach(c => c.classList.toggle('selected', binSel.includes(+c.dataset.bid))); }   // v8.1.1: sense tornar a dibuixar
 async function binRecover(ids, at, stay = false) {
   const doc = getActiveDoc();
-  if (!doc) { toast('Obre un document on recuperar les pàgines', true); return; }
+  if (!doc) { toast('Obre un document on posar les pàgines', true); return; }
   const items = PBIN.filter(e => ids.includes(e.id));
   if (!items.length) return;
-  if (stay) binSel = []; else binLeave(false);   // v8.1.1: arrossegant a la tira, la paperera continua oberta
+  if (stay) binSel = []; else binLeave(false);   // v8.1.1: arrossegant a la tira, la vista continua oberta
   saveHistory();
   const pos = at == null ? doc.pages.length : Math.max(0, Math.min(at, doc.pages.length));
   const np = items.map(e => pageClone(e.pd));
@@ -7521,29 +7694,114 @@ async function binRecover(ids, at, stay = false) {
   doc.selectedPages = np.map((_, i) => pos + i); doc.curIdx = pos;
   binDo({ kind: 'take', items });
   await renderThumbs(); await goTo(pos, true);
-  toast(np.length + (np.length === 1 ? ' pàgina recuperada' : ' pàgines recuperades') + ' · Ctrl+Z per desfer-ho');
+  toast(pgN(np.length) + ' al document «' + doc.name + '» · Ctrl+Z per desfer-ho');
 }
-function binRecoverSel() { binRecover(binSel.length ? binSel : PBIN.map(e => e.id), null); }
+function binRecoverSel() { binRecover(binSel.length ? binSel : binOf(binTab).map(e => e.id), null); }
+// Canvis dins de les llistes (sense historial de document): es desfan amb Ctrl+Z mentre la vista és oberta
+function binLocal(undo) { BINU.push(undo); if (BINU.length > 50) BINU.shift(); }
+function binLocalUndo() { const u = BINU.pop(); if (!u) return false; u(); binChanged(); toast('Desfet'); return true; }
+function binSwap(ids) {
+  const items = PBIN.filter(e => ids.includes(e.id)); if (!items.length) return;
+  const prev = items.map(e => e.kind), to = items[0].kind === 'park' ? 'trash' : 'park';
+  items.forEach(e => { e.kind = to; });
+  binLocal(() => items.forEach((e, i) => { e.kind = prev[i]; }));
+  binSel = binSel.filter(x => !ids.includes(x)); binChanged();
+  toast(pgN(items.length) + (to === 'trash' ? ' a la paperera' : ' a la safata') + ' · Ctrl+Z per desfer-ho');
+}
+function binSwapSel() {
+  if (!binSel.length) { toast('Selecciona pàgines de la llista', true); return; }
+  binSwap(binSel);
+}
+function binPurge(ids) {
+  const gone = PBIN.filter(e => ids.includes(e.id)); if (!gone.length) return;
+  PBIN = PBIN.filter(e => !ids.includes(e.id));
+  binLocal(() => { PBIN.push(...gone); PBIN.sort((a, b) => a.id - b.id); });
+  binSel = binSel.filter(x => !ids.includes(x)); binChanged();
+  toast(pgN(gone.length) + (gone.length === 1 ? ' eliminada' : ' eliminades') + ' definitivament · Ctrl+Z per desfer-ho');
+}
+// Supr dins de la vista: de la safata passen a la paperera; de la paperera s'eliminen
 function binPurgeSel() {
-  if (!binSel.length) { toast('Selecciona pàgines de la paperera', true); return; }
-  if (!confirm('Eliminar definitivament ' + binSel.length + (binSel.length === 1 ? ' pàgina' : ' pàgines') + ' de la paperera? No es pot desfer.')) return;
-  PBIN = PBIN.filter(e => !binSel.includes(e.id)); binSel = []; binChanged();
+  if (!binSel.length) { toast('Selecciona pàgines de la llista', true); return; }
+  binTab === 'park' ? binSwap(binSel) : binPurge(binSel);
 }
-async function binSave() {
-  if (!PBIN.length) { toast('La paperera és buida', true); return false; }
+function binEmptyAsk(k = binTab) {
+  const L = binOf(k); if (!L.length) { toast(k === 'park' ? 'La safata és buida' : 'La paperera és buida'); return false; }
+  if (!confirm('Buidar ' + (k === 'park' ? 'la safata' : 'la paperera') + ' (' + pgN(L.length) + ')? Les pàgines es perden.')) return false;
+  binPurge(L.map(e => e.id)); return true;
+}
+// La × de la pestanya: si hi ha pàgines, pregunta (desar / descartar o buidar / cancel·lar)
+function binCloseTab(k) {
+  const L = binOf(k);
+  if (!L.length) { if (binView && binTab === k) binLeave(); return; }
+  const park = k === 'park';
+  $('bcl-h').textContent = park ? 'Tancar la safata' : 'Tancar la paperera';
+  $('bcl-msg').textContent = (park ? 'La safata' : 'La paperera') + ' conté ' + pgN(L.length) + '. Per tancar-la cal buidar-la; si no la deses com a PDF, ' + (park ? 'les pàgines passaran a la paperera.' : 'es perdran.');
+  $('bcl-a').textContent = park ? 'Passar-les a la paperera' : 'Buidar';
+  $('bcl-a').onclick = () => { closeModal('modal-binclose'); if (park) binSwap(L.map(e => e.id)); else binPurge(L.map(e => e.id)); if (binView && binTab === k) binLeave(); };
+  $('bcl-b').onclick = async () => { closeModal('modal-binclose'); if (!(await binSave(k))) return; PBIN = PBIN.filter(e => !L.includes(e)); BINU = []; binChanged(); if (binView && binTab === k) binLeave(); };
+  openModal('modal-binclose');
+}
+async function binSave(k = binTab, ids) {
+  const L = ids ? PBIN.filter(e => ids.includes(e.id)) : binOf(k);
+  if (!L.length) { toast(k === 'park' ? 'La safata és buida' : 'La paperera és buida', true); return false; }
   if (!LIB_PDFLIB) { toast("pdf-lib no està disponible", true); return false; }
   toast('Generant PDF…', false, 15000);
   try {
     // Cada pàgina porta la nota del document i pàgina d'origen
-    const pages = PBIN.map(e => { const q = pageClone(e.pd, true); q.notes = 'Origen: ' + e.from.docName + ', pàg. ' + (e.from.idx + 1) + (q.notes ? '\n' + q.notes : ''); return q; });
+    const pages = L.map(e => { const q = pageClone(e.pd, true); q.notes = 'Origen: ' + e.from.docName + ', pàg. ' + (e.from.idx + 1) + (q.notes ? '\n' + q.notes : ''); return q; });
     const bytes = await generatePdfBytes(pages, null, [], { noNotes: false, attachments: [], meta: {}, ocOff: undefined });
-    const t = await saveTarget({ name: 'Paperera_guaitaPDF.pdf', fh: null }, true);
+    const name = BK[k].file;
+    const t = await saveTarget({ name, fh: null }, true);
     if (!t) return false;
-    await saveWrite({ name: 'Paperera_guaitaPDF.pdf' }, t, bytes);
-    toast('Paperera desada');
+    await saveWrite({ name }, t, bytes);
+    toast((k === 'park' ? 'Safata' : 'Paperera') + ' desada com a PDF');
     return true;
-  } catch (err) { toast('Error en desar la paperera: ' + err.message, true); }
+  } catch (err) { toast('Error en desar: ' + err.message, true); }
   return false;
+}
+// Aparcar a la safata (des de la tira, l'Organitzador o el menú); amb copy, les pàgines es queden al document
+async function binPark(sel, copy) {
+  const doc = getActiveDoc(); if (!doc || !binOn || !sel.length) return false;
+  if (!copy && doc.pages.length <= sel.length) { toast('No pots treure totes les pàgines del document: amb Ctrl les copies a la safata', true); return false; }
+  binLeave(false);
+  saveHistory();
+  const asc = [...sel].sort((a, b) => a - b);
+  const items = asc.map(i => binEntry(doc.pages[i], binFrom(doc, i), 'park'));
+  if (!copy) {
+    for (let k = asc.length - 1; k >= 0; k--) doc.pages.splice(asc[k], 1);
+    doc.curIdx = Math.min(doc.curIdx, doc.pages.length - 1); doc.selectedPages = [doc.curIdx];
+  }
+  binDo({ kind: 'add', items });
+  await renderThumbs(); await goTo(doc.curIdx);
+  toast(pgN(items.length) + (items.length === 1 ? (copy ? ' copiada' : ' aparcada') : (copy ? ' copiades' : ' aparcades')) + ' a la safata · Ctrl+Z per desfer-ho');
+  return true;
+}
+// Menús contextuals propis (sense el del navegador)
+function cmBin(e, k, inView) {
+  const L = binOf(k), n = L.length, park = k === 'park', ids = L.map(x => x.id);
+  const viewing = binView && binTab === k;
+  CM.open(e.clientX, e.clientY, [
+    { head: BK[k].n + ' · ' + pgN(n) },
+    viewing ? { label: 'Tornar al document', kbd: 'Esc', act: () => binLeave() } : { label: 'Veure el contingut', act: () => binOpen(k) },
+    { label: 'Desar com a PDF…', icon: 'save', disabled: !n, act: () => binSave(k) },
+    park ? { label: 'Posar-les totes al document', disabled: !n || !getActiveDoc(), act: () => binRecover(ids, null) } : { label: 'Recuperar-les totes', disabled: !n || !getActiveDoc(), act: () => binRecover(ids, null) },
+    { label: park ? 'Passar-les totes a la paperera' : 'Passar-les totes a la safata', disabled: !n, act: () => binSwap(ids) },
+    { label: 'Buidar…', icon: 'trash', danger: true, disabled: !n, act: () => binEmptyAsk(k) },
+    '-',
+    { label: 'Tancar', act: () => binCloseTab(k) }
+  ]);
+}
+function cmBinCard(e, id) {
+  if (!binSel.includes(id)) { binSel = [id]; binMarkSel(); }
+  const sel = [...binSel], park = binTab === 'park', n = sel.length;
+  CM.open(e.clientX, e.clientY, [
+    { head: n > 1 ? pgN(n) + ' seleccionades' : (park ? 'Pàgina aparcada' : 'Pàgina descartada') },
+    { label: park ? 'Posar al document' : 'Recuperar al final del document', disabled: !getActiveDoc(), act: () => binRecover(sel, null) },
+    { label: park ? 'Passar a descartades' : 'Passar a aparcades', act: () => binSwap(sel) },
+    { label: 'Desar com a PDF…', icon: 'save', act: () => binSave(binTab, sel) },
+    park ? null : '-',
+    park ? null : { label: 'Eliminar definitivament', icon: 'trash', kbd: 'Supr', danger: true, act: () => binPurge(sel) }
+  ]);
 }
 
 // ─── Add blank page ───────────────────────────────────────
@@ -8071,6 +8329,7 @@ async function saveWrite(doc, t, bytes) {
     const w = await t.h.createWritable(); await w.write(blob); await w.close();
     doc.fh = t.h;
     if (t.h.name && t.h.name !== doc.name) { doc.name = t.h.name; updateTabsUI(); }
+    if (docs.includes(doc)) sessSave();   // v8.1.3
     return;
   }
   const url = URL.createObjectURL(blob), a = document.createElement('a');
@@ -9764,7 +10023,7 @@ const HELP = {
 <h3>Si no apareix l'opció</h3>
 <p>Cal obrir l'adreça web (https) de l'aplicació, no el fitxer des del disc. Firefox i Safari d'escriptori no instal·len PWA; a Safari de l'iPhone: <b>Comparteix › Afegeix a la pantalla d'inici</b>.</p>`],
   about: ['Quant a Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 8.1.2</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 8.1.3</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -10347,7 +10606,7 @@ document.addEventListener('keydown', e => {
     if (e.key === 'c' || e.key === 'C') { e.preventDefault(); copyPage(); return; }
     if (e.key === 'x' || e.key === 'X') { e.preventDefault(); cutPage(); return; }
     if (e.key === 'v' || e.key === 'V') { clearTimeout(pasteKbd); pasteKbd = setTimeout(() => { pasteKbd = 0; pasteInternal(); }, 120); return; }   // v8.1.0: l'esdeveniment paste decideix (imatge o porta-retalls intern)
-    if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
+    if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); if (binView && !e.shiftKey && binLocalUndo()) return; e.shiftKey ? redo() : undo(); return; }   // v8.1.3
     if (e.key === 'y' || e.key === 'Y') { e.preventDefault(); redo(); return; }
     if (e.key === 'f' || e.key === 'F') { e.preventDefault(); showSearchModal(); return; }
     if (e.key === 'p' || e.key === 'P') { e.preventDefault(); if (docs.length) showPrintModal('doc'); return; }
@@ -11059,19 +11318,21 @@ function lbChip() {
   const s = doc.selectedPages.length;
   ch.innerHTML = `<b>${s}</b><span class="lbc-t">de ${doc.pages.length} pàgines seleccionades</span><span class="lbc-h">Maj+clic: interval · Ctrl+clic: una més · arrossega sobre l'espai buit: finestra · Esc cancel·la l'arrossegament</span>`;
 }
-// v8.1.0: paperera de pàgines dins l'organitzador (angle inferior dret del llenç de pàgines)
+// v8.1.0: paperera de pàgines dins l'organitzador (angle inferior dret del llenç de pàgines); v8.1.3: i safata
 function lbBinSync(on) {
-  let b = $('lb-bin');
-  if (!b) {
-    if (!on) return;
-    b = document.createElement('div'); b.id = 'lb-bin';
-    b.title = "Paperera de pàgines: arrossega-hi les pàgines seleccionades (Supr)";
-    b.innerHTML = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3"/><path d="M6 7l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg><span class="bn" id="lb-bin-count">0</span>';
-    b.addEventListener('click', () => binOpen());
-    $('viewer-container').appendChild(b);
-  }
-  b.classList.toggle('hidden', !on);
-  if (on) { b.classList.toggle('full', PBIN.length > 0); $('lb-bin-count').textContent = PBIN.length; }
+  [['lb-park', 'park'], ['lb-bin', 'trash']].forEach(([id, k]) => {
+    let b = $(id);
+    if (!b) {
+      if (!on) return;
+      b = document.createElement('div'); b.id = id;
+      b.title = k === 'park' ? 'Safata: arrossega-hi pàgines per aparcar-les (amb Ctrl, es copien)' : 'Paperera: arrossega-hi les pàgines que vols descartar (Supr)';
+      b.innerHTML = (k === 'park' ? '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13l2.5-8h13L21 13v6H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/></svg>' : '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3"/><path d="M6 7l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg>') + '<span class="bn" id="' + id + '-count">0</span>';
+      b.addEventListener('click', () => binOpen(k));
+      $('viewer-container').appendChild(b);
+    }
+    b.classList.toggle('hidden', !on);
+    if (on) { const n = binOf(k).length; b.classList.toggle('full', n > 0); $(id + '-count').textContent = n; }
+  });
 }
 let lbKeep = null;   // canvas ja pintats que es reaprofiten en reconstruir la graella (sense parpelleig)
 function lbDecorate(c, d, pd) {
@@ -11129,13 +11390,14 @@ function lbPosAt(cx, cy) {   // posició d'inserció entre les caixes visibles (
 function lbHover() {
   const D = lbDrag; if (!D || !D.moved) return;
   D.gh.style.left = (D.cx - D.gx) + 'px'; D.gh.style.top = (D.cy - D.gy) + 'px';
-  const binEl = $('lb-bin');   // v8.1.0: arrossegar cap a la paperera de l'organitzador
-  if (binEl && !binEl.classList.contains('hidden')) {
-    const r = binEl.getBoundingClientRect();
+  D.hot = null;   // v8.1.0: arrossegar cap a la paperera de l'organitzador; v8.1.3: o a la safata
+  for (const [id, k] of [['lb-park', 'park'], ['lb-bin', 'trash']]) {
+    const el = $(id); if (!el || el.classList.contains('hidden')) continue;
+    const r = el.getBoundingClientRect();
     const hot = D.cx >= r.left && D.cx <= r.right && D.cy >= r.top && D.cy <= r.bottom;
-    binEl.classList.toggle('on', hot);
-    if (hot) return;   // mentre hi som a sobre, no es recalcula la posició d'inserció
+    el.classList.toggle('on', hot); if (hot) D.hot = k;
   }
+  if (D.hot) return;   // mentre hi som a sobre, no es recalcula la posició d'inserció
   const pos = lbPosAt(D.cx, D.cy); if (pos === D.pos) return;
   D.pos = pos;
   lbFlip(() => { const ref = (D.lay[pos] || {}).b || null, g = lbGrid(); D.ph.forEach(ph => g.insertBefore(ph, ref)); });
@@ -11184,14 +11446,14 @@ async function lbEnd(doc, cancel) {
   const D = lbDrag; if (!D) return;
   lbDrag = null; cancelAnimationFrame(D.raf); document.removeEventListener('keydown', D.key, true);
   document.body.classList.remove('lb-dragging');
-  const binEl = $('lb-bin'); let overBin = !cancel && !!binEl && binEl.classList.contains('on');
-  if (binEl) binEl.classList.remove('on');
-  if (overBin && D.sel.length >= doc.pages.length) { toast('No pots eliminar totes les pàgines del document', true); overBin = false; cancel = true; }   // v8.1.1: es restaura la graella
-  if (overBin) {   // v8.1.0: deixar anar sobre la paperera de l'organitzador
+  const hot = cancel ? null : D.hot; ['lb-park', 'lb-bin'].forEach(id => { if ($(id)) $(id).classList.remove('on'); });
+  let overBin = hot === 'trash', overPark = hot === 'park', copy = overPark && !!D.ck;
+  if ((overBin || (overPark && !copy)) && D.sel.length >= doc.pages.length) { toast(overBin ? 'No pots eliminar totes les pàgines del document' : 'No pots treure totes les pàgines del document: amb Ctrl les copies a la safata', true); overBin = overPark = false; cancel = true; }   // v8.1.1: es restaura la graella
+  if (overBin || overPark) {   // v8.1.0: deixar anar sobre la paperera (o la safata) de l'organitzador
     D.ph.forEach(ph => ph.remove());
     D.gh.remove();
     doc.selectedPages = [...D.sel];
-    await deleteSelectedPages(false);
+    if (overBin) await deleteSelectedPages(false); else await binPark([...D.sel], copy);
     return;
   }
   const vis = D.lay.map(L => L.b), n = doc.pages.length;
@@ -11221,7 +11483,7 @@ $('book-wrapper').addEventListener('mousedown', e => {
   const D0 = lbDrag;
   const move = ev => {
     if (lbDrag !== D0) return;
-    D0.cx = ev.clientX; D0.cy = ev.clientY;
+    D0.cx = ev.clientX; D0.cy = ev.clientY; D0.ck = ev.ctrlKey || ev.metaKey;   // v8.1.3: Ctrl en deixar anar a la safata = copiar
     if (!D0.moved && Math.hypot(ev.clientX - D0.x, ev.clientY - D0.y) > 6) lbStart(doc);
     if (D0.moved) lbHover();
   };
@@ -14145,7 +14407,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 8.1.2 · pdf-lib';
+  const prod = 'Guaita PDF Edit 8.1.3 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -14184,7 +14446,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'metadades XMP'); del(cat, 'PieceInfo', 'dades privades d\'aplicacions');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.1.2') })); rep.cleaned.push('informació del document'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.1.3') })); rep.cleaned.push('informació del document'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'miniatures'));
@@ -17264,7 +17526,7 @@ async function fdOpen(list) {
   list = list || fdSelFiles(); if (!list.length) return;
   if (list.length > 8 && !confirm('Obrir ' + list.length + ' documents?')) return;
   const files = [];
-  for (const f of list) { try { if (f.fh) { const x = await f.fh.getFile(); f.file = x; } files.push(f.file); } catch (e) { toast('No s\'ha pogut llegir ' + f.name, true); } }
+  for (const f of list) { try { if (f.fh) { const x = await f.fh.getFile(); x.fsHandle = f.fh; f.file = x; } files.push(f.file); } catch (e) { toast('No s\'ha pogut llegir ' + f.name, true); } }   // v8.1.3: amb la ubicació
   if (!files.length) return;
   const { opened } = await openPdfFiles(files);
   if (opened.length) setMode('view');
@@ -19231,7 +19493,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 8.1.2 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 8.1.3 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadades:', e); }
 }
