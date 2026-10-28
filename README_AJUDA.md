@@ -3,9 +3,9 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 7.9.3c** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.2.1** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
-Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
+Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
 ## Índex
 
@@ -85,6 +85,16 @@ El commutador de la capçalera separa les maneres de treballar:
 3.  **Fitxer › Nou document…** crea un PDF des de zero: pàgines en blanc o una pàgina per imatge (la imatge s'encaixa dins la pàgina, centrada; mida automàtica segons la imatge o un format triat).
 4.  **Desa el PDF actual** genera un PDF nou amb tots els canvis.
 
+### Desar i Desar com…
+
+**Desar PDF actual** (`Ctrl+S`) i **Desar com…** (`Ctrl+Maj+S`, tria el nom i la ubicació). A Chrome i Edge el document passa a tenir el nom triat i els desaments següents sobreescriuen el mateix fitxer; als altres navegadors es descarrega un PDF nou.
+
+### Pantalla d'inici i sessió anterior
+
+- Sense cap document obert, la pantalla d'inici ofereix quatre accions: **Obrir PDF…**, **Explorar una carpeta…**, **Escanejar PDF sospitós…** i **Composar…**.
+- Si l'app encara no és instal·lada, hi surt un avís per instal·lar-la; es pot amagar amb la × i sempre queda a **Ajuda › Instal·lar com a aplicació…**.
+- **Documents de l'última sessió**: l'app recorda els documents que tenies oberts. Cada fila diu si es pot reobrir directament (✓), si cal donar permís de lectura (🔒) o si només se'n recorda el nom i l'has d'obrir un cop amb *Obrir PDF…* (⚠). **Reobrir-los tots** els obre d'un cop. Només es recorda el nom i, a Chrome i Edge, la referència al fitxer; el contingut no es desa.
+
 **Imprimeix** mostra una previsualització que compara la mida del paper amb la del PDF i permet triar paper (A4, A3…), orientació i escala. **Fusiona tots** crea un document amb totes les pestanyes.
 
 ## 04. Pàgines i visualització
@@ -112,6 +122,32 @@ Clic dret sobre una miniatura › **Color de pàgina…** posa un marc de color 
 ### Cintes de marcadors
 
 Cada pàgina amb marcador mostra una cinta vermella de punt de llibre al costat dret, a l'altura de la destinació. En passar-hi per sobre veus el títol i amb un clic s'obre al panell. S'activen a **Visualització › Cintes de marcadors a les pàgines** (vista única, contínues i organitzador).
+
+### Pestanyes, miniatures i nitidesa
+
+- **Reordenar pestanyes**: arrossega la pestanya d'un document fins a la posició que vulguis.
+- **Vista › Miniatures a mida relativa** (activada per defecte): a la tira de pàgines, un format gran (A3) es veu més gran que un de petit (A4).
+- **Vista › Nitidesa vectorial (zoom alt)**: torna a dibuixar la part visible de la pàgina a la resolució de la pantalla perquè els traços vectorials (plànols) es vegin nítids a qualsevol zoom.
+
+### Safata i paperera de pàgines
+
+Dues llistes temporals en memòria per a les pàgines que treus dels documents (**Eines › Safata i paperera de pàgines**, o les dues zones de la tira de miniatures i de l'Organitzador). Cada pàgina recorda el document i la pàgina d'origen.
+
+- **Safata** (aparcades): per traslladar fulls d'un document a un altre. Arrossega-hi pàgines des de la tira o l'Organitzador (amb `Ctrl` es copien sense treure-les del document) i després deixa-les a la tira o a la pestanya del document de destí.
+- **Paperera** (descartades): `Supr`, la × de la miniatura i la icona de la paperera hi envien les pàgines, i encara les pots recuperar.
+- Clica la zona o la pestanya *Safata* / *Paperera* per veure-les al visor. `Ctrl+Z` torna la pàgina al document. La × de la pestanya pot **Amagar** la llista (les pàgines hi continuen), desar-la com a PDF i buidar-la, o buidar-la.
+- No es desen soles: es perden en tancar l'app. Desa-les com a PDF si les vols conservar. Si desactives l'opció, eliminar pàgines torna a funcionar amb confirmació i `Ctrl+Z`.
+
+### Comparar revisions
+
+**Pàgines › Comparar revisions…** superposa dues pàgines (del mateix document o de documents diferents) a la mateixa escala: el que només és a la pàgina A surt en **vermell** (s'ha tret), el que només és a la B en **blau** (s'ha afegit) i el que no canvia, en gris.
+
+1.  Tria la pàgina **A · anterior** i la **B · nova**, i la resolució: Normal (150 ppp) o Alta (300 ppp, més lenta). Prem **Comparar**.
+2.  Si una versió està desplaçada, s'alinea sola (*Alineació automàtica*). Si també canvia d'escala o de gir, fes servir **Alinear amb 2 punts**: clica dos punts a A i els mateixos dos a B.
+3.  Mostra o amaga *Tret*, *Afegit* i *Sense canvis*; amb la roda fas zoom i arrossegant et desplaces. **Zones amb canvis** llista cada zona amb la seva mida; un clic hi fa zoom.
+4.  Desa el resultat com a **PDF** (amb una llegenda), com a **PNG** o **Obre'l com a document**.
+
+> ⚠️ És una comparació de píxels: detecta canvis de dibuix i de text, però no entén els objectes (un text que només canvia de lletra també surt com a canvi). En plànols molt grans (A1, A0) la resolució baixa sola perquè no falti memòria.
 
 ### Dividir i índex
 
@@ -142,11 +178,17 @@ Amb una imatge o una pàgina incrustada seleccionada, clic dret › **Mida i pos
 
 ### Mesurar
 
-L'eina **Mesura** (`M`) té tres modes al selector del costat de l'escala:
+L'eina **Mesura** (`M`, també **Eines › Mesurar a escala**) mesura sobre el plànol a l'escala de la pàgina.
 
-- **Distància** a l'escala triada (`1:`).
-- **Àrea i perímetre**: clica els vèrtexs i tanca el polígon clicant el primer punt, amb doble clic o amb Retorn.
-- **Calibrar escala**: clica els dos extrems d'una cota coneguda, escriu-ne la longitud real en metres i l'escala es calcula sola.
+- **Escala per pàgina**: desplegable d'escales predefinides (1:10, 1:20, 1:50, 1:100, 1:200, 1:300, 1:500 i 1:1000) o una de personalitzada. Cada pàgina recorda la seva. Si el text de la pàgina conté una escala (p. ex. «Escala 1:100»), apareix un botó **1:N?** per aplicar-la.
+- **Tipus**: *Distància*, *Polilínia* (longitud total), *Àrea i perímetre* (es tanca clicant el primer punt, amb doble clic o amb `Retorn`), *Comptar* (una marca per clic, numerada per categoria) i *Calibrar escala*.
+- **Calibrar escala**: clica els dos extrems d'una cota coneguda, escriu-ne la longitud real (mm, cm o m) i l'escala es calcula sola; la pots aplicar a totes les pàgines del document.
+- **Unitat de lectura**: mm, cm, m, km, peus, polzades i milles.
+- **Fixar**: `Retorn` o el botó de l'agulla deixa la mesura fixada sobre el plànol, dins una **categoria** (nom, color i, per al comptatge, símbol; *＋ Nova categoria…*). Les mesures fixades es mouen i s'esborren amb *Seleccionar* o la goma, i es desfan amb `Ctrl+Z`.
+- **Panell Mesures**: la pestanya *Mesures* llista les mesures fixades de la pàgina o de tot el document, amb els totals per categoria, i les exporta a CSV.
+- **Desar**: es desen dins el PDF com a anotacions de mesura estàndard (línia, polilínia, polígon i cercle) i, en reobrir-lo a Guaita, es tornen a editar.
+
+> 💡 La lectura és tan bona com l'escala: comprova-la sempre amb una cota coneguda del plànol. Els visors que mostren anotacions veuen les mesures; per tornar-les a editar cal Guaita.
 
 ## 06. Editar el contingut original
 
@@ -230,6 +272,8 @@ A dalt, sempre visibles, **Fusionar** i **Document final**; sota, les pestanyes 
 - **Els meus nodes**: desa un grup com a node reutilitzable. **Plantilles de receptes**: 13 de fàbrica i les teves, per reaprofitar-les amb altres PDF. Inclouen receptes **per a arquitectura**: memòria de projecte bàsic, projecte d'execució, entrega al visat, plànols en mosaic i plànols per imprimir en A3 (les paraules clau són editables; són una estructura de partida, no una validació del que exigeix el CoAC).
 - Les opcions de cada node són al mateix node i a la barra de la dreta; el botó dret ofereix les ràpides.
 - A la franja de vista prèvia, **Mida relativa** dibuixa cada pàgina a escala real respecte de les altres (un A3 té el doble d'àrea que un A4); un altre clic les torna a posar totes iguals.
+- **Desfer i refer al llenç**: `Ctrl+Z` i `Ctrl+Y` (o `Ctrl+Maj+Z`) desfan i refan els canvis del llenç, fins a 100 passos.
+- **Paperera del llenç**: la icona de l'angle inferior dret del llenç treu els nodes que hi arrossegues, com `Supr`. No desa res; `Ctrl+Z` els recupera.
 
 ### Nodes nous de la 7.6
 
@@ -318,7 +362,10 @@ Un cop instal·lada, clic dret sobre un PDF › **Obre amb › Guaita PDF Edit**
 
 | Tecla | Acció |
 |---|---|
-| `Ctrl+Z` / `Ctrl+Y` | Desfés / refés |
+| `Ctrl+Z` / `Ctrl+Y` | Desfés / refés (refés també amb `Ctrl+Maj+Z`; també al llenç de Composar) |
+| `Ctrl+S` / `Ctrl+Maj+S` | Desa / desa com… |
+| `Ctrl+C` `Ctrl+D` | Copia / duplica l'anotació seleccionada (`Ctrl+V` l'enganxa) |
+| `Retorn` | Mesura: fixa la mesura sobre el plànol |
 | `Ctrl+F` | Cerca text |
 | `Ctrl+P` | Imprimeix |
 | `Ctrl+C` `Ctrl+X` `Ctrl+V` | Copia / retalla / enganxa pàgines (Ctrl+V també una imatge) |
@@ -368,6 +415,19 @@ No. Tot es processa localment al navegador, també l'analitzador i la signatura.
 **❓ Es pot signar des de Composar?**
 
 Sí: el node **Signar amb certificat** signa el Document final en desar, com a darrer pas. El certificat només es guarda en memòria.
+
+**❓ On són les pàgines que he eliminat?**
+
+Si la safata i la paperera són activades, a la **Paperera** (clica la zona o la pestanya). Són temporals: es perden en tancar l'app, així que desa-les com a PDF si les vols conservar.
+
+**❓ Per què la comparació de revisions mostra canvis on no n'hi ha?**
+
+És una comparació de píxels. Si una versió té un altre desplaçament, escala o gir, fes servir **Alinear amb 2 punts**; i prova l'opció d'alta resolució (300 ppp).
+
+**❓ Es poden obrir les mesures a un altre visor?**
+
+Es desen com a anotacions de mesura estàndard del PDF, que els visors que mostren anotacions veuen. Per tornar-les a editar (moure, canviar categoria) cal obrir-les a Guaita.
+
 
 
 ---

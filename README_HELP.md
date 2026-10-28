@@ -3,9 +3,9 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 7.9.3c** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.2.1** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
-Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
+Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
 ## Contents
 
@@ -85,6 +85,16 @@ The switch in the header separates the ways of working:
 3.  **File › New document…** creates a PDF from scratch: blank pages or one page per image (the image is fitted inside the page, centred; automatic size from the image or a chosen format).
 4.  **Save current PDF** generates a new PDF with all the changes.
 
+### Save and Save as…
+
+**Save current PDF** (`Ctrl+S`) and **Save as…** (`Ctrl+Shift+S`, choose the name and location). In Chrome and Edge the document takes the chosen name and later saves overwrite the same file; in other browsers a new PDF is downloaded.
+
+### Start screen and previous session
+
+- With no document open, the start screen offers four actions: **Open PDF…**, **Explore a folder…**, **Scan a suspicious PDF…** and **Compose…**.
+- If the app is not installed yet, a notice offers to install it; hide it with the × and it always remains at **Help › Install as an app…**.
+- **Documents from the last session**: the app remembers the documents you had open. Each row says whether it can be reopened directly (✓), needs read permission (🔒) or only the name is remembered and you must open it once with *Open PDF…* (⚠). **Reopen them all** opens them in one go. Only the name and, in Chrome and Edge, the file reference are remembered; the content is not stored.
+
 **Print** shows a preview that compares the paper size with the PDF size and lets you choose paper (A4, A3…), orientation and scale. **Merge all** creates one document from all the tabs.
 
 ## 04. Pages and view
@@ -112,6 +122,32 @@ Right-click a thumbnail › **Page colour…** puts a colour frame on the page (
 ### Bookmark ribbons
 
 Every page with a bookmark shows a red bookmark ribbon on its right side, at the height of the destination. Hover to see the title; click to open it in the panel. Turn them on with **View › Bookmark ribbons on the pages** (single page, continuous views and organiser).
+
+### Tabs, thumbnails and sharpness
+
+- **Reorder tabs**: drag a document's tab to the position you want.
+- **View › Thumbnails at relative size** (on by default): in the page strip, a large format (A3) looks larger than a small one (A4).
+- **View › Vector sharpness (high zoom)**: redraws the visible part of the page at screen resolution so vector strokes (drawings) look sharp at any zoom.
+
+### Page tray and bin
+
+Two temporary in-memory lists for the pages you take out of documents (**Tools › Page tray and bin**, or the two zones of the thumbnail strip and of the Organiser). Each page remembers its source document and page.
+
+- **Tray** (parked): to move sheets from one document to another. Drag pages onto it from the strip or the Organiser (with `Ctrl` they are copied without removing them from the document), then drop them on the strip or on the tab of the target document.
+- **Bin** (discarded): `Del`, the thumbnail × and the bin icon send pages there, and you can still recover them.
+- Click the zone or the *Tray* / *Bin* tab to see them in the viewer. `Ctrl+Z` returns the page to the document. The tab's × can **Hide** the list (the pages stay), save it as a PDF and empty it, or empty it.
+- They are not saved on their own: they are lost when you close the app. Save them as PDF if you want to keep them. If you turn the option off, deleting pages works again with confirmation and `Ctrl+Z`.
+
+### Compare revisions
+
+**Pages › Compare revisions…** overlays two pages (from the same document or different ones) at the same scale: what is only on page A is shown in **red** (removed), what is only on B in **blue** (added), and what does not change, in grey.
+
+1.  Choose page **A · previous** and **B · new**, and the resolution: Normal (150 dpi) or High (300 dpi, slower). Press **Compare**.
+2.  If one version is shifted it aligns itself (*Auto alignment*). If it is also scaled or rotated, use **Align with 2 points**: click two points on A and the same two on B.
+3.  Show or hide *Removed*, *Added* and *Unchanged*; the wheel zooms and dragging pans. **Changed areas** lists each area with its size; a click zooms to it.
+4.  Save the result as a **PDF** (with a legend), as a **PNG**, or **Open it as a document**.
+
+> ⚠️ It is a pixel comparison: it detects drawing and text changes but does not understand objects (a text that only changes typeface also shows as a change). On very large drawings (A1, A0) the resolution drops by itself so memory does not run out.
 
 ### Split and index
 
@@ -142,11 +178,17 @@ With an image or an embedded page selected, right-click › **Size and position�
 
 ### Measure
 
-The **Measure** tool (`M`) has three modes in the selector next to the scale:
+The **Measure** tool (`M`, also **Tools › Measure to scale**) measures on the drawing at the page's scale.
 
-- **Distance** at the chosen scale (`1:`).
-- **Area and perimeter**: click the vertices and close the polygon by clicking the first point, double-clicking or pressing Enter.
-- **Calibrate scale**: click the two ends of a known dimension, type its real length in metres and the scale is computed for you.
+- **Scale per page**: a drop-down of preset scales (1:10, 1:20, 1:50, 1:100, 1:200, 1:300, 1:500 and 1:1000) or a custom one. Each page remembers its own. If the page text contains a scale (e.g. “Scale 1:100”), a **1:N?** button appears to apply it.
+- **Types**: *Distance*, *Polyline* (total length), *Area and perimeter* (close it by clicking the first point, double-clicking or pressing `Enter`), *Count* (one marker per click, numbered per category) and *Calibrate scale*.
+- **Calibrate scale**: click the two ends of a known dimension, type its real length (mm, cm or m) and the scale is computed for you; you can apply it to all the pages of the document.
+- **Reading unit**: mm, cm, m, km, feet, inches and miles.
+- **Pin**: `Enter` or the pin button leaves the measurement pinned on the drawing, inside a **category** (name, colour and, for counting, a symbol; *＋ New category…*). Pinned measurements are moved and deleted with *Select* or the eraser, and undone with `Ctrl+Z`.
+- **Measurements panel**: the *Measurements* tab lists the pinned measurements of the page or the whole document, with totals per category, and exports them to CSV.
+- **Saving**: they are saved inside the PDF as standard measurement annotations (line, polyline, polygon and circle) and become editable again when reopened in Guaita.
+
+> 💡 A reading is only as good as the scale: always check it against a known dimension on the drawing. Viewers that show annotations see the measurements; Guaita is needed to edit them again.
 
 ## 06. Edit the original content
 
@@ -230,6 +272,8 @@ At the top, always visible, **Merge** and **Final document**; below, the **Docum
 - **My nodes**: save a group as a reusable node. **Recipe templates**: 13 built-in plus your own, to reuse with other PDFs. They include **architecture** recipes: outline project report, construction project, submission for approval, tiled drawings and drawings to print on A3 (the keywords are editable; they are a starting structure, not a validation of what the CoAC requires).
 - Each node's options are on the node itself and in the right bar; right-click offers the quick ones.
 - In the preview strip, **Relative size** draws each page at true scale relative to the others (an A3 has twice the area of an A4); another click makes them all equal again.
+- **Undo and redo on the canvas**: `Ctrl+Z` and `Ctrl+Y` (or `Ctrl+Shift+Z`) undo and redo canvas changes, up to 100 steps.
+- **Canvas bin**: the icon at the bottom right of the canvas removes the nodes you drag onto it, like `Del`. It saves nothing; `Ctrl+Z` brings them back.
 
 ### New in 7.6 nodes
 
@@ -318,7 +362,10 @@ Once installed, right-click a PDF › **Open with › Guaita PDF Edit**. If the 
 
 | Key | Action |
 |---|---|
-| `Ctrl+Z` / `Ctrl+Y` | Undo / redo |
+| `Ctrl+Z` / `Ctrl+Y` | Undo / redo (redo also with `Ctrl+Shift+Z`; also on the Compose canvas) |
+| `Ctrl+S` / `Ctrl+Shift+S` | Save / save as… |
+| `Ctrl+C` `Ctrl+D` | Copy / duplicate the selected annotation (`Ctrl+V` pastes it) |
+| `Enter` | Measure: pin the measurement on the drawing |
 | `Ctrl+F` | Search text |
 | `Ctrl+P` | Print |
 | `Ctrl+C` `Ctrl+X` `Ctrl+V` | Copy / cut / paste pages (Ctrl+V also pastes an image) |
@@ -368,6 +415,19 @@ No. Everything is processed locally in the browser, including the analyser and s
 **❓ Can I sign from Compose?**
 
 Yes: the **Sign with certificate** node signs the Final document on saving, as the last step. The certificate is only kept in memory.
+
+**❓ Where are the pages I deleted?**
+
+If the tray and bin are on, in the **Bin** (click the zone or the tab). They are temporary: they are lost when you close the app, so save them as PDF if you want to keep them.
+
+**❓ Why does revision comparison show changes where there are none?**
+
+It is a pixel comparison. If one version has a different offset, scale or rotation, use **Align with 2 points**; and try the high resolution option (300 dpi).
+
+**❓ Can the measurements be opened in another viewer?**
+
+They are saved as standard PDF measurement annotations, which viewers that show annotations display. To edit them again (move, change category) open them in Guaita.
+
 
 
 ---
