@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 8.2.0 — Editor de PDF multidocument (suite Guaita Apps)
+  Guaita PDF Edit 8.2.1 — Editor de PDF multidocument (suite Guaita Apps)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   Aquest programa és programari lliure: el podeu redistribuir i/o modificar sota els termes de la
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v8.2.0</title>
+<title>Guaita PDF Edit v8.2.1</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -740,6 +740,29 @@ body.mode-view #mbar-edit, body.mode-view #ctxbar, body.mode-edit #mbar-view { d
 .thumb-rib.on { display: block; }
 .thumb-pg.pcol canvas { outline: 3px solid var(--pc); outline-offset: -3px; }
 .thumb-pg.pcol::before { content: ''; position: absolute; left: -5px; top: 6px; bottom: 6px; width: 3px; background: var(--pc); border-radius: 2px; }
+/* v8.2.1: comparar revisions */
+#rcm-view { position: fixed; inset: 0; z-index: 950; background: var(--bg); display: flex; flex-direction: column; }
+#rcm-view.hidden { display: none; }
+.rcm-bar { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--border); background: var(--bg-surface); flex-wrap: wrap; }
+.rcm-bar .sp { flex: 1; }
+.rcm-t { font-size: 13px; max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rcm-ck { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; padding: 3px 8px; border-radius: 6px; background: var(--bg-hover); cursor: pointer; user-select: none; }
+.rcm-ck.r { color: #FF6B6F; } .rcm-ck.b { color: #7C9BFF; } .rcm-ck.g { color: var(--text-mut); }
+.rcm-ck span { font: 500 11px 'IBM Plex Mono', monospace; }
+#rcm-op { width: 90px; }
+.rcm-body { flex: 1; display: flex; min-height: 0; }
+#rcm-stage { flex: 1; position: relative; overflow: hidden; background: #2A2F37; cursor: grab; }
+#rcm-stage.pick { cursor: crosshair; }
+#rcm-cv { position: absolute; left: 0; top: 0; transform-origin: 0 0; image-rendering: auto; box-shadow: 0 4px 24px rgba(0,0,0,.4); }
+#rcm-ov { position: absolute; left: 0; top: 0; pointer-events: none; }
+#rcm-side { width: 230px; border-left: 1px solid var(--border); overflow-y: auto; background: var(--bg-surface); flex: none; }
+.rcm-sh { padding: 10px 12px 6px; font: 600 10px 'IBM Plex Mono', monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim2); }
+.rcm-z { display: flex; align-items: center; gap: 8px; padding: 6px 12px; font-size: 12px; cursor: pointer; border-top: 1px solid var(--border-soft); }
+.rcm-z:hover, .rcm-z.on { background: var(--bg-hover); }
+.rcm-z i { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+.rcm-z span { margin-left: auto; color: var(--text-dim2); font: 500 10.5px 'IBM Plex Mono', monospace; }
+.rcm-msg { position: absolute; left: 50%; top: 64px; transform: translateX(-50%); background: rgba(23,27,33,.96); color: #E7EAEE; border: 1px solid #2A313B; border-radius: 8px; padding: 8px 14px; font-size: 13px; z-index: 5; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.rcm-msg:empty { display: none; }
 /* v8.2.0: mesures fixades */
 #ms-extra { display: inline-flex; align-items: center; gap: 4px; }
 #ms-cat { height: 30px; max-width: 150px; font-weight: 600; }
@@ -2100,6 +2123,7 @@ body.th-dragging #bin-drops .bh { display: block; }
         <button class="mi" data-twin="btn-blank" onclick="showBlankModal()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M12 11v6M9 14h6"/></svg>Pàgina en blanc…</span></button>
         <button class="mi" data-twin="btn-import" onclick="showImportModal()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M8.5 14h7M12.5 11l3 3-3 3"/></svg>Des d'un altre PDF…</span></button>
         <button class="mi needs-doc" onclick="showIndexModal()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>Índex a partir dels marcadors…</span></button>
+        <button class="mi needs-doc" onclick="rcmOpen()" disabled title="Superposa dues versions d'una pàgina o d'un plànol: en vermell el que s'ha tret i en blau el que s'ha afegit"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="11" height="14" rx="1"/><rect x="10" y="7" width="11" height="14" rx="1"/></svg>Comparar revisions…</span></button>
         <button class="mi needs-doc" onclick="showSplitModal()" disabled title="Dividir el document en diversos fitxers"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h9l4 4v5"/><path d="M5 3v18h8"/><path d="M16 15l3 3-3 3M13 18h6"/></svg>Dividir el document…</span></button>
         <div class="msep"></div>
         <button class="mi" data-twin="btn-rcw" onclick="rotatePage(90)" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 11-3-6.3"/><path d="M20 4v5h-5"/></svg>Girar 90° dreta</span></button>
@@ -2204,7 +2228,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <button id="mode-compose" onclick="setMode('compose')" title="Composar: fusionar documents i pàgines amb un arbre de nodes (fonts → Fusionar → Document final)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Composar</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v8.2.0</span>
+  <span class="tag">v8.2.1</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Canviar a tema clar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2587,7 +2611,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.2.0</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.2.1</small></div>
           <div id="wl-inst" class="hidden"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg><div class="wi-t"><b>Instal·la Guaita PDF Edit com a aplicació</b><span>Finestra pròpia, funciona sense connexió i obre els PDF des de l'Explorador de fitxers.</span></div><button class="btn primary" onclick="pwaInstall()">Instal·lar</button><button class="wi-x" onclick="wlInstHide()" title="Amagar aquest avís" aria-label="Amagar aquest avís">×</button></div>
           <h1>Editor de PDF <em>local</em>, sense núvol.</h1>
           <p>Obre un o diversos PDF o arrossega'ls a la finestra. Tot es processa en aquest ordinador: cap fitxer surt del navegador.</p>
@@ -2902,7 +2926,7 @@ body.th-dragging #bin-drops .bh { display: block; }
   <span id="st-worker" class="hidden" title="Aquest entorn no permet els «workers» de pdf.js (visor incrustat o restriccions del navegador). Els PDF es processen al fil principal: tot funciona igual, però els documents grans van més lents. Obert directament a Chrome o Edge des del disc normalment no passa.">pdf.js · fil principal</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 8.2.0 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 8.2.1 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -2961,6 +2985,41 @@ body.th-dragging #bin-drops .bh { display: block; }
       <button class="btn dang" onclick="binOffEmpty()">Buidar i desactivar</button>
       <button class="btn primary" onclick="binOffSave()">Desar com a PDF i desactivar</button>
     </div>
+  </div>
+</div>
+<div class="modal-bg hidden" id="modal-rcm">
+  <div class="modal">
+    <h2>Comparar revisions</h2>
+    <p class="mnote">Superposa dues pàgines a la mateixa escala: el que només és a <b style="color:#E5484D">A</b> surt en vermell (s'ha tret) i el que només és a <b style="color:#3E63DD">B</b>, en blau (s'ha afegit). El que no canvia, en gris.</p>
+    <div class="frow"><label>A · anterior</label><select id="rcm-da" onchange="rcmPgMax()" style="max-width:240px"></select><label>pàg.</label><input type="number" id="rcm-pa" min="1" value="1" style="width:64px"></div>
+    <div class="frow"><label>B · nova</label><select id="rcm-db" onchange="rcmPgMax()" style="max-width:240px"></select><label>pàg.</label><input type="number" id="rcm-pb" min="1" value="1" style="width:64px"></div>
+    <div class="frow"><label>Resolució</label><select id="rcm-res"><option value="150">Normal (150 ppp)</option><option value="300">Alta (300 ppp, més lenta)</option></select></div>
+    <p class="mnote">És una comparació de píxels: detecta canvis de dibuix i de text, però no entén els objectes. Si una versió està desplaçada, s'alinea sola; si també canvia d'escala o de gir, fes servir «Alinear amb 2 punts».</p>
+    <div class="mactions">
+      <button class="btn" onclick="closeModal('modal-rcm')">Cancel·lar</button>
+      <button class="btn primary" onclick="rcmRun()">Comparar</button>
+    </div>
+  </div>
+</div>
+<div id="rcm-view" class="hidden">
+  <div class="rcm-bar">
+    <b class="rcm-t" id="rcm-title"></b>
+    <label class="rcm-ck r" title="Només a A: s'ha tret (nombre de zones)"><input type="checkbox" id="rcm-shr" checked onchange="rcmPaint()">Tret <span id="rcm-nr"></span></label>
+    <label class="rcm-ck b" title="Només a B: s'ha afegit (nombre de zones)"><input type="checkbox" id="rcm-shb" checked onchange="rcmPaint()">Afegit <span id="rcm-nb"></span></label>
+    <label class="rcm-ck g" title="A totes dues versions"><input type="checkbox" id="rcm-shg" checked onchange="rcmPaint()">Sense canvis</label>
+    <input type="range" id="rcm-op" min="10" max="100" value="35" oninput="rcmPaint()" title="Opacitat del que no canvia">
+    <span class="sp"></span>
+    <button class="btn" onclick="rcmAlignAuto()" title="Torna a calcular el desplaçament entre les dues versions">Alineació automàtica</button>
+    <button class="btn" id="rcm-2p" onclick="rcmAlign2()" title="Clica dos punts a A i els mateixos dos punts a B: corregeix desplaçament, gir i escala">Alinear amb 2 punts</button>
+    <button class="btn" onclick="rcmFit()" title="Veure tota la pàgina">Ajustar</button>
+    <button class="btn" onclick="rcmSavePng()" title="Desar la imatge de la comparació">PNG</button>
+    <button class="btn" onclick="rcmToDoc()" title="Obrir la comparació com un document nou (una pàgina amb llegenda)">Obrir com a document</button>
+    <button class="btn primary" onclick="rcmSavePdf()">Desar PDF</button>
+    <button class="btn ib" onclick="rcmClose()" title="Tancar (Esc)" aria-label="Tancar (Esc)">×</button>
+  </div>
+  <div class="rcm-body">
+    <div id="rcm-stage"><canvas id="rcm-cv"></canvas><canvas id="rcm-ov"></canvas><div id="rcm-msg" class="rcm-msg"></div></div>
+    <div id="rcm-side"><div class="rcm-sh">Zones amb canvis</div><div id="rcm-zones"></div></div>
   </div>
 </div>
 <div class="modal-bg hidden" id="modal-cal">
@@ -10144,7 +10203,7 @@ const HELP = {
 <h3>Si no apareix l'opció</h3>
 <p>Cal obrir l'adreça web (https) de l'aplicació, no el fitxer des del disc. Firefox i Safari d'escriptori no instal·len PWA; a Safari de l'iPhone: <b>Comparteix › Afegeix a la pantalla d'inici</b>.</p>`],
   about: ['Quant a Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 8.2.0</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 8.2.1</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -14529,7 +14588,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 8.2.0 · pdf-lib';
+  const prod = 'Guaita PDF Edit 8.2.1 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -14568,7 +14627,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'metadades XMP'); del(cat, 'PieceInfo', 'dades privades d\'aplicacions');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.2.0') })); rep.cleaned.push('informació del document'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.2.1') })); rep.cleaned.push('informació del document'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'miniatures'));
@@ -19615,7 +19674,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 8.2.0 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 8.2.1 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadades:', e); }
 }
@@ -19718,6 +19777,272 @@ $('measure-mode').addEventListener('change', e => {
   if (measureMode === 'path') toast('Polilínia: clica els vèrtexs; doble clic o Retorn per acabar');
   e.target.blur();
 });
+
+// ─── v8.2.1: comparar revisions (superposició de píxels, alineació automàtica o amb 2 punts) ───
+const RCM = { W: 0, H: 0, s: 1, cvA: null, rawB: null, mA: null, mB: null, cls: null, zones: [], T: null, z: 1, x: 0, y: 0, two: null, sel: -1, nA: '', nB: '', open: false };
+const RCM_MAXPX = 16e6, RCM_MAXDIM = 8000;
+function rcmOpen() {
+  const d = getActiveDoc(); if (!d) return;
+  const opt = docs.map(x => `<option value="${x.id}">${escHtml(x.name)}</option>`).join('');
+  $('rcm-da').innerHTML = opt; $('rcm-db').innerHTML = opt;
+  const other = docs.find(x => x !== d);
+  $('rcm-da').value = d.id; $('rcm-pa').value = d.curIdx + 1;
+  if (other) { $('rcm-db').value = other.id; $('rcm-pb').value = Math.min(d.curIdx + 1, other.pages.length); }
+  else { $('rcm-db').value = d.id; $('rcm-pb').value = Math.min(d.curIdx + 2, d.pages.length); }
+  rcmPgMax(); openModal('modal-rcm');
+}
+function rcmPgMax() {
+  [['rcm-da', 'rcm-pa'], ['rcm-db', 'rcm-pb']].forEach(([s, p]) => { const d = docs.find(x => x.id === $(s).value); if (d) { $(p).max = d.pages.length; if (+$(p).value > d.pages.length) $(p).value = d.pages.length; } });
+}
+const rcmWait = () => new Promise(r => setTimeout(r, 20));
+function rcmMsg(t) { $('rcm-msg').textContent = t || ''; }
+async function rcmRender(pd, s) {
+  const cv = document.createElement('canvas');
+  if (pd.type !== 'pdf') { const d = await bkDims(pd); cv.width = Math.max(1, Math.round(d.w * s)); cv.height = Math.max(1, Math.round(d.h * s)); const c = cv.getContext('2d'); c.fillStyle = '#fff'; c.fillRect(0, 0, cv.width, cv.height); return cv; }
+  const pg = await getPdfPage(pd), vp = pg.getViewport({ scale: s, rotation: pd.rotation });
+  cv.width = Math.max(1, Math.round(vp.width)); cv.height = Math.max(1, Math.round(vp.height));
+  const c = cv.getContext('2d'); c.fillStyle = '#fff'; c.fillRect(0, 0, cv.width, cv.height);
+  await pg.render({ canvasContext: c, viewport: vp, optionalContentConfigPromise: ocFor(pd) }).promise;
+  return cv;
+}
+function rcmInk(cv, W, H) {   // 1 = tinta (el blanc i els grisos molt clars no compten)
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d', { willReadFrequently: true }); x.fillStyle = '#fff'; x.fillRect(0, 0, W, H); x.drawImage(cv, 0, 0);
+  return rcmInkCtx(x, W, H);
+}
+function rcmInkCtx(x, W, H) {
+  const d = x.getImageData(0, 0, W, H).data, m = new Uint8Array(W * H);
+  for (let i = 0, j = 0; i < m.length; i++, j += 4) if (d[j] * 0.299 + d[j + 1] * 0.587 + d[j + 2] * 0.114 < 200) m[i] = 1;
+  return m;
+}
+function rcmDil(m, W, H) {   // dilatació 3×3 (tolerància d'un píxel per l'antialiàsing)
+  const t = new Uint8Array(W * H), o = new Uint8Array(W * H);
+  for (let y = 0; y < H; y++) { const r = y * W; for (let x = 0; x < W; x++) if (m[r + x] || (x && m[r + x - 1]) || (x < W - 1 && m[r + x + 1])) t[r + x] = 1; }
+  for (let y = 0; y < H; y++) { const r = y * W; for (let x = 0; x < W; x++) if (t[r + x] || (y && t[r - W + x]) || (y < H - 1 && t[r + W + x])) o[r + x] = 1; }
+  return o;
+}
+function rcmShift(mA, mB, W, H) {   // desplaçament de B que més s'assembla a A (perfils de files i columnes)
+  const cA = new Float64Array(W), cB = new Float64Array(W), rA = new Float64Array(H), rB = new Float64Array(H);
+  for (let y = 0; y < H; y++) { const r = y * W; for (let x = 0; x < W; x++) { if (mA[r + x]) { cA[x]++; rA[y]++; } if (mB[r + x]) { cB[x]++; rB[y]++; } } }
+  const best = (a, b, n) => {
+    const R = Math.round(n * 0.2); let bd = 0, bv = -1;
+    for (let d = -R; d <= R; d++) { let s = 0; const i0 = Math.max(0, d), i1 = Math.min(n, n + d); for (let i = i0; i < i1; i++) s += a[i] * b[i - d]; if (s > bv * 1.0001) { bv = s; bd = d; } }
+    return bd;
+  };
+  return { dx: best(cA, cB, W), dy: best(rA, rB, H) };
+}
+function rcmPlaceB() {   // B (sense transformar) col·locat al marc d'A amb la transformació actual
+  const { W, H, T, rawB } = RCM;
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d', { willReadFrequently: true }); x.fillStyle = '#fff'; x.fillRect(0, 0, W, H);
+  x.setTransform(T.a, T.b, T.c, T.d, T.e, T.f); x.imageSmoothingQuality = 'high'; x.drawImage(rawB, 0, 0); x.setTransform(1, 0, 0, 1, 0, 0);
+  RCM.mB = rcmInkCtx(x, W, H);
+}
+function rcmDiff() {
+  const { W, H, mA, mB } = RCM, T = RCM.T || { a: 1, b: 0 }, two = Math.abs(T.a - 1) > 1e-4 || Math.abs(T.b) > 1e-4;   // amb gir o escala, 2 px de tolerància pel remostreig
+  let dA = rcmDil(mA, W, H), dB = rcmDil(mB, W, H); if (two) { dA = rcmDil(dA, W, H); dB = rcmDil(dB, W, H); }
+  const cls = new Uint8Array(W * H);
+  let nr = 0, nb = 0;
+  for (let i = 0; i < cls.length; i++) {
+    if (mA[i]) { if (dB[i]) cls[i] = 1; else { cls[i] = 2; nr++; } }
+    else if (mB[i]) { if (dA[i]) cls[i] = 1; else { cls[i] = 3; nb++; } }
+  }
+  RCM.cls = cls; RCM.nr = nr; RCM.nb = nb;
+  // zones: blocs de 24 px amb canvis, agrupats si són a prop
+  const B = 24, bw = Math.ceil(W / B), bh = Math.ceil(H / B), cr = new Uint16Array(bw * bh), cb = new Uint16Array(bw * bh);
+  for (let y = 0; y < H; y++) { const r = y * W, br = ((y / B) | 0) * bw; for (let x = 0; x < W; x++) { const v = cls[r + x]; if (v === 2) cr[br + ((x / B) | 0)]++; else if (v === 3) cb[br + ((x / B) | 0)]++; } }
+  const on = new Uint8Array(bw * bh); for (let i = 0; i < on.length; i++) if (cr[i] + cb[i] >= 6) on[i] = 1;
+  const lab = new Int32Array(bw * bh).fill(-1), zones = [];
+  for (let i = 0; i < on.length; i++) {
+    if (!on[i] || lab[i] >= 0) continue;
+    const st = [i], z = { x0: 1e9, y0: 1e9, x1: -1, y1: -1, r: 0, b: 0 }; lab[i] = zones.length;
+    while (st.length) {
+      const k = st.pop(), bx = k % bw, by = (k / bw) | 0;
+      z.x0 = Math.min(z.x0, bx); z.y0 = Math.min(z.y0, by); z.x1 = Math.max(z.x1, bx); z.y1 = Math.max(z.y1, by); z.r += cr[k]; z.b += cb[k];
+      for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
+        const nx = bx + dx, ny = by + dy; if (nx < 0 || ny < 0 || nx >= bw || ny >= bh) continue;
+        const q = ny * bw + nx; if (on[q] && lab[q] < 0) { lab[q] = zones.length; st.push(q); }
+      }
+    }
+    zones.push({ x: z.x0 * B, y: z.y0 * B, w: (z.x1 - z.x0 + 1) * B, h: (z.y1 - z.y0 + 1) * B, r: z.r, b: z.b });
+  }
+  zones.sort((a, b) => (b.r + b.b) - (a.r + a.b));
+  RCM.zones = zones.slice(0, 300); RCM.sel = -1;
+}
+function rcmPaint() {
+  if (!RCM.cls) return;
+  const { W, H, cls } = RCM, cv = $('rcm-cv'); cv.width = W; cv.height = H;
+  const x = cv.getContext('2d'), img = x.createImageData(W, H), d = img.data;
+  const sr = $('rcm-shr').checked, sb = $('rcm-shb').checked, sg = $('rcm-shg').checked, op = (+$('rcm-op').value || 35) / 100;
+  const g = Math.round(255 - (255 - 90) * op);
+  for (let i = 0, j = 0; i < cls.length; i++, j += 4) {
+    const v = cls[i];
+    if (v === 2 && sr) { d[j] = 229; d[j + 1] = 72; d[j + 2] = 77; }
+    else if (v === 3 && sb) { d[j] = 62; d[j + 1] = 99; d[j + 2] = 221; }
+    else if (v === 1 && sg) { d[j] = d[j + 1] = d[j + 2] = g; }
+    else { d[j] = d[j + 1] = d[j + 2] = 255; }
+    d[j + 3] = 255;
+  }
+  x.putImageData(img, 0, 0);
+  $('rcm-nr').textContent = RCM.zones.filter(z => z.r).length; $('rcm-nb').textContent = RCM.zones.filter(z => z.b).length;
+  rcmZonesUi(); rcmView();
+}
+function rcmZonesUi() {
+  const box = $('rcm-zones');
+  if (!RCM.zones.length) { box.innerHTML = '<div class="rcm-z" style="cursor:default">Cap diferència detectada</div>'; return; }
+  box.innerHTML = RCM.zones.map((z, i) => {
+    const c = z.r && z.b ? 'linear-gradient(90deg,#E5484D 50%,#3E63DD 50%)' : z.r ? '#E5484D' : '#3E63DD';
+    const t = z.r && z.b ? 'Canvi' : z.r ? 'Tret' : 'Afegit';
+    return `<div class="rcm-z${i === RCM.sel ? ' on' : ''}" data-i="${i}"><i style="background:${c}"></i>${i + 1} · ${t}<span>${Math.round(z.w / RCM.s * 25.4 / 72)}×${Math.round(z.h / RCM.s * 25.4 / 72)} mm</span></div>`;
+  }).join('');
+}
+$('rcm-zones').addEventListener('click', e => { const r = e.target.closest('.rcm-z[data-i]'); if (!r) return; rcmZoom(+r.dataset.i); });
+function rcmZoom(i) {
+  const z = RCM.zones[i]; if (!z) return; RCM.sel = i;
+  const st = $('rcm-stage'), W = st.clientWidth, H = st.clientHeight, pad = Math.max(z.w, z.h) * 0.6 + 40;
+  RCM.z = Math.min(8, Math.min(W / (z.w + pad), H / (z.h + pad)));
+  RCM.x = W / 2 - (z.x + z.w / 2) * RCM.z; RCM.y = H / 2 - (z.y + z.h / 2) * RCM.z;
+  document.querySelectorAll('#rcm-zones .rcm-z').forEach(r => r.classList.toggle('on', +r.dataset.i === i));
+  rcmView();
+}
+function rcmView() {
+  const cv = $('rcm-cv'); cv.style.transform = `translate(${RCM.x}px,${RCM.y}px) scale(${RCM.z})`;
+  cv.style.imageRendering = RCM.z > 2 ? 'pixelated' : 'auto';
+  const st = $('rcm-stage'), ov = $('rcm-ov'); ov.width = st.clientWidth; ov.height = st.clientHeight;
+  const x = ov.getContext('2d'); x.clearRect(0, 0, ov.width, ov.height);
+  const z = RCM.zones[RCM.sel];
+  if (z) { x.strokeStyle = '#D6FB41'; x.lineWidth = 2; x.setLineDash([6, 4]); x.strokeRect(RCM.x + (z.x - 6) * RCM.z, RCM.y + (z.y - 6) * RCM.z, (z.w + 12) * RCM.z, (z.h + 12) * RCM.z); x.setLineDash([]); }
+  if (RCM.two) {
+    const pts = RCM.two.step < 2 ? RCM.two.a : RCM.two.b, col = RCM.two.step < 2 ? '#E5484D' : '#3E63DD';
+    pts.forEach((p, k) => { const sx = RCM.x + p.x * RCM.z, sy = RCM.y + p.y * RCM.z; x.strokeStyle = col; x.lineWidth = 2; x.beginPath(); x.arc(sx, sy, 9, 0, 7); x.moveTo(sx - 14, sy); x.lineTo(sx + 14, sy); x.moveTo(sx, sy - 14); x.lineTo(sx, sy + 14); x.stroke(); x.fillStyle = col; x.font = 'bold 12px sans-serif'; x.fillText(String(k + 1), sx + 11, sy - 11); });
+  }
+}
+function rcmFit() {
+  const st = $('rcm-stage'), W = st.clientWidth, H = st.clientHeight;
+  RCM.z = Math.min((W - 40) / RCM.W, (H - 40) / RCM.H); RCM.x = (W - RCM.W * RCM.z) / 2; RCM.y = (H - RCM.H * RCM.z) / 2; RCM.sel = -1;
+  document.querySelectorAll('#rcm-zones .rcm-z').forEach(r => r.classList.remove('on'));
+  rcmView();
+}
+async function rcmRun() {
+  const dA = docs.find(x => x.id === $('rcm-da').value), dB = docs.find(x => x.id === $('rcm-db').value);
+  const iA = (+$('rcm-pa').value || 1) - 1, iB = (+$('rcm-pb').value || 1) - 1;
+  if (!dA || !dB || !dA.pages[iA] || !dB.pages[iB]) { toast('Pàgina no vàlida', true); return; }
+  if (dA === dB && iA === iB) { toast('Tria dues pàgines diferents', true); return; }
+  closeModal('modal-rcm');
+  const pA = dA.pages[iA], pB = dB.pages[iB], dimA = await bkDims(pA), dimB = await bkDims(pB);
+  let s = (+$('rcm-res').value || 150) / 72;
+  s = Math.min(s, Math.sqrt(RCM_MAXPX / (dimA.w * dimA.h)), RCM_MAXDIM / Math.max(dimA.w, dimA.h));
+  RCM.s = s; RCM.nA = dA.name + ' · pàg. ' + (iA + 1); RCM.nB = dB.name + ' · pàg. ' + (iB + 1);
+  $('rcm-title').textContent = 'A: ' + RCM.nA + '   ·   B: ' + RCM.nB; $('rcm-title').title = $('rcm-title').textContent;
+  $('rcm-view').classList.remove('hidden'); RCM.open = true; RCM.two = null; $('rcm-stage').classList.remove('pick');
+  RCM.cls = null; $('rcm-zones').innerHTML = ''; rcmMsg('Dibuixant les dues pàgines…'); await rcmWait();
+  try {
+    RCM.cvA = await rcmRender(pA, s); RCM.rawB = await rcmRender(pB, s);
+    RCM.W = RCM.cvA.width; RCM.H = RCM.cvA.height;
+    rcmMsg('Comparant…'); await rcmWait();
+    RCM.mA = rcmInk(RCM.cvA, RCM.W, RCM.H);
+    await rcmAlignAuto(true);
+    rcmFit();
+    rcmMsg(''); toast(RCM.zones.length ? RCM.zones.length + ' zones amb canvis' : 'Cap diferència detectada entre les dues pàgines', false, 4000);
+  } catch (e) { rcmMsg(''); toast('No s\'ha pogut comparar: ' + e.message, true); console.error(e); }
+}
+async function rcmAlignAuto(silent) {
+  if (!RCM.mA) return;
+  RCM.two = null; $('rcm-stage').classList.remove('pick');
+  if (!silent) { rcmMsg('Alineant…'); await rcmWait(); }
+  RCM.T = { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }; rcmPlaceB();
+  const sh = rcmShift(RCM.mA, RCM.mB, RCM.W, RCM.H);
+  if (sh.dx || sh.dy) { RCM.T.e = sh.dx; RCM.T.f = sh.dy; rcmPlaceB(); }
+  RCM.shift = sh;
+  rcmDiff(); rcmPaint();
+  if (!silent) { rcmMsg(''); toast('Alineació automàtica: desplaçament ' + Math.round(sh.dx / RCM.s * 25.4 / 72 * 10) / 10 + ' × ' + Math.round(sh.dy / RCM.s * 25.4 / 72 * 10) / 10 + ' mm'); }
+}
+function rcmAlign2() {
+  if (!RCM.mA) return;
+  RCM.two = { step: 0, a: [], b: [] }; $('rcm-stage').classList.add('pick');
+  rcmShowOnly('a'); rcmMsg('Revisió A (vermell): clica el punt 1');
+}
+function rcmShowOnly(w) {   // durant l'alineació amb 2 punts es veu una sola versió
+  const { W, H } = RCM, cv = $('rcm-cv'); cv.width = W; cv.height = H;
+  const x = cv.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, W, H);
+  if (w === 'a') x.drawImage(RCM.cvA, 0, 0);
+  else { const T = RCM.T; x.setTransform(T.a, T.b, T.c, T.d, T.e, T.f); x.drawImage(RCM.rawB, 0, 0); x.setTransform(1, 0, 0, 1, 0, 0); }
+  rcmView();
+}
+function rcmPick(p) {
+  const t = RCM.two; if (!t) return;
+  if (t.step < 2) { t.a.push(p); t.step++; if (t.step === 1) rcmMsg('Revisió A (vermell): clica el punt 2'); else { rcmShowOnly('b'); rcmMsg('Revisió B (blau): clica el mateix punt 1'); } rcmView(); return; }
+  t.b.push(p); t.step++;
+  if (t.step === 3) { rcmMsg('Revisió B (blau): clica el mateix punt 2'); rcmView(); return; }
+  // B vist al marc actual → coordenades de B sense transformar
+  const T = RCM.T, det = T.a * T.d - T.b * T.c;
+  const inv = q => ({ x: (T.d * (q.x - T.e) - T.c * (q.y - T.f)) / det, y: (-T.b * (q.x - T.e) + T.a * (q.y - T.f)) / det });
+  const b1 = inv(t.b[0]), b2 = inv(t.b[1]), a1 = t.a[0], a2 = t.a[1];
+  const vb = { x: b2.x - b1.x, y: b2.y - b1.y }, va = { x: a2.x - a1.x, y: a2.y - a1.y }, lb = Math.hypot(vb.x, vb.y);
+  RCM.two = null; $('rcm-stage').classList.remove('pick');
+  if (lb < 4 || Math.hypot(va.x, va.y) < 4) { rcmMsg(''); toast('Els dos punts han d\'estar separats', true); rcmPaint(); return; }
+  const k = Math.hypot(va.x, va.y) / lb, th = Math.atan2(va.y, va.x) - Math.atan2(vb.y, vb.x), c = k * Math.cos(th), s2 = k * Math.sin(th);
+  RCM.T = { a: c, b: s2, c: -s2, d: c, e: a1.x - (c * b1.x - s2 * b1.y), f: a1.y - (s2 * b1.x + c * b1.y) };
+  rcmMsg('Comparant…');
+  setTimeout(() => { rcmPlaceB(); rcmDiff(); rcmPaint(); rcmMsg(''); toast('Alineat amb 2 punts · escala ' + k.toFixed(3) + ' · gir ' + (th * 180 / Math.PI).toFixed(1) + '°'); }, 20);
+}
+// navegació: roda = zoom, arrossegar = desplaçar; clic en mode 2 punts = punt
+{
+  const st = $('rcm-stage'); let drag = null;
+  st.addEventListener('wheel', e => {
+    e.preventDefault(); const r = st.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+    const k = Math.exp(-e.deltaY * 0.0015), nz = Math.max(0.02, Math.min(16, RCM.z * k));
+    RCM.x = mx - (mx - RCM.x) * nz / RCM.z; RCM.y = my - (my - RCM.y) * nz / RCM.z; RCM.z = nz; rcmView();
+  }, { passive: false });
+  st.addEventListener('mousedown', e => { if (e.button !== 0) return; drag = { x: e.clientX, y: e.clientY, ox: RCM.x, oy: RCM.y, moved: false }; });
+  addEventListener('mousemove', e => { if (!drag) return; const dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.hypot(dx, dy) > 3) drag.moved = true; if (drag.moved) { RCM.x = drag.ox + dx; RCM.y = drag.oy + dy; rcmView(); } });
+  addEventListener('mouseup', e => {
+    if (!drag) return; const d = drag; drag = null;
+    if (!d.moved && RCM.two) { const r = st.getBoundingClientRect(); rcmPick({ x: (e.clientX - r.left - RCM.x) / RCM.z, y: (e.clientY - r.top - RCM.y) / RCM.z }); }
+  });
+  addEventListener('resize', () => { if (RCM.open) rcmView(); });
+  document.addEventListener('keydown', e => {
+    if (!RCM.open) return;
+    if (e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); if (RCM.two) { RCM.two = null; st.classList.remove('pick'); rcmMsg(''); rcmPaint(); } else rcmClose(); }
+  }, true);
+}
+function rcmClose() { $('rcm-view').classList.add('hidden'); RCM.open = false; RCM.two = null; rcmMsg(''); }
+function rcmName() { return ('Comparacio_' + RCM.nA.split(' · ')[0].replace(/\.pdf$/i, '') + '_vs_' + RCM.nB.split(' · ')[0].replace(/\.pdf$/i, '')).replace(/[\\/:*?"<>|]+/g, '_'); }
+function rcmSavePng() {
+  if (!RCM.cls) return;
+  $('rcm-cv').toBlob(b => { const u = URL.createObjectURL(b), a = document.createElement('a'); a.href = u; a.download = rcmName() + '.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 30000); toast('Imatge de la comparació desada'); }, 'image/png');
+}
+async function rcmPdfBytes() {
+  const { PDFDocument, StandardFonts, rgb } = PDFLib;
+  const png = await new Promise(r => $('rcm-cv').toBlob(b => b.arrayBuffer().then(r), 'image/png'));
+  const out = await PDFDocument.create(), img = await out.embedPng(png), f = await out.embedFont(StandardFonts.Helvetica), fb = await out.embedFont(StandardFonts.HelveticaBold);
+  const w = RCM.W / RCM.s, h = RCM.H / RCM.s, band = Math.max(42, Math.min(w, h) * 0.05), pg = out.addPage([w, h + band]);
+  pg.drawImage(img, { x: 0, y: band, width: w, height: h });
+  const fs = band * 0.24, y1 = band * 0.6, y2 = band * 0.22, sq = fs * 0.9;
+  const T = t => t.replace(/[^\x20-\x7E -ÿ]/g, '?');
+  pg.drawText(T('Comparació de revisions · ' + new Date().toLocaleDateString('ca-ES')), { x: band * 0.3, y: y1, size: fs, font: fb, color: rgb(0.1, 0.1, 0.1) });
+  let x = band * 0.3;
+  [[[0.898, 0.282, 0.302], 'A (tret): ' + RCM.nA], [[0.243, 0.388, 0.867], 'B (afegit): ' + RCM.nB], [[0.6, 0.6, 0.6], 'Sense canvis']].forEach(([c, t]) => {
+    pg.drawRectangle({ x, y: y2, width: sq, height: sq, color: rgb(...c) }); x += sq * 1.5;
+    const tt = T(t); pg.drawText(tt, { x, y: y2, size: fs * 0.9, font: f, color: rgb(0.15, 0.15, 0.15) }); x += f.widthOfTextAtSize(tt, fs * 0.9) + sq * 2;
+  });
+  out.setTitle(T('Comparació: ' + RCM.nA + ' / ' + RCM.nB)); out.setProducer('Guaita PDF Edit');
+  return await out.save();
+}
+async function rcmSavePdf() {
+  if (!RCM.cls) return;
+  try {
+    const bytes = await rcmPdfBytes(), d = { name: rcmName() + '.pdf' };
+    const t = await saveTarget(d, true); if (!t) return;
+    await saveWrite(d, t, bytes); toast('Comparació desada com a PDF');
+  } catch (e) { toast('Error en desar: ' + e.message, true); }
+}
+async function rcmToDoc() {
+  if (!RCM.cls) return;
+  try { const bytes = await rcmPdfBytes(); rcmClose(); await loadPdfFile(new File([bytes], rcmName() + '.pdf', { type: 'application/pdf' })); }
+  catch (e) { toast('Error: ' + e.message, true); }
+}
+
 
 // ─── v8.2.0: mesures fixades (cota, polilínia, àrea, comptatge), escala per pàgina, panell i CSV ───
 const MS_COLS = ['#E5484D', '#3E63DD', '#30A46C', '#F76B15', '#8E4EC6', '#12A594', '#E93D82', '#B8860B'];
