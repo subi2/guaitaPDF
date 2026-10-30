@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.3.3** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.3.6** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -148,6 +148,27 @@ Two temporary in-memory lists for the pages you take out of documents (**Tools �
 4.  Save the result as a **PDF** (with a legend), as a **PNG**, or **Open it as a document**.
 
 > ⚠️ It is a pixel comparison: it detects drawing and text changes but does not understand objects (a text that only changes typeface also shows as a change). On very large drawings (A1, A0) the resolution drops by itself so memory does not run out.
+
+### Automatic drawing index
+
+**Pages › Automatic drawing index…** reads the code and title from each drawing's title block, without OCR (the text must be real PDF text).
+
+- Choose **Code** or **Title** and draw a rectangle over the title block of one page. The zone is remembered and used for all pages (positions are proportional to the page size).
+- **Extract** (all pages or a range such as “2-30, 35”) fills an editable table: you can fix codes and titles, or untick pages. Rows without text in the zone are shown in orange.
+- **Create bookmarks** replaces or appends bookmarks; **Bookmarks + index page…** also opens the index with links; **Save CSV** exports page, code and title.
+
+### Links between drawings
+
+**Pages › Links between drawings…** turns references in the text, such as “see A-201” or “p. 12”, into links. In View mode (single page), a click jumps to the drawing; they are underlined in blue on screen.
+
+- Codes come from the automatic index zones or from the first word of the bookmarks. You can require a keyword (“see”, “ref.”, “detail”…) or link any occurrence of the code on another drawing.
+- **Save the links inside the PDF**: when ticked, they become internal PDF links on saving; otherwise they only work in this viewer.
+- Rotated pages are not linked, and **Remove all** takes them all away.
+
+### Home tab and Close all
+
+- The **Home** tab, always on the left, shows the home screen even with documents open: open more, reopen those from the last session or switch document. A second click goes back.
+- **Close all**, always on the right, asks for confirmation; if any document has unsaved changes, a second warning appears (cancel, review them one by one or close without saving). The names stay under “Documents from the last session”, and the page tray and bin are kept.
 
 ### Zoom and real size
 

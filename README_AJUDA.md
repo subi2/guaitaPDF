@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 8.3.3** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.3.6** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -148,6 +148,27 @@ Dues llistes temporals en memòria per a les pàgines que treus dels documents (
 4.  Desa el resultat com a **PDF** (amb una llegenda), com a **PNG** o **Obre'l com a document**.
 
 > ⚠️ És una comparació de píxels: detecta canvis de dibuix i de text, però no entén els objectes (un text que només canvia de lletra també surt com a canvi). En plànols molt grans (A1, A0) la resolució baixa sola perquè no falti memòria.
+
+### Índex automàtic de plànols
+
+**Pàgines › Índex automàtic de plànols…** llegeix el codi i el títol del caixetí de cada plànol, sense OCR (el text ha de ser del PDF).
+
+- Tria **Codi** o **Títol** i dibuixa un rectangle sobre el caixetí d'una pàgina. La zona es recorda i serveix per a totes les pàgines (les posicions són proporcionals a la mida de la pàgina).
+- **Extreure** (totes les pàgines o un interval com «2-30, 35») omple una taula editable: pots corregir codis i títols, o desmarcar pàgines. Les files sense text a la zona surten en taronja.
+- **Crear marcadors** substitueix o afegeix marcadors; **Marcadors + pàgina d'índex…** a més obre l'índex amb enllaços; **Desar CSV** exporta pàgina, codi i títol.
+
+### Enllaços entre plànols
+
+**Pàgines › Enllaços entre plànols…** converteix en enllaços les referències del text, com «veure A-201» o «pàg. 12». Al mode Veure (pàgina única), un clic salta al plànol; es veuen subratllats en blau a la pantalla.
+
+- Els codis surten de les zones de l'índex automàtic o de la primera paraula dels marcadors. Pots exigir una paraula clau («veure», «vegeu», «see», «ref.»…) o enllaçar qualsevol aparició del codi en un altre plànol.
+- **Desar els enllaços dins del PDF**: si està marcat, es converteixen en enllaços interns del PDF en desar; si no, només funcionen en aquest visor.
+- No s'enllacen les pàgines girades, i es poden treure tots amb **Treure'ls tots**.
+
+### Pestanya Inici i Tancar-ho tot
+
+- La pestanya **Inici**, sempre a l'esquerra, mostra la pantalla d'inici encara que hi hagi documents oberts: obrir-ne més, reobrir els de l'última sessió o canviar de document. Un segon clic hi torna.
+- **Tancar-ho tot**, sempre a la dreta, demana confirmació; si algun document té canvis sense desar, surt un segon avís (cancel·lar, revisar-los un per un o tancar-los sense desar). Els noms queden a «Documents de l'última sessió», i la safata i la paperera de pàgines es conserven.
 
 ### Zoom i mida real
 
