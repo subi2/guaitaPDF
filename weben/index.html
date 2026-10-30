@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 8.3.4 — Multi-document PDF editor (Guaita Apps suite)
+  Guaita PDF Edit 8.3.5 — Multi-document PDF editor (Guaita Apps suite)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v8.3.4 (EN)</title>
+<title>Guaita PDF Edit v8.3.5 (EN)</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -740,6 +740,10 @@ body.mode-view #mbar-edit, body.mode-view #ctxbar, body.mode-edit #mbar-view { d
 .thumb-rib.on { display: block; }
 .thumb-pg.pcol canvas { outline: 3px solid var(--pc); outline-offset: -3px; }
 .thumb-pg.pcol::before { content: ''; position: absolute; left: -5px; top: 6px; bottom: 6px; width: 3px; background: var(--pc); border-radius: 2px; }
+/* v8.3.5: enllaços entre plànols */
+.xl-modal { width: min(520px, 94vw); }
+.xl-modal label.chk { display: flex; gap: 6px; align-items: center; margin: 6px 0; }
+#xl-info { font-size: 12px; color: var(--text-dim, #8a9370); min-height: 16px; margin-top: 6px; }
 /* v8.3.4: índex automàtic de plànols */
 .pli-modal { width: min(980px, 96vw); max-width: 96vw; max-height: 94vh; display: flex; flex-direction: column; }
 .pli-body { display: flex; gap: 14px; min-height: 0; flex: 1; overflow: hidden; }
@@ -2167,6 +2171,7 @@ body.th-dragging #bin-drops .bh { display: block; }
         <button class="mi" data-twin="btn-import" onclick="showImportModal()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M8.5 14h7M12.5 11l3 3-3 3"/></svg>From another PDF…</span></button>
         <button class="mi needs-doc" onclick="showIndexModal()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>Index from the bookmarks…</span></button>
         <button class="mi needs-doc" onclick="pliOpen()" disabled title="Reads the code and title from each drawing's title block and makes bookmarks, an index or a CSV"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h3"/><path d="M15 18l2 2 3-4"/></svg>Automatic drawing index…</span></button>
+        <button class="mi needs-doc" onclick="xlOpen()" disabled title="Turns references to other drawings (“see A-201”) or to pages (“p. 12”) into clickable links"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/></svg>Links between drawings…</span></button>
         <button class="mi needs-doc" onclick="rcmOpen()" disabled title="Overlays two versions of a page or drawing: removed content in red and added content in blue"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="11" height="14" rx="1"/><rect x="10" y="7" width="11" height="14" rx="1"/></svg>Compare revisions…</span></button>
         <button class="mi needs-doc" onclick="showSplitModal()" disabled title="Split the document into several files"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h9l4 4v5"/><path d="M5 3v18h8"/><path d="M16 15l3 3-3 3M13 18h6"/></svg>Split the document…</span></button>
         <div class="msep"></div>
@@ -2274,7 +2279,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <button id="mode-compose" onclick="setMode('compose')" title="Compose: merge documents and pages with a node tree (sources → Merge → Final document)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Compose</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v8.3.4</span>
+  <span class="tag">v8.3.5</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Switch to light theme"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2657,7 +2662,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.3.4</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.3.5</small></div>
           <div id="wl-inst" class="hidden"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg><div class="wi-t"><b>Install Guaita PDF Edit as an app</b><span>Its own window, works offline and opens PDFs from your file manager.</span></div><button class="btn primary" onclick="pwaInstall()">Install</button><button class="wi-x" onclick="wlInstHide()" title="Hide this notice" aria-label="Hide this notice">×</button></div>
           <h1>PDF editor <em>local</em>, no cloud.</h1>
           <p>Open one or more PDFs or drag them onto the window. Everything is processed on this computer: no file leaves the browser.</p>
@@ -2974,7 +2979,7 @@ body.th-dragging #bin-drops .bh { display: block; }
   <span id="st-worker" class="hidden" title="This environment does not allow pdf.js workers (embedded viewer or browser restrictions). PDFs are processed on the main thread: everything works the same, but large documents are slower. Opened directly in Chrome or Edge from disk, this does not normally happen.">pdf.js · main thread</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 8.3.4 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 8.3.5 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -3489,6 +3494,22 @@ body.th-dragging #bin-drops .bh { display: block; }
       </div>
     </div>
     <div class="mactions"><button class="btn" onclick="closeModal('modal-pli')">Close</button><button class="btn" onclick="pliCsv()">Save CSV</button><button class="btn" onclick="pliMarkers(false)">Create bookmarks</button><button class="btn primary" onclick="pliMarkers(true)">Bookmarks + index page…</button></div>
+  </div>
+</div>
+<div class="modal-bg hidden" id="modal-xl">
+  <div class="modal xl-modal">
+    <h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/></svg>Links between drawings</h2>
+    <p class="cert-note" style="margin:0 0 8px">Turns references to other drawings in the text (“see A-201”) into clickable links. In View mode, a click jumps to that drawing.</p>
+    <label>Drawing codes</label>
+    <select id="xl-src"><option value="zones">Read with the automatic drawing index zones</option><option value="bm">First word of the bookmarks</option></select>
+    <label>Which references</label>
+    <select id="xl-kw"><option value="kw">Only those preceded by “see”, “ref.”, “detail”…</option><option value="all">Any occurrence of the code on another drawing</option></select>
+    <label class="chk"><input type="checkbox" id="xl-pg"> Also “p. N” / “page N” (page 1 is the first one)</label>
+    <label>Pages</label>
+    <select id="xl-scope"><option value="all">Whole document</option><option value="cur">Current page only</option></select>
+    <label class="chk"><input type="checkbox" id="xl-save" checked> Save the links inside the PDF (if not, they only show and work here)</label>
+    <div id="xl-info"></div>
+    <div class="mactions"><button class="btn" onclick="closeModal('modal-xl')">Close</button><button class="btn" onclick="xlRemove()">Remove all</button><button class="btn primary" onclick="xlRun()">Create the links</button></div>
   </div>
 </div>
 <div class="modal-bg hidden" id="modal-applyto">
@@ -10303,7 +10324,7 @@ const HELP = {
 <h3>If the option does not appear</h3>
 <p>You need to open the app's web address (https), not the file from disk. Desktop Firefox and Safari do not install PWAs; on iPhone Safari: <b>Share › Add to Home Screen</b>.</p>`],
   about: ['About Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 8.3.4</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 8.3.5</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -14690,7 +14711,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 8.3.4 · pdf-lib';
+  const prod = 'Guaita PDF Edit 8.3.5 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -14729,7 +14750,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'XMP metadata'); del(cat, 'PieceInfo', 'private application data');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.3.4') })); rep.cleaned.push('document information'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.3.5') })); rep.cleaned.push('document information'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'thumbnails'));
@@ -14879,7 +14900,7 @@ const rvInkDash = S => [9 * S, 0.7 * S, 14 * S, 0.5 * S, 5 * S, 0.9 * S, 11 * S,
 function linksWrite(out, pagesList, outPages, rots, pidRef) {
   const { PDFName, PDFArray, PDFNumber, PDFNull } = PDFLib, ctx = out.context;
   pagesList.forEach((pd, i) => {
-    const L = (pd.annotations || []).filter(a => (a.type === 'link' && (a.target || a.url)) || (a.type === 'image' && a.url)), pg = outPages[i]; if (!L.length || !pg) return;
+    const L = (pd.annotations || []).filter(a => (a.type === 'link' && !a.noSave && (a.target || a.url)) || (a.type === 'image' && a.url)), pg = outPages[i]; if (!L.length || !pg) return;
     const g = pageGeom(pg, rots[i] || 0);
     let A = pg.node.lookup(PDFName.of('Annots')); if (!(A instanceof PDFArray)) { A = ctx.obj([]); pg.node.set(PDFName.of('Annots'), A); }
     L.forEach(a => {
@@ -17094,6 +17115,9 @@ function ntInit772(s) {
       if (a.url) {
         const x = Math.min(a.x1, a.x2), y = Math.min(a.y1, a.y2), w = Math.abs(a.x2 - a.x1), h = Math.abs(a.y2 - a.y1), S = RENDER_SCALE;
         ctx.save(); ctx.fillStyle = 'rgba(47,95,230,.10)'; ctx.fillRect(x, y, w, h); ctx.strokeStyle = '#2F5FE6'; ctx.lineWidth = 1.2 * S; ctx.setLineDash([5 * S, 3 * S]); ctx.strokeRect(x, y, w, h); ctx.restore();
+      } else if (a.role === 'xlink' && ctx.canvas && (ctx.canvas.id === 'annot-canvas' || ctx.canvas.id === 'annot-sharp')) {
+        const x = Math.min(a.x1, a.x2), w = Math.abs(a.x2 - a.x1), y = Math.max(a.y1, a.y2), S = RENDER_SCALE;
+        ctx.save(); ctx.strokeStyle = 'rgba(47,95,230,.85)'; ctx.lineWidth = 1 * S; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + w, y); ctx.stroke(); ctx.restore();
       }
       return;
     }
@@ -19776,7 +19800,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 8.3.4 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 8.3.5 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadata:', e); }
 }
@@ -20001,6 +20025,67 @@ window.addEventListener('load', () => setTimeout(rzCheck, 1500));
 window.addEventListener('resize', () => { zoomLblSet(); rzCheck(); });
 
 
+
+// ─── v8.3.5: enllaços entre plànols (referències «veure A-201» / «pàg. N» → enllaços interns)
+function xlOpen() {
+  const doc = getActiveDoc(); if (!doc) return;
+  $('xl-src').value = PLI.Z.code ? 'zones' : 'bm'; xlInfo(); openModal('modal-xl');
+}
+function xlCount(doc) { let n = 0; doc.pages.forEach(p => (p.annotations || []).forEach(a => { if (a.role === 'xlink') n++; })); return n; }
+function xlInfo() { const doc = getActiveDoc(); if (!doc) return; const n = xlCount(doc); $('xl-info').textContent = n ? 'There are now ' + n + ' links of this kind in the document.' : ''; }
+async function xlCodes(doc, src) {
+  fixPids(doc); const out = [], seen = new Set();
+  if (src === 'zones') {
+    if (!PLI.Z.code) return null;
+    for (let i = 0; i < doc.pages.length; i++) {
+      const pd = doc.pages[i]; if (pd.type !== 'pdf') continue;
+      try { const pg = await getPdfPage(pd), vp = pg.getViewport({ scale: 1, rotation: pd.rotation }), tc = await pg.getTextContent(), c = pliTxt(tc, vp, PLI.Z.code); if (c && !seen.has(c.toLowerCase())) { seen.add(c.toLowerCase()); out.push({ code: c, pid: pd.pid }); } } catch (e) { }
+    }
+  } else {
+    bmFlatIdx(doc, 99).forEach(e => { if (e.idx < 0) return; const m = e.title.match(/^[\p{L}\p{N}][\p{L}\p{N}._\/-]*/u); if (m && !seen.has(m[0].toLowerCase())) { seen.add(m[0].toLowerCase()); out.push({ code: m[0], pid: e.pid }); } });
+  }
+  return out;
+}
+async function xlRun() {
+  const doc = getActiveDoc(); if (!doc) return;
+  const codes = await xlCodes(doc, $('xl-src').value);
+  if (codes === null) { toast('First define the zones with “Automatic drawing index…” or choose the bookmarks', true, 6000); return; }
+  const usePg = $('xl-pg').checked;
+  if (!codes.length && !usePg) { toast('No drawing code found', true); return; }
+  const kwOnly = $('xl-kw').value === 'kw', save = $('xl-save').checked, cur = $('xl-scope').value === 'cur';
+  const byCode = new Map(codes.map(c => [c.code.toLowerCase(), c.pid])), esc = c => c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = codes.length ? new RegExp('(?<![\\p{L}\\p{N}_-])(' + codes.map(c => c.code).sort((a, b) => b.length - a.length).map(esc).join('|') + ')(?![\\p{L}\\p{N}_]|-[\\p{L}\\p{N}])', 'giu') : null;
+  const kwRe = /(veure|vegeu|vegeu-ne|veieu|see|ref\.?|referència|ref[eè]rence|detall|detail|secci[oó]|section|plànol|plano|drawing|dwg\.?|pl\.)\s*[:.\-–]?\s*(?:n[úu]m\.?|no\.?|nº)?\s*$/i;
+  const pgRe = /(?:p[àa]g(?:ina|ines)?\.?|p\.)\s*(\d{1,4})\b/gi;
+  fixPids(doc); saveHistory();
+  const S = RENDER_SCALE; let n = 0, skipRot = 0; const hit = new Set();
+  const idxs = cur ? [doc.curIdx] : doc.pages.map((_, i) => i);
+  doc.pages.forEach(p => { p.annotations = (p.annotations || []).filter(a => a.role !== 'xlink' || (cur && p !== doc.pages[doc.curIdx])); });
+  for (let n2 = 0; n2 < idxs.length; n2++) {
+    const i = idxs[n2], pd = doc.pages[i]; if (pd.type !== 'pdf') continue;
+    if (pd.rotation) { skipRot++; continue; }
+    $('xl-info').textContent = 'Reading… ' + (n2 + 1) + ' / ' + idxs.length;
+    if (n2 % 5 === 0) await new Promise(r => setTimeout(r, 0));
+    let wd; try { wd = await cpWordsCalc(await getPdfPage(pd)); } catch (e) { continue; }
+    pd.annotations = pd.annotations || [];
+    const add = (l, a, b, pid) => {
+      const x0 = l.x + l.w * a / l.s.length, x1 = l.x + l.w * b / l.s.length;
+      pd.annotations.push({ type: 'link', role: 'xlink', target: pid, noSave: !save, x1: x0 * S, y1: (l.y - l.h * 0.85) * S, x2: x1 * S, y2: (l.y + l.h * 0.2) * S }); n++; hit.add(pid);
+    };
+    wd.L.forEach(l => {
+      if (re) { re.lastIndex = 0; let m; while ((m = re.exec(l.s))) { const pid = byCode.get(m[1].toLowerCase()); if (!pid || pid === pd.pid) continue; if (kwOnly && !kwRe.test(l.s.slice(0, m.index))) continue; add(l, m.index, m.index + m[0].length, pid); } }
+      if (usePg) { pgRe.lastIndex = 0; let m; while ((m = pgRe.exec(l.s))) { const t = doc.pages[+m[1] - 1]; if (!t || t === pd) continue; add(l, m.index, m.index + m[0].length, pidOf(t)); } }
+    });
+  }
+  xlInfo(); await goTo(doc.curIdx);
+  toast(n ? n + ' links created to ' + hit.size + ' drawings' + (save ? ' · they will be saved in the PDF' : ' · only visible here') + (skipRot ? ' · ' + skipRot + ' rotated pages were skipped' : '') : 'No reference found' + (kwOnly ? ' (try “Any occurrence of the code”)' : ''), !n, 6000);
+}
+function xlRemove() {
+  const doc = getActiveDoc(); if (!doc) return; const n = xlCount(doc); if (!n) { toast('There are no links of this kind'); return; }
+  saveHistory(); doc.pages.forEach(p => { p.annotations = (p.annotations || []).filter(a => a.role !== 'xlink'); });
+  xlInfo(); goTo(doc.curIdx); toast(n + ' links removed');
+}
+
 // ─── v8.3.4: índex automàtic de plànols (zones de codi i títol → marcadors, índex o CSV)
 const PLI = { Z: { code: null, title: null }, rows: [], pg: 0, mode: 'code', vp: null };
 try { const z = JSON.parse(localStorage.getItem('guaita-plizones') || 'null'); if (z && typeof z === 'object') PLI.Z = { code: z.code || null, title: z.title || null }; } catch (e) { }
@@ -20092,7 +20177,7 @@ async function pliExtract() {
       try { const pg = await getPdfPage(pd), vp = pg.getViewport({ scale: 1, rotation: pd.rotation }), tc = await pg.getTextContent(); r.code = pliTxt(tc, vp, PLI.Z.code); r.title = pliTxt(tc, vp, PLI.Z.title); } catch (e) { }
     }
     rows.push(r);
-    if (n % 5 === 0) { $('pli-st').textContent = 'Llegint… ' + (n + 1) + ' / ' + idx.length; await new Promise(r => setTimeout(r, 0)); }
+    if (n % 5 === 0) { $('pli-st').textContent = 'Reading… ' + (n + 1) + ' / ' + idx.length; await new Promise(r => setTimeout(r, 0)); }
   }
   PLI.rows = rows; pliTable();
   const nE = rows.filter(r => !r.code && !r.title).length;
