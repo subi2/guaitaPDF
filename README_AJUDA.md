@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 8.5.0** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.6.0** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -189,6 +189,14 @@ El botó de la taula (o **AEC › Taula de revisions…**) mostra cada revisió 
 ### Segells d'estat personalitzats
 
 Al selector de segells, **Personalitzat…** demana un text i el desa a la llista (fins a 20, amb el color triat) perquè el tinguis sempre a mà, fins i tot en tornar a obrir l'aplicació. El segell porta la teva signatura de revisor i la data. «Esborra els personalitzats» buida la llista.
+
+### Estats de capes
+
+Al tauler **Capes** (o a **AEC › Estats de capes…**) hi ha un selector d'estats. Posa les capes com vulguis (per exemple només «Estructura»), prem **Desa…** i dona-li un nom. Quan trïis l'estat, es tornen a aplicar a un clic les capes visibles i amagades. Els estats es recorden en aquest navegador, per nom de fitxer; la **×** elimina l'estat triat. Si desa o imprimeixes després d'aplicar un estat, el PDF porta aquella visibilitat.
+
+### Vista dividida sincronitzada
+
+**AEC › Vista dividida sincronitzada…** obre dos plànols costat a costat (la pàgina actual i la següent, o un altre document obert) dins el visor de comparació. El zoom (`Ctrl`+roda) i el desplaçament són comuns, de manera que veus la mateixa zona dels dos. A cada costat pots triar el document i escriure el número de pàgina; amb «Pàgines sincronitzades» les fletxes avancen les dues alhora. És una vista per consultar: no es poden editar anotacions des d'aquí.
 
 ### Zoom i mida real
 

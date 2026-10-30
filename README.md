@@ -2,7 +2,7 @@
 <p align="center"><img src="guaitaPDF_social_preview.png" alt="Guaita PDF Edit · SBS BIM Consulting" width="100%"></p>
 
 <p align="center">
-<img src="https://img.shields.io/badge/versi%C3%B3-8.5.0-C6FF00?style=for-the-badge&labelColor=0b0d07" alt="8.5.0">
+<img src="https://img.shields.io/badge/versi%C3%B3-8.6.0-C6FF00?style=for-the-badge&labelColor=0b0d07" alt="8.6.0">
 <img src="https://img.shields.io/badge/llic%C3%A8ncia-AGPL--3.0--only-FF2ECC?style=for-the-badge&labelColor=0b0d07" alt="AGPL-3.0-only">
 <img src="https://img.shields.io/badge/offline-0%20CDN-00E5FF?style=for-the-badge&labelColor=0b0d07" alt="offline">
 <img src="https://img.shields.io/badge/PWA-instal%C2%B7lable-FFE500?style=for-the-badge&labelColor=0b0d07" alt="PWA">
@@ -49,6 +49,7 @@
 | 💾 **Desar i sessió** | Desar i Desar com… (Ctrl+S, Ctrl+Maj+S), reordenar pestanyes arrossegant i reobrir els documents de l'última sessió |
 | 📐 **Plànols** | Índex automàtic de plànols (codi i títol del caixetí → marcadors, índex o CSV) i enllaços «veure A-201» entre plànols |
 | 🏠 **Inici i Tancar-ho tot** | Pestanya Inici sempre a mà i botó per tancar tots els documents amb avís |
+| 🗂 **Estats de capes i vista dividida** | Estats de capes amb nom que s'apliquen d'un clic; dos plànols costat a costat amb zoom i desplaçament lligats |
 | △ **Núvols numerats i revisions** | Núvols de revisió amb número (△n), taula de revisions inserible a la pàgina i segells d'estat personalitzats que es recorden |
 | 🧰 **Menú AEC i Edita** | Menú AEC amb totes les eines de plànols i enginyeria; Copia, Retalla i Enganxa a Edita |
 | 🔎 **Zoom i mida real** | Zoom numèric editable, 100 % nominal i **Mida real** calibrada amb un full A4 (el paper a mida física a la pantalla) |
@@ -120,6 +121,7 @@ La navegació de marcadors va a la pàgina (no a la posició exacta); «Insereix
 | 💾 **Save and session** | Save and Save as… (Ctrl+S, Ctrl+Shift+S), reorder tabs by dragging and reopen the documents from the last session |
 | 📐 **Drawings** | Automatic drawing index (title-block code and title → bookmarks, index or CSV) and “see A-201” links between drawings |
 | 🏠 **Home and Close all** | An always-available Home tab and a button to close all documents with a warning |
+| 🗂 **Layer states and split view** | Named layer states applied in one click; two drawings side by side with linked zoom and panning |
 | △ **Numbered clouds and revisions** | Revision clouds with a number (△n), a revision table you can insert on the page and custom status stamps that are remembered |
 | 🧰 **AEC menu and Edit** | An AEC menu with all the drawing and engineering tools; Copy, Cut and Paste in Edit |
 | 🔎 **Zoom and real size** | Editable numeric zoom, nominal 100 % and a **Real size** zoom calibrated with an A4 sheet (the paper at physical size on screen) |

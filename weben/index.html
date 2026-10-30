@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 8.5.0 — Multi-document PDF editor (Guaita Apps suite)
+  Guaita PDF Edit 8.6.0 — Multi-document PDF editor (Guaita Apps suite)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v8.5.0 (EN)</title>
+<title>Guaita PDF Edit v8.6.0 (EN)</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -1363,7 +1363,7 @@ body.mode-compose #status-bar .sgrp, body.mode-compose #st-info { display: none;
 #lb-chip b { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 11px; background: #D6FB41; color: #171B21; font: 700 11.5px 'IBM Plex Mono', monospace; display: flex; align-items: center; justify-content: center; }
 #lb-chip .lbc-h { color: var(--text-dim2); overflow: hidden; text-overflow: ellipsis; }
 body.lb-dragging #lb-chip { opacity: .35; }
-/* v8.5.0: durant l'arrossegament la graella es fa translúcida i les zones queden per sobre; sobre una zona la pàgina es fa icona */
+/* v8.6.0: durant l'arrossegament la graella es fa translúcida i les zones queden per sobre; sobre una zona la pàgina es fa icona */
 body.lb-dragging #viewer-container .lb-grid .lb-box:not(.lb-ph) { opacity: .4; transition: opacity .15s; }
 body.lb-dragging #viewer-container #lb-park, body.lb-dragging #viewer-container #lb-bin { z-index: 700; background: var(--bg-panel); box-shadow: 0 6px 22px rgba(0,0,0,.5); }
 body.lb-dragging #viewer-container #lb-park.on { background: #F5A524; }
@@ -1848,6 +1848,7 @@ body.mode-scan #rv-panel { display: none !important; }
 #cmp .cp-bar, #cmp-cv, #cmp-stat { grid-area: auto; }
 #cmp .cp-bar { flex-wrap: nowrap; overflow-x: auto; }
 #cmp select { height: 30px; max-width: 200px; }
+#cmp input[type=number] { width: 58px; height: 30px; }
 .cmp-l { font: 700 11px 'IBM Plex Mono', monospace; padding: 2px 7px; border-radius: 4px; background: rgba(220,40,40,.2); color: #FF7070; }
 .cmp-l.b { background: rgba(20,160,70,.2); color: #4FD484; }
 .cmp-pg { font-size: 11px; color: var(--text-mut); min-width: 44px; text-align: center; }
@@ -2287,6 +2288,10 @@ body.th-dragging #bin-drops .bh { display: block; }
         <button class="mi needs-doc" onclick="rvRevOpen()" disabled><span>Revision table…</span></button>
         <button class="mi needs-doc" onclick="aecReview('stamp')" disabled><span>Status stamp</span></button>
         <div class="msep"></div>
+        <div class="mhead">Layers and views</div>
+        <button class="mi needs-doc" onclick="aecLayers()" disabled><span>Layer states…</span></button>
+        <button class="mi needs-doc" onclick="splitOpen()" disabled><span>Synchronised split view…</span></button>
+        <div class="msep"></div>
         <div class="mhead">Drawing sets</div>
         <button class="mi needs-doc" onclick="pliOpen()" disabled><span>Automatic drawing index…</span></button>
         <button class="mi needs-doc" onclick="xlOpen()" disabled><span>Links between drawings…</span></button>
@@ -2346,7 +2351,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <button id="mode-compose" onclick="setMode('compose')" title="Compose: merge documents and pages with a node tree (sources → Merge → Final document)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Compose</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v8.5.0</span>
+  <span class="tag">v8.6.0</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Switch to light theme"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2691,6 +2696,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     </div>
     <div id="oc-panel" class="side-panel" style="display:none">
       <div class="sp-bar"><button class="btn" onclick="ocAll(true)" title="Show all layers" aria-label="Show all layers"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>All</button><button class="btn" onclick="ocAll(false)" title="Hide all layers" aria-label="Hide all layers"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0112 5c6 0 10 7 10 7a17 17 0 01-3.2 3.9M6.6 6.6A17 17 0 002 12s4 7 10 7a9.6 9.6 0 004.4-1"/><path d="M9.9 9.9a3 3 0 004.2 4.2"/></svg>None</button><span class="spacer"></span><span class="mono sp-tot" id="oc-tot"></span></div>
+      <div class="sp-bar" id="oc-st"><select id="oc-st-sel" title="Saved layer states: choosing one applies it" aria-label="Layer states"></select><button class="btn" onclick="ocStSave()" title="Save the current layer visibility as a named state">Save…</button><button class="btn ib" onclick="ocStDel()" title="Delete the chosen state" aria-label="Delete the chosen state">×</button></div>
       <div id="oc-list"></div>
       <div class="sp-empty" id="oc-empty">This PDF has no layers (optional content).</div>
       <p class="sp-note">Visibility applies to the view, to printing and to the saved PDF, as the initial state of the layers.</p>
@@ -2731,7 +2737,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.5.0</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.6.0</small></div>
           <div id="wl-inst" class="hidden"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg><div class="wi-t"><b>Install Guaita PDF Edit as an app</b><span>Its own window, works offline and opens PDFs from your file manager.</span></div><button class="btn primary" onclick="pwaInstall()">Install</button><button class="wi-x" onclick="wlInstHide()" title="Hide this notice" aria-label="Hide this notice">×</button></div>
           <h1>PDF editor <em>local</em>, no cloud.</h1>
           <p>Open one or more PDFs or drag them onto the window. Everything is processed on this computer: no file leaves the browser.</p>
@@ -3006,8 +3012,8 @@ body.th-dragging #bin-drops .bh { display: block; }
 <div id="cmp" class="hidden" role="dialog" aria-label="Compare versions">
   <div class="cp-bar">
     <span class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>compare</small></span>
-    <span class="cmp-l">A</span><select id="cmp-a"></select><span class="mono cmp-pg" id="cmp-pa"></span>
-    <span class="cmp-l b">B</span><select id="cmp-b"></select><button class="btn ib" onclick="CMPS.bi=Math.max(0,CMPS.bi-1);cmpRun()" title="Previous page of B" aria-label="Previous page of B"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="mono cmp-pg" id="cmp-pb"></span><button class="btn ib" onclick="CMPS.bi++;cmpRun()" title="Next page of B" aria-label="Next page of B"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+    <span class="cmp-l">A</span><select id="cmp-a"></select><input type="number" id="cmp-ia" min="1" title="Page of A" aria-label="Page of A"><span class="mono cmp-pg" id="cmp-pa"></span>
+    <span class="cmp-l b">B</span><select id="cmp-b"></select><input type="number" id="cmp-ib" min="1" title="Page of B" aria-label="Page of B"><button class="btn ib" onclick="CMPS.bi=Math.max(0,CMPS.bi-1);cmpRun()" title="Previous page of B" aria-label="Previous page of B"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="mono cmp-pg" id="cmp-pb"></span><button class="btn ib" onclick="CMPS.bi++;cmpRun()" title="Next page of B" aria-label="Next page of B"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
     <label class="chk"><input type="checkbox" id="cmp-sync" checked> Synchronised pages</label>
     <span class="vrule"></span>
     <button class="btn ib" onclick="cmpStep(-1)" title="Previous page (←)" aria-label="Previous page (←)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button class="btn ib" onclick="cmpStep(1)" title="Next page (→)" aria-label="Next page (→)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
@@ -3052,7 +3058,7 @@ body.th-dragging #bin-drops .bh { display: block; }
   <span id="st-worker" class="hidden" title="This environment does not allow pdf.js workers (embedded viewer or browser restrictions). PDFs are processed on the main thread: everything works the same, but large documents are slower. Opened directly in Chrome or Edge from disk, this does not normally happen.">pdf.js · main thread</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 8.5.0 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 8.6.0 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -8020,7 +8026,7 @@ function binUiSync() {
   $('bin-drops').classList.toggle('hidden', !binOn);
   $('thumb-list').classList.toggle('bin-on', binOn);
   const k = $('mi-bin') && $('mi-bin').querySelector('.mk'); if (k) k.textContent = binOn ? '✔' : '';
-  const k2 = $('mi-bin2') && $('mi-bin2').querySelector('.mk'); if (k2) k2.textContent = binOn ? '✔' : '';   // v8.5.0§
+  const k2 = $('mi-bin2') && $('mi-bin2').querySelector('.mk'); if (k2) k2.textContent = binOn ? '✔' : '';   // v8.6.0§
   lbChip(); updateTabsUI();
 }
 function binSetOn(v) {
@@ -10432,7 +10438,7 @@ const HELP = {
 <h3>If the option does not appear</h3>
 <p>You need to open the app's web address (https), not the file from disk. Desktop Firefox and Safari do not install PWAs; on iPhone Safari: <b>Share › Add to Home Screen</b>.</p>`],
   about: ['About Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 8.5.0</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 8.6.0</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -11808,7 +11814,7 @@ function lbHover() {
     const hot = D.cx >= r.left && D.cx <= r.right && D.cy >= r.top && D.cy <= r.bottom;
     el.classList.toggle('on', hot); if (hot) D.hot = k;
   }
-  D.gh.style.transformOrigin = D.gx + 'px ' + D.gy + 'px'; D.gh.classList.toggle('mini', !!D.hot);   // v8.5.0
+  D.gh.style.transformOrigin = D.gx + 'px ' + D.gy + 'px'; D.gh.classList.toggle('mini', !!D.hot);   // v8.6.0
   if (D.hot) return;   // mentre hi som a sobre, no es recalcula la posició d'inserció
   const pos = lbPosAt(D.cx, D.cy); if (pos === D.pos) return;
   D.pos = pos;
@@ -14822,7 +14828,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 8.5.0 · pdf-lib';
+  const prod = 'Guaita PDF Edit 8.6.0 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -14861,7 +14867,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'XMP metadata'); del(cat, 'PieceInfo', 'private application data');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.5.0') })); rep.cleaned.push('document information'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.6.0') })); rep.cleaned.push('document information'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'thumbnails'));
@@ -19820,6 +19826,7 @@ async function ocRender() {
   $('oc-count').textContent = G.size ? G.size : '';
   $('oc-empty').classList.toggle('hidden', G.size > 0);
   $('oc-tot').textContent = G.size ? (G.size - [...G.keys()].filter(n => doc.ocOff.has(n)).length) + ' / ' + G.size : '';
+  ocStFill();
   for (const name of G.keys()) {
     const on = !doc.ocOff.has(name);
     const r = document.createElement('div'); r.className = 'oc-row' + (on ? '' : ' off');
@@ -19829,6 +19836,35 @@ async function ocRender() {
     box.appendChild(r);
   }
 }
+// ── v8.6.0: estats de capes desats («Estructura», «Instal·lacions»…)
+function ocStAll() { try { return JSON.parse(localStorage.getItem('guaita-ocstates') || '{}') || {}; } catch (e) { return {}; } }
+function ocStList(doc) { const a = ocStAll()[doc.name]; return Array.isArray(a) ? a : []; }
+function ocStStore(doc, list) { try { const o = ocStAll(); if (list.length) o[doc.name] = list; else delete o[doc.name]; localStorage.setItem('guaita-ocstates', JSON.stringify(o)); } catch (e) { toast('Could not save the state in this browser', true); } }
+function ocStFill(pick) {
+  const doc = getActiveDoc(), s = $('oc-st-sel'); if (!s) return; s.textContent = '';
+  const o0 = document.createElement('option'); o0.value = ''; o0.textContent = 'Layer states…'; s.appendChild(o0);
+  (doc ? ocStList(doc) : []).forEach((st, i) => { const o = document.createElement('option'); o.value = String(i); o.textContent = st.name; s.appendChild(o); });
+  s.value = pick !== undefined ? String(pick) : '';
+}
+async function ocStSave(name) {
+  const doc = getActiveDoc(); if (!doc) return;
+  const G = await ocGroups(doc); if (!G.size) { toast('This PDF has no layers', true); return; }
+  if (typeof name !== 'string') { name = prompt('Layer state name (e.g. «Structure»):', ''); if (!name || !name.trim()) return; }
+  name = name.trim().slice(0, 40);
+  const off = [...G.keys()].filter(n => doc.ocOff.has(n)), L = ocStList(doc).filter(x => x.name !== name); L.push({ name, off });
+  ocStStore(doc, L); ocStFill(L.length - 1); toast('State «' + name + '» saved: ' + (G.size - off.length) + ' layers visible out of ' + G.size);
+}
+async function ocStApply(i) {
+  const doc = getActiveDoc(); if (!doc) return; const st = ocStList(doc)[i]; if (!st) return;
+  const G = await ocGroups(doc); doc.ocOff = new Set(st.off.filter(n => G.has(n)));
+  await ocRender(); ocStFill(i); await ocRefresh(); toast('State «' + st.name + '» applied');
+}
+function ocStDel() {
+  const doc = getActiveDoc(), s = $('oc-st-sel'); if (!doc || !s || s.value === '') { toast('Choose the state you want to delete first', true); return; }
+  const L = ocStList(doc), st = L[+s.value]; if (!st) return; L.splice(+s.value, 1); ocStStore(doc, L); ocStFill(); toast('State «' + st.name + '» deleted');
+}
+function aecLayers() { if (!getActiveDoc()) return; bmSetTab('oc'); }
+$('oc-st-sel').addEventListener('change', e => { if (e.target.value !== '') ocStApply(+e.target.value); });
 async function ocSet(names, on) {
   const doc = getActiveDoc(); if (!doc) return;
   doc.ocOff = doc.ocOff || new Set();
@@ -19911,7 +19947,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 8.5.0 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 8.6.0 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadata:', e); }
 }
@@ -20139,7 +20175,7 @@ window.addEventListener('resize', () => { zoomLblSet(); rzCheck(); });
 
 
 
-// ─── v8.5.0: menú Edita (copiar, retallar, enganxar) i menú AEC
+// ─── v8.6.0: menú Edita (copiar, retallar, enganxar) i menú AEC
 function menuCopy() {
   if (typeof tlSelText === 'function' && tlSelText()) { tlCopy(); return; }
   if (annCopy(false)) return;
@@ -21114,7 +21150,7 @@ function rvCloudPath(ctx, pts, r) {
   }
   ctx.closePath();
 }
-// ── v8.5.0: núvols de revisió numerats (△n) i taula de revisions
+// ── v8.6.0: núvols de revisió numerats (△n) i taula de revisions
 function rvRevs(doc) { doc = doc || getActiveDoc(); if (!doc) return []; return doc.revs || (doc.revs = []); }
 function rvRevSync() {
   const s = $('rv-rev'); if (!s) return; const d = getActiveDoc(), L = d ? rvRevs(d) : [];
@@ -21336,7 +21372,7 @@ async function rvDown(e) {
     if (a) rvDrag = { kind: 'move', a, p0: p, last: p, moved: false };
     return;
   }
-  if (rvTool === 'revtable') {   // v8.5.0
+  if (rvTool === 'revtable') {   // v8.6.0
     const lines = ['REVISIONS'].concat(rvRevLines(doc)), S = RENDER_SCALE;
     rvAdd({ sub: 'free', x1: p.x, y1: p.y, x2: p.x + 240 * S, y2: p.y + (lines.length * 12 + 10) * S, color: '#171B21', w: 1.5, fs: 10, text: lines.join('\n') });
     rvSetTool('select'); return;
@@ -21407,7 +21443,7 @@ async function rvUp() {
 }
 function rvPolyEnd() {
   const P = rvPoly; rvPoly = null; if (!P || P.pts.length < 3) { rvDrawSel(); return; }
-  const dd = getActiveDoc(), rv = P.sub === 'cloud' && dd && dd.revCur ? { rev: dd.revCur } : {};   // v8.5.0
+  const dd = getActiveDoc(), rv = P.sub === 'cloud' && dd && dd.revCur ? { rev: dd.revCur } : {};   // v8.6.0
   rvAdd({ sub: P.sub, pts: P.pts, color: P.color, w: 1.5, ...rv });
 }
 function rvEsc() { if (rvPoly) { rvPoly = null; rvDrawSel(); return true; } if (rvSel) { rvSel = null; rvRender(); rvDrawSel(); return true; } return false; }
@@ -21648,13 +21684,16 @@ async function rvCircuitApply() {
 
 // ── comparar versions
 const CMPS = { a: null, b: null, ai: 0, bi: 0, mode: 'diff', op: 0.5, sync: true, z: 1, x: 0, y: 0 };
-function cmpOpen() {
+function cmpOpen(mode) {
   if (!getActiveDoc()) return;
+  if (typeof mode === 'string') CMPS.mode = mode;
   CMPS.a = activeDocId; CMPS.b = (docs.find(d => d.id !== activeDocId) || getActiveDoc()).id; CMPS.ai = getActiveDoc().curIdx; CMPS.bi = Math.min(CMPS.ai, (docs.find(d => d.id === CMPS.b).pages.length - 1));
+  if (CMPS.b === CMPS.a) CMPS.bi = Math.min(CMPS.ai + 1, getActiveDoc().pages.length - 1);   // v8.6.0: dos plànols del mateix document
   const opts = docs.map(d => `<option value="${d.id}">${cpEsc(d.name)}</option>`).join('');
   $('cmp-a').innerHTML = opts; $('cmp-b').innerHTML = opts; $('cmp-a').value = CMPS.a; $('cmp-b').value = CMPS.b;
   $('cmp').classList.remove('hidden'); document.body.classList.add('cmp-on'); cmpRun();
 }
+function splitOpen() { cmpOpen('side'); }   // v8.6.0: vista dividida sincronitzada
 function cmpClose() { $('cmp').classList.add('hidden'); document.body.classList.remove('cmp-on'); }
 function cmpStep(d) {
   const A = docs.find(x => x.id === CMPS.a), Bd = docs.find(x => x.id === CMPS.b); if (!A || !Bd) return;
@@ -21666,6 +21705,7 @@ let cmpTok = 0;
 async function cmpRun() {
   const A = docs.find(x => x.id === CMPS.a), Bd = docs.find(x => x.id === CMPS.b); if (!A || !Bd) return;
   CMPS.ai = Math.min(CMPS.ai, A.pages.length - 1); CMPS.bi = Math.min(CMPS.bi, Bd.pages.length - 1);
+  $('cmp-ia').max = A.pages.length; $('cmp-ia').value = CMPS.ai + 1; $('cmp-ib').max = Bd.pages.length; $('cmp-ib').value = CMPS.bi + 1;
   $('cmp-pa').textContent = (CMPS.ai + 1) + ' / ' + A.pages.length; $('cmp-pb').textContent = (CMPS.bi + 1) + ' / ' + Bd.pages.length;
   document.querySelectorAll('#cmp [data-cm]').forEach(b => b.classList.toggle('on', b.dataset.cm === CMPS.mode));
   $('cmp-op').closest('label').classList.toggle('hidden', CMPS.mode !== 'over');
@@ -21723,6 +21763,8 @@ function cmpApply() { $('cmp-host').style.transform = `translate(${CMPS.x}px,${C
   $('cmp-b').onchange = e => { CMPS.b = e.target.value; CMPS.bi = 0; cmpRun(); };
   $('cmp-op').oninput = e => { CMPS.op = e.target.value / 100; cmpRun(); };
   $('cmp-sync').onchange = e => { CMPS.sync = e.target.checked; };
+  $('cmp-ia').onchange = e => { CMPS.ai = Math.max(0, (+e.target.value || 1) - 1); cmpRun(); };
+  $('cmp-ib').onchange = e => { CMPS.bi = Math.max(0, (+e.target.value || 1) - 1); cmpRun(); };
   document.addEventListener('keydown', e => {
     if ($('cmp').classList.contains('hidden') || ['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) return;
     if (e.key === 'Escape') { e.stopImmediatePropagation(); cmpClose(); }
@@ -21747,7 +21789,7 @@ $('rv-author').value = rvAuthor;
 $('rv-author').addEventListener('change', e => { rvAuthor = e.target.value.trim().slice(0, 80); try { localStorage.setItem('guaita-author', rvAuthor); } catch (er) {} });
 ['rv-f-page', 'rv-f-status', 'rv-f-author', 'rv-f-kind'].forEach(id => $(id).addEventListener('change', () => { rvFilter.page = $('rv-f-page').value; rvFilter.status = $('rv-f-status').value; rvRender(); }));
 let RV_CUST = []; try { RV_CUST = JSON.parse(localStorage.getItem('guaita-stamps') || '[]').filter(x => Array.isArray(x) && typeof x[0] === 'string').slice(0, 20); } catch (e) { }
-function rvStampFill(sel) {   // v8.5.0: els segells personalitzats es recorden
+function rvStampFill(sel) {   // v8.6.0: els segells personalitzats es recorden
   const s = $('rv-stamp'), v = sel || s.value; s.textContent = '';
   const add = (val, txt) => { const o = document.createElement('option'); o.value = val; o.textContent = txt; s.appendChild(o); };
   RV_STAMPS.concat(RV_CUST).forEach(x => add(x[0], x[0])); add('__custom', 'Personalitzat…'); if (RV_CUST.length) add('__clear', 'Delete custom stamps');
@@ -21868,7 +21910,7 @@ async function rvWrite(out, outPage, list, rot, font, fontB) {
             }
           }
           ops += 'S Q ';
-          if (a.rev) {   // v8.5.0: triangle numerat
+          if (a.rev) {   // v8.6.0: triangle numerat
             const vx = Math.min(...a.pts.map(q => q.x)), vy = Math.min(...a.pts.map(q => q.y)), sv = 24 * S;
             const T1 = P(vx, vy - sv * 1.15), T2 = P(vx - sv * 0.6, vy - sv * 0.15), T3 = P(vx + sv * 0.6, vy - sv * 0.15), TC = P(vx, vy - sv * 0.47);
             ops += `q ${cs} RG 1 1 1 rg 1.2 w ${f2(T1.x)} ${f2(T1.y)} m ${f2(T2.x)} ${f2(T2.y)} l ${f2(T3.x)} ${f2(T3.y)} l h B Q ` + txtOps([String(a.rev)], TC.x, TC.y, 10, fntB, true, col);

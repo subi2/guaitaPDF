@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.5.0** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.6.0** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -189,6 +189,14 @@ The table button (or **AEC › Revision table…**) lists each revision with its
 ### Custom status stamps
 
 In the stamp selector, **Custom…** asks for a text and saves it in the list (up to 20, with the chosen colour) so you always have it at hand, even after reopening the app. The stamp carries your reviewer name and the date. «Delete custom stamps» empties the list.
+
+### Layer states
+
+The **Layers** panel (or **AEC › Layer states…**) has a state selector. Set the layers as you like (for example only «Structure»), press **Save…** and name it. Choosing the state later re-applies the visible and hidden layers in one click. States are remembered in this browser, by file name; the **×** deletes the chosen state. If you save or print after applying a state, the PDF carries that visibility.
+
+### Synchronised split view
+
+**AEC › Synchronised split view…** opens two drawings side by side (the current page and the next one, or another open document) in the comparison viewer. Zoom (`Ctrl`+wheel) and panning are shared, so you see the same area of both. On each side you can choose the document and type the page number; with «Synchronised pages» the arrows move both at once. It is a viewing aid: annotations cannot be edited from here.
 
 ### Zoom and real size
 
