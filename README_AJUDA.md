@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 8.7.2** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.9.0** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -201,6 +201,18 @@ El tauler **Revisar** té dos filtres nous, que apareixen quan el document té r
 Els nodes **Filtrar**, **Ordenar per**, **Agrupar** i **Valor** tenen propietats noves: *Revisió* (la més alta de la pàgina), *Revisions*, *Núvols de revisió* i *Segells*; per exemple, filtra «Segells conté APROVAT» o ordena per revisió. Les capçaleres i els peus accepten els camps `[revisió]`, `[revisions]` i `[segell]`.
 
 El node **Capes** té el mode *Estat de capes desat…* per aplicar un estat pel seu nom. El node **Segell** pot afegir el nom del revisor i, amb *Desar com a segell editable*, deixa el segell com a anotació real del PDF (no com a imatge), de manera que continua sent editable i es recorda al tauler Revisar.
+
+### Cercar i substituir
+
+**Ctrl**+**F** (o el botó de cercar) obre la cerca. Escriu el text i prem Intro. Les opcions són *Majúscules*, *Accents* (per defecte la cerca els ignora), *Paraula sencera* i *Expressió regular*. La cerca troba el text encara que estigui partit en diversos fragments de la mateixa línia.
+
+A **Cercar a** tries on mirar: *text del PDF*, *text afegit* per tu, *notes de pàgina*, *revisions* (comentaris, respostes, llegendes, noms de segells i de camps de signatura), *comentaris del PDF* original (només lectura) i *marcadors i metadades*. L'àmbit és el document actiu, tots els oberts o les pàgines seleccionades. Cada resultat porta l'origen; es pot filtrar per origen, anar-hi (obre el mode que toca) i exportar la llista a CSV.
+
+Amb **Substituir…** apareix el camp del text nou i una casella a cada resultat. **Substituir marcades** ho aplica amb un sol pas de Desfer per document. Amb expressions regulars, `$1`, `$2`… tornen els grups i `$&amp;` la coincidència. Per defecte es canvien el text afegit, les notes, les revisions i els marcadors; el **text del PDF** s'hi inclou amb una casella pròpia perquè és el canvi amb més risc: usa el motor d'✎ Contingut, només treballa amb fragments editables, combina lletres de la font si en falten, i omet (i t'ho diu) els fragments que no es poden editar, els que quedarien buits o aquells en què la font de reemplaçament no té una lletra. Les coincidències que creuen fragments, el text dibuixat com a traçats i les imatges escanejades no es poden substituir.
+
+### Node «Cercar i substituir» (Composar)
+
+Aplica una llista de regles (una per línia, `cerca =&gt; substitueix`, o amb tabulador o punt i coma, de manera que es poden enganxar des d'Excel) a les pàgines que hi passen: text del PDF, text afegit, notes i revisions i, a tot el document final, marcadors i metadades (aquestes últimes només si hi ha un node Metadades que n'escrigui). Admet les mateixes opcions que la cerca. Combinat amb un node de lot, ho fa per a cada document. El node mostra quantes substitucions ha fet i quantes ha omès.
 
 ### Estats de capes
 

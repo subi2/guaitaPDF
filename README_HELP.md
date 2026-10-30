@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.7.2** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.9.0** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -201,6 +201,18 @@ The **Review** panel has two new filters, shown when the document has revisions 
 The **Filter**, **Sort by**, **Group** and **Value** nodes have new properties: *Revision* (the highest on the page), *Revisions*, *Revision clouds* and *Stamps*; for example, filter «Stamps contains APPROVED» or sort by revision. Headers and footers accept the fields `[revision]`, `[revisions]` and `[stamp]`.
 
 The **Layers** node has a *Saved layer state…* mode that applies a state by name. The **Stamp** node can add the reviewer name and, with *Save as editable stamp*, leaves the stamp as a real PDF annotation (not an image), so it stays editable and is remembered in the Review panel.
+
+### Find and replace
+
+**Ctrl**+**F** (or the search button) opens the search. Type the text and press Enter. The options are *Match case*, *Match accents* (ignored by default), *Whole word* and *Regular expression*. The search finds text even when it is split across several fragments on the same line.
+
+Under **Search in** you choose where to look: *PDF text*, *added text*, *page notes*, *reviews* (comments, replies, callouts, stamp names and signature-field names), the original *PDF comments* (read-only) and *bookmarks and metadata*. The scope is the active document, all open ones or the selected pages. Each result carries its source; you can filter by source, jump to it (it opens the right mode) and export the list to CSV.
+
+**Replace…** shows the new-text field and a checkbox on every result. **Replace checked** applies them with a single Undo step per document. With regular expressions, `$1`, `$2`… return the groups and `$&amp;` the match. By default added text, notes, reviews and bookmarks are changed; **PDF text** has its own checkbox because it is the riskiest change: it uses the ✎ Content engine, only works on editable fragments, combines letters from the font when some are missing, and skips (and tells you about) fragments that cannot be edited, that would end up empty, or where the replacement font lacks a letter. Matches that span fragments, text drawn as outlines and scanned images cannot be replaced.
+
+### «Find and replace» node (Compose)
+
+Applies a list of rules (one per line, `find =&gt; replace`, or separated by a tab or semicolon so you can paste them from Excel) to the pages passing through it: PDF text, added text, notes and reviews and, across the whole final document, bookmarks and metadata (the latter only when a Metadata node writes some). It supports the same options as the search. Combined with a batch node it runs for every document. The node shows how many replacements it made and how many it skipped.
 
 ### Layer states
 
