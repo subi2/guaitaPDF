@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 8.8.0 — Editor de PDF multidocument (suite Guaita Apps)
+  Guaita PDF Edit 8.8.1 — Editor de PDF multidocument (suite Guaita Apps)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   Aquest programa és programari lliure: el podeu redistribuir i/o modificar sota els termes de la
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v8.8.0</title>
+<title>Guaita PDF Edit v8.8.1</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -1368,7 +1368,7 @@ body.mode-compose #status-bar .sgrp, body.mode-compose #st-info { display: none;
 #lb-chip b { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 11px; background: #D6FB41; color: #171B21; font: 700 11.5px 'IBM Plex Mono', monospace; display: flex; align-items: center; justify-content: center; }
 #lb-chip .lbc-h { color: var(--text-dim2); overflow: hidden; text-overflow: ellipsis; }
 body.lb-dragging #lb-chip { opacity: .35; }
-/* v8.8.0: durant l'arrossegament la graella es fa translúcida i les zones queden per sobre; sobre una zona la pàgina es fa icona */
+/* v8.8.1: durant l'arrossegament la graella es fa translúcida i les zones queden per sobre; sobre una zona la pàgina es fa icona */
 body.lb-dragging #viewer-container .lb-grid .lb-box:not(.lb-ph) { opacity: .4; transition: opacity .15s; }
 body.lb-dragging #viewer-container #lb-park, body.lb-dragging #viewer-container #lb-bin { z-index: 700; background: var(--bg-panel); box-shadow: 0 6px 22px rgba(0,0,0,.5); }
 body.lb-dragging #viewer-container #lb-park.on { background: #F5A524; }
@@ -2359,7 +2359,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <button id="mode-compose" onclick="setMode('compose')" title="Composar: fusionar documents i pàgines amb un arbre de nodes (fonts → Fusionar → Document final)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Composar</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v8.8.0</span>
+  <span class="tag">v8.8.1</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Canviar a tema clar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2745,7 +2745,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.8.0</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.8.1</small></div>
           <div id="wl-inst" class="hidden"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg><div class="wi-t"><b>Instal·la Guaita PDF Edit com a aplicació</b><span>Finestra pròpia, funciona sense connexió i obre els PDF des de l'Explorador de fitxers.</span></div><button class="btn primary" onclick="pwaInstall()">Instal·lar</button><button class="wi-x" onclick="wlInstHide()" title="Amagar aquest avís" aria-label="Amagar aquest avís">×</button></div>
           <h1>Editor de PDF <em>local</em>, sense núvol.</h1>
           <p>Obre un o diversos PDF o arrossega'ls a la finestra. Tot es processa en aquest ordinador: cap fitxer surt del navegador.</p>
@@ -3068,7 +3068,7 @@ body.th-dragging #bin-drops .bh { display: block; }
   <span id="st-worker" class="hidden" title="Aquest entorn no permet els «workers» de pdf.js (visor incrustat o restriccions del navegador). Els PDF es processen al fil principal: tot funciona igual, però els documents grans van més lents. Obert directament a Chrome o Edge des del disc normalment no passa.">pdf.js · fil principal</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 8.8.0 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 8.8.1 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -3486,9 +3486,15 @@ body.th-dragging #bin-drops .bh { display: block; }
     <div class="sr-opts"><b>Àmbit</b>
       <select id="sr-scope"><option value="doc">Document actiu</option><option value="all">Tots els oberts</option><option value="sel">Pàgines seleccionades</option></select>
     </div>
-    <div id="search-summary"><span id="sr-sum"></span><span class="spacer" style="flex:1"></span><select id="sr-filt" class="hidden" onchange="srRender()"></select></div>
+    <div class="sr-opts hidden" id="sr-reprow"><b>Substituir per</b>
+      <input type="text" id="sr-rep" placeholder="Text nou (buit = eliminar)" style="flex:1;min-width:200px">
+      <label class="chk" title="Canvia el text original del PDF amb el motor d'✎ Contingut. Només els fragments editables; les coincidències que creuen fragments no es poden substituir."><input type="checkbox" id="sr-reppdf" onchange="if($('search-query').value.trim())runSearch()"> Incloure el text del PDF</label>
+    </div>
+    <div id="search-summary"><span id="sr-sum"></span><label class="chk hidden" id="sr-alll"><input type="checkbox" id="sr-all" checked onchange="srAll(this.checked)"> Totes</label><span class="spacer" style="flex:1"></span><select id="sr-filt" class="hidden" onchange="srRender()"></select></div>
     <div id="search-results"></div>
     <div class="mactions">
+      <button class="btn" id="sr-repbtn" onclick="srToggleRep()">Substituir…</button>
+      <button class="btn primary hidden" id="sr-repgo" onclick="srReplace()" disabled>Substituir marcades</button>
       <button class="btn" id="sr-csv" onclick="srCsv()" disabled>Exportar CSV</button>
       <button class="btn" onclick="closeModal('modal-search')">Tancar</button>
     </div>
@@ -4813,7 +4819,7 @@ async function readPageColors(pdfJs) {   // el color de pàgina viatja a l'entra
   try { const md = await pdfJs.getMetadata(), s = md && md.info && md.info.Custom && md.info.Custom.GuaitaPageColors; String(s || '').split(';').forEach(t => { const [i, c] = t.split('='); if (/^\d+$/.test(i) && /^#[0-9a-f]{6}$/i.test(c || '')) m[+i - 1] = c; }); } catch (e) { }
   return m;
 }
-// v8.8.0 — marques que es recorden: núvols numerats i segells viatgen a l'entrada d'informació (GuaitaMarks / GuaitaRevisions)
+// v8.8.1 — marques que es recorden: núvols numerats i segells viatgen a l'entrada d'informació (GuaitaMarks / GuaitaRevisions)
 function gmPush(outPage, it) { it.r = (it.r || []).map(v => Math.round(v * 10) / 10); (outPage._gm || (outPage._gm = [])).push(it); }
 function gmWrite(out, pagesList, outPagesL, revs) {
   const I = out.getInfoDict(), M = [];
@@ -8078,7 +8084,7 @@ function binUiSync() {
   $('bin-drops').classList.toggle('hidden', !binOn);
   $('thumb-list').classList.toggle('bin-on', binOn);
   const k = $('mi-bin') && $('mi-bin').querySelector('.mk'); if (k) k.textContent = binOn ? '✔' : '';
-  const k2 = $('mi-bin2') && $('mi-bin2').querySelector('.mk'); if (k2) k2.textContent = binOn ? '✔' : '';   // v8.8.0§
+  const k2 = $('mi-bin2') && $('mi-bin2').querySelector('.mk'); if (k2) k2.textContent = binOn ? '✔' : '';   // v8.8.1§
   lbChip(); updateTabsUI();
 }
 function binSetOn(v) {
@@ -10504,7 +10510,7 @@ const HELP = {
 <h3>Si no apareix l'opció</h3>
 <p>Cal obrir l'adreça web (https) de l'aplicació, no el fitxer des del disc. Firefox i Safari d'escriptori no instal·len PWA; a Safari de l'iPhone: <b>Comparteix › Afegeix a la pantalla d'inici</b>.</p>`],
   about: ['Quant a Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 8.8.0</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 8.8.1</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -10868,8 +10874,8 @@ function exportPagePng() {
 // ─── Text search ──────────────────────────────────────────
 const escHtml = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-// ─── v8.8.0: cerca unificada (PDF, text afegit, notes, revisions, comentaris originals, marcadors i metadades)
-const SR = { res: [], tok: 0, shown: 0 };
+// ─── v8.8.1: cerca unificada (PDF, text afegit, notes, revisions, comentaris originals, marcadors i metadades)
+const SR = { res: [], tok: 0, shown: 0, rep: false, cross: 0 };
 const SR_SRC = { pdf: 'PDF', added: 'Text afegit', notes: 'Nota de pàgina', rev: 'Revisió', orig: 'Comentari original', bm: 'Marcador', meta: 'Metadada' };
 const srLinesC = new WeakMap();
 function srOptLoad() {
@@ -10899,7 +10905,7 @@ function srFind(str, re, o) {   // → [{s, e}] en índexs del text original (el
   while ((m = re.exec(t)) && out.length < 500) {
     if (!m[0].length) { re.lastIndex++; continue; }
     const s0 = o.acc ? m.index : map[m.index], e0 = o.acc ? m.index + m[0].length : map[m.index + m[0].length - 1] + 1;
-    out.push({ s: s0, e: e0 });
+    out.push({ s: s0, e: e0, x: m.slice() });
   }
   return out;
 }
@@ -10934,6 +10940,7 @@ function srRects(line, m) {
 }
 function srPush(r, str, m, base) {
   const f = Math.max(0, m.s - 30);
+  r.raw = str.slice(m.s, m.e); r.chk = true;
   Object.assign(r, { pre: (f > 0 ? '…' : '') + str.slice(f, m.s).replace(/\s+/g, ' '), hit: str.slice(m.s, m.e).replace(/\s+/g, ' '), post: str.slice(m.e, m.e + 40).replace(/\s+/g, ' '), m });
   SR.res.push(Object.assign(r, base || {}));
 }
@@ -10948,7 +10955,7 @@ async function runSearch() {
   if (!q.trim()) { res.innerHTML = ''; $('sr-sum').textContent = ''; $('sr-filt').classList.add('hidden'); $('sr-csv').disabled = true; SR.res = []; return; }
   const o = srOpts(); let re;
   try { re = srRegex(q, o); } catch (e) { $('sr-sum').textContent = 'Expressió regular no vàlida'; return; }
-  const tok = ++SR.tok; SR.res = [];
+  const tok = ++SR.tok; SR.res = []; SR.cross = 0;
   const act = getActiveDoc(), L = o.scope === 'all' ? docs.slice() : [act];
   $('sr-sum').textContent = 'Cercant…'; res.innerHTML = '';
   for (const doc of L) {
@@ -10957,21 +10964,34 @@ async function runSearch() {
       if (tok !== SR.tok) return;
       if (sel && !sel.has(i)) continue;
       const pd = doc.pages[i];
-      if (o.src.pdf && pd.type === 'pdf') {
+      if (o.src.pdf && pd.type === 'pdf' && SR.rep && $('sr-reppdf').checked) {
+        if (i % 4 === 0) { $('sr-sum').textContent = 'Cercant… ' + doc.name + ' · p. ' + (i + 1) + ' / ' + doc.pages.length; await new Promise(r => setTimeout(r, 0)); }
+        let nRun = 0;
+        try {
+          const an = await analyzeSource(pd);
+          for (const run of an.runs) {
+            const ed = (pd.edits || []).find(x => x.type === 'text' && x.id === run.id), txt = ed ? ed.text : run.text;
+            const xs = run.quad.map(q => q.x), ys = run.quad.map(q => q.y), bx0 = Math.min(...xs), bx1 = Math.max(...xs), by0 = Math.min(...ys), by1 = Math.max(...ys);
+            for (const m of srFind(txt, re, o)) { nRun++; const L = Math.max(1, txt.length); srPush({ src: 'pdf', doc, page: i, run, ed, tgt: 'run', rects: [{ x0: bx0 + (bx1 - bx0) * m.s / L, x1: bx0 + (bx1 - bx0) * m.e / L, y0: by0, y1: by1 }] }, txt, m); }
+          }
+        } catch (e) { }
+        let nLine = 0; for (const ln of await srPageLines(pd)) nLine += srFind(ln.text, re, o).length;
+        SR.cross += Math.max(0, nLine - nRun);
+      } else if (o.src.pdf && pd.type === 'pdf') {
         if (i % 8 === 0) { $('sr-sum').textContent = 'Cercant… ' + doc.name + ' · p. ' + (i + 1) + ' / ' + doc.pages.length; await new Promise(r => setTimeout(r, 0)); }
         for (const ln of await srPageLines(pd)) for (const m of srFind(ln.text, re, o)) srPush({ src: 'pdf', doc, page: i, rects: srRects(ln, m) }, ln.text, m);
       }
-      if (o.src.added) (pd.annotations || []).forEach(a => { if (a.type === 'text' && !a.role) srFind(a.text, re, o).forEach(m => srPush({ src: 'added', doc, page: i, a }, a.text, m)); });
-      if (o.src.notes && pd.notes) srFind(pd.notes, re, o).forEach(m => srPush({ src: 'notes', doc, page: i }, pd.notes, m));
+      if (o.src.added) (pd.annotations || []).forEach(a => { if (a.type === 'text' && !a.role) srFind(a.text, re, o).forEach(m => srPush({ src: 'added', doc, page: i, a, tgt: 'f', obj: a, key: 'text' }, a.text, m)); });
+      if (o.src.notes && pd.notes) srFind(pd.notes, re, o).forEach(m => srPush({ src: 'notes', doc, page: i, tgt: 'f', obj: pd, key: 'notes' }, pd.notes, m));
       if (o.src.rev) (pd.annotations || []).forEach(a => {
         if (a.type !== 'rv') return;
-        [a.text, a.quoted, a.sub === 'stamp' ? a.label : '', a.sub === 'sigfield' ? a.name : ''].concat((a.replies || []).map(r => r.text)).forEach(t => { if (t) srFind(t, re, o).forEach(m => srPush({ src: 'rev', doc, page: i, a }, t, m)); });
+        [['text', a.text], ['quoted', a.quoted], ['label', a.sub === 'stamp' ? a.label : ''], ['name', a.sub === 'sigfield' ? a.name : '']].concat((a.replies || []).map((r, k) => ['r' + k, r.text])).forEach(([key, t]) => { if (t) srFind(t, re, o).forEach(m => srPush({ src: 'rev', doc, page: i, a, tgt: key === 'quoted' ? null : 'f', obj: a, key }, t, m)); });
       });
     }
     if (tok !== SR.tok) return;
     if (o.src.orig) { try { for (const g of await rvOriginals(doc)) { if (sel && !sel.has(g.page)) continue; [g.text].concat((g.replies || []).map(r => r.text)).forEach(t => { if (t) srFind(t, re, o).forEach(m => srPush({ src: 'orig', doc, page: g.page, o: g }, t, m)); }); } } catch (e) { } }
     if (o.src.bm && o.scope !== 'sel') {
-      bmFlat(doc.outline || []).forEach(n => { if (n.title) srFind(n.title, re, o).forEach(m => srPush({ src: 'bm', doc, page: bmPageIdx(doc, n), n }, n.title, m)); });
+      bmFlat(doc.outline || []).forEach(n => { if (n.title) srFind(n.title, re, o).forEach(m => srPush({ src: 'bm', doc, page: bmPageIdx(doc, n), n, tgt: 'f', obj: n, key: 'title' }, n.title, m)); });
       const M = doc.meta || {}; [['title', 'Títol'], ['author', 'Autor'], ['subject', 'Assumpte'], ['keywords', 'Paraules clau']].forEach(([k, l]) => { if (M[k]) srFind(M[k], re, o).forEach(m => srPush({ src: 'meta', doc, page: -1, key: l }, M[k], m)); });
     }
   }
@@ -10988,12 +11008,15 @@ function srRender() {
   const pgs = new Set(vis.map(([r]) => r.doc.id + ':' + r.page)).size;
   $('sr-sum').textContent = vis.length ? vis.length + (vis.length === 1 ? ' coincidència' : ' coincidències') + ' en ' + pgs + (pgs === 1 ? ' pàgina' : ' pàgines') : '';
   $('sr-csv').disabled = !SR.res.length;
+  if (SR.rep && SR.cross) $('sr-sum').textContent += ($('sr-sum').textContent ? ' · ' : '') + SR.cross + ' creuen fragments del PDF i no es poden substituir';
+  srCount();
   if (!vis.length) { res.innerHTML = '<div style="color:#e74c3c;font-size:12px;padding:6px">Cap coincidència trobada</div>'; return; }
   const multi = new Set(vis.map(([r]) => r.doc.id)).size > 1;
   let h = '', lastDoc = null;
   vis.slice(0, 400).forEach(([r, i]) => {
     if (multi && r.doc !== lastDoc) { h += '<div class="sr-doc">' + escHtml(r.doc.name) + '</div>'; lastDoc = r.doc; }
-    h += `<div class="sr-item" onclick="gotoResult(${i})"><span class="sr-pg">${r.page >= 0 ? 'Pàg. ' + (r.page + 1) : '—'}</span><span class="sr-tag">${SR_SRC[r.src]}${r.key ? ' · ' + escHtml(r.key) : ''}</span>${escHtml(r.pre)}<mark>${escHtml(r.hit)}</mark>${escHtml(r.post)}</div>`;
+    const can = SR.rep && !!r.tgt;
+    h += `<div class="sr-item" onclick="gotoResult(${i})">${can ? `<input type="checkbox" data-i="${i}" ${r.chk ? 'checked' : ''} onclick="event.stopPropagation();SR.res[${i}].chk=this.checked;srCount()" style="margin-right:6px">` : ''}<span class="sr-pg">${r.page >= 0 ? 'Pàg. ' + (r.page + 1) : '—'}</span><span class="sr-tag">${SR_SRC[r.src]}${r.key ? ' · ' + escHtml(r.key) : ''}</span>${escHtml(r.pre)}<mark>${escHtml(r.hit)}</mark>${escHtml(r.post)}</div>`;
   });
   if (vis.length > 400) h += '<div style="font-size:11px;color:var(--text-muted);padding:6px">Es mostren les 400 primeres; afina la cerca o exporta-ho a CSV.</div>';
   res.innerHTML = h;
@@ -11020,6 +11043,67 @@ async function gotoResult(i) {
   if (r.src === 'notes') { pnToggle(true); setTimeout(() => { const ta = $('pn-text'); try { ta.focus(); ta.setSelectionRange(r.m.s, r.m.e); } catch (e) { } }, 80); return; }
   if (r.src === 'rev' && r.a) { rvSel = r.a.id; await rvRender(true); try { rvDrawSel(); } catch (e) { } }
   await srHilite(r);
+}
+function srCount() {
+  const n = SR.res.filter(r => SR.rep && r.tgt && r.chk).length;
+  $('sr-repgo').disabled = !n; $('sr-repgo').textContent = 'Substituir marcades' + (n ? ' (' + n + ')' : '');
+}
+function srAll(v) { const F = $('sr-filt').value; SR.res.forEach(r => { if (r.tgt && (F === 'all' || r.src === F)) r.chk = v; }); srRender(); }
+function srToggleRep() {
+  SR.rep = $('sr-reprow').classList.contains('hidden');
+  ['sr-reprow', 'sr-repgo', 'sr-alll'].forEach(id => $(id).classList.toggle('hidden', !SR.rep));
+  $('sr-repbtn').textContent = SR.rep ? 'Només cercar' : 'Substituir…';
+  if (SR.rep) setTimeout(() => $('sr-rep').focus(), 30);
+  if ($('search-query').value.trim()) runSearch(); else srCount();
+}
+const srGet = (r) => r.key && r.key[0] === 'r' && /^r\d+$/.test(r.key) ? ((r.obj.replies || [])[+r.key.slice(1)] || {}).text : r.obj[r.key];
+async function srReplace() {
+  const o = srOpts(), rep = $('sr-rep').value, sel = SR.res.filter(r => r.tgt && r.chk);
+  if (!sel.length) return;
+  const exp = (r) => o.re ? rep.replace(/\$(\d+|&|\$)/g, (t, k) => k === '$' ? '$' : k === '&' ? r.raw : (r.m.x[+k] == null ? '' : r.m.x[+k])) : rep;
+  const docsSel = [...new Set(sel.map(r => r.doc))];
+  if (!confirm('Substituir ' + sel.length + ' coincidència(es) per «' + rep + '»' + (docsSel.length > 1 ? ' en ' + docsSel.length + ' documents' : '') + '?\nEs pot desfer amb Desfer (un pas per document).')) return;
+  let done = 0; const skips = [];
+  for (const doc of docsSel) {
+    if (doc !== getActiveDoc()) await switchDoc(doc.id);
+    saveHistory();
+    const mine = sel.filter(r => r.doc === doc), touched = new Set();
+    // — text pla (afegit, notes, revisions, marcadors)
+    const byT = new Map();
+    mine.filter(r => r.tgt === 'f').forEach(r => { const k = r.obj, kk = r.key; if (!byT.has(k)) byT.set(k, new Map()); const M = byT.get(k); if (!M.has(kk)) M.set(kk, []); M.get(kk).push(r); });
+    byT.forEach((M, obj) => M.forEach((L, key) => {
+      let str = srGet(L[0]); if (str == null) return;
+      L.sort((a, b) => b.m.s - a.m.s).forEach(r => { if (str.slice(r.m.s, r.m.e) !== r.raw) { skips.push('«' + r.raw + '»: el text ha canviat des de la cerca'); return; } str = str.slice(0, r.m.s) + exp(r) + str.slice(r.m.e); done++; });
+      const r0 = L[0];
+      if (/^r\d+$/.test(key)) { const k = +key.slice(1); obj.replies = obj.replies.map((x, j) => j === k ? { ...x, text: str } : x); }
+      else obj[key] = str;
+      touched.add(r0.src);
+    }));
+    // — text del PDF (fragments editables)
+    const byRun = new Map();
+    mine.filter(r => r.tgt === 'run').forEach(r => { const k = r.run; if (!byRun.has(k)) byRun.set(k, []); byRun.get(k).push(r); });
+    byRun.forEach((L, run) => {
+      const pd = doc.pages[L[0].page], ed = (pd.edits || []).find(x => x.type === 'text' && x.id === run.id); let t = ed ? ed.text : run.text;
+      L.sort((a, b) => b.m.s - a.m.s).forEach(r => { t = t.slice(0, r.m.s) + exp(r) + t.slice(r.m.e); });
+      if (!t) { skips.push('p. ' + (L[0].page + 1) + ' «' + run.text + '»: el fragment quedaria buit'); return; }
+      if (!run.ok) { skips.push('p. ' + (L[0].page + 1) + ' «' + run.text + '»: ' + run.reason); return; }
+      const missing = [...new Set([...t].filter(ch => GE.encodeWith(run.font, ch) === null))], name = etDefaultFont(run.font && run.font.base).slice(4), spec = { kind: 'std', name };
+      if (missing.some(ch => !fontSupports(spec, ch))) { skips.push('p. ' + (L[0].page + 1) + ' «' + run.text + '»: la font no té ' + missing.filter(ch => !fontSupports(spec, ch)).join(' ')); return; }
+      const others = (pd.edits || []).filter(x => !(x.type === 'text' && x.id === run.id));
+      pd.edits = t === run.text ? others : [...others, { type: 'text', id: run.id, path: run.path, orig: run.text, text: t, mode: missing.length ? 'complete' : 'orig', fontSpec: spec }];
+      done += L.length; touched.add('pdf');
+    });
+    if (touched.has('added')) redrawAnnotations();
+    if (touched.has('rev')) { redrawAnnotations(); rvRender(); }
+    if (touched.has('notes')) pnSync(true);
+    if (touched.has('bm')) { try { bmRender(); } catch (e) { } }
+    if (touched.has('pdf')) { editKey = ''; await refreshAfterEdit(); }
+    updateTabsUI();
+  }
+  SR.res = []; $('sr-repgo').disabled = true; $('sr-csv').disabled = true; $('sr-filt').classList.add('hidden');
+  $('sr-sum').textContent = done + (done === 1 ? ' coincidència substituïda' : ' coincidències substituïdes') + (skips.length ? ' · ' + skips.length + ' omeses' : '');
+  $('search-results').innerHTML = skips.length ? '<div class="sr-doc">' + 'Omeses' + '</div>' + skips.slice(0, 100).map(t => '<div class="sr-item" style="cursor:default">' + escHtml(t) + '</div>').join('') : '<div style="font-size:12px;color:var(--text-muted);padding:6px">Fet. Amb Desfer ho pots revertir.</div>';
+  toast(done + ' coincidència(es) substituïda(es)' + (skips.length ? ' · ' + skips.length + ' omeses' : ''), skips.length > 0 && !done);
 }
 function srCsv() {
   if (!SR.res.length) return;
@@ -11974,7 +12058,7 @@ function lbHover() {
     const hot = D.cx >= r.left && D.cx <= r.right && D.cy >= r.top && D.cy <= r.bottom;
     el.classList.toggle('on', hot); if (hot) D.hot = k;
   }
-  D.gh.style.transformOrigin = D.gx + 'px ' + D.gy + 'px'; D.gh.classList.toggle('mini', !!D.hot);   // v8.8.0
+  D.gh.style.transformOrigin = D.gx + 'px ' + D.gy + 'px'; D.gh.classList.toggle('mini', !!D.hot);   // v8.8.1
   if (D.hot) return;   // mentre hi som a sobre, no es recalcula la posició d'inserció
   const pos = lbPosAt(D.cx, D.cy); if (pos === D.pos) return;
   D.pos = pos;
@@ -13685,7 +13769,7 @@ function cpBmOf(doc) {
   for (let p = 0; p < doc.pages.length; p++) { let best = null, best1 = null; flat.forEach(f => { if (f.i <= p) { if (!best || f.i >= best.i) best = f; if (f.t1 && (!best1 || f.i >= best1.i)) best1 = f; } }); bm[p] = best ? best.t : ''; bm1[p] = best ? best.t1 : (best1 ? best1.t1 : ''); }
   r = { bm, bm1 }; cpBmMemo.set(doc, r); return r;
 }
-function cpMarksOf(pd) {   // v8.8.0: núvols numerats i segells d'una pàgina (marques de la sessió + les recordades al PDF)
+function cpMarksOf(pd) {   // v8.8.1: núvols numerats i segells d'una pàgina (marques de la sessió + les recordades al PDF)
   const rv = new Set(), st = []; let cl = 0;
   (pd.annotations || []).forEach(a => { if (a.type !== 'rv') return; if (a.sub === 'cloud') { cl++; if (a.rev) rv.add(a.rev); } else if (a.sub === 'stamp' && a.label && !st.includes(a.label)) st.push(a.label); });
   (pd.gm || []).forEach(g => { if (g.k === 'c') { cl++; if (g.rv) rv.add(g.rv); } else if (g.k === 's' && g.l && !st.includes(g.l)) st.push(g.l); });
@@ -14997,7 +15081,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 8.8.0 · pdf-lib';
+  const prod = 'Guaita PDF Edit 8.8.1 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -15036,7 +15120,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'metadades XMP'); del(cat, 'PieceInfo', 'dades privades d\'aplicacions');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.8.0') })); rep.cleaned.push('informació del document'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.8.1') })); rep.cleaned.push('informació del document'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'miniatures'));
@@ -15631,7 +15715,7 @@ function cpEdAnns(it, info) {
     } else if (d.t === 'estamp') {
       const t = F(p.text) || 'APROVAT', col = p.col || '#1E9E4A';
       if (p.mode === 'wm') { out.push({ type: 'watermark', role: 'estamp', text: t, size: Math.min(W, H) * 1.15 / (Math.max(8, t.length) * 0.68), color: col, opacity: Math.max(3, Math.min(100, cpNumV(p.opw) || 14)) / 100 }); continue; }
-      if (p.real) {   // v8.8.0: segell com a anotació real del PDF (editable en qualsevol lector, es recorda al Revisar)
+      if (p.real) {   // v8.8.1: segell com a anotació real del PDF (editable en qualsevol lector, es recorda al Revisar)
         const h0 = mm(p.h || 15) || 15 * 2.83 * S, w0 = h0 * 2.6, q0 = cpAnchor(p.anchor || 'tr', W, H, w0, h0, mm(p.dx), mm(p.dy));
         out.push({ type: 'rv', sub: 'stamp', label: t.toUpperCase().slice(0, 40), x1: q0.x, y1: q0.y, x2: q0.x + w0, y2: q0.y + h0, color: col, hand: !!p.hand, rot: cpNumV(p.rot) || 0, noau: !p.who, nodate: !p.date, id: rvId(), author: p.who ? rvWho() : (rvAuthor || 'Guaita'), date: rvNow(), status: '', replies: [], text: '' }); continue;
       }
@@ -20015,7 +20099,7 @@ async function ocRender() {
     box.appendChild(r);
   }
 }
-// ── v8.8.0: estats de capes desats («Estructura», «Instal·lacions»…)
+// ── v8.8.1: estats de capes desats («Estructura», «Instal·lacions»…)
 function ocStAll() { try { return JSON.parse(localStorage.getItem('guaita-ocstates') || '{}') || {}; } catch (e) { return {}; } }
 function ocStList(doc) { const a = ocStAll()[doc.name]; return Array.isArray(a) ? a : []; }
 function ocStStore(doc, list) { try { const o = ocStAll(); if (list.length) o[doc.name] = list; else delete o[doc.name]; localStorage.setItem('guaita-ocstates', JSON.stringify(o)); } catch (e) { toast('No s\'ha pogut desar l\'estat en aquest navegador', true); } }
@@ -20042,7 +20126,7 @@ function ocStDel() {
   const doc = getActiveDoc(), s = $('oc-st-sel'); if (!doc || !s || s.value === '') { toast('Tria primer l\'estat que vols eliminar', true); return; }
   const L = ocStList(doc), st = L[+s.value]; if (!st) return; L.splice(+s.value, 1); ocStStore(doc, L); ocStFill(); toast('Estat «' + st.name + '» eliminat');
 }
-// v8.8.0: estat dinàmic del menú Plànols
+// v8.8.1: estat dinàmic del menú Plànols
 async function plSync() {
   const doc = getActiveDoc();
   document.querySelectorAll('#menu-pl-list [data-pl]').forEach(b => {
@@ -20142,7 +20226,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 8.8.0 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 8.8.1 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadades:', e); }
 }
@@ -20370,7 +20454,7 @@ window.addEventListener('resize', () => { zoomLblSet(); rzCheck(); });
 
 
 
-// ─── v8.8.0: menú Edita (copiar, retallar, enganxar) i menú AEC
+// ─── v8.8.1: menú Edita (copiar, retallar, enganxar) i menú AEC
 function menuCopy() {
   if (typeof tlSelText === 'function' && tlSelText()) { tlCopy(); return; }
   if (annCopy(false)) return;
@@ -21345,7 +21429,7 @@ function rvCloudPath(ctx, pts, r) {
   }
   ctx.closePath();
 }
-// ── v8.8.0: núvols de revisió numerats (△n) i taula de revisions
+// ── v8.8.1: núvols de revisió numerats (△n) i taula de revisions
 function rvRevs(doc) { doc = doc || getActiveDoc(); if (!doc) return []; return doc.revs || (doc.revs = []); }
 function rvRevSync() {
   const s = $('rv-rev'); if (!s) return; const d = getActiveDoc(), L = d ? rvRevs(d) : [];
@@ -21567,7 +21651,7 @@ async function rvDown(e) {
     if (a) rvDrag = { kind: 'move', a, p0: p, last: p, moved: false };
     return;
   }
-  if (rvTool === 'revtable') {   // v8.8.0
+  if (rvTool === 'revtable') {   // v8.8.1
     const lines = ['REVISIONS'].concat(rvRevLines(doc)), S = RENDER_SCALE;
     rvAdd({ sub: 'free', x1: p.x, y1: p.y, x2: p.x + 240 * S, y2: p.y + (lines.length * 12 + 10) * S, color: '#171B21', w: 1.5, fs: 10, text: lines.join('\n') });
     rvSetTool('select'); return;
@@ -21638,7 +21722,7 @@ async function rvUp() {
 }
 function rvPolyEnd() {
   const P = rvPoly; rvPoly = null; if (!P || P.pts.length < 3) { rvDrawSel(); return; }
-  const dd = getActiveDoc(), rv = P.sub === 'cloud' && dd && dd.revCur ? { rev: dd.revCur } : {};   // v8.8.0
+  const dd = getActiveDoc(), rv = P.sub === 'cloud' && dd && dd.revCur ? { rev: dd.revCur } : {};   // v8.8.1
   rvAdd({ sub: P.sub, pts: P.pts, color: P.color, w: 1.5, ...rv });
 }
 function rvEsc() { if (rvPoly) { rvPoly = null; rvDrawSel(); return true; } if (rvSel) { rvSel = null; rvRender(); rvDrawSel(); return true; } return false; }
@@ -21892,12 +21976,12 @@ function cmpOpen(mode) {
   if (!getActiveDoc()) return;
   if (typeof mode === 'string') CMPS.mode = mode;
   CMPS.a = activeDocId; CMPS.b = (docs.find(d => d.id !== activeDocId) || getActiveDoc()).id; CMPS.ai = getActiveDoc().curIdx; CMPS.bi = Math.min(CMPS.ai, (docs.find(d => d.id === CMPS.b).pages.length - 1));
-  if (CMPS.b === CMPS.a) CMPS.bi = Math.min(CMPS.ai + 1, getActiveDoc().pages.length - 1);   // v8.8.0: dos plànols del mateix document
+  if (CMPS.b === CMPS.a) CMPS.bi = Math.min(CMPS.ai + 1, getActiveDoc().pages.length - 1);   // v8.8.1: dos plànols del mateix document
   const opts = docs.map(d => `<option value="${d.id}">${cpEsc(d.name)}</option>`).join('');
   $('cmp-a').innerHTML = opts; $('cmp-b').innerHTML = opts; $('cmp-a').value = CMPS.a; $('cmp-b').value = CMPS.b;
   $('cmp').classList.remove('hidden'); document.body.classList.add('cmp-on'); cmpRun();
 }
-function splitOpen() { cmpOpen('side'); }   // v8.8.0: vista dividida sincronitzada
+function splitOpen() { cmpOpen('side'); }   // v8.8.1: vista dividida sincronitzada
 function cmpClose() { $('cmp').classList.add('hidden'); document.body.classList.remove('cmp-on'); }
 function cmpStep(d) {
   const A = docs.find(x => x.id === CMPS.a), Bd = docs.find(x => x.id === CMPS.b); if (!A || !Bd) return;
@@ -21993,7 +22077,7 @@ $('rv-author').value = rvAuthor;
 $('rv-author').addEventListener('change', e => { rvAuthor = e.target.value.trim().slice(0, 80); try { localStorage.setItem('guaita-author', rvAuthor); } catch (er) {} });
 ['rv-f-page', 'rv-f-status', 'rv-f-author', 'rv-f-kind', 'rv-f-rev', 'rv-f-stamp'].forEach(id => $(id).addEventListener('change', () => { rvFilter.page = $('rv-f-page').value; rvFilter.status = $('rv-f-status').value; rvRender(); }));
 let RV_CUST = []; try { RV_CUST = JSON.parse(localStorage.getItem('guaita-stamps') || '[]').filter(x => Array.isArray(x) && typeof x[0] === 'string').slice(0, 20); } catch (e) { }
-function rvStampFill(sel) {   // v8.8.0: els segells personalitzats es recorden
+function rvStampFill(sel) {   // v8.8.1: els segells personalitzats es recorden
   const s = $('rv-stamp'), v = sel || s.value; s.textContent = '';
   const add = (val, txt) => { const o = document.createElement('option'); o.value = val; o.textContent = txt; s.appendChild(o); };
   RV_STAMPS.concat(RV_CUST).forEach(x => add(x[0], x[0])); add('__custom', 'Personalitzat…'); if (RV_CUST.length) add('__clear', 'Esborra els personalitzats');
@@ -22114,7 +22198,7 @@ async function rvWrite(out, outPage, list, rot, font, fontB) {
             }
           }
           ops += 'S Q ';
-          if (a.rev) {   // v8.8.0: triangle numerat
+          if (a.rev) {   // v8.8.1: triangle numerat
             const vx = Math.min(...a.pts.map(q => q.x)), vy = Math.min(...a.pts.map(q => q.y)), sv = 24 * S;
             const T1 = P(vx, vy - sv * 1.15), T2 = P(vx - sv * 0.6, vy - sv * 0.15), T3 = P(vx + sv * 0.6, vy - sv * 0.15), TC = P(vx, vy - sv * 0.47);
             ops += `q ${cs} RG 1 1 1 rg 1.2 w ${f2(T1.x)} ${f2(T1.y)} m ${f2(T2.x)} ${f2(T2.y)} l ${f2(T3.x)} ${f2(T3.y)} l h B Q ` + txtOps([String(a.rev)], TC.x, TC.y, 10, fntB, true, col);
