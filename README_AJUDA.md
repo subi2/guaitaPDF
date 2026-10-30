@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 8.3.7** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.3.8** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -113,7 +113,7 @@ Les miniatures de l'esquerra permeten seleccionar (Ctrl+clic), reordenar arrosse
 
 ### Organitzador de pàgines
 
-Les pàgines arrossegades s'aixequen i segueixen el cursor (en pila amb comptador si en són diverses); les altres s'aparten per obrir el forat on cauran. Hi ha desplaçament automàtic a prop de les vores, `Esc` cancel·la l'arrossegament i pots seleccionar amb una finestra arrossegant sobre l'espai buit (Maj o Ctrl afegeix a la selecció). Cada pàgina mostra el seu format (A4, A3…) i el seu número.
+Les pàgines arrossegades s'aixequen i segueixen el cursor (en pila amb comptador si en són diverses); les altres s'aparten per obrir el forat on cauran. Hi ha desplaçament automàtic a prop de les vores, `Esc` cancel·la l'arrossegament i pots desplaçar la vista arrossegant el fons de la graella (el cursor és una mà, com sobre una pàgina) i seleccionar amb una finestra mantenint `Maj` mentre arrossegues el fons (el cursor passa a creu; Maj+Ctrl afegeix a la selecció). Cada pàgina mostra el seu format (A4, A3…) i el seu número.
 
 ### Colors de pàgina
 

@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.3.7** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.3.8** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -113,7 +113,7 @@ The thumbnails on the left let you select (Ctrl+click), reorder by dragging, rot
 
 ### Page organiser
 
-Dragged pages lift and follow the cursor (as a stack with a counter if there are several); the others move aside to open the gap where they will land. It scrolls automatically near the edges, `Esc` cancels the drag, and you can select with a marquee dragged over empty space (Shift or Ctrl adds to the selection). Each page shows its format (A4, A3…) and its number.
+Dragged pages lift and follow the cursor (as a stack with a counter if there are several); the others move aside to open the gap where they will land. It scrolls automatically near the edges, `Esc` cancels the drag, and you can pan the view by dragging the grid background (the cursor is a hand, as over a page) and select with a marquee by holding `Shift` while dragging the background (the cursor becomes a cross; Shift+Ctrl adds to the selection). Each page shows its format (A4, A3…) and its number.
 
 ### Page colours
 

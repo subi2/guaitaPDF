@@ -2,7 +2,7 @@
 <p align="center"><img src="guaitaPDF_social_preview.png" alt="Guaita PDF Edit · SBS BIM Consulting" width="100%"></p>
 
 <p align="center">
-<img src="https://img.shields.io/badge/versi%C3%B3-8.3.7-C6FF00?style=for-the-badge&labelColor=0b0d07" alt="8.3.7">
+<img src="https://img.shields.io/badge/versi%C3%B3-8.3.8-C6FF00?style=for-the-badge&labelColor=0b0d07" alt="8.3.8">
 <img src="https://img.shields.io/badge/llic%C3%A8ncia-AGPL--3.0--only-FF2ECC?style=for-the-badge&labelColor=0b0d07" alt="AGPL-3.0-only">
 <img src="https://img.shields.io/badge/offline-0%20CDN-00E5FF?style=for-the-badge&labelColor=0b0d07" alt="offline">
 <img src="https://img.shields.io/badge/PWA-instal%C2%B7lable-FFE500?style=for-the-badge&labelColor=0b0d07" alt="PWA">
