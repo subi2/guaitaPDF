@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 8.3.6 — Multi-document PDF editor (Guaita Apps suite)
+  Guaita PDF Edit 8.3.7 — Multi-document PDF editor (Guaita Apps suite)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v8.3.6 (EN)</title>
+<title>Guaita PDF Edit v8.3.7 (EN)</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -740,6 +740,16 @@ body.mode-view #mbar-edit, body.mode-view #ctxbar, body.mode-edit #mbar-view { d
 .thumb-rib.on { display: block; }
 .thumb-pg.pcol canvas { outline: 3px solid var(--pc); outline-offset: -3px; }
 .thumb-pg.pcol::before { content: ''; position: absolute; left: -5px; top: 6px; bottom: 6px; width: 3px; background: var(--pc); border-radius: 2px; }
+/* v8.3.7: safata, paperera i barra de selecció de l'organitzador fixes a la vora inferior visible */
+#viewer-container #lb-chip { bottom: auto; top: calc(var(--lbst, 100%) - 14px); transform: translate(-50%, -100%); }
+#viewer-container #lb-park, #viewer-container #lb-bin { bottom: auto; top: calc(var(--lbst, 100%) - 14px); --lbh: 58px; transform: translateY(-100%); transition: transform .18s, background .18s, width .15s, height .15s; }
+#viewer-container #lb-park.on, #viewer-container #lb-bin.on { transform: translateY(calc(-100% - 3px)) scale(1.08); }
+body.lb-dragging #viewer-container #lb-park, body.lb-dragging #viewer-container #lb-bin { width: 104px; height: 82px; }
+body.lb-dragging #viewer-container #lb-bin { right: 16px; }
+body.lb-dragging #viewer-container #lb-park { right: 130px; }
+body.lb-dragging #viewer-container #lb-park svg, body.lb-dragging #viewer-container #lb-bin svg { width: 28px; height: 28px; }
+#viewer-container #lb-park .bh, #viewer-container #lb-bin .bh { display: none; font: 600 10px var(--mono, monospace); letter-spacing: .02em; }
+body.lb-dragging #viewer-container #lb-park .bh, body.lb-dragging #viewer-container #lb-bin .bh { display: block; }
 /* v8.3.6: pestanya Inici i Tancar-ho tot */
 #viewer-container.home-open > :not(#welcome) { visibility: hidden !important; }
 #viewer-container.home-open > #welcome { z-index: 5; background: var(--bg); }
@@ -2290,7 +2300,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <button id="mode-compose" onclick="setMode('compose')" title="Compose: merge documents and pages with a node tree (sources → Merge → Final document)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Compose</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v8.3.6</span>
+  <span class="tag">v8.3.7</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Switch to light theme"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2673,7 +2683,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.3.6</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.3.7</small></div>
           <div id="wl-inst" class="hidden"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg><div class="wi-t"><b>Install Guaita PDF Edit as an app</b><span>Its own window, works offline and opens PDFs from your file manager.</span></div><button class="btn primary" onclick="pwaInstall()">Install</button><button class="wi-x" onclick="wlInstHide()" title="Hide this notice" aria-label="Hide this notice">×</button></div>
           <h1>PDF editor <em>local</em>, no cloud.</h1>
           <p>Open one or more PDFs or drag them onto the window. Everything is processed on this computer: no file leaves the browser.</p>
@@ -2994,7 +3004,7 @@ body.th-dragging #bin-drops .bh { display: block; }
   <span id="st-worker" class="hidden" title="This environment does not allow pdf.js workers (embedded viewer or browser restrictions). PDFs are processed on the main thread: everything works the same, but large documents are slower. Opened directly in Chrome or Edge from disk, this does not normally happen.">pdf.js · main thread</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 8.3.6 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 8.3.7 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -10364,7 +10374,7 @@ const HELP = {
 <h3>If the option does not appear</h3>
 <p>You need to open the app's web address (https), not the file from disk. Desktop Firefox and Safari do not install PWAs; on iPhone Safari: <b>Share › Add to Home Screen</b>.</p>`],
   about: ['About Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 8.3.6</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 8.3.7</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -11662,13 +11672,14 @@ function lbChip() {
 }
 // v8.1.0: paperera de pàgines dins l'organitzador (angle inferior dret del llenç de pàgines); v8.1.3: i safata
 function lbBinSync(on) {
+  if (window.lbPinUpd) lbPinUpd();   // v8.3.7
   [['lb-park', 'park'], ['lb-bin', 'trash']].forEach(([id, k]) => {
     let b = $(id);
     if (!b) {
       if (!on) return;
       b = document.createElement('div'); b.id = id;
       b.title = k === 'park' ? 'Tray: drag pages here to park them (with Ctrl, they are copied)' : 'Bin: drag here the pages you want to discard (Del)';
-      b.innerHTML = (k === 'park' ? '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13l2.5-8h13L21 13v6H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/></svg>' : '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3"/><path d="M6 7l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg>') + '<span class="bn" id="' + id + '-count">0</span>';
+      b.innerHTML = (k === 'park' ? '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13l2.5-8h13L21 13v6H3z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/></svg>' : '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3"/><path d="M6 7l1 14h10l1-14"/><path d="M10 11v6M14 11v6"/></svg>') + '<span class="bn" id="' + id + '-count">0</span><span class="bh">' + (k === 'park' ? 'To the tray' : 'To the bin') + '</span>';
       b.addEventListener('click', () => binOpen(k));
       $('viewer-container').appendChild(b);
     }
@@ -14751,7 +14762,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 8.3.6 · pdf-lib';
+  const prod = 'Guaita PDF Edit 8.3.7 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -14790,7 +14801,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'XMP metadata'); del(cat, 'PieceInfo', 'private application data');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.3.6') })); rep.cleaned.push('document information'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.3.7') })); rep.cleaned.push('document information'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'thumbnails'));
@@ -19840,7 +19851,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 8.3.6 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 8.3.7 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadata:', e); }
 }
@@ -20067,6 +20078,14 @@ window.addEventListener('resize', () => { zoomLblSet(); rzCheck(); });
 
 
 
+// ─── v8.3.7: safata, paperera i barra de l'organitzador fixes a la vora inferior visible
+(function lbPinInit() {
+  const vc = $('viewer-container'); if (!vc) return;
+  const upd = () => vc.style.setProperty('--lbst', (vc.scrollTop + vc.clientHeight) + 'px');
+  vc.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd);
+  if (window.ResizeObserver) new ResizeObserver(upd).observe(vc);
+  upd(); window.lbPinUpd = upd;
+})();
 // ─── v8.3.6: pestanya «Inici» (pantalla d'inici amb documents oberts) i «Tancar-ho tot»
 function homeTabEl() {
   const t = document.createElement('div'); t.className = 'tab home-tab' + (homeView ? ' active' : ''); t.dataset.home = '1';
