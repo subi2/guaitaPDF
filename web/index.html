@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 8.3.3 — Editor de PDF multidocument (suite Guaita Apps)
+  Guaita PDF Edit 8.3.4 — Editor de PDF multidocument (suite Guaita Apps)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   Aquest programa és programari lliure: el podeu redistribuir i/o modificar sota els termes de la
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v8.3.3</title>
+<title>Guaita PDF Edit v8.3.4</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -740,6 +740,28 @@ body.mode-view #mbar-edit, body.mode-view #ctxbar, body.mode-edit #mbar-view { d
 .thumb-rib.on { display: block; }
 .thumb-pg.pcol canvas { outline: 3px solid var(--pc); outline-offset: -3px; }
 .thumb-pg.pcol::before { content: ''; position: absolute; left: -5px; top: 6px; bottom: 6px; width: 3px; background: var(--pc); border-radius: 2px; }
+/* v8.3.4: índex automàtic de plànols */
+.pli-modal { width: min(980px, 96vw); max-width: 96vw; max-height: 94vh; display: flex; flex-direction: column; }
+.pli-body { display: flex; gap: 14px; min-height: 0; flex: 1; overflow: hidden; }
+.pli-left { flex: 0 0 auto; width: 520px; max-width: 52%; display: flex; flex-direction: column; gap: 6px; }
+.pli-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+#pli-stage { position: relative; align-self: flex-start; background: #fff; border: 1px solid var(--border); line-height: 0; touch-action: none; user-select: none; }
+#pli-cv { display: block; }
+#pli-ov { position: absolute; inset: 0; cursor: crosshair; }
+.pli-z { position: absolute; box-sizing: border-box; border: 2px solid #C6FF00; background: rgba(198,255,0,.18); pointer-events: none; }
+.pli-z.title { border-color: #FF2ECC; background: rgba(255,46,204,.16); }
+.pli-z span { position: absolute; left: 0; top: -15px; font: 600 10px 'IBM Plex Mono', monospace; line-height: 13px; padding: 0 4px; background: #111; color: #C6FF00; }
+.pli-z.title span { color: #FF2ECC; }
+.pli-tools { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: 12px; }
+.pli-tools .btn.on { outline: 2px solid var(--accent-line); }
+#pli-tbl-w { overflow: auto; flex: 1; min-height: 160px; max-height: 52vh; border: 1px solid var(--border); }
+#pli-tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+#pli-tbl th { position: sticky; top: 0; background: var(--bg-panel, var(--bg)); text-align: left; padding: 4px 6px; font-weight: 600; }
+#pli-tbl td { padding: 2px 4px; border-top: 1px solid var(--border); }
+#pli-tbl input[type=text] { width: 100%; box-sizing: border-box; padding: 3px 5px; font-size: 12px; }
+#pli-tbl tr.pli-empty input[type=text] { border-color: #e67e22; }
+#pli-tbl .pn { cursor: pointer; text-decoration: underline; white-space: nowrap; }
+#pli-st { font-size: 12px; color: var(--text-dim, #8a9370); min-height: 16px; }
 /* v8.3.3: zoom numèric i mida real */
 #zoom-wrap { display: inline-flex; align-items: center; gap: 4px; }
 #zoom-label { width: 58px; min-width: 58px; box-sizing: border-box; text-align: center; cursor: text; }
@@ -2144,6 +2166,7 @@ body.th-dragging #bin-drops .bh { display: block; }
         <button class="mi" data-twin="btn-blank" onclick="showBlankModal()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M12 11v6M9 14h6"/></svg>Pàgina en blanc…</span></button>
         <button class="mi" data-twin="btn-import" onclick="showImportModal()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M8.5 14h7M12.5 11l3 3-3 3"/></svg>Des d'un altre PDF…</span></button>
         <button class="mi needs-doc" onclick="showIndexModal()" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>Índex a partir dels marcadors…</span></button>
+        <button class="mi needs-doc" onclick="pliOpen()" disabled title="Llegeix el codi i el títol del caixetí de cada plànol i en fa marcadors, un índex o un CSV"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h3"/><path d="M15 18l2 2 3-4"/></svg>Índex automàtic de plànols…</span></button>
         <button class="mi needs-doc" onclick="rcmOpen()" disabled title="Superposa dues versions d'una pàgina o d'un plànol: en vermell el que s'ha tret i en blau el que s'ha afegit"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="11" height="14" rx="1"/><rect x="10" y="7" width="11" height="14" rx="1"/></svg>Comparar revisions…</span></button>
         <button class="mi needs-doc" onclick="showSplitModal()" disabled title="Dividir el document en diversos fitxers"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h9l4 4v5"/><path d="M5 3v18h8"/><path d="M16 15l3 3-3 3M13 18h6"/></svg>Dividir el document…</span></button>
         <div class="msep"></div>
@@ -2251,7 +2274,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <button id="mode-compose" onclick="setMode('compose')" title="Composar: fusionar documents i pàgines amb un arbre de nodes (fonts → Fusionar → Document final)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Composar</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v8.3.3</span>
+  <span class="tag">v8.3.4</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Canviar a tema clar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2634,7 +2657,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.3.3</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.3.4</small></div>
           <div id="wl-inst" class="hidden"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg><div class="wi-t"><b>Instal·la Guaita PDF Edit com a aplicació</b><span>Finestra pròpia, funciona sense connexió i obre els PDF des de l'Explorador de fitxers.</span></div><button class="btn primary" onclick="pwaInstall()">Instal·lar</button><button class="wi-x" onclick="wlInstHide()" title="Amagar aquest avís" aria-label="Amagar aquest avís">×</button></div>
           <h1>Editor de PDF <em>local</em>, sense núvol.</h1>
           <p>Obre un o diversos PDF o arrossega'ls a la finestra. Tot es processa en aquest ordinador: cap fitxer surt del navegador.</p>
@@ -2951,7 +2974,7 @@ body.th-dragging #bin-drops .bh { display: block; }
   <span id="st-worker" class="hidden" title="Aquest entorn no permet els «workers» de pdf.js (visor incrustat o restriccions del navegador). Els PDF es processen al fil principal: tot funciona igual, però els documents grans van més lents. Obert directament a Chrome o Edge des del disc normalment no passa.">pdf.js · fil principal</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 8.3.3 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 8.3.4 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -3433,6 +3456,39 @@ body.th-dragging #bin-drops .bh { display: block; }
     <label class="chk"><input type="checkbox" id="ix-links" checked> Enllaços clicables a cada pàgina</label>
     <p class="cert-note">L'índex s'insereix com a pàgines A4 editables (textos i enllaços). Els números de pàgina ja compten les pàgines de l'índex.</p>
     <div class="mactions"><button class="btn" onclick="closeModal('modal-index')">Cancel·lar</button><button class="btn primary" onclick="indexInsert()">Inserir l'índex</button></div>
+  </div>
+</div>
+<div class="modal-bg hidden" id="modal-pli">
+  <div class="modal pli-modal">
+    <h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>Índex automàtic de plànols</h2>
+    <p class="cert-note" style="margin:0 0 8px">Marca sobre una pàgina on és el <b>codi</b> i el <b>títol</b> del plànol (al caixetí). La zona es fa servir a totes les pàgines; el text es llegeix del PDF, sense OCR.</p>
+    <div class="pli-body">
+      <div class="pli-left">
+        <div class="pli-tools">
+          <button class="btn" onclick="pliGo(-1)" title="Pàgina anterior">‹</button>
+          <span id="pli-pn">1 / 1</span>
+          <button class="btn" onclick="pliGo(1)" title="Pàgina següent">›</button>
+          <span style="flex:1"></span>
+          <button class="btn on" id="pli-m-code" onclick="pliMode('code')" title="Dibuixa la zona del codi (p. ex. A-201)">Codi</button>
+          <button class="btn" id="pli-m-title" onclick="pliMode('title')" title="Dibuixa la zona del títol">Títol</button>
+          <button class="btn" onclick="pliClearZ()" title="Esborra les dues zones">Esborrar</button>
+        </div>
+        <div id="pli-stage"><canvas id="pli-cv"></canvas><div id="pli-ov"></div></div>
+      </div>
+      <div class="pli-right">
+        <div class="pli-tools">
+          <label>Pàgines</label><input type="text" id="pli-rng" placeholder="totes (p. ex. 2-30, 35)" spellcheck="false" style="width:150px">
+          <button class="btn primary" onclick="pliExtract()">Extreure</button>
+          <span id="pli-st"></span>
+        </div>
+        <div id="pli-tbl-w"><table id="pli-tbl"></table></div>
+        <div class="pli-tools">
+          <label>Marcador</label><select id="pli-fmt"><option value="ct">codi – títol</option><option value="c">només el codi</option><option value="t">només el títol</option></select>
+          <select id="pli-how"><option value="replace">Substituir els marcadors actuals</option><option value="append">Afegir al final</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="mactions"><button class="btn" onclick="closeModal('modal-pli')">Tancar</button><button class="btn" onclick="pliCsv()">Desar CSV</button><button class="btn" onclick="pliMarkers(false)">Crear marcadors</button><button class="btn primary" onclick="pliMarkers(true)">Marcadors + pàgina d'índex…</button></div>
   </div>
 </div>
 <div class="modal-bg hidden" id="modal-applyto">
@@ -10247,7 +10303,7 @@ const HELP = {
 <h3>Si no apareix l'opció</h3>
 <p>Cal obrir l'adreça web (https) de l'aplicació, no el fitxer des del disc. Firefox i Safari d'escriptori no instal·len PWA; a Safari de l'iPhone: <b>Comparteix › Afegeix a la pantalla d'inici</b>.</p>`],
   about: ['Quant a Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 8.3.3</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 8.3.4</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -14632,7 +14688,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 8.3.3 · pdf-lib';
+  const prod = 'Guaita PDF Edit 8.3.4 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -14671,7 +14727,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'metadades XMP'); del(cat, 'PieceInfo', 'dades privades d\'aplicacions');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.3.3') })); rep.cleaned.push('informació del document'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.3.4') })); rep.cleaned.push('informació del document'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'miniatures'));
@@ -19718,7 +19774,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 8.3.3 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 8.3.4 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadades:', e); }
 }
@@ -19941,6 +19997,134 @@ function rzCheck() {
 }
 window.addEventListener('load', () => setTimeout(rzCheck, 1500));
 window.addEventListener('resize', () => { zoomLblSet(); rzCheck(); });
+
+
+// ─── v8.3.4: índex automàtic de plànols (zones de codi i títol → marcadors, índex o CSV)
+const PLI = { Z: { code: null, title: null }, rows: [], pg: 0, mode: 'code', vp: null };
+try { const z = JSON.parse(localStorage.getItem('guaita-plizones') || 'null'); if (z && typeof z === 'object') PLI.Z = { code: z.code || null, title: z.title || null }; } catch (e) { }
+function pliSaveZ() { try { localStorage.setItem('guaita-plizones', JSON.stringify(PLI.Z)); } catch (e) { } }
+async function pliOpen() {
+  const doc = getActiveDoc(); if (!doc) return;
+  PLI.pg = Math.max(0, Math.min(doc.curIdx, doc.pages.length - 1)); PLI.rows = []; $('pli-tbl').innerHTML = ''; $('pli-st').textContent = '';
+  openModal('modal-pli'); pliMode(PLI.mode); await pliRenderPage();
+}
+function pliMode(m) { PLI.mode = m; $('pli-m-code').classList.toggle('on', m === 'code'); $('pli-m-title').classList.toggle('on', m === 'title'); }
+async function pliGo(d) {
+  const doc = getActiveDoc(); if (!doc) return;
+  PLI.pg = Math.max(0, Math.min(doc.pages.length - 1, PLI.pg + d)); await pliRenderPage();
+}
+async function pliRenderPage() {
+  const doc = getActiveDoc(); if (!doc) return; const pd = doc.pages[PLI.pg], cv = $('pli-cv'); if (!pd) return;
+  $('pli-pn').textContent = (PLI.pg + 1) + ' / ' + doc.pages.length;
+  const tk = ++PLI.tk || (PLI.tk = 1);
+  const d = await bkDims(pd), k = Math.min(500 / d.w, 460 / d.h);
+  if (pd.type === 'pdf') {
+    const pg = await getPdfPage(pd); if (!pg || tk !== PLI.tk) return;
+    const vp = pg.getViewport({ scale: k * 1.5, rotation: pd.rotation }); PLI.vp = vp;
+    cv.width = vp.width; cv.height = vp.height; cv.style.width = Math.round(vp.width / 1.5) + 'px'; cv.style.height = Math.round(vp.height / 1.5) + 'px';
+    const c = cv.getContext('2d'); c.fillStyle = '#fff'; c.fillRect(0, 0, cv.width, cv.height);
+    try { await pg.render({ canvasContext: c, viewport: vp, optionalContentConfigPromise: ocFor(pd) }).promise; } catch (e) { }
+  } else {
+    cv.width = Math.round(d.w * k); cv.height = Math.round(d.h * k); cv.style.width = cv.width + 'px'; cv.style.height = cv.height + 'px';
+    const c = cv.getContext('2d'); c.fillStyle = '#fff'; c.fillRect(0, 0, cv.width, cv.height);
+  }
+  pliDrawZ();
+}
+function pliDrawZ() {
+  const ov = $('pli-ov'); ov.innerHTML = '';
+  [['code', 'CODI'], ['title', 'TÍTOL']].forEach(([k, lab]) => {
+    const z = PLI.Z[k]; if (!z) return;
+    const e = document.createElement('div'); e.className = 'pli-z ' + k;
+    e.style.cssText = 'left:' + z.x0 * 100 + '%;top:' + z.y0 * 100 + '%;width:' + (z.x1 - z.x0) * 100 + '%;height:' + (z.y1 - z.y0) * 100 + '%';
+    e.innerHTML = '<span>' + lab + '</span>'; ov.appendChild(e);
+  });
+}
+function pliClearZ() { PLI.Z = { code: null, title: null }; pliSaveZ(); pliDrawZ(); }
+(function pliInit() {
+  const ov = $('pli-ov'); let st = null, tmp = null;
+  const pt = e => { const r = ov.getBoundingClientRect(); return { x: Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), y: Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)) }; };
+  ov.addEventListener('pointerdown', e => { st = pt(e); ov.setPointerCapture(e.pointerId); tmp = document.createElement('div'); tmp.className = 'pli-z ' + PLI.mode; ov.appendChild(tmp); e.preventDefault(); });
+  ov.addEventListener('pointermove', e => {
+    if (!st || !tmp) return; const p = pt(e), x0 = Math.min(st.x, p.x), y0 = Math.min(st.y, p.y);
+    tmp.style.cssText = 'left:' + x0 * 100 + '%;top:' + y0 * 100 + '%;width:' + Math.abs(p.x - st.x) * 100 + '%;height:' + Math.abs(p.y - st.y) * 100 + '%';
+  });
+  const end = e => {
+    if (!st) return; const p = pt(e); const z = { x0: Math.min(st.x, p.x), y0: Math.min(st.y, p.y), x1: Math.max(st.x, p.x), y1: Math.max(st.y, p.y) }; st = null;
+    if (tmp) { tmp.remove(); tmp = null; }
+    if (z.x1 - z.x0 > 0.01 && z.y1 - z.y0 > 0.005) { PLI.Z[PLI.mode] = z; pliSaveZ(); if (PLI.mode === 'code' && !PLI.Z.title) pliMode('title'); }
+    pliDrawZ();
+  };
+  ov.addEventListener('pointerup', end); ov.addEventListener('pointercancel', () => { st = null; if (tmp) { tmp.remove(); tmp = null; } });
+})();
+function pliTxt(tc, vp, z) {
+  if (!z) return '';
+  const I = [];
+  tc.items.forEach(it => {
+    const s = it.str; if (!s || !s.trim()) return;
+    const t = it.transform, L = Math.hypot(t[0], t[1]) || 1, ux = t[0] / L, uy = t[1] / L, w = it.width || 0, h = Math.abs(it.height) || L;
+    const mx = t[4] + ux * w / 2 - uy * h / 2, my = t[5] + uy * w / 2 + ux * h / 2;
+    const q = vp.convertToViewportPoint(mx, my), fx = q[0] / vp.width, fy = q[1] / vp.height;
+    if (fx >= z.x0 && fx <= z.x1 && fy >= z.y0 && fy <= z.y1) I.push({ s, fx, fy, h: h * vp.scale / vp.height });
+  });
+  I.sort((a, b) => a.fy - b.fy);
+  const rows = [];
+  I.forEach(i => { const r = rows[rows.length - 1]; if (r && Math.abs(r.fy - i.fy) < Math.max(r.h, i.h) * 0.6) { r.it.push(i); } else rows.push({ fy: i.fy, h: i.h, it: [i] }); });
+  return rows.map(r => r.it.sort((a, b) => a.fx - b.fx).map(i => i.s.trim()).join(' ')).join(' ').replace(/\s+/g, ' ').trim();
+}
+function pliRange(doc) {
+  const v = $('pli-rng').value.trim(), n = doc.pages.length;
+  if (!v || /^(totes|all)$/i.test(v)) return doc.pages.map((_, i) => i);
+  const set = new Set();
+  v.split(/[,;\s]+/).filter(Boolean).forEach(p => { const m = p.match(/^(\d+)(?:-(\d+))?$/); if (!m) return; let a = +m[1], b = m[2] ? +m[2] : a; if (a > b) [a, b] = [b, a]; for (let i = Math.max(1, a); i <= Math.min(n, b); i++) set.add(i - 1); });
+  return [...set].sort((a, b) => a - b);
+}
+async function pliExtract() {
+  const doc = getActiveDoc(); if (!doc) return;
+  if (!PLI.Z.code && !PLI.Z.title) { toast('Dibuixa abans la zona del codi i/o la del títol sobre la pàgina', true, 5000); return; }
+  const idx = pliRange(doc); if (!idx.length) { toast('Cap pàgina dins l\'interval indicat', true); return; }
+  fixPids(doc); const rows = []; PLI.run = (PLI.run || 0) + 1; const run = PLI.run;
+  for (let n = 0; n < idx.length; n++) {
+    if (run !== PLI.run || doc !== getActiveDoc()) return;
+    const i = idx[n], pd = doc.pages[i], r = { i, pid: pd.pid, code: '', title: '', on: true };
+    if (pd.type === 'pdf') {
+      try { const pg = await getPdfPage(pd), vp = pg.getViewport({ scale: 1, rotation: pd.rotation }), tc = await pg.getTextContent(); r.code = pliTxt(tc, vp, PLI.Z.code); r.title = pliTxt(tc, vp, PLI.Z.title); } catch (e) { }
+    }
+    rows.push(r);
+    if (n % 5 === 0) { $('pli-st').textContent = 'Llegint… ' + (n + 1) + ' / ' + idx.length; await new Promise(r => setTimeout(r, 0)); }
+  }
+  PLI.rows = rows; pliTable();
+  const nE = rows.filter(r => !r.code && !r.title).length;
+  $('pli-st').textContent = rows.length + ' pàgines' + (nE ? ' · ' + nE + ' sense text a la zona (marcades en taronja: pots escriure-hi el codi o desmarcar-les)' : '');
+}
+function pliTable() {
+  const T = $('pli-tbl'), esc = escHtml;
+  T.innerHTML = '<tr><th><input type="checkbox" checked onchange="pliAll(this.checked)" title="Marca o desmarca totes"></th><th>Pàg.</th><th>Codi</th><th>Títol</th></tr>' +
+    PLI.rows.map((r, k) => '<tr data-k="' + k + '"' + (!r.code && !r.title ? ' class="pli-empty"' : '') + '><td><input type="checkbox"' + (r.on ? ' checked' : '') + ' onchange="PLI.rows[' + k + '].on=this.checked"></td><td class="pn" onclick="PLI.pg=' + r.i + ';pliRenderPage()">' + (r.i + 1) + '</td><td><input type="text" value="' + esc(r.code) + '" oninput="PLI.rows[' + k + '].code=this.value" style="width:110px"></td><td><input type="text" value="' + esc(r.title) + '" oninput="PLI.rows[' + k + '].title=this.value"></td></tr>').join('');
+}
+function pliAll(on) { PLI.rows.forEach(r => r.on = on); pliTable(); }
+function pliLabel(r) {
+  const f = $('pli-fmt').value, c = r.code.trim(), t = r.title.trim();
+  let s = f === 'c' ? (c || t) : f === 't' ? (t || c) : (c && t ? c + ' – ' + t : (c || t));
+  return s || 'Pàgina ' + (r.i + 1);
+}
+function pliMarkers(withIndex) {
+  const doc = getActiveDoc(); if (!doc) return;
+  const R = PLI.rows.filter(r => r.on); if (!R.length) { toast('Primer extreu els plànols amb «Extreure»', true); return; }
+  fixPids(doc); saveHistory();
+  const nodes = R.map(r => { const p = doc.pages[r.i]; return { id: bmId(), title: pliLabel(r), pid: pidOf(p), dest: { type: 'XYZ', args: [null, null, null] }, url: null, bold: false, italic: false, color: null, open: true, children: [] }; });
+  if ($('pli-how').value === 'replace') doc.outline = nodes; else (doc.outline || (doc.outline = [])).push(...nodes);
+  bmChanged(); closeModal('modal-pli');
+  toast(nodes.length + ' marcadors creats a partir dels plànols', false, 4000);
+  if (withIndex) showIndexModal();
+}
+function pliCsv() {
+  const doc = getActiveDoc(); if (!doc) return; if (!PLI.rows.length) { toast('Primer extreu els plànols amb «Extreure»', true); return; }
+  const q = s => '"' + String(s).replace(/"/g, '""') + '"';
+  const txt = '﻿pàgina;codi;títol\n' + PLI.rows.filter(r => r.on).map(r => [r.i + 1, q(r.code), q(r.title)].join(';')).join('\n') + '\n';
+  const u = URL.createObjectURL(new Blob([txt], { type: 'text/csv;charset=utf-8' })), a = document.createElement('a');
+  a.href = u; a.download = doc.name.replace(/\.pdf$/i, '') + '_plànols.csv'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 30000);
+  toast('CSV desat · ' + a.download);
+}
 
 // ─── v8.2.1: comparar revisions (superposició de píxels, alineació automàtica o amb 2 punts) ───
 const RCM = { W: 0, H: 0, s: 1, cvA: null, rawB: null, mA: null, mB: null, cls: null, zones: [], T: null, z: 1, x: 0, y: 0, two: null, sel: -1, nA: '', nB: '', open: false };
