@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.4.1** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.4.2** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
