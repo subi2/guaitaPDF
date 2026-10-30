@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 8.6.0 — Multi-document PDF editor (Guaita Apps suite)
+  Guaita PDF Edit 8.6.1 — Multi-document PDF editor (Guaita Apps suite)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v8.6.0 (EN)</title>
+<title>Guaita PDF Edit v8.6.1 (EN)</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -1363,7 +1363,7 @@ body.mode-compose #status-bar .sgrp, body.mode-compose #st-info { display: none;
 #lb-chip b { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 11px; background: #D6FB41; color: #171B21; font: 700 11.5px 'IBM Plex Mono', monospace; display: flex; align-items: center; justify-content: center; }
 #lb-chip .lbc-h { color: var(--text-dim2); overflow: hidden; text-overflow: ellipsis; }
 body.lb-dragging #lb-chip { opacity: .35; }
-/* v8.6.0: durant l'arrossegament la graella es fa translúcida i les zones queden per sobre; sobre una zona la pàgina es fa icona */
+/* v8.6.1: durant l'arrossegament la graella es fa translúcida i les zones queden per sobre; sobre una zona la pàgina es fa icona */
 body.lb-dragging #viewer-container .lb-grid .lb-box:not(.lb-ph) { opacity: .4; transition: opacity .15s; }
 body.lb-dragging #viewer-container #lb-park, body.lb-dragging #viewer-container #lb-bin { z-index: 700; background: var(--bg-panel); box-shadow: 0 6px 22px rgba(0,0,0,.5); }
 body.lb-dragging #viewer-container #lb-park.on { background: #F5A524; }
@@ -2260,6 +2260,7 @@ body.th-dragging #bin-drops .bh { display: block; }
         <button class="mi needs-doc" onclick="setZoom(1)" disabled title="1 PDF point = 1 CSS pixel; it is not the paper size"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l2-2v10M16 9l2-2v10"/><path d="M11.5 10v.01M11.5 15v.01"/></svg>100 % nominal</span></button>
         <button class="mi needs-doc" onclick="rzGo()" disabled title="The paper at physical size, according to the calibration"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="8" rx="1"/><path d="M7 8v3M11 8v4M15 8v3M19 8v4"/></svg>Real size</span></button>
         <button class="mi" onclick="rzOpen()" title="Calibrate the screen with an A4 sheet"><span><span class="ic-ph"></span>Calibrate real size…</span></button>
+        <button class="mi needs-doc" onclick="splitOpen()" disabled title="Two drawings side by side with linked zoom and panning"><span><span class="ic-ph"></span>Synchronised split view…</span></button>
         <div class="msep"></div>
         <button class="mi" id="mi-thumbs" onclick="toggleThumbs()"><span><span class="ic-ph"></span>Thumbnails</span><span class="rt"><span class="mk"></span></span></button>
         <button class="mi needs-doc" id="mi-bm" onclick="bmSetTab('bm')" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10v18l-5-4-5 4z"/></svg>Bookmarks panel</span><span class="rt"><span class="mk"></span></span></button>
@@ -2271,36 +2272,38 @@ body.th-dragging #bin-drops .bh { display: block; }
       </div>
     </div>
     <div class="menu">
-      <button class="menu-btn">AEC </button>
-      <div class="menu-list">
-        <div class="mhead">Measure</div>
-        <button class="mi needs-doc" onclick="aecMeasure('dist')" disabled title="Measure distances to scale (M)"><span>Measure distances</span></button>
-        <button class="mi needs-doc" onclick="aecMeasure('path')" disabled><span>Polyline</span></button>
-        <button class="mi needs-doc" onclick="aecMeasure('area')" disabled><span>Area and perimeter</span></button>
-        <button class="mi needs-doc" onclick="aecMeasure('count')" disabled><span>Count objects</span></button>
-        <button class="mi needs-doc" onclick="aecMeasure('cal')" disabled><span>Calibrate the scale with a known dimension</span></button>
-        <button class="mi needs-doc" onclick="aecPanel()" disabled><span>Measurements panel</span></button>
-        <div class="msep"></div>
-        <div class="mhead">Revisions</div>
-        <button class="mi needs-doc" onclick="rcmOpen()" disabled><span>Compare revisions…</span></button>
-        <button class="mi needs-doc" onclick="aecReview('cloud')" disabled><span>Review cloud</span></button>
-        <button class="mi needs-doc" onclick="aecRevNew()" disabled><span>New revision (△n)…</span></button>
-        <button class="mi needs-doc" onclick="rvRevOpen()" disabled><span>Revision table…</span></button>
-        <button class="mi needs-doc" onclick="aecReview('stamp')" disabled><span>Status stamp</span></button>
-        <div class="msep"></div>
-        <div class="mhead">Layers and views</div>
-        <button class="mi needs-doc" onclick="aecLayers()" disabled><span>Layer states…</span></button>
-        <button class="mi needs-doc" onclick="splitOpen()" disabled><span>Synchronised split view…</span></button>
-        <div class="msep"></div>
+      <button class="menu-btn" id="menu-pl">Drawings </button>
+      <div class="menu-list" id="menu-pl-list">
         <div class="mhead">Drawing sets</div>
         <button class="mi needs-doc" onclick="pliOpen()" disabled><span>Automatic drawing index…</span></button>
         <button class="mi needs-doc" onclick="xlOpen()" disabled><span>Links between drawings…</span></button>
         <button class="mi needs-doc" onclick="showIndexModal()" disabled><span>Index from the bookmarks…</span></button>
         <div class="msep"></div>
-        <div class="mhead">Scale and size</div>
+        <div class="mhead" id="pl-scale-head">Scale and size</div>
         <button class="mi needs-doc" onclick="setZoom(1)" disabled><span>100 % nominal</span></button>
-        <button class="mi needs-doc" onclick="rzGo()" disabled title="The paper at physical size (the screen must be calibrated once)"><span>Real size</span></button>
+        <button class="mi needs-doc" onclick="rzGo()" disabled title="The paper at physical size (the screen must be calibrated once)"><span>Real size</span><span class="rt" id="pl-rz-st"></span></button>
         <button class="mi" onclick="rzOpen()"><span>Calibrate real size…</span></button>
+        <div class="msep"></div>
+        <div class="mhead">Measure</div>
+        <button class="mi needs-doc" data-pl="m:dist" onclick="aecMeasure('dist')" disabled title="Measure distances to scale (M)"><span><span class="mk"></span>Measure distances</span><kbd>M</kbd></button>
+        <button class="mi needs-doc" data-pl="m:path" onclick="aecMeasure('path')" disabled><span><span class="mk"></span>Polyline</span></button>
+        <button class="mi needs-doc" data-pl="m:area" onclick="aecMeasure('area')" disabled><span><span class="mk"></span>Area and perimeter</span></button>
+        <button class="mi needs-doc" data-pl="m:count" onclick="aecMeasure('count')" disabled><span><span class="mk"></span>Count objects</span></button>
+        <button class="mi needs-doc" data-pl="m:cal" onclick="aecMeasure('cal')" disabled><span><span class="mk"></span>Calibrate the scale with a known dimension</span></button>
+        <button class="mi needs-doc" onclick="aecPanel()" disabled><span><span class="mk"></span>Measurements panel</span></button>
+        <div class="msep"></div>
+        <div class="mhead">Revisions</div>
+        <button class="mi needs-doc" onclick="rcmOpen()" disabled><span><span class="mk"></span>Compare revisions…</span></button>
+        <button class="mi needs-doc" data-pl="r:cloud" onclick="aecReview('cloud')" disabled><span><span class="mk"></span>Review cloud</span></button>
+        <button class="mi needs-doc" onclick="aecRevNew()" disabled><span><span class="mk"></span>New revision (△n)…</span></button>
+        <button class="mi needs-doc" onclick="rvRevOpen()" disabled><span><span class="mk"></span>Revision table…</span></button>
+        <button class="mi needs-doc" data-pl="r:stamp" onclick="aecReview('stamp')" disabled><span><span class="mk"></span>Status stamp</span></button>
+        <div class="msep"></div>
+        <div class="mhead">Layers and views</div>
+        <button class="mi needs-doc" id="mi-pl-layers" onclick="aecLayers()" disabled><span><span class="mk"></span>Layer states…</span></button>
+        <button class="mi needs-doc" onclick="splitOpen()" disabled><span><span class="mk"></span>Synchronised split view…</span></button>
+        <div class="msep"></div>
+        <button class="mi" onclick="showHelp('plans')"><span><span class="mk"></span>Drawings help</span></button>
       </div>
     </div>
     <div class="menu">
@@ -2351,7 +2354,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <button id="mode-compose" onclick="setMode('compose')" title="Compose: merge documents and pages with a node tree (sources → Merge → Final document)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Compose</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v8.6.0</span>
+  <span class="tag">v8.6.1</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Switch to light theme"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2737,7 +2740,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.6.0</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.6.1</small></div>
           <div id="wl-inst" class="hidden"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg><div class="wi-t"><b>Install Guaita PDF Edit as an app</b><span>Its own window, works offline and opens PDFs from your file manager.</span></div><button class="btn primary" onclick="pwaInstall()">Install</button><button class="wi-x" onclick="wlInstHide()" title="Hide this notice" aria-label="Hide this notice">×</button></div>
           <h1>PDF editor <em>local</em>, no cloud.</h1>
           <p>Open one or more PDFs or drag them onto the window. Everything is processed on this computer: no file leaves the browser.</p>
@@ -3058,7 +3061,7 @@ body.th-dragging #bin-drops .bh { display: block; }
   <span id="st-worker" class="hidden" title="This environment does not allow pdf.js workers (embedded viewer or browser restrictions). PDFs are processed on the main thread: everything works the same, but large documents are slower. Opened directly in Chrome or Edge from disk, this does not normally happen.">pdf.js · main thread</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 8.6.0 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 8.6.1 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -8026,7 +8029,7 @@ function binUiSync() {
   $('bin-drops').classList.toggle('hidden', !binOn);
   $('thumb-list').classList.toggle('bin-on', binOn);
   const k = $('mi-bin') && $('mi-bin').querySelector('.mk'); if (k) k.textContent = binOn ? '✔' : '';
-  const k2 = $('mi-bin2') && $('mi-bin2').querySelector('.mk'); if (k2) k2.textContent = binOn ? '✔' : '';   // v8.6.0§
+  const k2 = $('mi-bin2') && $('mi-bin2').querySelector('.mk'); if (k2) k2.textContent = binOn ? '✔' : '';   // v8.6.1§
   lbChip(); updateTabsUI();
 }
 function binSetOn(v) {
@@ -10396,6 +10399,19 @@ const HELP = {
 <p>The <b>Scan</b> mode (header switch or File › Analyse suspicious PDF…) loads <b>guaitaPDFscan</b> inside the editor, in an isolated frame (<code>sandbox</code>) that has no access to the editor. The suspicious PDF is opened and analysed only in the analyser; in Scan mode the editor does not accept dragged files either. After disarming and saving it, the <b>Open in guaitaPDF Edit</b> button sends the clean PDF to the editor, which validates it, opens it as a new document and returns to View mode. The analyser can also be opened in a separate window (Tools menu). The file <code>guaitaPDFscan_1.3.html</code> must be in the same folder as the editor.</p>
 <h3>Tab mode and app mode</h3>
 <p>The <code>*_app.html</code> file is the same program prepared to open as an application (without an address bar) with the launchers <code>Obrir_Guaita_PDF_Edit_app.bat</code> (Windows) or <code>.command</code> (macOS/Linux). Everything works offline: PDFs never leave the computer.</p>`],
+  plans: ['Drawings help', `
+<p>The <b>Drawings</b> menu gathers the tools for working with drawings and technical documentation. Some of them are also in other menus or buttons.</p>
+<h3>Drawing sets</h3>
+<p><b>Automatic index</b> reads the code and title of each drawing inside zones you draw once; <b>Links between drawings</b> turns references like «see A-201» into clickable links; <b>Index from bookmarks</b> creates the index page from the document's bookmarks.</p>
+<h3>Scale and size</h3>
+<p><b>100 % nominal</b> shows 1 PDF point per pixel. <b>Real size</b> applies the calibrated zoom so the paper appears at physical size; if you have not calibrated the screen yet, it warns you and opens the calibration (once, with an A4 sheet). The group title shows the page scale, and «Real size» shows whether the screen is calibrated.</p>
+<h3>Measure</h3>
+<p>Distances, polylines, areas and perimeters, and object counting, on the drawing and at the page scale (key <kbd>M</kbd>). <b>Calibrate the scale with a known dimension</b> sets the scale from a known measurement. Measurements stay as annotations and are listed in the measurements panel. The active tool carries a ✔ mark.</p>
+<h3>Revisions</h3>
+<p><b>Compare revisions</b> overlays two versions. With <b>New revision</b> the revision clouds carry the number (△n); the <b>revision table</b> can be copied or inserted on the page. The <b>status stamp</b> places APPROVED, REVIEWED or your own text with your name and the date.</p>
+<h3>Layers and views</h3>
+<p><b>Layer states</b> saves and applies named layer combinations (only available if the PDF has layers). <b>Synchronised split view</b> shows two drawings side by side with linked zoom and panning; it is read-only.</p>
+`],
   keys: ['Keyboard shortcuts', `
 <table>
 <tr><td><kbd>Ctrl+Z</kbd> / <kbd>Ctrl+Y</kbd></td><td>Undo / redo</td></tr>
@@ -10438,7 +10454,7 @@ const HELP = {
 <h3>If the option does not appear</h3>
 <p>You need to open the app's web address (https), not the file from disk. Desktop Firefox and Safari do not install PWAs; on iPhone Safari: <b>Share › Add to Home Screen</b>.</p>`],
   about: ['About Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 8.6.0</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 8.6.1</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -11814,7 +11830,7 @@ function lbHover() {
     const hot = D.cx >= r.left && D.cx <= r.right && D.cy >= r.top && D.cy <= r.bottom;
     el.classList.toggle('on', hot); if (hot) D.hot = k;
   }
-  D.gh.style.transformOrigin = D.gx + 'px ' + D.gy + 'px'; D.gh.classList.toggle('mini', !!D.hot);   // v8.6.0
+  D.gh.style.transformOrigin = D.gx + 'px ' + D.gy + 'px'; D.gh.classList.toggle('mini', !!D.hot);   // v8.6.1
   if (D.hot) return;   // mentre hi som a sobre, no es recalcula la posició d'inserció
   const pos = lbPosAt(D.cx, D.cy); if (pos === D.pos) return;
   D.pos = pos;
@@ -14828,7 +14844,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 8.6.0 · pdf-lib';
+  const prod = 'Guaita PDF Edit 8.6.1 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -14867,7 +14883,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'XMP metadata'); del(cat, 'PieceInfo', 'private application data');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.6.0') })); rep.cleaned.push('document information'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.6.1') })); rep.cleaned.push('document information'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'thumbnails'));
@@ -19836,7 +19852,7 @@ async function ocRender() {
     box.appendChild(r);
   }
 }
-// ── v8.6.0: estats de capes desats («Estructura», «Instal·lacions»…)
+// ── v8.6.1: estats de capes desats («Estructura», «Instal·lacions»…)
 function ocStAll() { try { return JSON.parse(localStorage.getItem('guaita-ocstates') || '{}') || {}; } catch (e) { return {}; } }
 function ocStList(doc) { const a = ocStAll()[doc.name]; return Array.isArray(a) ? a : []; }
 function ocStStore(doc, list) { try { const o = ocStAll(); if (list.length) o[doc.name] = list; else delete o[doc.name]; localStorage.setItem('guaita-ocstates', JSON.stringify(o)); } catch (e) { toast('Could not save the state in this browser', true); } }
@@ -19863,6 +19879,22 @@ function ocStDel() {
   const doc = getActiveDoc(), s = $('oc-st-sel'); if (!doc || !s || s.value === '') { toast('Choose the state you want to delete first', true); return; }
   const L = ocStList(doc), st = L[+s.value]; if (!st) return; L.splice(+s.value, 1); ocStStore(doc, L); ocStFill(); toast('State «' + st.name + '» deleted');
 }
+// v8.6.1: estat dinàmic del menú Plànols
+async function plSync() {
+  const doc = getActiveDoc();
+  document.querySelectorAll('#menu-pl-list [data-pl]').forEach(b => {
+    const [k, v] = b.dataset.pl.split(':'); let on = false;
+    if (k === 'm') on = tool === 'measure' && measureMode === v;
+    else if (k === 'r') on = tool === 'rv' && rvTool === v;
+    const m = b.querySelector('.mk'); if (m) m.textContent = on ? '✔' : '';
+  });
+  const h = $('pl-scale-head');
+  if (h) { const pd = doc && doc.pages[doc.curIdx], sc = pd && pd.mscale > 0 ? ' · 1:' + pd.mscale : ''; h.textContent = 'Scale and size' + sc; }
+  const rz = $('pl-rz-st'); if (rz) rz.textContent = RZ ? 'calibrated' : 'not calibrated';
+  const L = $('mi-pl-layers');
+  if (L && doc) { let n = 0; try { n = (await ocGroups(doc)).size; } catch (e) { } L.disabled = !n; L.title = n ? '' : 'This PDF has no layers'; }
+}
+(function () { const m = $('menu-pl'); if (!m) return; const box = m.parentElement; ['mouseenter', 'focusin', 'click'].forEach(t => box.addEventListener(t, plSync)); })();
 function aecLayers() { if (!getActiveDoc()) return; bmSetTab('oc'); }
 $('oc-st-sel').addEventListener('change', e => { if (e.target.value !== '') ocStApply(+e.target.value); });
 async function ocSet(names, on) {
@@ -19947,7 +19979,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 8.6.0 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 8.6.1 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadata:', e); }
 }
@@ -20175,7 +20207,7 @@ window.addEventListener('resize', () => { zoomLblSet(); rzCheck(); });
 
 
 
-// ─── v8.6.0: menú Edita (copiar, retallar, enganxar) i menú AEC
+// ─── v8.6.1: menú Edita (copiar, retallar, enganxar) i menú AEC
 function menuCopy() {
   if (typeof tlSelText === 'function' && tlSelText()) { tlCopy(); return; }
   if (annCopy(false)) return;
@@ -21150,7 +21182,7 @@ function rvCloudPath(ctx, pts, r) {
   }
   ctx.closePath();
 }
-// ── v8.6.0: núvols de revisió numerats (△n) i taula de revisions
+// ── v8.6.1: núvols de revisió numerats (△n) i taula de revisions
 function rvRevs(doc) { doc = doc || getActiveDoc(); if (!doc) return []; return doc.revs || (doc.revs = []); }
 function rvRevSync() {
   const s = $('rv-rev'); if (!s) return; const d = getActiveDoc(), L = d ? rvRevs(d) : [];
@@ -21372,7 +21404,7 @@ async function rvDown(e) {
     if (a) rvDrag = { kind: 'move', a, p0: p, last: p, moved: false };
     return;
   }
-  if (rvTool === 'revtable') {   // v8.6.0
+  if (rvTool === 'revtable') {   // v8.6.1
     const lines = ['REVISIONS'].concat(rvRevLines(doc)), S = RENDER_SCALE;
     rvAdd({ sub: 'free', x1: p.x, y1: p.y, x2: p.x + 240 * S, y2: p.y + (lines.length * 12 + 10) * S, color: '#171B21', w: 1.5, fs: 10, text: lines.join('\n') });
     rvSetTool('select'); return;
@@ -21443,7 +21475,7 @@ async function rvUp() {
 }
 function rvPolyEnd() {
   const P = rvPoly; rvPoly = null; if (!P || P.pts.length < 3) { rvDrawSel(); return; }
-  const dd = getActiveDoc(), rv = P.sub === 'cloud' && dd && dd.revCur ? { rev: dd.revCur } : {};   // v8.6.0
+  const dd = getActiveDoc(), rv = P.sub === 'cloud' && dd && dd.revCur ? { rev: dd.revCur } : {};   // v8.6.1
   rvAdd({ sub: P.sub, pts: P.pts, color: P.color, w: 1.5, ...rv });
 }
 function rvEsc() { if (rvPoly) { rvPoly = null; rvDrawSel(); return true; } if (rvSel) { rvSel = null; rvRender(); rvDrawSel(); return true; } return false; }
@@ -21688,12 +21720,12 @@ function cmpOpen(mode) {
   if (!getActiveDoc()) return;
   if (typeof mode === 'string') CMPS.mode = mode;
   CMPS.a = activeDocId; CMPS.b = (docs.find(d => d.id !== activeDocId) || getActiveDoc()).id; CMPS.ai = getActiveDoc().curIdx; CMPS.bi = Math.min(CMPS.ai, (docs.find(d => d.id === CMPS.b).pages.length - 1));
-  if (CMPS.b === CMPS.a) CMPS.bi = Math.min(CMPS.ai + 1, getActiveDoc().pages.length - 1);   // v8.6.0: dos plànols del mateix document
+  if (CMPS.b === CMPS.a) CMPS.bi = Math.min(CMPS.ai + 1, getActiveDoc().pages.length - 1);   // v8.6.1: dos plànols del mateix document
   const opts = docs.map(d => `<option value="${d.id}">${cpEsc(d.name)}</option>`).join('');
   $('cmp-a').innerHTML = opts; $('cmp-b').innerHTML = opts; $('cmp-a').value = CMPS.a; $('cmp-b').value = CMPS.b;
   $('cmp').classList.remove('hidden'); document.body.classList.add('cmp-on'); cmpRun();
 }
-function splitOpen() { cmpOpen('side'); }   // v8.6.0: vista dividida sincronitzada
+function splitOpen() { cmpOpen('side'); }   // v8.6.1: vista dividida sincronitzada
 function cmpClose() { $('cmp').classList.add('hidden'); document.body.classList.remove('cmp-on'); }
 function cmpStep(d) {
   const A = docs.find(x => x.id === CMPS.a), Bd = docs.find(x => x.id === CMPS.b); if (!A || !Bd) return;
@@ -21789,7 +21821,7 @@ $('rv-author').value = rvAuthor;
 $('rv-author').addEventListener('change', e => { rvAuthor = e.target.value.trim().slice(0, 80); try { localStorage.setItem('guaita-author', rvAuthor); } catch (er) {} });
 ['rv-f-page', 'rv-f-status', 'rv-f-author', 'rv-f-kind'].forEach(id => $(id).addEventListener('change', () => { rvFilter.page = $('rv-f-page').value; rvFilter.status = $('rv-f-status').value; rvRender(); }));
 let RV_CUST = []; try { RV_CUST = JSON.parse(localStorage.getItem('guaita-stamps') || '[]').filter(x => Array.isArray(x) && typeof x[0] === 'string').slice(0, 20); } catch (e) { }
-function rvStampFill(sel) {   // v8.6.0: els segells personalitzats es recorden
+function rvStampFill(sel) {   // v8.6.1: els segells personalitzats es recorden
   const s = $('rv-stamp'), v = sel || s.value; s.textContent = '';
   const add = (val, txt) => { const o = document.createElement('option'); o.value = val; o.textContent = txt; s.appendChild(o); };
   RV_STAMPS.concat(RV_CUST).forEach(x => add(x[0], x[0])); add('__custom', 'Personalitzat…'); if (RV_CUST.length) add('__clear', 'Delete custom stamps');
@@ -21910,7 +21942,7 @@ async function rvWrite(out, outPage, list, rot, font, fontB) {
             }
           }
           ops += 'S Q ';
-          if (a.rev) {   // v8.6.0: triangle numerat
+          if (a.rev) {   // v8.6.1: triangle numerat
             const vx = Math.min(...a.pts.map(q => q.x)), vy = Math.min(...a.pts.map(q => q.y)), sv = 24 * S;
             const T1 = P(vx, vy - sv * 1.15), T2 = P(vx - sv * 0.6, vy - sv * 0.15), T3 = P(vx + sv * 0.6, vy - sv * 0.15), TC = P(vx, vy - sv * 0.47);
             ops += `q ${cs} RG 1 1 1 rg 1.2 w ${f2(T1.x)} ${f2(T1.y)} m ${f2(T2.x)} ${f2(T2.y)} l ${f2(T3.x)} ${f2(T3.y)} l h B Q ` + txtOps([String(a.rev)], TC.x, TC.y, 10, fntB, true, col);

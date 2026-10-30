@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.6.0** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.6.1** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -170,9 +170,9 @@ Two temporary in-memory lists for the pages you take out of documents (**Tools �
 - The **Home** tab, always on the left, shows the home screen even with documents open: open more, reopen those from the last session or switch document. A second click goes back.
 - **Close all**, always on the right, asks for confirmation; if any document has unsaved changes, a second warning appears (cancel, review them one by one or close without saving). The names stay under “Documents from the last session”, and the page tray and bin are kept.
 
-### AEC menu
+### Drawings menu
 
-The **AEC** menu gathers the architecture, engineering and drawing tools in one place, even if some are also in other menus or buttons: **Measure** (distances, polyline, area and perimeter, count objects, calibrate the scale with a known dimension and the measurements panel), **Revisions** (compare revisions, review cloud and status stamp), **Drawing sets** (automatic index, links between drawings and index from the bookmarks) and **Scale and size** (nominal 100 %, real size and calibration).
+The **Drawings** menu gathers the tools for working with drawings and technical documentation in one place, even if some are also in other menus or buttons: **Measure** (distances, polyline, area and perimeter, count objects, calibrate the scale with a known dimension and the measurements panel), **Revisions** (compare revisions, review cloud and status stamp), **Drawing sets** (automatic index, links between drawings and index from the bookmarks) and **Scale and size** (nominal 100 %, real size and calibration). The active tool carries a ✔ mark, the «Scale and size» title shows the page scale, «Real size» shows whether the screen is calibrated, and «Layer states» is disabled if the PDF has no layers. At the end of the menu there is the **Drawings help**.
 
 ### Edit: copy, cut and paste
 
@@ -184,7 +184,7 @@ The ruler button in the status bar (**Real size**) applies the calibrated zoom; 
 
 In the **Review** bar, next to the cloud, there is the revision selector and the **△+** button. Create a revision (for example «First issue») and every new cloud carries the number of the active revision inside a triangle, also in the saved PDF (the annotations get the subject «Rev n»). Switch revision with the selector; «No revision» draws clouds without a number.
 
-The table button (or **AEC › Revision table…**) lists each revision with its date, an editable description, the number of clouds and the pages they are on. You can **copy the table** to a spreadsheet or **insert it on the page** (for example in the title block) as a text box. A revision can only be removed if it has no clouds. Revisions are remembered while the document stays open.
+The table button (or **Drawings › Revision table…**) lists each revision with its date, an editable description, the number of clouds and the pages they are on. You can **copy the table** to a spreadsheet or **insert it on the page** (for example in the title block) as a text box. A revision can only be removed if it has no clouds. Revisions are remembered while the document stays open.
 
 ### Custom status stamps
 
@@ -192,11 +192,11 @@ In the stamp selector, **Custom…** asks for a text and saves it in the list (u
 
 ### Layer states
 
-The **Layers** panel (or **AEC › Layer states…**) has a state selector. Set the layers as you like (for example only «Structure»), press **Save…** and name it. Choosing the state later re-applies the visible and hidden layers in one click. States are remembered in this browser, by file name; the **×** deletes the chosen state. If you save or print after applying a state, the PDF carries that visibility.
+The **Layers** panel (or **Drawings › Layer states…**) has a state selector. Set the layers as you like (for example only «Structure»), press **Save…** and name it. Choosing the state later re-applies the visible and hidden layers in one click. States are remembered in this browser, by file name; the **×** deletes the chosen state. If you save or print after applying a state, the PDF carries that visibility.
 
 ### Synchronised split view
 
-**AEC › Synchronised split view…** opens two drawings side by side (the current page and the next one, or another open document) in the comparison viewer. Zoom (`Ctrl`+wheel) and panning are shared, so you see the same area of both. On each side you can choose the document and type the page number; with «Synchronised pages» the arrows move both at once. It is a viewing aid: annotations cannot be edited from here.
+**Drawings › Synchronised split view…** opens two drawings side by side (the current page and the next one, or another open document) in the comparison viewer. Zoom (`Ctrl`+wheel) and panning are shared, so you see the same area of both. On each side you can choose the document and type the page number; with «Synchronised pages» the arrows move both at once. It is a viewing aid: annotations cannot be edited from here.
 
 ### Zoom and real size
 

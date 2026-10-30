@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 8.6.0** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.6.1** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -170,9 +170,9 @@ Dues llistes temporals en memòria per a les pàgines que treus dels documents (
 - La pestanya **Inici**, sempre a l'esquerra, mostra la pantalla d'inici encara que hi hagi documents oberts: obrir-ne més, reobrir els de l'última sessió o canviar de document. Un segon clic hi torna.
 - **Tancar-ho tot**, sempre a la dreta, demana confirmació; si algun document té canvis sense desar, surt un segon avís (cancel·lar, revisar-los un per un o tancar-los sense desar). Els noms queden a «Documents de l'última sessió», i la safata i la paperera de pàgines es conserven.
 
-### Menú AEC
+### Menú Plànols
 
-El menú **AEC** reuneix les eines d'arquitectura, enginyeria i plànols en un sol lloc, encara que algunes també siguin a altres menús o botons: **Mesurar** (distàncies, polilínia, àrea i perímetre, comptar objectes, calibrar l'escala amb una cota i panell de mesures), **Revisions** (comparar revisions, núvol de revisió i segell d'estat), **Jocs de plànols** (índex automàtic, enllaços entre plànols i índex a partir dels marcadors) i **Escala i mida** (100 % nominal, mida real i calibratge).
+El menú **Plànols** reuneix les eines per treballar amb plànols i documentació tècnica en un sol lloc, encara que algunes també siguin a altres menús o botons: **Mesurar** (distàncies, polilínia, àrea i perímetre, comptar objectes, calibrar l'escala amb una cota i panell de mesures), **Revisions** (comparar revisions, núvol de revisió i segell d'estat), **Jocs de plànols** (índex automàtic, enllaços entre plànols i índex a partir dels marcadors) i **Escala i mida** (100 % nominal, mida real i calibratge). L'eina activa porta una marca ✔, el títol d'«Escala i mida» mostra l'escala de la pàgina, «Mida real» indica si la pantalla està calibrada i «Estats de capes» es desactiva si el PDF no té capes. Al final del menú hi ha l'**Ajuda dels plànols**.
 
 ### Edita: copiar, retallar i enganxar
 
@@ -184,7 +184,7 @@ El botó de la regla de la barra d'estat (**Mida real**) aplica el zoom calibrat
 
 A la barra de **Revisar**, al costat del núvol, hi ha el selector de revisió i el botó **△+**. Crea una revisió (per exemple «Primera emissió») i tots els núvols nous porten el número de la revisió activa dins d'un triangle, també al PDF desat (les anotacions tenen l'assumpte «Rev n»). Canvia de revisió amb el selector; «Sense revisió» dibuixa núvols sense número.
 
-El botó de la taula (o **AEC › Taula de revisions…**) mostra cada revisió amb la data, la descripció (editable), el nombre de núvols i les pàgines on són. Pots **copiar la taula** a un full de càlcul o **inserir-la a la pàgina** (per exemple al caixetí) com a quadre de text. Només es pot treure una revisió si no té núvols. Les revisions es recorden mentre el document és obert.
+El botó de la taula (o **Plànols › Taula de revisions…**) mostra cada revisió amb la data, la descripció (editable), el nombre de núvols i les pàgines on són. Pots **copiar la taula** a un full de càlcul o **inserir-la a la pàgina** (per exemple al caixetí) com a quadre de text. Només es pot treure una revisió si no té núvols. Les revisions es recorden mentre el document és obert.
 
 ### Segells d'estat personalitzats
 
@@ -192,11 +192,11 @@ Al selector de segells, **Personalitzat…** demana un text i el desa a la llist
 
 ### Estats de capes
 
-Al tauler **Capes** (o a **AEC › Estats de capes…**) hi ha un selector d'estats. Posa les capes com vulguis (per exemple només «Estructura»), prem **Desa…** i dona-li un nom. Quan triïs l'estat, es tornen a aplicar a un clic les capes visibles i amagades. Els estats es recorden en aquest navegador, per nom de fitxer; la **×** elimina l'estat triat. Si desa o imprimeixes després d'aplicar un estat, el PDF porta aquella visibilitat.
+Al tauler **Capes** (o a **Plànols › Estats de capes…**) hi ha un selector d'estats. Posa les capes com vulguis (per exemple només «Estructura»), prem **Desa…** i dona-li un nom. Quan triïs l'estat, es tornen a aplicar a un clic les capes visibles i amagades. Els estats es recorden en aquest navegador, per nom de fitxer; la **×** elimina l'estat triat. Si desa o imprimeixes després d'aplicar un estat, el PDF porta aquella visibilitat.
 
 ### Vista dividida sincronitzada
 
-**AEC › Vista dividida sincronitzada…** obre dos plànols costat a costat (la pàgina actual i la següent, o un altre document obert) dins el visor de comparació. El zoom (`Ctrl`+roda) i el desplaçament són comuns, de manera que veus la mateixa zona dels dos. A cada costat pots triar el document i escriure el número de pàgina; amb «Pàgines sincronitzades» les fletxes avancen les dues alhora. És una vista per consultar: no es poden editar anotacions des d'aquí.
+**Plànols › Vista dividida sincronitzada…** obre dos plànols costat a costat (la pàgina actual i la següent, o un altre document obert) dins el visor de comparació. El zoom (`Ctrl`+roda) i el desplaçament són comuns, de manera que veus la mateixa zona dels dos. A cada costat pots triar el document i escriure el número de pàgina; amb «Pàgines sincronitzades» les fletxes avancen les dues alhora. És una vista per consultar: no es poden editar anotacions des d'aquí.
 
 ### Zoom i mida real
 
