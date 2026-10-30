@@ -2,7 +2,7 @@
 <p align="center"><img src="guaitaPDF_social_preview.png" alt="Guaita PDF Edit · SBS BIM Consulting" width="100%"></p>
 
 <p align="center">
-<img src="https://img.shields.io/badge/versi%C3%B3-8.2.1-C6FF00?style=for-the-badge&labelColor=0b0d07" alt="8.2.1">
+<img src="https://img.shields.io/badge/versi%C3%B3-8.3.3-C6FF00?style=for-the-badge&labelColor=0b0d07" alt="8.3.3">
 <img src="https://img.shields.io/badge/llic%C3%A8ncia-AGPL--3.0--only-FF2ECC?style=for-the-badge&labelColor=0b0d07" alt="AGPL-3.0-only">
 <img src="https://img.shields.io/badge/offline-0%20CDN-00E5FF?style=for-the-badge&labelColor=0b0d07" alt="offline">
 <img src="https://img.shields.io/badge/PWA-instal%C2%B7lable-FFE500?style=for-the-badge&labelColor=0b0d07" alt="PWA">
@@ -47,6 +47,7 @@
 | 🔍 **Comparar revisions** | Superposa dues pàgines: el que s'ha tret en vermell i el que s'ha afegit en blau; alineació automàtica o amb 2 punts, zones amb canvis i desament a PDF o PNG |
 | 🧺 **Safata i paperera** | Llistes temporals per traslladar pàgines entre documents i recuperar les descartades; amagar, desar com a PDF |
 | 💾 **Desar i sessió** | Desar i Desar com… (Ctrl+S, Ctrl+Maj+S), reordenar pestanyes arrossegant i reobrir els documents de l'última sessió |
+| 🔎 **Zoom i mida real** | Zoom numèric editable, 100 % nominal i **Mida real** calibrada amb un full A4 (el paper a mida física a la pantalla) |
 | 🛡 **guaitaPDFscan** | Analitza i desarma un PDF sospitós en una finestra aïllada; l'editor només rep el PDF net |
 | 🖨 **Impressió** | Previsualització amb paper, orientació i escala (com Acrobat) |
 | 🌐 **Idiomes** | Català i anglès |
@@ -113,6 +114,7 @@ La navegació de marcadors va a la pàgina (no a la posició exacta); «Insereix
 | 🔍 **Compare revisions** | Overlay two pages: what was removed in red and what was added in blue; automatic or 2-point alignment, changed areas and saving to PDF or PNG |
 | 🧺 **Tray and bin** | Temporary lists to move pages between documents and recover discarded ones; hide, save as PDF |
 | 💾 **Save and session** | Save and Save as… (Ctrl+S, Ctrl+Shift+S), reorder tabs by dragging and reopen the documents from the last session |
+| 🔎 **Zoom and real size** | Editable numeric zoom, nominal 100 % and a **Real size** zoom calibrated with an A4 sheet (the paper at physical size on screen) |
 | 🛡 **guaitaPDFscan** | Analyse and disarm a suspicious PDF in an isolated window; the editor only receives the clean PDF |
 | 🖨 **Print** | Preview with paper, orientation and scale (Acrobat-style) |
 | 🌐 **Languages** | Catalan and English |

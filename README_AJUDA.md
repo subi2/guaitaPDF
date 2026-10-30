@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 8.2.1** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.3.3** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -148,6 +148,15 @@ Dues llistes temporals en memòria per a les pàgines que treus dels documents (
 4.  Desa el resultat com a **PDF** (amb una llegenda), com a **PNG** o **Obre'l com a document**.
 
 > ⚠️ És una comparació de píxels: detecta canvis de dibuix i de text, però no entén els objectes (un text que només canvia de lletra també surt com a canvi). En plànols molt grans (A1, A0) la resolució baixa sola perquè no falti memòria.
+
+### Zoom i mida real
+
+El número de zoom de la barra d'estat és un camp: clica'l, escriu un valor (de 5 a 2000, també amb coma o amb «%») i prem `Retorn` (`Esc` cancel·la).
+
+- **100 % nominal** (botó *100* o **Vista › 100 % nominal**): 1 punt PDF = 1 píxel CSS. **No és la mida del paper**: un píxel CSS fa 1/96 de polzada i un punt PDF 1/72, i el navegador no sap la mida física de la pantalla.
+- **Mida real** (botó de la regla o **Vista › Mida real**): el paper a mida física, segons un calibratge que fas un sol cop. Un A4 hi fa 210 × 297 mm a la pantalla. Quan el zoom coincideix amb el de mida real, surt una marca *REAL* al costat del número.
+- **Vista › Calibrar mida real…**: posa un full A4 apaïsat contra la pantalla i arrossega la nansa de la regla (o fes servir ← → ; `Maj` = més ràpid) fins que la vora dreta del full coincideixi amb els 297 mm. Si la finestra és massa estreta, hi ha l'opció de calibrar amb el costat curt (210 mm). **Valor estàndard** torna al càlcul de 96 píxels per polzada.
+- El calibratge es desa al navegador com a densitat física (píxels per mm) i sobreviu al zoom del navegador i als canvis d'escalat. Si canvies de pantalla, l'app avisa que potser cal recalibrar-lo; amb diverses pantalles només es desa un calibratge.
 
 ### Dividir i índex
 
@@ -427,6 +436,11 @@ Si la safata i la paperera són activades, a la **Paperera** (clica la zona o la
 **❓ Es poden obrir les mesures a un altre visor?**
 
 Es desen com a anotacions de mesura estàndard del PDF, que els visors que mostren anotacions veuen. Per tornar-les a editar (moure, canviar categoria) cal obrir-les a Guaita.
+
+
+**❓ Per què el 100 % no és la mida del paper?**
+
+Perquè el 100 % és nominal (1 punt PDF = 1 píxel CSS) i el navegador no sap la mida real de la pantalla. Calibra-la un cop a **Vista › Calibrar mida real…** i fes servir el botó **Mida real**.
 
 
 

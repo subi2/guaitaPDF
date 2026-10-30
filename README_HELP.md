@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.2.1** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.3.3** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -148,6 +148,15 @@ Two temporary in-memory lists for the pages you take out of documents (**Tools �
 4.  Save the result as a **PDF** (with a legend), as a **PNG**, or **Open it as a document**.
 
 > ⚠️ It is a pixel comparison: it detects drawing and text changes but does not understand objects (a text that only changes typeface also shows as a change). On very large drawings (A1, A0) the resolution drops by itself so memory does not run out.
+
+### Zoom and real size
+
+The zoom number in the status bar is a field: click it, type a value (5 to 2000, with a comma or “%” if you like) and press `Enter` (`Esc` cancels).
+
+- **100 % nominal** (the *100* button or **View › 100 % nominal**): 1 PDF point = 1 CSS pixel. **It is not the paper size**: a CSS pixel is 1/96 of an inch and a PDF point 1/72, and the browser does not know the physical size of the screen.
+- **Real size** (the ruler button or **View › Real size**): the paper at physical size, according to a calibration you do once. An A4 measures 210 × 297 mm on the screen. When the zoom matches the real-size zoom, a *REAL* mark appears next to the number.
+- **View › Calibrate real size…**: hold an A4 sheet in landscape against the screen and drag the ruler handle (or use ← → ; `Shift` = faster) until the sheet's right edge matches 297 mm. If the window is too narrow, you can calibrate with the short side (210 mm). **Standard value** goes back to the 96-pixels-per-inch calculation.
+- The calibration is saved in the browser as a physical density (pixels per mm) and survives browser zoom and scaling changes. If you change screen, the app warns you that you may need to recalibrate; with several screens only one calibration is stored.
 
 ### Split and index
 
@@ -427,6 +436,11 @@ It is a pixel comparison. If one version has a different offset, scale or rotati
 **❓ Can the measurements be opened in another viewer?**
 
 They are saved as standard PDF measurement annotations, which viewers that show annotations display. To edit them again (move, change category) open them in Guaita.
+
+
+**❓ Why is 100 % not the paper size?**
+
+Because 100 % is nominal (1 PDF point = 1 CSS pixel) and the browser does not know the screen's real size. Calibrate it once at **View › Calibrate real size…** and use the **Real size** button.
 
 
 
