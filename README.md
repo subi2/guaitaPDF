@@ -2,7 +2,7 @@
 <p align="center"><img src="guaitaPDF_social_preview.png" alt="Guaita PDF Edit · SBS BIM Consulting" width="100%"></p>
 
 <p align="center">
-<img src="https://img.shields.io/badge/versi%C3%B3-8.3.8-C6FF00?style=for-the-badge&labelColor=0b0d07" alt="8.3.8">
+<img src="https://img.shields.io/badge/versi%C3%B3-8.4.1-C6FF00?style=for-the-badge&labelColor=0b0d07" alt="8.4.1">
 <img src="https://img.shields.io/badge/llic%C3%A8ncia-AGPL--3.0--only-FF2ECC?style=for-the-badge&labelColor=0b0d07" alt="AGPL-3.0-only">
 <img src="https://img.shields.io/badge/offline-0%20CDN-00E5FF?style=for-the-badge&labelColor=0b0d07" alt="offline">
 <img src="https://img.shields.io/badge/PWA-instal%C2%B7lable-FFE500?style=for-the-badge&labelColor=0b0d07" alt="PWA">
@@ -49,6 +49,7 @@
 | 💾 **Desar i sessió** | Desar i Desar com… (Ctrl+S, Ctrl+Maj+S), reordenar pestanyes arrossegant i reobrir els documents de l'última sessió |
 | 📐 **Plànols** | Índex automàtic de plànols (codi i títol del caixetí → marcadors, índex o CSV) i enllaços «veure A-201» entre plànols |
 | 🏠 **Inici i Tancar-ho tot** | Pestanya Inici sempre a mà i botó per tancar tots els documents amb avís |
+| 🧰 **Menú AEC i Edita** | Menú AEC amb totes les eines de plànols i enginyeria; Copia, Retalla i Enganxa a Edita |
 | 🔎 **Zoom i mida real** | Zoom numèric editable, 100 % nominal i **Mida real** calibrada amb un full A4 (el paper a mida física a la pantalla) |
 | 🛡 **guaitaPDFscan** | Analitza i desarma un PDF sospitós en una finestra aïllada; l'editor només rep el PDF net |
 | 🖨 **Impressió** | Previsualització amb paper, orientació i escala (com Acrobat) |
@@ -118,6 +119,7 @@ La navegació de marcadors va a la pàgina (no a la posició exacta); «Insereix
 | 💾 **Save and session** | Save and Save as… (Ctrl+S, Ctrl+Shift+S), reorder tabs by dragging and reopen the documents from the last session |
 | 📐 **Drawings** | Automatic drawing index (title-block code and title → bookmarks, index or CSV) and “see A-201” links between drawings |
 | 🏠 **Home and Close all** | An always-available Home tab and a button to close all documents with a warning |
+| 🧰 **AEC menu and Edit** | An AEC menu with all the drawing and engineering tools; Copy, Cut and Paste in Edit |
 | 🔎 **Zoom and real size** | Editable numeric zoom, nominal 100 % and a **Real size** zoom calibrated with an A4 sheet (the paper at physical size on screen) |
 | 🛡 **guaitaPDFscan** | Analyse and disarm a suspicious PDF in an isolated window; the editor only receives the clean PDF |
 | 🖨 **Print** | Preview with paper, orientation and scale (Acrobat-style) |

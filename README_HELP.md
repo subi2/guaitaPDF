@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.3.8** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.4.1** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -169,6 +169,16 @@ Two temporary in-memory lists for the pages you take out of documents (**Tools �
 
 - The **Home** tab, always on the left, shows the home screen even with documents open: open more, reopen those from the last session or switch document. A second click goes back.
 - **Close all**, always on the right, asks for confirmation; if any document has unsaved changes, a second warning appears (cancel, review them one by one or close without saving). The names stay under “Documents from the last session”, and the page tray and bin are kept.
+
+### AEC menu
+
+The **AEC** menu gathers the architecture, engineering and drawing tools in one place, even if some are also in other menus or buttons: **Measure** (distances, polyline, area and perimeter, count objects, calibrate the scale with a known dimension and the measurements panel), **Revisions** (compare revisions, review cloud and status stamp), **Drawing sets** (automatic index, links between drawings and index from the bookmarks) and **Scale and size** (nominal 100 %, real size and calibration).
+
+### Edit: copy, cut and paste
+
+The **Edit** menu has **Copy**, **Cut** and **Paste** (`Ctrl+C`, `Ctrl+X`, `Ctrl+V`): they act on the selected text, the selected annotation or the selected pages, depending on what you have selected. There is also a **Page tray and bin** entry to turn them on or off.
+
+The ruler button in the status bar (**Real size**) applies the calibrated zoom; if you have not calibrated the screen yet, it warns you and opens the calibration.
 
 ### Zoom and real size
 

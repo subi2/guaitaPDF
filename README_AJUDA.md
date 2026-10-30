@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 8.3.8** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.4.1** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -169,6 +169,16 @@ Dues llistes temporals en memòria per a les pàgines que treus dels documents (
 
 - La pestanya **Inici**, sempre a l'esquerra, mostra la pantalla d'inici encara que hi hagi documents oberts: obrir-ne més, reobrir els de l'última sessió o canviar de document. Un segon clic hi torna.
 - **Tancar-ho tot**, sempre a la dreta, demana confirmació; si algun document té canvis sense desar, surt un segon avís (cancel·lar, revisar-los un per un o tancar-los sense desar). Els noms queden a «Documents de l'última sessió», i la safata i la paperera de pàgines es conserven.
+
+### Menú AEC
+
+El menú **AEC** reuneix les eines d'arquitectura, enginyeria i plànols en un sol lloc, encara que algunes també siguin a altres menús o botons: **Mesurar** (distàncies, polilínia, àrea i perímetre, comptar objectes, calibrar l'escala amb una cota i panell de mesures), **Revisions** (comparar revisions, núvol de revisió i segell d'estat), **Jocs de plànols** (índex automàtic, enllaços entre plànols i índex a partir dels marcadors) i **Escala i mida** (100 % nominal, mida real i calibratge).
+
+### Edita: copiar, retallar i enganxar
+
+El menú **Edita** té **Copia**, **Retalla** i **Enganxa** (`Ctrl+C`, `Ctrl+X`, `Ctrl+V`): actuen sobre el text seleccionat, l'anotació seleccionada o les pàgines seleccionades, segons el que tinguis seleccionat. També hi ha l'entrada **Safata i paperera de pàgines** per activar-les o desactivar-les.
+
+El botó de la regla de la barra d'estat (**Mida real**) aplica el zoom calibrat; si encara no has calibrat la pantalla, avisa i obre el calibratge.
 
 ### Zoom i mida real
 
