@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.6.1** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.7.2** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -189,6 +189,18 @@ The table button (or **Drawings › Revision table…**) lists each revision wit
 ### Custom status stamps
 
 In the stamp selector, **Custom…** asks for a text and saves it in the list (up to 20, with the chosen colour) so you always have it at hand, even after reopening the app. The stamp carries your reviewer name and the date. «Delete custom stamps» empties the list.
+
+### Marks that are remembered
+
+Numbered clouds and stamps are remembered when you save: when you reopen the PDF in Guaita (or send it to a colleague who uses Guaita) you see the △n revision number, the revision table and the stamps again, listed in the **Review** panel. Other PDF readers show the clouds and stamps as ordinary annotations, but do not understand the number as data.
+
+The **Review** panel has two new filters, shown when the document has revisions or stamps: by **revision** (△n or no revision) and by **stamp** (APPROVED, REJECTED…). Marks from an earlier session are read-only and appear under «In the original PDF».
+
+### Revisions and stamps in Compose nodes
+
+The **Filter**, **Sort by**, **Group** and **Value** nodes have new properties: *Revision* (the highest on the page), *Revisions*, *Revision clouds* and *Stamps*; for example, filter «Stamps contains APPROVED» or sort by revision. Headers and footers accept the fields `[revision]`, `[revisions]` and `[stamp]`.
+
+The **Layers** node has a *Saved layer state…* mode that applies a state by name. The **Stamp** node can add the reviewer name and, with *Save as editable stamp*, leaves the stamp as a real PDF annotation (not an image), so it stays editable and is remembered in the Review panel.
 
 ### Layer states
 

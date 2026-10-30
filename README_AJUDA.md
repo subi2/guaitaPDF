@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 8.6.1** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.7.2** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -189,6 +189,18 @@ El botó de la taula (o **Plànols › Taula de revisions…**) mostra cada revi
 ### Segells d'estat personalitzats
 
 Al selector de segells, **Personalitzat…** demana un text i el desa a la llista (fins a 20, amb el color triat) perquè el tinguis sempre a mà, fins i tot en tornar a obrir l'aplicació. El segell porta la teva signatura de revisor i la data. «Esborra els personalitzats» buida la llista.
+
+### Marques que es recorden
+
+Els núvols numerats i els segells es recorden en desar: en reobrir el PDF a Guaita (o enviar-lo a un altre company que usi Guaita) hi tornes a veure el número de revisió △n, la taula de revisions i els segells, llistats al tauler **Revisar**. Altres lectors de PDF mostren els núvols i els segells com a anotacions normals, però no n'entenen el número com a dada.
+
+El tauler **Revisar** té dos filtres nous, que apareixen quan el document té revisions o segells: per **revisió** (△n o sense revisió) i per **segell** (APROVAT, REBUTJAT…). Les marques d'una sessió anterior són de només lectura i surten a «Al PDF original».
+
+### Revisions i segells als nodes de Composar
+
+Els nodes **Filtrar**, **Ordenar per**, **Agrupar** i **Valor** tenen propietats noves: *Revisió* (la més alta de la pàgina), *Revisions*, *Núvols de revisió* i *Segells*; per exemple, filtra «Segells conté APROVAT» o ordena per revisió. Les capçaleres i els peus accepten els camps `[revisió]`, `[revisions]` i `[segell]`.
+
+El node **Capes** té el mode *Estat de capes desat…* per aplicar un estat pel seu nom. El node **Segell** pot afegir el nom del revisor i, amb *Desar com a segell editable*, deixa el segell com a anotació real del PDF (no com a imatge), de manera que continua sent editable i es recorda al tauler Revisar.
 
 ### Estats de capes
 
