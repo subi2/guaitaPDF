@@ -192,7 +192,7 @@ Al selector de segells, **Personalitzat…** demana un text i el desa a la llist
 
 ### Estats de capes
 
-Al tauler **Capes** (o a **AEC › Estats de capes…**) hi ha un selector d'estats. Posa les capes com vulguis (per exemple només «Estructura»), prem **Desa…** i dona-li un nom. Quan trïis l'estat, es tornen a aplicar a un clic les capes visibles i amagades. Els estats es recorden en aquest navegador, per nom de fitxer; la **×** elimina l'estat triat. Si desa o imprimeixes després d'aplicar un estat, el PDF porta aquella visibilitat.
+Al tauler **Capes** (o a **AEC › Estats de capes…**) hi ha un selector d'estats. Posa les capes com vulguis (per exemple només «Estructura»), prem **Desa…** i dona-li un nom. Quan triïs l'estat, es tornen a aplicar a un clic les capes visibles i amagades. Els estats es recorden en aquest navegador, per nom de fitxer; la **×** elimina l'estat triat. Si desa o imprimeixes després d'aplicar un estat, el PDF porta aquella visibilitat.
 
 ### Vista dividida sincronitzada
 
