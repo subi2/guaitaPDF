@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 8.4.2** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.5.0** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -179,6 +179,16 @@ El menú **AEC** reuneix les eines d'arquitectura, enginyeria i plànols en un s
 El menú **Edita** té **Copia**, **Retalla** i **Enganxa** (`Ctrl+C`, `Ctrl+X`, `Ctrl+V`): actuen sobre el text seleccionat, l'anotació seleccionada o les pàgines seleccionades, segons el que tinguis seleccionat. També hi ha l'entrada **Safata i paperera de pàgines** per activar-les o desactivar-les.
 
 El botó de la regla de la barra d'estat (**Mida real**) aplica el zoom calibrat; si encara no has calibrat la pantalla, avisa i obre el calibratge.
+
+### Núvols de revisió numerats i taula de revisions
+
+A la barra de **Revisar**, al costat del núvol, hi ha el selector de revisió i el botó **△+**. Crea una revisió (per exemple «Primera emissió») i tots els núvols nous porten el número de la revisió activa dins d'un triangle, també al PDF desat (les anotacions tenen l'assumpte «Rev n»). Canvia de revisió amb el selector; «Sense revisió» dibuixa núvols sense número.
+
+El botó de la taula (o **AEC › Taula de revisions…**) mostra cada revisió amb la data, la descripció (editable), el nombre de núvols i les pàgines on són. Pots **copiar la taula** a un full de càlcul o **inserir-la a la pàgina** (per exemple al caixetí) com a quadre de text. Només es pot treure una revisió si no té núvols. Les revisions es recorden mentre el document és obert.
+
+### Segells d'estat personalitzats
+
+Al selector de segells, **Personalitzat…** demana un text i el desa a la llista (fins a 20, amb el color triat) perquè el tinguis sempre a mà, fins i tot en tornar a obrir l'aplicació. El segell porta la teva signatura de revisor i la data. «Esborra els personalitzats» buida la llista.
 
 ### Zoom i mida real
 

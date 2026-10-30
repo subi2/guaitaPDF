@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.4.2** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.5.0** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -179,6 +179,16 @@ The **AEC** menu gathers the architecture, engineering and drawing tools in one 
 The **Edit** menu has **Copy**, **Cut** and **Paste** (`Ctrl+C`, `Ctrl+X`, `Ctrl+V`): they act on the selected text, the selected annotation or the selected pages, depending on what you have selected. There is also a **Page tray and bin** entry to turn them on or off.
 
 The ruler button in the status bar (**Real size**) applies the calibrated zoom; if you have not calibrated the screen yet, it warns you and opens the calibration.
+
+### Numbered revision clouds and revision table
+
+In the **Review** bar, next to the cloud, there is the revision selector and the **△+** button. Create a revision (for example «First issue») and every new cloud carries the number of the active revision inside a triangle, also in the saved PDF (the annotations get the subject «Rev n»). Switch revision with the selector; «No revision» draws clouds without a number.
+
+The table button (or **AEC › Revision table…**) lists each revision with its date, an editable description, the number of clouds and the pages they are on. You can **copy the table** to a spreadsheet or **insert it on the page** (for example in the title block) as a text box. A revision can only be removed if it has no clouds. Revisions are remembered while the document stays open.
+
+### Custom status stamps
+
+In the stamp selector, **Custom…** asks for a text and saves it in the list (up to 20, with the chosen colour) so you always have it at hand, even after reopening the app. The stamp carries your reviewer name and the date. «Delete custom stamps» empties the list.
 
 ### Zoom and real size
 
