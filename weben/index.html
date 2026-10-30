@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 8.6.1 — Multi-document PDF editor (Guaita Apps suite)
+  Guaita PDF Edit 8.7.0 — Multi-document PDF editor (Guaita Apps suite)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v8.6.1 (EN)</title>
+<title>Guaita PDF Edit v8.7.0 (EN)</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -1363,7 +1363,7 @@ body.mode-compose #status-bar .sgrp, body.mode-compose #st-info { display: none;
 #lb-chip b { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 11px; background: #D6FB41; color: #171B21; font: 700 11.5px 'IBM Plex Mono', monospace; display: flex; align-items: center; justify-content: center; }
 #lb-chip .lbc-h { color: var(--text-dim2); overflow: hidden; text-overflow: ellipsis; }
 body.lb-dragging #lb-chip { opacity: .35; }
-/* v8.6.1: durant l'arrossegament la graella es fa translúcida i les zones queden per sobre; sobre una zona la pàgina es fa icona */
+/* v8.7.0: durant l'arrossegament la graella es fa translúcida i les zones queden per sobre; sobre una zona la pàgina es fa icona */
 body.lb-dragging #viewer-container .lb-grid .lb-box:not(.lb-ph) { opacity: .4; transition: opacity .15s; }
 body.lb-dragging #viewer-container #lb-park, body.lb-dragging #viewer-container #lb-bin { z-index: 700; background: var(--bg-panel); box-shadow: 0 6px 22px rgba(0,0,0,.5); }
 body.lb-dragging #viewer-container #lb-park.on { background: #F5A524; }
@@ -2354,7 +2354,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <button id="mode-compose" onclick="setMode('compose')" title="Compose: merge documents and pages with a node tree (sources → Merge → Final document)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Compose</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v8.6.1</span>
+  <span class="tag">v8.7.0</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Switch to light theme"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2740,7 +2740,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.6.1</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.7.0</small></div>
           <div id="wl-inst" class="hidden"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg><div class="wi-t"><b>Install Guaita PDF Edit as an app</b><span>Its own window, works offline and opens PDFs from your file manager.</span></div><button class="btn primary" onclick="pwaInstall()">Install</button><button class="wi-x" onclick="wlInstHide()" title="Hide this notice" aria-label="Hide this notice">×</button></div>
           <h1>PDF editor <em>local</em>, no cloud.</h1>
           <p>Open one or more PDFs or drag them onto the window. Everything is processed on this computer: no file leaves the browser.</p>
@@ -2858,6 +2858,8 @@ body.th-dragging #bin-drops .bh { display: block; }
       <select id="rv-f-status"><option value="all">All statuses</option><option value="open">Pending</option><option value="Accepted">Accepted</option><option value="Rejected">Rejected</option><option value="Completed">Resolved</option><option value="Cancelled">Cancelled</option></select>
       <select id="rv-f-author"></select>
       <select id="rv-f-kind"><option value="all">All types</option><option value="marks">Text marks</option><option value="notes">Notes and texts</option><option value="shapes">Shapes, stamps and others</option></select>
+      <select id="rv-f-rev" class="hidden"></select>
+      <select id="rv-f-stamp" class="hidden"></select>
     </div>
     <div id="rv-list"></div>
     <div id="rv-empty" class="sp-empty">There are no comments yet.<br>Choose a tool from the review bar and mark the page.</div>
@@ -3061,7 +3063,7 @@ body.th-dragging #bin-drops .bh { display: block; }
   <span id="st-worker" class="hidden" title="This environment does not allow pdf.js workers (embedded viewer or browser restrictions). PDFs are processed on the main thread: everything works the same, but large documents are slower. Opened directly in Chrome or Edge from disk, this does not normally happen.">pdf.js · main thread</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 8.6.1 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 8.7.0 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -4573,6 +4575,7 @@ async function loadPdfFile(file) {
     let outline = [];
     try { outline = await readOutline(pdfJs, pages); } catch (e) { console.warn('Marcadors no llegits:', e); }
     const { attachments, meta } = await readDocExtras(pdfJs, pdfBytes);
+    let gmR = null; try { gmR = await readGuaitaMarks(pdfJs); gmApply(pages, gmR); } catch (e) { }
     let pcNames = null; try { const pcs = await readPageColors(pdfJs); pcNames = pcs.__names || null; delete pcs.__names; Object.keys(pcs).forEach(k => { if (pages[+k]) pages[+k].pcol = pcs[k]; }); } catch (e) { }
     const newDoc = {
       id: generateId(),
@@ -4587,6 +4590,7 @@ async function loadPdfFile(file) {
       attachments, meta, ocOff: new Set()
     };
     if (pcNames) newDoc.pcolNames = pcNames;
+    if (gmR && gmR.revs.length) { newDoc.revs = gmR.revs; newDoc.revCur = gmR.revs.reduce((m, r) => Math.max(m, r.n), 0); }
     if (wmMarks) await wmApply(newDoc, wmMarks);
     if (msMarks) msApply(newDoc, msMarks);   // v8.2.0
     await sgDetect(newDoc, pdfBytes);
@@ -4786,6 +4790,28 @@ async function readPageColors(pdfJs) {   // el color de pàgina viatja a l'entra
   try { const md = await pdfJs.getMetadata(), s = md && md.info && md.info.Custom && md.info.Custom.GuaitaPageColors; String(s || '').split(';').forEach(t => { const [i, c] = t.split('='); if (/^\d+$/.test(i) && /^#[0-9a-f]{6}$/i.test(c || '')) m[+i - 1] = c; }); } catch (e) { }
   return m;
 }
+// v8.7.0 — marques que es recorden: núvols numerats i segells viatgen a l'entrada d'informació (GuaitaMarks / GuaitaRevisions)
+function gmPush(outPage, it) { it.r = (it.r || []).map(v => Math.round(v * 10) / 10); (outPage._gm || (outPage._gm = [])).push(it); }
+function gmWrite(out, pagesList, outPagesL, revs) {
+  const I = out.getInfoDict(), M = [];
+  pagesList.forEach((pd, pi) => {
+    if (!pd) return;
+    (outPagesL[pi] && outPagesL[pi]._gm || []).concat(pd.type === 'pdf' ? (pd.gm || []) : []).forEach(g => M.push(Object.assign({ p: pi + 1 }, g)));
+  });
+  if (M.length) I.set(PDFLib.PDFName.of('GuaitaMarks'), PDFLib.PDFString.of(encodeURIComponent(JSON.stringify(M.map(g => ({ p: g.p, k: g.k, r: g.r, rv: g.rv, l: g.l, a: g.a, d: g.d }))))));
+  if (revs && revs.length) I.set(PDFLib.PDFName.of('GuaitaRevisions'), PDFLib.PDFString.of(encodeURIComponent(JSON.stringify(revs.map(r => ({ n: r.n, date: r.date, desc: r.desc }))))));
+}
+async function readGuaitaMarks(pdfJs) {
+  const o = { items: [], revs: [] };
+  try {
+    const md = await pdfJs.getMetadata(), c = md && md.info && md.info.Custom; if (!c) return o;
+    const rd = k => { try { const j = JSON.parse(decodeURIComponent(String(c[k]))); return Array.isArray(j) ? j : []; } catch (e) { return []; } };
+    if (c.GuaitaMarks) o.items = rd('GuaitaMarks').filter(g => g && g.p > 0 && Array.isArray(g.r));
+    if (c.GuaitaRevisions) o.revs = rd('GuaitaRevisions').filter(r => r && r.n > 0);
+  } catch (e) { }
+  return o;
+}
+function gmApply(pages, G) { (G.items || []).forEach(g => { const pd = pages[g.p - 1]; if (pd) (pd.gm || (pd.gm = [])).push(g); }); }
 function pcolWrite(out, pagesList, names) {
   try { const nn = {}; Object.entries(names || {}).forEach(([h, v]) => { if (v && pagesList.some(q => q && q.pcol && q.pcol.toUpperCase() === h.toUpperCase())) nn[h.toUpperCase()] = v; }); if (Object.keys(nn).length) out.getInfoDict().set(PDFLib.PDFName.of('GuaitaColorNames'), PDFLib.PDFString.of(encodeURIComponent(JSON.stringify(nn)))); } catch (e) { console.warn('Colour names:', e); }
   try { const pc = pagesList.map((q, i) => q && q.pcol ? (i + 1) + '=' + q.pcol : '').filter(Boolean).join(';'); if (pc) out.getInfoDict().set(PDFLib.PDFName.of('GuaitaPageColors'), PDFLib.PDFString.of(pc)); } catch (e) { console.warn('Page colours:', e); }
@@ -8029,7 +8055,7 @@ function binUiSync() {
   $('bin-drops').classList.toggle('hidden', !binOn);
   $('thumb-list').classList.toggle('bin-on', binOn);
   const k = $('mi-bin') && $('mi-bin').querySelector('.mk'); if (k) k.textContent = binOn ? '✔' : '';
-  const k2 = $('mi-bin2') && $('mi-bin2').querySelector('.mk'); if (k2) k2.textContent = binOn ? '✔' : '';   // v8.6.1§
+  const k2 = $('mi-bin2') && $('mi-bin2').querySelector('.mk'); if (k2) k2.textContent = binOn ? '✔' : '';   // v8.7.0§
   lbChip(); updateTabsUI();
 }
 function binSetOn(v) {
@@ -8490,6 +8516,7 @@ async function generatePdfBytes(pagesList, pageNums = null, outline = null, extr
   try { ocWrite(out, X.ocOff || (ad && ad.ocOff) || null); } catch (e) { console.warn('Capes:', e); }
   if (X.meta) metaWrite(out, X.meta);
   pcolWrite(out, pagesList, Object.assign({}, PCN, (X.pcolNames || (ad && ad.pcolNames)) || {}));
+  try { gmWrite(out, pagesList, outPagesL, X.revs || (ad && ad.revs) || []); } catch (e) { console.warn('Marques recordades:', e); }
   for (const a of (X.attachments || [])) {
     try { await out.attach(a.bytes, a.name, { mimeType: a.mime || attMime(a.name), description: a.desc || undefined, creationDate: new Date(), modificationDate: new Date() }); } catch (e) { console.warn('Adjunt no incrustable:', a.name, e); }
   }
@@ -10454,7 +10481,7 @@ const HELP = {
 <h3>If the option does not appear</h3>
 <p>You need to open the app's web address (https), not the file from disk. Desktop Firefox and Safari do not install PWAs; on iPhone Safari: <b>Share › Add to Home Screen</b>.</p>`],
   about: ['About Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 8.6.1</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 8.7.0</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -11830,7 +11857,7 @@ function lbHover() {
     const hot = D.cx >= r.left && D.cx <= r.right && D.cy >= r.top && D.cy <= r.bottom;
     el.classList.toggle('on', hot); if (hot) D.hot = k;
   }
-  D.gh.style.transformOrigin = D.gx + 'px ' + D.gy + 'px'; D.gh.classList.toggle('mini', !!D.hot);   // v8.6.1
+  D.gh.style.transformOrigin = D.gx + 'px ' + D.gy + 'px'; D.gh.classList.toggle('mini', !!D.hot);   // v8.7.0
   if (D.hot) return;   // mentre hi som a sobre, no es recalcula la posició d'inserció
   const pos = lbPosAt(D.cx, D.cy); if (pos === D.pos) return;
   D.pos = pos;
@@ -14844,7 +14871,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 8.6.1 · pdf-lib';
+  const prod = 'Guaita PDF Edit 8.7.0 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -14883,7 +14910,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'XMP metadata'); del(cat, 'PieceInfo', 'private application data');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.6.1') })); rep.cleaned.push('document information'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.7.0') })); rep.cleaned.push('document information'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'thumbnails'));
@@ -18407,6 +18434,7 @@ async function fdTempDoc(f) {
   const pages = Array.from({ length: pdfJs.numPages }, (_, i) => ({ type: 'pdf', srcIdx: i, rotation: rots[i] || 0, annotations: [], pdfJs, pdfBytes: bytes, sourceName: f.name }));
   let outline = []; try { outline = await readOutline(pdfJs, pages); } catch (e) { }
   let ex = { attachments: [], meta: {} }; try { ex = await readDocExtras(pdfJs, bytes); } catch (e) { }
+  try { gmApply(pages, await readGuaitaMarks(pdfJs)); } catch (e) { }
   try { const pcs = await readPageColors(pdfJs); delete pcs.__names; Object.keys(pcs).forEach(k => { if (pages[+k]) pages[+k].pcol = pcs[k]; }); } catch (e) { }
   const d = { id: generateId(), name: f.name, pages, outline, history: [], redo: [], pageNums: null, curIdx: 0, selectedPages: [0], attachments: ex.attachments, meta: ex.meta, ocOff: new Set(), _tmp: true };
   if (bytesHas(bytes, '/ByteRange')) { try { const s = await sigScan(bytes); if (s.some(x => x.signed)) d.signed = { bytes, fields: s, count: s.filter(x => x.signed).length, verified: null }; } catch (e) { } }
@@ -19852,7 +19880,7 @@ async function ocRender() {
     box.appendChild(r);
   }
 }
-// ── v8.6.1: estats de capes desats («Estructura», «Instal·lacions»…)
+// ── v8.7.0: estats de capes desats («Estructura», «Instal·lacions»…)
 function ocStAll() { try { return JSON.parse(localStorage.getItem('guaita-ocstates') || '{}') || {}; } catch (e) { return {}; } }
 function ocStList(doc) { const a = ocStAll()[doc.name]; return Array.isArray(a) ? a : []; }
 function ocStStore(doc, list) { try { const o = ocStAll(); if (list.length) o[doc.name] = list; else delete o[doc.name]; localStorage.setItem('guaita-ocstates', JSON.stringify(o)); } catch (e) { toast('Could not save the state in this browser', true); } }
@@ -19879,7 +19907,7 @@ function ocStDel() {
   const doc = getActiveDoc(), s = $('oc-st-sel'); if (!doc || !s || s.value === '') { toast('Choose the state you want to delete first', true); return; }
   const L = ocStList(doc), st = L[+s.value]; if (!st) return; L.splice(+s.value, 1); ocStStore(doc, L); ocStFill(); toast('State «' + st.name + '» deleted');
 }
-// v8.6.1: estat dinàmic del menú Plànols
+// v8.7.0: estat dinàmic del menú Plànols
 async function plSync() {
   const doc = getActiveDoc();
   document.querySelectorAll('#menu-pl-list [data-pl]').forEach(b => {
@@ -19979,7 +20007,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 8.6.1 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 8.7.0 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadata:', e); }
 }
@@ -20207,7 +20235,7 @@ window.addEventListener('resize', () => { zoomLblSet(); rzCheck(); });
 
 
 
-// ─── v8.6.1: menú Edita (copiar, retallar, enganxar) i menú AEC
+// ─── v8.7.0: menú Edita (copiar, retallar, enganxar) i menú AEC
 function menuCopy() {
   if (typeof tlSelText === 'function' && tlSelText()) { tlCopy(); return; }
   if (annCopy(false)) return;
@@ -21182,7 +21210,7 @@ function rvCloudPath(ctx, pts, r) {
   }
   ctx.closePath();
 }
-// ── v8.6.1: núvols de revisió numerats (△n) i taula de revisions
+// ── v8.7.0: núvols de revisió numerats (△n) i taula de revisions
 function rvRevs(doc) { doc = doc || getActiveDoc(); if (!doc) return []; return doc.revs || (doc.revs = []); }
 function rvRevSync() {
   const s = $('rv-rev'); if (!s) return; const d = getActiveDoc(), L = d ? rvRevs(d) : [];
@@ -21199,7 +21227,7 @@ function rvRevNew(desc) {
   toast('Revision △' + n + ' active: new clouds will carry its number');
 }
 function aecRevNew() { if (!getActiveDoc()) return; if (uiMode !== 'review') { if (viewMode !== 'single') setViewMode('single'); setMode('review'); } rvRevNew(); }
-function rvRevClouds(d, n) { const o = []; d.pages.forEach((p, i) => (p.annotations || []).forEach(a => { if (a.type === 'rv' && a.sub === 'cloud' && a.rev === n) o.push(i + 1); })); return o; }
+function rvRevClouds(d, n) { const o = []; d.pages.forEach((p, i) => { (p.annotations || []).forEach(a => { if (a.type === 'rv' && a.sub === 'cloud' && a.rev === n) o.push(i + 1); }); (p.gm || []).forEach(g => { if (g.k === 'c' && g.rv === n) o.push(i + 1); }); }); return o; }
 function rvRevTable() {
   const d = getActiveDoc(), t = $('rev-tbody'); if (!d || !t) return; t.textContent = '';
   const L = rvRevs(d); $('rev-empty').classList.toggle('hidden', !!L.length);
@@ -21404,7 +21432,7 @@ async function rvDown(e) {
     if (a) rvDrag = { kind: 'move', a, p0: p, last: p, moved: false };
     return;
   }
-  if (rvTool === 'revtable') {   // v8.6.1
+  if (rvTool === 'revtable') {   // v8.7.0
     const lines = ['REVISIONS'].concat(rvRevLines(doc)), S = RENDER_SCALE;
     rvAdd({ sub: 'free', x1: p.x, y1: p.y, x2: p.x + 240 * S, y2: p.y + (lines.length * 12 + 10) * S, color: '#171B21', w: 1.5, fs: 10, text: lines.join('\n') });
     rvSetTool('select'); return;
@@ -21475,7 +21503,7 @@ async function rvUp() {
 }
 function rvPolyEnd() {
   const P = rvPoly; rvPoly = null; if (!P || P.pts.length < 3) { rvDrawSel(); return; }
-  const dd = getActiveDoc(), rv = P.sub === 'cloud' && dd && dd.revCur ? { rev: dd.revCur } : {};   // v8.6.1
+  const dd = getActiveDoc(), rv = P.sub === 'cloud' && dd && dd.revCur ? { rev: dd.revCur } : {};   // v8.7.0
   rvAdd({ sub: P.sub, pts: P.pts, color: P.color, w: 1.5, ...rv });
 }
 function rvEsc() { if (rvPoly) { rvPoly = null; rvDrawSel(); return true; } if (rvSel) { rvSel = null; rvRender(); rvDrawSel(); return true; } return false; }
@@ -21502,7 +21530,8 @@ async function rvOriginals(doc) {
           if (!['Text', 'FreeText', 'Highlight', 'Underline', 'StrikeOut', 'Squiggly', 'Square', 'Circle', 'Line', 'Polygon', 'PolyLine', 'Ink', 'Stamp', 'Caret', 'FileAttachment'].includes(x.subtype)) return;
           if (x.inReplyTo && byId.has(x.inReplyTo)) return;
           const replies = an.filter(r => r.inReplyTo === x.id && !(r.stateModel)).map(r => ({ author: (r.titleObj && r.titleObj.str) || '', text: (r.contentsObj && r.contentsObj.str) || '' }));
-          L.push({ sub: x.subtype, author: (x.titleObj && x.titleObj.str) || '', text: (x.contentsObj && x.contentsObj.str) || '', date: x.modificationDate || x.creationDate || '', replies, rect: x.rect, nm: x.id });
+          const gg = (pd.gm || []).find(g => g.r && x.rect && g.r.length === 4 && g.r.every((v, j) => Math.abs(v - x.rect[j]) < 2));
+          L.push({ rev: gg && gg.k === 'c' ? gg.rv : undefined, label: gg ? (gg.k === 's' ? gg.l : undefined) : (x.subtype === 'Stamp' ? ((x.contentsObj && x.contentsObj.str) || '').toUpperCase().slice(0, 40) || undefined : undefined), sub: x.subtype, author: (x.titleObj && x.titleObj.str) || '', text: (x.contentsObj && x.contentsObj.str) || '', date: x.modificationDate || x.creationDate || '', replies, rect: x.rect, nm: x.id });
         });
       } catch (e) {}
       rvOrigCache.set(pd, L);
@@ -21523,16 +21552,22 @@ async function rvRender(scrollSel) {
   const mine = rvAllItems(doc), orig = await rvOriginals(doc); if (tok !== rvRenderTok) return;
   const authors = [...new Set(mine.map(x => x.a.author).concat(orig.map(o => o.author)).filter(Boolean))];
   const as = $('rv-f-author'), keep = as.value; as.innerHTML = '<option value="all">All authors</option>' + authors.map(a => `<option>${cpEsc(a)}</option>`).join(''); as.value = authors.includes(keep) ? keep : 'all';
+  const rs = $('rv-f-rev'), ss = $('rv-f-stamp');
+  { const L = rvRevs(doc), k0 = rs.value; rs.innerHTML = '<option value="all">All revisions</option><option value="0">No revision</option>' + L.map(r => `<option value="${r.n}">△${r.n}${r.desc ? ' · ' + cpEsc(r.desc.slice(0, 18)) : ''}</option>`).join('');
+    rs.value = [...rs.options].some(o => o.value === k0) ? k0 : 'all'; rs.classList.toggle('hidden', !L.length);
+    const lb = [...new Set(mine.filter(x => x.a.sub === 'stamp').map(x => x.a.label).concat(orig.map(o => o.label)).filter(Boolean))], s0 = ss.value;
+    ss.innerHTML = '<option value="all">All stamps</option>' + lb.map(l => `<option>${cpEsc(l)}</option>`).join(''); ss.value = lb.includes(s0) ? s0 : 'all'; ss.classList.toggle('hidden', !lb.length); }
+  const okR = (cl, rv) => rs.value === 'all' || (cl && (rv || 0) === +rs.value), okT = (st, lb) => ss.value === 'all' || (st && lb === ss.value);
   const okP = i => rvFilter.page === 'all' || i === doc.curIdx;
   const okS = a => rvFilter.status === 'all' || (rvFilter.status === 'open' ? !a.status : a.status === rvFilter.status);
   const okA = au => as.value === 'all' || au === as.value;
   box.innerHTML = '';
-  const M = mine.filter(x => x.a.sub !== 'sigfield' && okP(x.page) && okS(x.a) && okA(x.a.author) && rvKindOk(x.a.sub));
+  const M = mine.filter(x => x.a.sub !== 'sigfield' && okP(x.page) && okS(x.a) && okA(x.a.author) && rvKindOk(x.a.sub) && okR(x.a.sub === 'cloud', x.a.rev) && okT(x.a.sub === 'stamp', x.a.label));
   const nst = rvStrokeCount(doc);
   if (nst) { const bn = document.createElement('div'); bn.className = 'rv-conv'; bn.innerHTML = '<span></span><button class="btn">Convert</button>'; bn.firstChild.textContent = nst + (nst === 1 ? ' stroke' : ' strokes') + ' of the Edit highlighter: they can be converted into the text marks listed here'; bn.lastChild.onclick = rvConvertStrokes; box.appendChild(bn); }
   $('rv-count').textContent = mine.length ? mine.length : '';
   M.forEach(({ a, page }) => box.appendChild(rvCard(a, page)));
-  const O = orig.filter(o => okP(o.page) && rvFilter.status === 'all' && okA(o.author) && rvKindOk(o.sub));
+  const O = orig.filter(o => okP(o.page) && rvFilter.status === 'all' && okA(o.author) && rvKindOk(o.sub) && okR(o.rev !== undefined || o.sub === 'Polygon', o.rev) && okT(o.sub === 'Stamp', o.label));
   if (O.length) {
     const h = document.createElement('div'); h.className = 'rv-sec'; h.textContent = 'In the original PDF · read-only (' + O.length + ')'; box.appendChild(h);
     O.forEach(o => {
@@ -21540,6 +21575,7 @@ async function rvRender(scrollSel) {
       c.innerHTML = `<div class="rv-h"><span class="rv-k"></span><span class="rv-pg mono">p. ${o.page + 1}</span></div><div class="rv-meta"></div><div class="rv-t"></div>`;
       c.querySelector('.rv-k').textContent = ({ Text: 'Note', FreeText: 'Text', Highlight: 'Highlight', Underline: 'Underline', StrikeOut: 'Strikethrough', Squiggly: 'Squiggly', Square: 'Rectangle', Circle: 'Ellipse', Line: 'Line', Polygon: 'Polygon', PolyLine: 'Polyline', Ink: 'Stroke', Stamp: 'Stamp', Caret: 'Insertion', FileAttachment: 'File attachment' })[o.sub] || o.sub; c.querySelector('.rv-meta').textContent = (o.author || '—') + (o.date ? ' · ' + rvFmtDate(o.date) : '');
       c.querySelector('.rv-t').textContent = o.text || '(no text)';
+      if (o.rev) c.querySelector('.rv-k').textContent += ' · △' + o.rev; if (o.label) c.querySelector('.rv-k').textContent += ' · ' + o.label;
       o.replies.forEach(r => { const d = document.createElement('div'); d.className = 'rv-rep'; d.textContent = (r.author ? r.author + ': ' : '') + r.text; c.appendChild(d); });
       c.onclick = () => goTo(o.page);
       box.appendChild(c);
@@ -21559,6 +21595,7 @@ function rvCard(a, page) {
   c.innerHTML = `<div class="rv-h"><span class="rv-dot"></span><span class="rv-k"></span><span class="rv-st st-${a.status || 'open'}"></span><span class="rv-pg mono">p. ${page + 1}</span></div><div class="rv-meta"></div>`;
   c.querySelector('.rv-k').textContent = a.sub === 'stamp' ? 'Stamp · ' + a.label : a.sub === 'sigfield' ? 'Field · ' + (a.name || '') : a.sub === 'file' ? 'Attachment · ' + (a.fname || '') : RV_NAMES[a.sub] || a.sub;
   c.querySelector('.rv-st').textContent = st;
+  if (a.rev) c.querySelector('.rv-k').textContent += ' △' + a.rev;
   c.querySelector('.rv-meta').textContent = (a.author || '—') + ' · ' + rvFmtDate(a.date);
   if (a.quoted) { const q = document.createElement('div'); q.className = 'rv-q'; q.textContent = '«' + a.quoted + '»'; c.appendChild(q); }
   if (a.id === rvSel) {
@@ -21720,12 +21757,12 @@ function cmpOpen(mode) {
   if (!getActiveDoc()) return;
   if (typeof mode === 'string') CMPS.mode = mode;
   CMPS.a = activeDocId; CMPS.b = (docs.find(d => d.id !== activeDocId) || getActiveDoc()).id; CMPS.ai = getActiveDoc().curIdx; CMPS.bi = Math.min(CMPS.ai, (docs.find(d => d.id === CMPS.b).pages.length - 1));
-  if (CMPS.b === CMPS.a) CMPS.bi = Math.min(CMPS.ai + 1, getActiveDoc().pages.length - 1);   // v8.6.1: dos plànols del mateix document
+  if (CMPS.b === CMPS.a) CMPS.bi = Math.min(CMPS.ai + 1, getActiveDoc().pages.length - 1);   // v8.7.0: dos plànols del mateix document
   const opts = docs.map(d => `<option value="${d.id}">${cpEsc(d.name)}</option>`).join('');
   $('cmp-a').innerHTML = opts; $('cmp-b').innerHTML = opts; $('cmp-a').value = CMPS.a; $('cmp-b').value = CMPS.b;
   $('cmp').classList.remove('hidden'); document.body.classList.add('cmp-on'); cmpRun();
 }
-function splitOpen() { cmpOpen('side'); }   // v8.6.1: vista dividida sincronitzada
+function splitOpen() { cmpOpen('side'); }   // v8.7.0: vista dividida sincronitzada
 function cmpClose() { $('cmp').classList.add('hidden'); document.body.classList.remove('cmp-on'); }
 function cmpStep(d) {
   const A = docs.find(x => x.id === CMPS.a), Bd = docs.find(x => x.id === CMPS.b); if (!A || !Bd) return;
@@ -21819,9 +21856,9 @@ $('rv-file-input').addEventListener('change', async e => {
 $('rv-import-input').addEventListener('change', e => { const f = e.target.files[0]; e.target.value = ''; if (f) rvImport(f); });
 $('rv-author').value = rvAuthor;
 $('rv-author').addEventListener('change', e => { rvAuthor = e.target.value.trim().slice(0, 80); try { localStorage.setItem('guaita-author', rvAuthor); } catch (er) {} });
-['rv-f-page', 'rv-f-status', 'rv-f-author', 'rv-f-kind'].forEach(id => $(id).addEventListener('change', () => { rvFilter.page = $('rv-f-page').value; rvFilter.status = $('rv-f-status').value; rvRender(); }));
+['rv-f-page', 'rv-f-status', 'rv-f-author', 'rv-f-kind', 'rv-f-rev', 'rv-f-stamp'].forEach(id => $(id).addEventListener('change', () => { rvFilter.page = $('rv-f-page').value; rvFilter.status = $('rv-f-status').value; rvRender(); }));
 let RV_CUST = []; try { RV_CUST = JSON.parse(localStorage.getItem('guaita-stamps') || '[]').filter(x => Array.isArray(x) && typeof x[0] === 'string').slice(0, 20); } catch (e) { }
-function rvStampFill(sel) {   // v8.6.1: els segells personalitzats es recorden
+function rvStampFill(sel) {   // v8.7.0: els segells personalitzats es recorden
   const s = $('rv-stamp'), v = sel || s.value; s.textContent = '';
   const add = (val, txt) => { const o = document.createElement('option'); o.value = val; o.textContent = txt; s.appendChild(o); };
   RV_STAMPS.concat(RV_CUST).forEach(x => add(x[0], x[0])); add('__custom', 'Personalitzat…'); if (RV_CUST.length) add('__clear', 'Delete custom stamps');
@@ -21942,7 +21979,7 @@ async function rvWrite(out, outPage, list, rot, font, fontB) {
             }
           }
           ops += 'S Q ';
-          if (a.rev) {   // v8.6.1: triangle numerat
+          if (a.rev) {   // v8.7.0: triangle numerat
             const vx = Math.min(...a.pts.map(q => q.x)), vy = Math.min(...a.pts.map(q => q.y)), sv = 24 * S;
             const T1 = P(vx, vy - sv * 1.15), T2 = P(vx - sv * 0.6, vy - sv * 0.15), T3 = P(vx + sv * 0.6, vy - sv * 0.15), TC = P(vx, vy - sv * 0.47);
             ops += `q ${cs} RG 1 1 1 rg 1.2 w ${f2(T1.x)} ${f2(T1.y)} m ${f2(T2.x)} ${f2(T2.y)} l ${f2(T3.x)} ${f2(T3.y)} l h B Q ` + txtOps([String(a.rev)], TC.x, TC.y, 10, fntB, true, col);
@@ -21951,6 +21988,7 @@ async function rvWrite(out, outPage, list, rot, font, fontB) {
           }
         } else ops += pts.map((p, i) => `${f2(p.x)} ${f2(p.y)} ${i ? 'l' : 'm'}`).join(' ') + ' h S Q';
         d.set(N('AP'), ap(r, ops, a.rev ? fontRes() : undefined));
+        if (a.sub === 'cloud' && a.rev) gmPush(outPage, { k: 'c', r: r, rv: a.rev, a: a.author, d: a.date });
       } else if (a.sub === 'callout') {
         const G = rvCalloutGeom(a), rb = box(G.b.x1, G.b.y1, G.b.x2, G.b.y2), tp = P(G.t.x, G.t.y), ep = P(G.e.x, G.e.y), mg = 5, fs = a.fs || 10;
         const r = [Math.min(rb[0], tp.x) - mg, Math.min(rb[1], tp.y) - mg, Math.max(rb[2], tp.x) + mg, Math.max(rb[3], tp.y) + mg];
@@ -21969,6 +22007,7 @@ async function rvWrite(out, outPage, list, rot, font, fontB) {
         const r = box(b.x1, b.y1, b.x2, b.y2), [t1, t2] = rvStampText(a);
         d = base(a, 'Stamp', r); d.set(N('Name'), N({ 'APPROVED': 'Approved', 'REJECTED': 'NotApproved', 'DRAFT': 'Draft', 'FOR INFORMATION': 'ForComment' }[a.label] || 'Approved'));
         if (!a.text) d.set(N('Contents'), T(a.label));
+        d.set(N('Subj'), T(a.label)); gmPush(outPage, { k: 's', r: r, l: a.label, a: a.author, d: a.date });
         const ru = (u => box(u.x1, u.y1, u.x2, u.y2))(rvStampBox(a));
         const swap = g.r === 90 || g.r === 270, w = swap ? ru[3] - ru[1] : ru[2] - ru[0], h = swap ? ru[2] - ru[0] : ru[3] - ru[1];
         const cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2;
