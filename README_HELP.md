@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.10.0** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.11.0** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -201,6 +201,16 @@ The **Review** panel has two new filters, shown when the document has revisions 
 The **Filter**, **Sort by**, **Group** and **Value** nodes have new properties: *Revision* (the highest on the page), *Revisions*, *Revision clouds* and *Stamps*; for example, filter «Stamps contains APPROVED» or sort by revision. Headers and footers accept the fields `[revision]`, `[revisions]` and `[stamp]`.
 
 The **Layers** node has a *Saved layer state…* mode that applies a state by name. The **Stamp** node can add the reviewer name and, with *Save as editable stamp*, leaves the stamp as a real PDF annotation (not an image), so it stays editable and is remembered in the Review panel.
+
+### Extract data tables
+
+In the **Drawings** menu, **Extract data table…** turns a table in the PDF (area schedule, joinery list, price table…) into data. Draw a rectangle around the table; the **real text** of the PDF is read (no OCR) and split into rows and columns by position. The zone is remembered and can be applied to several pages (*2-5*, *all*); if the header is repeated on every page, it is kept only once.
+
+The **column gap** is the minimum empty space between two texts for them to be different columns: raise it if a column is split, lower it if two columns merge. You can edit the cells, delete rows or columns and merge a column with the next one. Options: header yes/no and a **page-number column**.
+
+Output formats: **CSV** (UTF-8 with BOM and semicolons, opens correctly in Excel), **LaTeX** (`tabular`, optional *booktabs*, special characters escaped and numeric columns right-aligned), **Markdown** and **text to paste into Excel**. You can copy it to the clipboard or save it.
+
+Limits: real text only (a scanned PDF has no text), grid lines are not detected and merged cells are only resolved approximately; in that case merge or edit by hand.
 
 ### Print to scale and crop a zone
 

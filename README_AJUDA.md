@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 8.10.0** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.11.0** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -201,6 +201,16 @@ El tauler **Revisar** té dos filtres nous, que apareixen quan el document té r
 Els nodes **Filtrar**, **Ordenar per**, **Agrupar** i **Valor** tenen propietats noves: *Revisió* (la més alta de la pàgina), *Revisions*, *Núvols de revisió* i *Segells*; per exemple, filtra «Segells conté APROVAT» o ordena per revisió. Les capçaleres i els peus accepten els camps `[revisió]`, `[revisions]` i `[segell]`.
 
 El node **Capes** té el mode *Estat de capes desat…* per aplicar un estat pel seu nom. El node **Segell** pot afegir el nom del revisor i, amb *Desar com a segell editable*, deixa el segell com a anotació real del PDF (no com a imatge), de manera que continua sent editable i es recorda al tauler Revisar.
+
+### Extreure taules de dades
+
+Al menú **Plànols**, **Extreure taula de dades…** converteix una taula del PDF (quadre de superfícies, llista de fusteries, quadre de preus…) en dades. Dibuixa un rectangle al voltant de la taula; es llegeix el **text real** del PDF (sense OCR) i es reparteix en files i columnes segons la posició. La zona es recorda i es pot aplicar a diverses pàgines (*2-5*, *totes*); si la capçalera es repeteix a cada pàgina, només es conserva una vegada.
+
+La **separació de columnes** és el buit mínim entre dos textos perquè siguin columnes diferents: puja-la si una columna es parteix, baixa-la si dues es fusionen. Pots editar les cel·les, eliminar files o columnes i fusionar una columna amb la següent. Opcions: capçalera sí/no i una **columna amb el número de pàgina**.
+
+Formats de sortida: **CSV** (UTF-8 amb BOM i punt i coma, s'obre bé a l'Excel), **LaTeX** (`tabular`, amb *booktabs* opcional, caràcters especials escapats i columnes numèriques alineades a la dreta), **Markdown** i **text per enganxar a Excel**. Es pot copiar al porta-retalls o desar.
+
+Límits: només text real (un PDF escanejat no té text), no es detecten les línies de la quadrícula i les cel·les combinades només es resolen de manera aproximada; en aquest cas fusiona o edita a mà.
 
 ### Imprimir a escala i retallar una zona
 

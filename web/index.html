@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 8.10.0 — Editor de PDF multidocument (suite Guaita Apps)
+  Guaita PDF Edit 8.11.0 — Editor de PDF multidocument (suite Guaita Apps)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   Aquest programa és programari lliure: el podeu redistribuir i/o modificar sota els termes de la
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v8.10.0</title>
+<title>Guaita PDF Edit v8.11.0</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -785,6 +785,12 @@ body.lb-dragging #viewer-container #lb-park .bh, body.lb-dragging #viewer-contai
 #esc-info { font-size: 12px; line-height: 1.55; border: 1px solid var(--border); padding: 6px 8px; border-radius: 6px; }
 #esc-info .bad { color: #e5484d; font-weight: 600; } #esc-info .ok { color: #3a9a3a; font-weight: 600; }
 .esc-f { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: 12px; margin: 3px 0; } .esc-f label { min-width: 92px; }
+#tb-stage { position: relative; align-self: flex-start; background: #fff; border: 1px solid var(--border); line-height: 0; touch-action: none; user-select: none; }
+#tb-ov { position: absolute; inset: 0; cursor: crosshair; }
+#tb-tw { overflow: auto; border: 1px solid var(--border); border-radius: 6px; max-height: 250px; min-height: 80px; }
+#tb-tbl { border-collapse: collapse; font-size: 12px; width: 100%; } #tb-tbl td, #tb-tbl th { border: 1px solid var(--border); padding: 2px 5px; white-space: nowrap; }
+#tb-tbl td[contenteditable] { min-width: 40px; } #tb-tbl th { background: var(--bg-2, rgba(128,128,128,.15)); font-weight: 600; } #tb-tbl .tbx { cursor: pointer; opacity: .6; border: 0; background: none; color: inherit; font-size: 12px; } #tb-tbl .tbx:hover { opacity: 1; }
+#tb-out { width: 100%; height: 90px; font: 11px 'IBM Plex Mono', monospace; box-sizing: border-box; resize: vertical; }
 #pli-ov { position: absolute; inset: 0; cursor: crosshair; }
 .pli-z { position: absolute; box-sizing: border-box; border: 2px solid #C6FF00; background: rgba(198,255,0,.18); pointer-events: none; }
 .pli-z.title { border-color: #FF2ECC; background: rgba(255,46,204,.16); }
@@ -2288,6 +2294,7 @@ body.th-dragging #bin-drops .bh { display: block; }
         <button class="mi needs-doc" onclick="pliOpen()" disabled><span>Índex automàtic de plànols…</span></button>
         <button class="mi needs-doc" onclick="xlOpen()" disabled><span>Enllaços entre plànols…</span></button>
         <button class="mi needs-doc" onclick="showIndexModal()" disabled><span>Índex a partir dels marcadors…</span></button>
+        <button class="mi needs-doc" onclick="tbOpen()" disabled title="Converteix una taula del PDF (quadre de superfícies, de fusteria…) en CSV, LaTeX o Markdown"><span>Extreure taula de dades…</span></button>
         <div class="msep"></div>
         <div class="mhead" id="pl-scale-head">Escala i mida</div>
         <button class="mi needs-doc" onclick="setZoom(1)" disabled><span>100 % nominal</span></button>
@@ -2366,7 +2373,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <button id="mode-compose" onclick="setMode('compose')" title="Composar: fusionar documents i pàgines amb un arbre de nodes (fonts → Fusionar → Document final)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Composar</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v8.10.0</span>
+  <span class="tag">v8.11.0</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Canviar a tema clar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2752,7 +2759,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.10.0</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.11.0</small></div>
           <div id="wl-inst" class="hidden"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg><div class="wi-t"><b>Instal·la Guaita PDF Edit com a aplicació</b><span>Finestra pròpia, funciona sense connexió i obre els PDF des de l'Explorador de fitxers.</span></div><button class="btn primary" onclick="pwaInstall()">Instal·lar</button><button class="wi-x" onclick="wlInstHide()" title="Amagar aquest avís" aria-label="Amagar aquest avís">×</button></div>
           <h1>Editor de PDF <em>local</em>, sense núvol.</h1>
           <p>Obre un o diversos PDF o arrossega'ls a la finestra. Tot es processa en aquest ordinador: cap fitxer surt del navegador.</p>
@@ -3075,7 +3082,7 @@ body.th-dragging #bin-drops .bh { display: block; }
   <span id="st-worker" class="hidden" title="Aquest entorn no permet els «workers» de pdf.js (visor incrustat o restriccions del navegador). Els PDF es processen al fil principal: tot funciona igual, però els documents grans van més lents. Obert directament a Chrome o Edge des del disc normalment no passa.">pdf.js · fil principal</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 8.10.0 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 8.11.0 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -3660,6 +3667,28 @@ body.th-dragging #bin-drops .bh { display: block; }
       </div>
     </div>
     <div class="mactions"><button class="btn" onclick="closeModal('modal-esc')">Tancar</button><button class="btn" onclick="escRun('png')">Desar PNG</button><button class="btn" onclick="escRun('open')">Obrir com a document</button><button class="btn" onclick="escRun('print')">Imprimir</button><button class="btn primary" onclick="escRun('pdf')">Desar PDF</button></div>
+  </div>
+</div>
+<div class="modal-bg hidden" id="modal-tb">
+  <div class="modal pli-modal">
+    <h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 10h18M3 15h18M9 5v14M15 5v14"/></svg>Extreure taula de dades</h2>
+    <p class="cert-note" style="margin:0 0 8px">Dibuixa un rectangle al voltant de la taula (quadre de superfícies, llista de fusteries…). Es llegeix el text real del PDF, sense OCR; la zona es recorda i es pot aplicar a diverses pàgines.</p>
+    <div class="pli-body">
+      <div class="pli-left">
+        <div class="pli-tools"><button class="btn" onclick="tbGo(-1)" title="Pàgina anterior">‹</button><span id="tb-pn">1 / 1</span><button class="btn" onclick="tbGo(1)" title="Pàgina següent">›</button><span style="flex:1"></span><button class="btn" onclick="tbClearZ()" title="Esborra la zona">Esborrar zona</button></div>
+        <div id="tb-stage"><canvas id="tb-cv"></canvas><div id="tb-ov"></div></div>
+      </div>
+      <div class="pli-right" style="overflow:auto;padding-left:12px">
+        <div class="pli-tools"><label>Pàgines</label><input type="text" id="tb-rng" placeholder="actual (o 2-5, totes)" spellcheck="false" style="width:140px">
+          <label>Separació de columnes (pt)</label><input type="number" id="tb-gap" min="1" max="60" step="1" value="6" style="width:56px" title="Buit mínim entre dos textos perquè siguin columnes diferents"></div>
+        <div class="pli-tools"><label><input type="checkbox" id="tb-head" checked> La primera fila és la capçalera</label><label><input type="checkbox" id="tb-pgc"> Columna de pàgina</label><button class="btn primary" onclick="tbExtract()">Extreure</button><span id="tb-st"></span></div>
+        <div id="tb-tw"><table id="tb-tbl"></table></div>
+        <div class="pli-tools"><label>Format</label><select id="tb-fmt" onchange="tbOut()"><option value="csv">CSV (Excel, punt i coma)</option><option value="tex">LaTeX (tabular)</option><option value="md">Markdown</option><option value="tsv">Text per enganxar a Excel</option></select>
+          <label id="tb-bk-l"><input type="checkbox" id="tb-bk" onchange="tbOut()"> booktabs</label></div>
+        <textarea id="tb-out" readonly spellcheck="false"></textarea>
+      </div>
+    </div>
+    <div class="mactions"><button class="btn" onclick="closeModal('modal-tb')">Tancar</button><button class="btn" onclick="tbCopy()">Copiar</button><button class="btn primary" onclick="tbSave()">Desar</button></div>
   </div>
 </div>
 <div class="modal-bg hidden" id="modal-xl">
@@ -10545,7 +10574,7 @@ const HELP = {
 <h3>Si no apareix l'opció</h3>
 <p>Cal obrir l'adreça web (https) de l'aplicació, no el fitxer des del disc. Firefox i Safari d'escriptori no instal·len PWA; a Safari de l'iPhone: <b>Comparteix › Afegeix a la pantalla d'inici</b>.</p>`],
   about: ['Quant a Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 8.10.0</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 8.11.0</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -15188,7 +15217,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 8.10.0 · pdf-lib';
+  const prod = 'Guaita PDF Edit 8.11.0 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -15227,7 +15256,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'metadades XMP'); del(cat, 'PieceInfo', 'dades privades d\'aplicacions');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.10.0') })); rep.cleaned.push('informació del document'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.11.0') })); rep.cleaned.push('informació del document'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'miniatures'));
@@ -20342,7 +20371,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 8.10.0 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 8.11.0 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadades:', e); }
 }
@@ -20868,7 +20897,7 @@ async function escBuild(doc, idx, P, zone) {
     page.node.set(N.of('Annots'), ctx.obj([ctx.register(hd)]));
     res.push(L);
   }
-  out.setProducer('Guaita PDF Edit 8.10.0 · pdf-lib');
+  out.setProducer('Guaita PDF Edit 8.11.0 · pdf-lib');
   return { bytes: await out.save({ useObjectStreams: false }), lay: res };
 }
 async function escPng(doc, P, dpi) {
@@ -20900,6 +20929,135 @@ async function escRun(how) {
     else if (how === 'open') { await loadPdfFile(new File([bytes], base + '.pdf', { type: 'application/pdf' })); closeModal('modal-esc'); }
     toast(lay.length + ' pàgina(es) a 1:' + P.T + (bad ? ' · ATENCIÓ: ' + bad + ' no hi caben al paper' : ' · comprovat'), !!bad, 5000);
   } catch (e) { console.error(e); toast('No s\'ha pogut generar: ' + (e.message || e), true, 6000); }
+}
+
+// ─── v8.11.0: extracció de taules de dades (CSV, LaTeX, Markdown)
+const TB = { pg: 0, z: null, dw: 0, dh: 0, tk: 0, rows: [], ncol: 0, hr: 0 };
+try { const z = JSON.parse(localStorage.getItem('guaita-tbzone') || 'null'); if (z && typeof z.x0 === 'number') TB.z = z; } catch (e) { }
+async function tbOpen() {
+  const doc = getActiveDoc(); if (!doc) return; TB.pg = doc.curIdx; TB.rows = []; $('tb-tbl').innerHTML = ''; $('tb-out').value = ''; $('tb-st').textContent = '';
+  openModal('modal-tb'); await tbRender();
+}
+async function tbGo(d) { const doc = getActiveDoc(); if (!doc) return; TB.pg = Math.max(0, Math.min(doc.pages.length - 1, TB.pg + d)); await tbRender(); }
+function tbClearZ() { TB.z = null; try { localStorage.removeItem('guaita-tbzone'); } catch (e) { } tbDrawZ(); }
+async function tbRender() {
+  const doc = getActiveDoc(); if (!doc) return; const pd = doc.pages[TB.pg], cv = $('tb-cv'); if (!pd) return;
+  $('tb-pn').textContent = (TB.pg + 1) + ' / ' + doc.pages.length; const tk = ++TB.tk;
+  const d = await bkDims(pd), k = Math.min(500 / d.w, 430 / d.h);
+  if (pd.type === 'pdf') {
+    const pg = await getPdfPage(pd); if (!pg || tk !== TB.tk) return;
+    const vp = pg.getViewport({ scale: k * 1.5, rotation: pd.rotation });
+    cv.width = vp.width; cv.height = vp.height; cv.style.width = Math.round(vp.width / 1.5) + 'px'; cv.style.height = Math.round(vp.height / 1.5) + 'px';
+    const c = cv.getContext('2d'); c.fillStyle = '#fff'; c.fillRect(0, 0, cv.width, cv.height);
+    try { await pg.render({ canvasContext: c, viewport: vp, optionalContentConfigPromise: ocFor(pd) }).promise; } catch (e) { }
+  } else {
+    cv.width = Math.round(d.w * k); cv.height = Math.round(d.h * k); cv.style.width = cv.width + 'px'; cv.style.height = cv.height + 'px';
+    const c = cv.getContext('2d'); c.fillStyle = '#fff'; c.fillRect(0, 0, cv.width, cv.height);
+  }
+  tbDrawZ();
+}
+function tbDrawZ() {
+  const ov = $('tb-ov'); ov.innerHTML = ''; const z = TB.z; if (!z) return;
+  const e = document.createElement('div'); e.className = 'pli-z'; e.style.cssText = 'left:' + z.x0 * 100 + '%;top:' + z.y0 * 100 + '%;width:' + (z.x1 - z.x0) * 100 + '%;height:' + (z.y1 - z.y0) * 100 + '%'; ov.appendChild(e);
+}
+(function tbInit() {
+  const ov = $('tb-ov'); let st = null, tmp = null;
+  const pt = e => { const r = ov.getBoundingClientRect(); return { x: Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), y: Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)) }; };
+  ov.addEventListener('pointerdown', e => { st = pt(e); ov.setPointerCapture(e.pointerId); tmp = document.createElement('div'); tmp.className = 'pli-z'; ov.appendChild(tmp); e.preventDefault(); });
+  ov.addEventListener('pointermove', e => { if (!st || !tmp) return; const p = pt(e); tmp.style.cssText = 'left:' + Math.min(st.x, p.x) * 100 + '%;top:' + Math.min(st.y, p.y) * 100 + '%;width:' + Math.abs(p.x - st.x) * 100 + '%;height:' + Math.abs(p.y - st.y) * 100 + '%'; });
+  ov.addEventListener('pointerup', e => {
+    if (!st) return; const p = pt(e), z = { x0: Math.min(st.x, p.x), y0: Math.min(st.y, p.y), x1: Math.max(st.x, p.x), y1: Math.max(st.y, p.y) }; st = null; if (tmp) { tmp.remove(); tmp = null; }
+    if (z.x1 - z.x0 > 0.01 && z.y1 - z.y0 > 0.005) { TB.z = z; try { localStorage.setItem('guaita-tbzone', JSON.stringify(z)); } catch (e2) { } }
+    tbDrawZ();
+  });
+  ov.addEventListener('pointercancel', () => { st = null; if (tmp) { tmp.remove(); tmp = null; } });
+})();
+// text de la zona d'una pàgina: elements {s, x0, x1, yc, h} en punts de la vista
+async function tbItems(pd, z) {
+  const pg = await getPdfPage(pd), vp = pg.getViewport({ scale: 1, rotation: pd.rotation }), tc = await pg.getTextContent(), I = [];
+  tc.items.forEach(it => {
+    const s = it.str; if (!s || !s.trim()) return; const t = it.transform, L = Math.hypot(t[0], t[1]) || 1, h = Math.abs(it.height) || L, w = it.width || 0;
+    const q = vp.convertToViewportPoint(t[4], t[5]), x0 = q[0], x1 = x0 + w, yc = q[1] - h * 0.35, cx = (x0 + x1) / 2;
+    if (cx >= z.x0 * vp.width && cx <= z.x1 * vp.width && yc >= z.y0 * vp.height && yc <= z.y1 * vp.height) I.push({ s, x0, x1, yc, h });
+  });
+  return I;
+}
+function tbRowsOf(I) {   // agrupa en files per la posició vertical
+  I = I.slice().sort((a, b) => a.yc - b.yc); const R = [];
+  I.forEach(i => { const r = R[R.length - 1]; if (r && Math.abs(r.yc - i.yc) < Math.max(r.h, i.h) * 0.5) { r.it.push(i); r.yc = (r.yc * (r.it.length - 1) + i.yc) / r.it.length; r.h = Math.max(r.h, i.h); } else R.push({ yc: i.yc, h: i.h, it: [i] }); });
+  R.forEach(r => r.it.sort((a, b) => a.x0 - b.x0)); return R;
+}
+function tbCols(all, gap) {   // intervals horitzontals units: cada buit més gran que «gap» separa dues columnes
+  const iv = all.map(i => [i.x0, i.x1]).sort((a, b) => a[0] - b[0]), C = [];
+  iv.forEach(v => { const c = C[C.length - 1]; if (c && v[0] - c[1] < gap) c[1] = Math.max(c[1], v[1]); else C.push([v[0], v[1]]); }); return C;
+}
+function tbRange(doc) {
+  const v = $('tb-rng').value.trim(), n = doc.pages.length;
+  if (!v) return [TB.pg]; if (/^(totes|all)$/i.test(v)) return doc.pages.map((_, i) => i);
+  const set = new Set(); v.split(/[,;\s]+/).filter(Boolean).forEach(p => { const m = p.match(/^(\d+)(?:-(\d+))?$/); if (!m) return; let a = +m[1], b = m[2] ? +m[2] : a; if (a > b) [a, b] = [b, a]; for (let i = Math.max(1, a); i <= Math.min(n, b); i++) set.add(i - 1); });
+  return [...set].sort((a, b) => a - b);
+}
+async function tbExtract() {
+  const doc = getActiveDoc(); if (!doc) return;
+  if (!TB.z) { toast('Dibuixa abans un rectangle al voltant de la taula', true, 4000); return; }
+  const idx = tbRange(doc).slice(0, 300); if (!idx.length) { toast('Cap pàgina dins l\'interval indicat', true); return; }
+  const gap = Math.max(1, +$('tb-gap').value || 6), per = [];
+  for (const i of idx) {
+    const pd = doc.pages[i]; if (pd.type !== 'pdf') continue;
+    try { per.push({ i, rows: tbRowsOf(await tbItems(pd, TB.z)) }); } catch (e) { console.warn(e); }
+    if (per.length % 5 === 0) { $('tb-st').textContent = 'Llegint… ' + per.length + ' / ' + idx.length; await new Promise(r => setTimeout(r, 0)); }
+  }
+  const all = per.flatMap(p => p.rows.flatMap(r => r.it)); if (!all.length) { TB.rows = []; tbShow(); $('tb-st').textContent = 'Cap text dins la zona (el PDF potser és una imatge escanejada)'; return; }
+  const C = tbCols(all, gap), head = $('tb-head').checked, pgc = $('tb-pgc').checked, out = []; let hdr = null;
+  per.forEach(p => p.rows.forEach(r => {
+    const cells = C.map(() => []); r.it.forEach(i => { const k = C.findIndex(c => i.x0 >= c[0] - 0.01 && i.x1 <= c[1] + 0.01); cells[k < 0 ? 0 : k].push(i); });
+    const row = cells.map(L => L.reduce((a, i, n) => a + (n ? (i.x0 - L[n - 1].x1 < i.h * 0.15 ? '' : ' ') : '') + i.s.trim(), ''));
+    if (head && out.length && hdr && row.join('\u0001').toLowerCase() === hdr) return;   // capçalera repetida en pàgines següents
+    if (head && !out.length) hdr = row.join('\u0001').toLowerCase();
+    out.push(pgc ? [String(p.i + 1), ...row] : row);
+  }));
+  TB.rows = out; TB.hr = head ? 1 : 0; tbShow();
+  $('tb-st').textContent = out.length + ' files × ' + (out[0] ? out[0].length : 0) + ' columnes · ' + per.length + ' pàgin' + (per.length === 1 ? 'a' : 'es');
+}
+function tbShow() {
+  const T = $('tb-tbl'), R = TB.rows, nc = R.reduce((m, r) => Math.max(m, r.length), 0), e = escHtml; TB.ncol = nc;
+  if (!R.length) { T.innerHTML = ''; tbOut(); return; }
+  let h = '<tr><th></th>' + Array.from({ length: nc }, (_, k) => '<th><button class="tbx" title="Elimina la columna" onclick="tbDelCol(' + k + ')">×</button>' + (k < nc - 1 ? '<button class="tbx" title="Fusiona amb la columna següent" onclick="tbMergeCol(' + k + ')">⇥</button>' : '') + '</th>').join('') + '</tr>';
+  h += R.slice(0, 400).map((r, i) => '<tr><th><button class="tbx" title="Elimina la fila" onclick="tbDelRow(' + i + ')">×</button></th>' + Array.from({ length: nc }, (_, k) => '<td contenteditable="true" spellcheck="false" oninput="TB.rows[' + i + '][' + k + ']=this.textContent;tbOut()">' + e(r[k] || '') + '</td>').join('') + '</tr>').join('');
+  if (R.length > 400) h += '<tr><th></th><td colspan="' + nc + '" style="opacity:.7">… només es mostren les 400 primeres files; l\'exportació les inclou totes</td></tr>';
+  T.innerHTML = h; tbOut();
+}
+function tbDelRow(i) { TB.rows.splice(i, 1); tbShow(); }
+function tbDelCol(k) { TB.rows.forEach(r => r.splice(k, 1)); tbShow(); }
+function tbMergeCol(k) { TB.rows.forEach(r => { r[k] = ((r[k] || '') + ' ' + (r[k + 1] || '')).trim(); r.splice(k + 1, 1); }); tbShow(); }
+const tbNum = v => /^[-+−]?[\d.,\s]+%?$/.test(v.trim());
+function tbNumCols() { return Array.from({ length: TB.ncol }, (_, k) => { const v = TB.rows.slice(TB.hr).map(r => (r[k] || '').trim()).filter(Boolean); return v.length > 0 && v.every(tbNum); }); }
+function tbText(f) {
+  const R = TB.rows.map(r => Array.from({ length: TB.ncol }, (_, k) => String(r[k] == null ? '' : r[k]).replace(/\s*[\r\n]+\s*/g, ' '))), nc = TB.ncol, hr = TB.hr;
+  if (!R.length) return '';
+  if (f === 'csv') return '﻿' + R.map(r => r.map(c => /[;"\n]/.test(c) ? '"' + c.replace(/"/g, '""') + '"' : c).join(';')).join('\r\n') + '\r\n';
+  if (f === 'tsv') return R.map(r => r.map(c => c.replace(/\t/g, ' ')).join('\t')).join('\n');
+  const num = tbNumCols();
+  if (f === 'md') {
+    const cell = c => c.replace(/\|/g, '\\|'), line = r => '| ' + r.map(cell).join(' | ') + ' |', hd = hr ? R[0] : Array(nc).fill(' ');
+    return [line(hd), '| ' + num.map(n => n ? '---:' : '---').join(' | ') + ' |', ...R.slice(hr).map(line)].join('\n') + '\n';
+  }
+  const esc = c => c.replace(/\\/g, '\\textbackslash{}').replace(/([&%$#_{}])/g, '\\$1').replace(/~/g, '\\textasciitilde{}').replace(/\^/g, '\\textasciicircum{}'), bk = $('tb-bk').checked;
+  const line = (r, b) => r.map(c => b && c ? '\\textbf{' + esc(c) + '}' : esc(c)).join(' & ') + ' \\\\', L = ['\\begin{tabular}{' + num.map(n => n ? 'r' : 'l').join(' ') + '}', bk ? '\\toprule' : '\\hline'];
+  R.forEach((r, i) => { L.push(line(r, i < hr)); if (i === hr - 1) L.push(bk ? '\\midrule' : '\\hline'); });
+  L.push(bk ? '\\bottomrule' : '\\hline', '\\end{tabular}'); return L.join('\n') + '\n';
+}
+function tbOut() { const f = $('tb-fmt').value; $('tb-bk-l').style.display = f === 'tex' ? '' : 'none'; $('tb-out').value = tbText(f).replace(/^﻿/, ''); }
+async function tbCopy() {
+  if (!TB.rows.length) { toast('Primer extreu la taula', true); return; }
+  const f = $('tb-fmt').value, txt = tbText(f === 'csv' ? 'tsv' : f).replace(/^﻿/, '');
+  try { await navigator.clipboard.writeText(txt); toast(f === 'csv' ? 'Copiat com a text per a Excel (separat per tabuladors)' : 'Copiat al porta-retalls'); } catch (e) { $('tb-out').value = txt; $('tb-out').select(); toast('El navegador no permet copiar: el text queda seleccionat (Ctrl+C)', true, 5000); }
+}
+function tbSave() {
+  const doc = getActiveDoc(); if (!doc || !TB.rows.length) { toast('Primer extreu la taula', true); return; }
+  const f = $('tb-fmt').value, ext = { csv: 'csv', tsv: 'txt', tex: 'tex', md: 'md' }[f], mt = { csv: 'text/csv', tsv: 'text/plain', tex: 'application/x-tex', md: 'text/markdown' }[f];
+  const u = URL.createObjectURL(new Blob([tbText(f)], { type: mt + ';charset=utf-8' })), a = document.createElement('a'); a.href = u; a.download = doc.name.replace(/\.pdf$/i, '') + '_taula.' + ext; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 30000);
+  toast('Taula desada (' + ext.toUpperCase() + ')');
 }
 
 // ─── v8.3.4: índex automàtic de plànols (zones de codi i títol → marcadors, índex o CSV)
