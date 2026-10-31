@@ -3,6 +3,8 @@
 **Guaita PDF Edit** · SBS BIM Consulting 2026
 Copyright © 2026 Jordi Subirós · Llicència **GNU AGPL v3.0** (`AGPL-3.0-only`), vegeu el fitxer [`LICENSE`](LICENSE).
 
+Versió del NOTICE: **2**
+
 ---
 
 ## Autoria i ús d'IA
@@ -12,6 +14,24 @@ La idea, el disseny funcional, la direcció, la revisió i les proves són de **
 ## Authorship and AI use
 
 The idea, functional design, direction, review and testing are by **Jordi Subirós**. A significant part of the code was generated with the assistance of artificial intelligence (**Claude**, by Anthropic) under human direction (“vibecoding”), and is reviewed and tested by the author, who is responsible for it as the project owner.
+
+### Contribució humana · Human contribution
+
+- **Concepte i disseny funcional:** definició de l'abast, de les funcions i del comportament de cada eina, a càrrec de l'autor.
+- **Decisions:** arquitectura, format d'un sol fitxer HTML, llicència, estructura del repositori i prioritats del projecte, preses per l'autor.
+- **Revisió:** cada canvi generat amb IA és revisat per l'autor abans d'integrar-se al repositori.
+- **Proves:** verificació funcional i proves de les funcions pel mateix autor.
+
+Totes les contribucions generades amb IA queden sota la responsabilitat i la titularitat de l'autor.
+
+### Human contribution
+
+- **Concept and functional design:** scope, features and behaviour of each tool defined by the author.
+- **Decisions:** architecture, single-file HTML format, licence, repository structure and project priorities, made by the author.
+- **Review:** every AI-generated change is reviewed by the author before it is merged into the repository.
+- **Testing:** functional verification and feature testing by the author.
+
+All AI-assisted contributions are under the author's responsibility and ownership.
 
 ---
 
