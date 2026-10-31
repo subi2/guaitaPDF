@@ -163,6 +163,10 @@ Bookmark navigation goes to the page (not the exact position); “Insert from PD
 
 ---
 
+## Contribuir · Contributing
+
+Les contribucions són benvingudes. Abans d'enviar una pull request, cal acceptar el [CLA v1.0](CLA.md) (Acord de Llicència de Contribuïdor) i incloure la línia `Signed-off-by` a cada commit. / Contributions are welcome. Before opening a pull request, please accept the [CLA v1.0](CLA.md) (Contributor License Agreement) and add a `Signed-off-by` line to each commit.
+
 ## Components · Llicència · Licence
 
 [pdf.js](https://mozilla.github.io/pdf.js/) 3.11.174 (Apache-2.0) · [pdf-lib](https://pdf-lib.js.org/) 1.17.1 (MIT) · [@pdf-lib/fontkit](https://github.com/Hopding/fontkit) 1.1.1 (MIT) — tots incrustats / all embedded.
