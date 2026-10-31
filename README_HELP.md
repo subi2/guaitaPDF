@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.9.0** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.10.0** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -201,6 +201,16 @@ The **Review** panel has two new filters, shown when the document has revisions 
 The **Filter**, **Sort by**, **Group** and **Value** nodes have new properties: *Revision* (the highest on the page), *Revisions*, *Revision clouds* and *Stamps*; for example, filter «Stamps contains APPROVED» or sort by revision. Headers and footers accept the fields `[revision]`, `[revisions]` and `[stamp]`.
 
 The **Layers** node has a *Saved layer state…* mode that applies a state by name. The **Stamp** node can add the reviewer name and, with *Save as editable stamp*, leaves the stamp as a real PDF annotation (not an image), so it stays editable and is remembered in the Review panel.
+
+### Print to scale and crop a zone
+
+In the **Drawings** menu, **Print to scale…** rescales a drawing to another scale and paper: for example, an A1 at 1:100 becomes an A3 at 1:200. Enter the *drawing scale* (read from the page if you already calibrated it), the *output scale*, the DIN paper (or «resulting size»), the orientation, the margin and the pages (current, a range or all).
+
+The info box tells you what you will get: the real-world size the drawing represents, the size of the drawing on paper, whether it fits (and by how much it overflows if not) and a check, such as «10 m real = 50 mm on paper». You can add a **graphic scale bar** with a round length and a **label** «Scale 1:200 · A3». The resulting PDF remembers the output scale, so it is already calibrated when you open it.
+
+If you draw a **zone** on the page (or choose **Crop zone to scale…**), only that detail is output, at the scale you choose (for example 1:20). It can be saved as a vector PDF, printed, opened as a new document or saved as a **PNG at 150, 300 or 600 dpi**: the image carries its physical size, so it can be imported into another application at scale.
+
+Limits: one zone per run (applied alike to all chosen pages) and a drawing is not split over several sheets.
 
 ### Find and replace
 

@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 8.9.0** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.10.0** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -201,6 +201,16 @@ El tauler **Revisar** té dos filtres nous, que apareixen quan el document té r
 Els nodes **Filtrar**, **Ordenar per**, **Agrupar** i **Valor** tenen propietats noves: *Revisió* (la més alta de la pàgina), *Revisions*, *Núvols de revisió* i *Segells*; per exemple, filtra «Segells conté APROVAT» o ordena per revisió. Les capçaleres i els peus accepten els camps `[revisió]`, `[revisions]` i `[segell]`.
 
 El node **Capes** té el mode *Estat de capes desat…* per aplicar un estat pel seu nom. El node **Segell** pot afegir el nom del revisor i, amb *Desar com a segell editable*, deixa el segell com a anotació real del PDF (no com a imatge), de manera que continua sent editable i es recorda al tauler Revisar.
+
+### Imprimir a escala i retallar una zona
+
+Al menú **Plànols**, **Imprimir a escala…** reescala el plànol a una altra escala i un altre paper: per exemple, un A1 a 1:100 passa a un A3 a 1:200. Indica l'*escala del plànol* (es llegeix de la pàgina si ja la tens calibrada), l'*escala de sortida*, el paper DIN (o «mida resultant»), l'orientació, el marge i les pàgines (actual, un interval o totes).
+
+El quadre d'informació et diu què en sortirà: la mida real que representa el plànol, la mida del dibuix al paper, si hi cap (si no, quant sobresurt) i una comprovació, com ara «10 m reals = 50 mm al paper». Pots afegir una **barra gràfica** amb longitud rodona i un **rètol** «Escala 1:200 · A3». El PDF resultant recorda l'escala de sortida i, en obrir-lo, ja està calibrat.
+
+Si dibuixes una **zona** sobre la pàgina (o tries **Retallar zona a escala…**), només se'n treu aquest detall, a l'escala que triïs (per exemple 1:20). Es pot desar com a PDF vectorial, imprimir, obrir com a document nou o desar com a **PNG a 150, 300 o 600 dpi**: la imatge porta la mida física, de manera que s'importa a una altra aplicació a escala.
+
+Límits: una sola zona per execució (s'aplica igual a totes les pàgines triades) i no es reparteix un plànol en diversos fulls.
 
 ### Cercar i substituir
 
