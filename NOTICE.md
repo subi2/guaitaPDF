@@ -3,7 +3,7 @@
 **Guaita PDF Edit** · SBS BIM Consulting 2026
 Copyright © 2026 Jordi Subirós · Llicència **GNU AGPL v3.0** (`AGPL-3.0-only`), vegeu el fitxer [`LICENSE`](LICENSE).
 
-Versió del NOTICE: **2**
+Versió del NOTICE: **3**
 
 ---
 
@@ -47,14 +47,21 @@ Guaita Apps is under development and offered **without any warranty**: the autho
 
 Els HTML de l'app incrusten biblioteques de codi obert amb les seves pròpies llicències. Es mantenen els seus avisos de copyright i llicència.
 
-| Component | Ús | Llicència |
-|---|---|---|
-| [pdf.js](https://github.com/mozilla/pdf.js) (Mozilla) 3.11.174 | Lectura i renderitzat de PDF | Apache-2.0 |
-| [pdf-lib](https://github.com/Hopding/pdf-lib) 1.17.1 | Escriptura i edició de PDF | MIT |
-| [fontkit](https://github.com/foliojs/fontkit) | Tipografies incrustades | MIT |
-| [node-forge](https://github.com/digitalbazaar/forge) | Signatura digital (.p12/.pfx) | BSD-3-Clause o GPL-2.0 (doble llicència) |
+| Component | Versió | Ús | Llicència | Fitxer | Estat |
+|---|---|---|---|---|---|
+| [pdf.js](https://github.com/mozilla/pdf.js) (Mozilla) | 3.11.174 | Lectura i renderitzat (editor) | Apache-2.0 | `web/index.html`, `weben/index.html` | Versió i avís al codi; no verificat amb l'upstream |
+| [pdf.js](https://github.com/mozilla/pdf.js) (Mozilla) | 4.10.38 | Lectura i renderitzat (scanner) | Apache-2.0 | `guaitaPDFscan_1.3.html` | Versió al codi; no verificat amb l'upstream |
+| [pdf-lib](https://github.com/Hopding/pdf-lib) | 1.17.1 | Escriptura i edició de PDF | MIT | `index.html` | Declarat al codi; no verificat amb l'upstream |
+| [fontkit](https://github.com/foliojs/fontkit) (`@pdf-lib/fontkit`) | 1.1.1 | Tipografies incrustades | MIT | `index.html` | Declarat al codi; no verificat amb l'upstream |
+| tslib (Microsoft), dins de pdf-lib | Desconeguda | Funcions auxiliars de compilació | Apache-2.0 (segons l'avís) | `index.html`, avís abans del bloc de pdf-lib | Avís complet al codi; versió no confirmada (les versions recents són 0BSD) |
+| [node-forge](https://github.com/digitalbazaar/forge) | 1.3.1 | Signatura digital (.p12/.pfx) | BSD-3-Clause (s'usa sota BSD) | `index.html` | Confirmat: avís complet al codi |
+| pako | Desconeguda | Compressió | No declarada (probablement MIT) | `index.html` | **No confirmat**: sense avís de llicència al fitxer |
+| iconv-lite | Desconeguda | Codificacions de text | No declarada (probablement MIT) | `index.html` | **No confirmat**: sense avís de llicència al fitxer |
+| IBM Plex | Desconeguda | Tipografia de la interfície | SIL OFL 1.1 | `index.html` | Declarat al codi; versió no confirmada |
+| Foxit standard fonts | Desconeguda | Fonts PDF estàndard | BSD | `guaitaPDFscan_1.3.html` | Declarat al text de l'app; **no confirmat** |
+| Liberation Sans | Desconeguda | Fonts PDF | SIL OFL 1.1 | `guaitaPDFscan_1.3.html` | Declarat al text de l'app; **no confirmat** |
 
-> *Pendent de revisar:* confirmar les versions exactes incrustades a cada HTML (CA i EN) i afegir qualsevol altra biblioteca que hi hagi, amb el text de la seva llicència quan ho exigeixi.
+> *Pendent de revisar:* les llicències marcades com a **no confirmades** o amb versió desconeguda s'han de verificar amb el repositori o el paquet original abans de dir que són correctes. El codi també menciona MIT i ISC en altres llocs sense atribució clara; cal identificar-los. Els vídeos i pòsters encara no tenen llicència declarada.
 
 ---
 
