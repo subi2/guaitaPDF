@@ -3,7 +3,7 @@
 **Guaita PDF Edit** · SBS BIM Consulting 2026
 Copyright © 2026 Jordi Subirós · Llicència **GNU AGPL v3.0** (`AGPL-3.0-only`), vegeu el fitxer [`LICENSE`](LICENSE).
 
-Versió del NOTICE: **4**
+Versió del NOTICE: **5**
 
 ---
 
@@ -53,7 +53,7 @@ Els HTML de l'app incrusten biblioteques de codi obert amb les seves pròpies ll
 | [pdf.js](https://github.com/mozilla/pdf.js) (Mozilla) | 4.10.38 | Lectura i renderitzat (scanner) | Apache-2.0 | `guaitaPDFscan_1.3.html` | Llicència confirmada a npm; versió del bundle no comparada |
 | [pdf-lib](https://github.com/Hopding/pdf-lib) | 1.17.1 | Escriptura i edició de PDF | MIT | `index.html` | Confirmat (metadades npm) |
 | [fontkit](https://github.com/foliojs/fontkit) (`@pdf-lib/fontkit`) | 1.1.1 | Tipografies incrustades | MIT | `index.html` | Confirmat (metadades npm) |
-| tslib (Microsoft) | Desconeguda | Funcions auxiliars de compilació, dins de pdf-lib | **Discrepància**: l'avís del bloc és Apache-2.0; el paquet `tslib` és 0BSD | `index.html`, abans del bloc de pdf-lib | Pendent de decidir quina atribució es manté (les dues són permissives) |
+| tslib (Microsoft) | Desconeguda | Funcions auxiliars de compilació, dins de pdf-lib | Apache-2.0 (segons l'avís del bundle); el paquet `tslib` és 0BSD | `index.html`, abans del bloc de pdf-lib | Avís del bundle mantingut tal com és. Versió exacta de tslib pendent de confirmar |
 | [node-forge](https://github.com/digitalbazaar/forge) | 1.3.1 | Signatura digital (.p12/.pfx) | BSD-3-Clause (s'usa sota BSD) | `index.html` | Confirmat (avís complet al codi i metadades npm) |
 | pako | 1.x (dependència de pdf-lib) | Compressió | MIT AND Zlib | `index.html` | Confirmat (LICENSE del paquet npm); versió del bundle no comparada |
 | iconv-lite | Desconeguda | Codificacions de text | MIT | `index.html` | Confirmat per metadades npm; versió del bundle no comparada |
@@ -61,7 +61,7 @@ Els HTML de l'app incrusten biblioteques de codi obert amb les seves pròpies ll
 | Foxit standard fonts | Desconeguda | Fonts PDF estàndard | Llicència tipus BSD (PDFium Authors) | `guaitaPDFscan_1.3.html` | Confirmat (`LICENSE_FOXIT` a `pdfjs-dist` 3.11.174) |
 | Liberation Sans | Desconeguda | Fonts PDF | SIL OFL 1.1 (noms reservats) | `guaitaPDFscan_1.3.html` | Confirmat (`LICENSE_LIBERATION` a `pdfjs-dist` 3.11.174) |
 
-> *Pendent:* la discrepància de tslib; la versió exacta de cada component dins del bundle; els vídeos i pòsters, que encara no tenen llicència declarada; i els avisos de MIT i ISC que apareixen al codi sense atribució clara.
+> *Pendent:* la versió exacta de tslib dins del bundle; la versió exacta de cada component dins del bundle; els vídeos i pòsters, que encara no tenen llicència declarada; i els avisos de MIT i ISC que apareixen al codi sense atribució clara.
 
 ---
 
