@@ -2,7 +2,7 @@
 <p align="center"><img src="guaitaPDF_social_preview.png" alt="Guaita PDF Edit · SBS BIM Consulting" width="100%"></p>
 
 <p align="center">
-<img src="https://img.shields.io/badge/versi%C3%B3-8.11.0-C6FF00?style=for-the-badge&labelColor=0b0d07" alt="8.11.0">
+<img src="https://img.shields.io/badge/versi%C3%B3-8.14.0-C6FF00?style=for-the-badge&labelColor=0b0d07" alt="8.14.0">
 <img src="https://img.shields.io/badge/llic%C3%A8ncia-AGPL--3.0--only-FF2ECC?style=for-the-badge&labelColor=0b0d07" alt="AGPL-3.0-only">
 <img src="https://img.shields.io/badge/offline-0%20CDN-00E5FF?style=for-the-badge&labelColor=0b0d07" alt="offline">
 <img src="https://img.shields.io/badge/PWA-instal%C2%B7lable-FFE500?style=for-the-badge&labelColor=0b0d07" alt="PWA">
@@ -49,6 +49,8 @@
 | 💾 **Desar i sessió** | Desar i Desar com… (Ctrl+S, Ctrl+Maj+S), reordenar pestanyes arrossegant i reobrir els documents de l'última sessió |
 | 📐 **Plànols** | Índex automàtic de plànols (codi i títol del caixetí → marcadors, índex o CSV) i enllaços «veure A-201» entre plànols |
 | 🏠 **Inici i Tancar-ho tot** | Pestanya Inici sempre a mà i botó per tancar tots els documents amb avís |
+| 📐 **Components del vector** | La distància dona també ΔX, ΔY i angle (al plànol, al PDF i al CSV), amb cota nítida i de mida constant a qualsevol zoom i mira per marcar punts |
+| 🪟 **Comparador de pàgines** | Dues pàgines o plànols costat a costat amb zoom sincronitzat, ara amb botó propi |
 | 📊 **Taules de dades** | Extreu una taula del PDF (quadre de superfícies, fusteries…) a CSV, LaTeX (booktabs) o Markdown, amb la zona recordada i diverses pàgines |
 | 🖨️ **Imprimir a escala** | Reescala un plànol (A1 1:100 → A3 1:200) amb barra gràfica i rètol, comprova que hi cap, retalla una zona a escala i la desa en PDF o PNG amb dpi |
 | 🔎 **Cercar i substituir** | Cerca al PDF, al text afegit, a les notes, a les revisions, als marcadors i a les metadades, amb accents, paraula sencera i expressions regulars; substitució amb vista prèvia, un sol Desfer i node de lot per a regles |
@@ -125,6 +127,8 @@ La navegació de marcadors va a la pàgina (no a la posició exacta); «Insereix
 | 💾 **Save and session** | Save and Save as… (Ctrl+S, Ctrl+Shift+S), reorder tabs by dragging and reopen the documents from the last session |
 | 📐 **Drawings** | Automatic drawing index (title-block code and title → bookmarks, index or CSV) and “see A-201” links between drawings |
 | 🏠 **Home and Close all** | An always-available Home tab and a button to close all documents with a warning |
+| 📐 **Vector components** | A distance also gives ΔX, ΔY and angle (on the drawing, in the PDF and in the CSV), with a crisp dimension of constant size at any zoom and a reticle to place points |
+| 🪟 **Page comparer** | Two pages or drawings side by side with synchronised zoom, now with its own button |
 | 📊 **Data tables** | Extract a table from the PDF (area schedule, joinery…) to CSV, LaTeX (booktabs) or Markdown, with a remembered zone and several pages |
 | 🖨️ **Print to scale** | Rescale a drawing (A1 1:100 → A3 1:200) with graphic bar and label, check it fits, crop a zone to scale and save it as PDF or PNG with dpi |
 | 🔎 **Find and replace** | Search PDF text, added text, notes, reviews, bookmarks and metadata, with accents, whole word and regular expressions; replace with preview, one Undo step and a batch node for rule lists |

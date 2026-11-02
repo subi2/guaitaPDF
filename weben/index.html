@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Guaita PDF Edit 8.11.0 — Multi-document PDF editor (Guaita Apps suite)
+  Guaita PDF Edit 8.14.0 — Multi-document PDF editor (Guaita Apps suite)
   Copyright (C) 2026 SBS BiM Consulting, Jordi Subirós
   SPDX-License-Identifier: AGPL-3.0-only
   This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guaita PDF Edit v8.11.0 (EN)</title>
+<title>Guaita PDF Edit v8.14.0 (EN)</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#171B21">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -443,6 +443,7 @@ body.light #pr-status.warn { background: #fdf0d0; color: #7a5200; }
 #page-canvas { display: block; box-shadow: 0 4px 24px rgba(0,0,0,0.6); }
 #annot-canvas { position: absolute; top: 0; left: 0; pointer-events: none; }
 #overlay-canvas { position: absolute; top: 0; left: 0; pointer-events: none; }
+#ms-scr { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; z-index: 4; }
 /* v8.1.2: capa nítida (la zona visible es torna a dibuixar a la resolució de pantalla) */
 #page-sharp, #annot-sharp { position: absolute; pointer-events: none; display: none; }
 
@@ -2276,7 +2277,7 @@ body.th-dragging #bin-drops .bh { display: block; }
         <button class="mi needs-doc" onclick="setZoom(1)" disabled title="1 PDF point = 1 CSS pixel; it is not the paper size"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l2-2v10M16 9l2-2v10"/><path d="M11.5 10v.01M11.5 15v.01"/></svg>100 % nominal</span></button>
         <button class="mi needs-doc" onclick="rzGo()" disabled title="The paper at physical size, according to the calibration"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="8" rx="1"/><path d="M7 8v3M11 8v4M15 8v3M19 8v4"/></svg>Real size</span></button>
         <button class="mi" onclick="rzOpen()" title="Calibrate the screen with an A4 sheet"><span><span class="ic-ph"></span>Calibrate real size…</span></button>
-        <button class="mi needs-doc" onclick="splitOpen()" disabled title="Two drawings side by side with linked zoom and panning"><span><span class="ic-ph"></span>Synchronised split view…</span></button>
+        <button class="mi needs-doc" onclick="splitOpen()" disabled title="Page comparer: two pages or drawings side by side with synchronised zoom and panning"><span><span class="ic-ph"></span>Page comparer…</span></button>
         <div class="msep"></div>
         <button class="mi" id="mi-thumbs" onclick="toggleThumbs()"><span><span class="ic-ph"></span>Thumbnails</span><span class="rt"><span class="mk"></span></span></button>
         <button class="mi needs-doc" id="mi-bm" onclick="bmSetTab('bm')" disabled><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10v18l-5-4-5 4z"/></svg>Bookmarks panel</span><span class="rt"><span class="mk"></span></span></button>
@@ -2320,7 +2321,7 @@ body.th-dragging #bin-drops .bh { display: block; }
         <div class="msep"></div>
         <div class="mhead">Layers and views</div>
         <button class="mi needs-doc" id="mi-pl-layers" onclick="aecLayers()" disabled><span><span class="mk"></span>Layer states…</span></button>
-        <button class="mi needs-doc" onclick="splitOpen()" disabled><span><span class="mk"></span>Synchronised split view…</span></button>
+        <button class="mi needs-doc" onclick="splitOpen()" disabled><span><span class="mk"></span>Page comparer…</span></button>
         <div class="msep"></div>
         <button class="mi" onclick="showHelp('plans')"><span><span class="mk"></span>Drawings help</span></button>
       </div>
@@ -2373,7 +2374,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <button id="mode-compose" onclick="setMode('compose')" title="Compose: merge documents and pages with a node tree (sources → Merge → Final document)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="5" rx="1"/><rect x="2" y="16" width="7" height="5" rx="1"/><rect x="15" y="9.5" width="7" height="5" rx="1"/><path d="M9 5.5h2.5v13H9M11.5 12H15"/></svg>Compose</button>
   </div>
   <span style="flex:1"></span>
-  <span class="tag">v8.11.0</span>
+  <span class="tag">v8.14.0</span>
   <button class="btn ib" id="btn-theme" onclick="toggleTheme()" title="Switch to light theme"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div>
 
@@ -2395,6 +2396,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <button class="btn ib needs-doc vbtn" data-view="duplex" onclick="setViewMode('duplex')" disabled title="Front and back (6)" aria-label="Front and back (6)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4"/><path d="M9 17c0-3 2-5 6-5"/><path d="M13 10l2 2-2 2"/></svg></button>
     <button class="btn ib needs-doc vbtn" data-view="light" onclick="setViewMode('light')" disabled title="Page organiser: all pages, to arrange and select (7)" aria-label="Page organiser: all pages, to arrange and select (7)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="5" height="5" rx=".5"/><rect x="9.5" y="3" width="5" height="5" rx=".5"/><rect x="16" y="3" width="5" height="5" rx=".5"/><rect x="3" y="9.5" width="5" height="5" rx=".5"/><rect x="9.5" y="9.5" width="5" height="5" rx=".5"/><rect x="16" y="9.5" width="5" height="5" rx=".5"/><rect x="3" y="16" width="5" height="5" rx=".5"/><rect x="9.5" y="16" width="5" height="5" rx=".5"/></svg></button>
     <button class="btn ib needs-doc" onclick="presentStart()" disabled title="Full-screen presentation (Ctrl+L)" aria-label="Full-screen presentation (Ctrl+L)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1"/><path d="M10.5 7.5l4 2.5-4 2.5z"/><path d="M8 20h8M12 16v4"/></svg></button>
+    <button class="btn ib needs-doc vbtn" id="btn-cmps" onclick="splitOpen()" disabled title="Page comparer: two pages or drawings side by side with synchronised zoom and panning" aria-label="Page comparer: two pages or drawings side by side with synchronised zoom and panning"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="8" height="16" rx="1"/><rect x="13" y="4" width="8" height="16" rx="1"/><path d="M8 12h8M10.5 9.5L8 12l2.5 2.5M13.5 9.5L16 12l-2.5 2.5"/></svg></button>
     <button class="btn ib needs-doc vbtn" id="btn-split" onclick="splitToggle()" disabled title="Split screen" aria-label="Split screen"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M12 4v16"/><path d="M6 9h3M15 9h3M6 13h3M15 13h3"/></svg></button>
   </div>
   <div class="grp">
@@ -2406,6 +2408,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <label class="fld" title="Measurement scale (the same as the DXF export)">1:<input type="number" id="scale-input" value="1" min="0.001" step="any" onchange="scaleInputSync(); updateMeasureInfo(true); msScaleFromInput()"></label>
     <select id="measure-mode" title="Measurement type"><option value="dist">Distance</option><option value="path">Polyline</option><option value="area">Area and perimeter</option><option value="count">Count</option><option value="cal">Calibrate scale</option></select>
     <select id="measure-unit" title="Unit of the reading" onchange="measSetUnit(this.value)"><option value="mm">mm</option><option value="cm">cm</option><option value="m">m</option><option value="km">km</option><option value="ft">ft</option><option value="in">in</option><option value="mi" title="milles terrestres">mi</option></select>
+    <label class="chk" title="Shows the horizontal (ΔX) and vertical (ΔY) components of distances on the drawing"><input type="checkbox" id="ms-comp" checked onchange="msCompSet(this.checked)"> ΔX/ΔY</label>
     <span id="ms-extra" style="display:none"><select id="ms-cat" title="Category of the measurements you pin and of the count markers" onchange="msCatChange(this.value)"></select><button class="btn ib" id="ms-fix" onclick="msFixBtn()" title="Pin the measurement on the drawing (Enter)" aria-label="Pin the measurement on the drawing (Enter)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l-1 6 3 3H7l3-3z"/><path d="M12 12v9"/></svg></button><button class="btn hidden" id="ms-sug" onclick="msSugApply()"></button></span>
   </div>
   <button class="btn search-fld" id="btn-search" onclick="showSearchModal()" disabled title="Find text in the document (Ctrl+F)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>Search in document…<kbd>Ctrl F</kbd></button>
@@ -2759,7 +2762,7 @@ body.th-dragging #bin-drops .bh { display: block; }
     <div id="viewer-container">
       <div id="welcome">
         <div class="wl-card">
-          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.11.0</small></div>
+          <div class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>PDF·EDIT 8.14.0</small></div>
           <div id="wl-inst" class="hidden"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 7v6M9.5 10.5L12 13l2.5-2.5M8 20h8"/></svg><div class="wi-t"><b>Install Guaita PDF Edit as an app</b><span>Its own window, works offline and opens PDFs from your file manager.</span></div><button class="btn primary" onclick="pwaInstall()">Install</button><button class="wi-x" onclick="wlInstHide()" title="Hide this notice" aria-label="Hide this notice">×</button></div>
           <h1>PDF editor <em>local</em>, no cloud.</h1>
           <p>Open one or more PDFs or drag them onto the window. Everything is processed on this computer: no file leaves the browser.</p>
@@ -3033,9 +3036,9 @@ body.th-dragging #bin-drops .bh { display: block; }
 </div>
 
 <!-- ══ COMPARAR VERSIONS (v6.5) ══════════════════════════ -->
-<div id="cmp" class="hidden" role="dialog" aria-label="Compare versions">
+<div id="cmp" class="hidden" role="dialog" aria-label="Page comparer">
   <div class="cp-bar">
-    <span class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>compare</small></span>
+    <span class="brand"><span class="cells"><i></i><i></i><i></i><i></i></span>GUAITA<small>page comparer</small></span>
     <span class="cmp-l">A</span><select id="cmp-a"></select><input type="number" id="cmp-ia" min="1" title="Page of A" aria-label="Page of A"><span class="mono cmp-pg" id="cmp-pa"></span>
     <span class="cmp-l b">B</span><select id="cmp-b"></select><input type="number" id="cmp-ib" min="1" title="Page of B" aria-label="Page of B"><button class="btn ib" onclick="CMPS.bi=Math.max(0,CMPS.bi-1);cmpRun()" title="Previous page of B" aria-label="Previous page of B"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="mono cmp-pg" id="cmp-pb"></span><button class="btn ib" onclick="CMPS.bi++;cmpRun()" title="Next page of B" aria-label="Next page of B"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
     <label class="chk"><input type="checkbox" id="cmp-sync" checked> Synchronised pages</label>
@@ -3082,7 +3085,7 @@ body.th-dragging #bin-drops .bh { display: block; }
   <span id="st-worker" class="hidden" title="This environment does not allow pdf.js workers (embedded viewer or browser restrictions). PDFs are processed on the main thread: everything works the same, but large documents are slower. Opened directly in Chrome or Edge from disk, this does not normally happen.">pdf.js · main thread</span>
   <span class="spacer"></span>
   <span id="st-off">offline · 0 CDN</span>
-  <span id="st-sign" title="Guaita PDF Edit 8.11.0 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
+  <span id="st-sign" title="Guaita PDF Edit 8.14.0 · Copyright © 2026 SBS BiM Consulting, Jordi Subirós · AGPL-3.0-only">SBS BIM Consulting 2026</span>
 </div>
 
 <!-- ══ MODAL: circuit d'aprovació (v6.5) ══ -->
@@ -5257,7 +5260,7 @@ function sharpDrawAnn(doc) {
   const ctx = cv.getContext('2d'), st = sharpSt, k = st.s / RENDER_SCALE, ac = $('annot-canvas');
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height);
   const pd = doc && doc.pages[doc.curIdx]; if (!pd || pd !== st.pd) return;
-  ctx.setTransform(k, 0, 0, k, -st.x0 * st.s, -st.y0 * st.s);
+  ctx.setTransform(k, 0, 0, k, -st.x0 * st.s, -st.y0 * st.s); ctx.zf = msZf();   // v8.14.0
   ctx.pgW = ac.width; ctx.pgH = ac.height;
   (pd.annotations || []).forEach(a => drawAnnot(a, ctx));
   if (curStroke) drawAnnot(curStroke, ctx);
@@ -5346,7 +5349,7 @@ function applyTransform() {
     `translate(-50%,-50%) translate(${panX}px,${panY}px) scale(${zoom})`;
   pw.style.setProperty('--rk', Math.min(3, Math.max(1, 1 / zoom)).toFixed(3));
   if (viewMode !== 'single') bkOnView();
-  else { sharpSchedule(); if (selAnn && tool === 'select' && !selDrag) drawSel(); }   // v8.1.2
+  else { sharpSchedule(); if (selAnn && tool === 'select' && !selDrag) drawSel(); msZoomSync(); }   // v8.1.2
 }
 
 // ─── Viewer mouse events ─────────────────────────────────
@@ -7416,22 +7419,12 @@ function drawMeasurePreview(e) {
   const scaledMm = actualMm * scale;
   
   $('measure-info').style.display = 'block';
-  $('measure-info').innerHTML = `📏 ${scaledMm.toFixed(1)} mm`;
+  $('measure-info').innerHTML = `📏 ${scaledMm.toFixed(1)} mm<br>` + msIns('', msCompLive(mPts[0], p2)).replace(/^<br>/, '').replace(/<br>$/, '');
 }
 
-function drawMeasureLine(p1, p2) {
-  const cv = $('overlay-canvas');
-  const ctx = cv.getContext('2d');
-  clearOverlay();
-  ctx.strokeStyle = cssVar('--accent-ink');
-  ctx.lineWidth   = 2;
-  ctx.setLineDash([8, 4]);
-  ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle = cssVar('--accent-ink');
-  [p1, p2].forEach(p => {
-    ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI * 2); ctx.fill();
-  });
+function drawMeasureLine(p1, p2) {   // v8.14.0: es dibuixa a la capa de pantalla (nítida i de mida constant)
+  const cv = $('overlay-canvas'); cv.getContext('2d').clearRect(0, 0, cv.width, cv.height);
+  MSV.d = { k: 'line', p1, p2 }; msLiveRedraw();
 }
 
 function updateMeasureInfo(forceRecalculate = false) {
@@ -7447,15 +7440,16 @@ function updateMeasureInfo(forceRecalculate = false) {
   const scaledMm = actualMm * scale;
   
   el.style.display = 'block';
-  el.innerHTML =
+  el.innerHTML = msIns(
     `<strong>📏 ${fmtLen(scaledMm)} ${scale !== 1 ? '(Scaled)' : ''}</strong><br>` +
     (scale !== 1 ? `<span style="color:#f39c12;font-size:11px">Real: ${fmtLen(actualMm)} (Scale 1:${scale})</span><br>` : '') +
-    `<span style="color:#8B939F;font-size:10px">Enter or the pin to pin it · click for a new measurement · Esc to cancel</span>`;
+    `<span style="color:#8B939F;font-size:10px">Enter or the pin to pin it · click for a new measurement · Esc to cancel</span>`, msCompLive(mPts[0], mPts[1]));
 }
 
 function clearOverlay() {
   const cv = $('overlay-canvas');
   cv.getContext('2d').clearRect(0, 0, cv.width, cv.height);
+  msScrClear();   // v8.14.0
 }
 
 // ─── Pencil tool ──────────────────────────────────────────
@@ -7842,6 +7836,7 @@ function redrawAnnotations() {
   ctx.clearRect(0, 0, cv.width, cv.height);
   const doc = getActiveDoc();
   if (!doc) return;
+  ctx.zf = MSV.zf = msZf();   // v8.14.0
   doc.pages[doc.curIdx].annotations.forEach(a => drawAnnot(a, ctx));
   if (curStroke) drawAnnot(curStroke, ctx);
   drawPageNumCanvas(doc, ctx, cv);
@@ -8875,6 +8870,7 @@ async function saveWrite(doc, t, bytes) {
 async function savePdf(as) {
   const doc = getActiveDoc();
   if (!doc || !doc.pages.length) return;
+  if (as !== true && doc.geLink && await geSaveBack(doc)) return;   // v8.12.0: document obert des de guaitaEstudis
   if (!doc.signed && !LIB_PDFLIB) { toast("pdf-lib is not available: try saving/opening the file again", true); return; }
   const t = await saveTarget(doc, as === true);
   if (!t) return;   // diàleg cancel·lat: el document continua sense desar
@@ -10462,6 +10458,106 @@ async function onScanMessage(e) {
   try { window.focus(); } catch (err) { }
 }
 window.addEventListener('message', onScanMessage);
+/* ── v8.12.0 · Enllaç amb guaitaEstudis (finestra apart, postMessage) ──
+   Protocol v1. Només s'accepten missatges de la finestra que ha obert aquest editor (window.opener).
+   guaitaEstudis → editor: ping · open {id,nom,buffer,readOnly} · goto {id,page} · annotations {id,req}
+   editor → guaitaEstudis: ready · opened {id} · saved {id,buffer} · annotations {id,req,list} · error {id,msg} */
+const GE_L = {"ro": "Delivered and locked document in guaitaEstudis: read-only. Use “Save as…” to save a copy.", "saving": "Saving to guaitaEstudis…", "saved": "Saved to guaitaEstudis", "err": "Error saving to guaitaEstudis: ", "openErr": "The PDF could not be opened", "opened": "Opened from guaitaEstudis · “Save” sends it back to the tree", "openedRo": "Opened from guaitaEstudis (read-only)", "noDoc": "The document is no longer open in the editor", "tab": "Linked to guaitaEstudis: “Save” sends it back to the tree", "tabRo": "Linked to guaitaEstudis (read-only)"};
+function geTarget(e) { return e.origin && e.origin !== 'null' ? e.origin : '*'; }
+let geOrigin = '*';
+function gePost(m, transfer) { try { window.opener && window.opener.postMessage(Object.assign({ app: 'guaitaPDFEdit', v: 1 }, m), geOrigin, transfer || []); } catch (err) { } }
+function geDocById(id) { return docs.find(d => d.geLink && d.geLink.id === id); }
+async function geBytes(doc) {
+  if (doc.signed) return doc.signed.bytes.slice();
+  fixPids(doc);
+  return await generatePdfBytes(doc.pages, doc.pageNums ? { ...doc.pageNums, ctx: hfCtx(doc) } : null, doc.outline || [], { noNotes: doc.notesOut === false, attachments: doc.attachments || [], meta: doc.meta || {}, ocOff: doc.ocOff });
+}
+async function geSaveBack(doc) {   // retorna true si el desat s'ha enviat a guaitaEstudis
+  if (!doc || !doc.geLink || !window.opener || window.opener.closed) return false;
+  if (doc.geLink.readOnly) { toast(GE_L.ro, true, 5000); return true; }
+  toast(GE_L.saving, false, 15000);
+  try {
+    const u8 = await geBytes(doc), buf = u8.buffer.slice(u8.byteOffset, u8.byteOffset + u8.byteLength);
+    gePost({ type: 'saved', id: doc.geLink.id, nom: doc.name, buffer: buf }, [buf]);
+    markSaved(doc); toast(GE_L.saved);
+  } catch (err) { console.error(err); toast(GE_L.err + err.message, true); }
+  return true;
+}
+function geQuadBoxes(a) {   // pdf.js 3.x: [[{x,y}×4],…] · 4.x: Float32Array plana
+  const q = a.quadPoints, out = [];
+  if (!q) return out;
+  if (Array.isArray(q) && q.length && Array.isArray(q[0])) { for (const p of q) { const xs = p.map(o => o.x), ys = p.map(o => o.y); out.push([Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)]); } }
+  else for (let i = 0; i + 7 < q.length; i += 8) { const xs = [q[i], q[i + 2], q[i + 4], q[i + 6]], ys = [q[i + 1], q[i + 3], q[i + 5], q[i + 7]]; out.push([Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)]); }
+  return out;
+}
+function geTextIn(items, boxes) {
+  const hit = [];
+  for (const it of items) {
+    if (!it.str || !it.transform) continue;
+    const x = it.transform[4], y = it.transform[5], w = it.width || 0, h = it.height || Math.abs(it.transform[3]) || 1;
+    const cy = y + h / 2;
+    for (const b of boxes) {
+      if (cy < b[1] - 1 || cy > b[3] + 1) continue;
+      const ox0 = Math.max(x, b[0]), ox1 = Math.min(x + w, b[2]);
+      if (ox1 <= ox0) continue;
+      let s = it.str;
+      if (w > 0 && s.length > 1) { const cw = w / s.length; const i0 = Math.max(0, Math.round((ox0 - x) / cw)), i1 = Math.min(s.length, Math.round((ox1 - x) / cw)); s = s.slice(i0, i1); }
+      if (s.trim()) hit.push({ y: -cy, x: ox0, s });
+      break;
+    }
+  }
+  hit.sort((p, q) => Math.abs(p.y - q.y) > 2 ? p.y - q.y : p.x - q.x);
+  return hit.map(h => h.s).join(' ').replace(/\s+/g, ' ').trim();
+}
+async function geAnnotations(doc) {
+  const pdf = await openPdfJs(await geBytes(doc)), list = [];
+  try {
+    for (let p = 1; p <= pdf.numPages; p++) {
+      const pg = await pdf.getPage(p), an = await pg.getAnnotations({ intent: 'display' });
+      let items = null;
+      for (const a of an) {
+        if (!a.subtype || /^(Link|Widget|Popup)$/.test(a.subtype)) continue;
+        const boxes = geQuadBoxes(a);
+        if (boxes.length && !items) items = (await pg.getTextContent()).items;
+        list.push({ pagina: p, tipus: a.subtype, contingut: (a.contentsObj && a.contentsObj.str) || a.contents || '', autor: (a.titleObj && a.titleObj.str) || a.title || '',
+          data: a.modificationDate || '', color: a.color ? Array.from(a.color) : null, rect: a.rect ? Array.from(a.rect) : null, nm: a.id || '', textMarcat: boxes.length ? geTextIn(items, boxes) : '' });
+      }
+    }
+  } finally { try { pdf.destroy(); } catch (e) { } }
+  return list;
+}
+async function geOnMessage(e) {
+  const d = e.data;
+  if (!d || d.app !== 'guaitaEstudis' || !window.opener || e.source !== window.opener) return;
+  geOrigin = geTarget(e);
+  try {
+    if (d.type === 'ping') { gePost({ type: 'ready' }); return; }
+    if (d.type === 'open') {
+      let doc = geDocById(d.id);
+      if (doc) { await switchDoc(doc.id); gePost({ type: 'opened', id: d.id }); if (d.page) await goTo(Math.max(0, d.page - 1)); return; }
+      const f = new File([d.buffer], d.nom || 'document.pdf', { type: 'application/pdf' });
+      const { opened } = await openPdfFiles([f]);
+      doc = opened[0];
+      if (!doc) { gePost({ type: 'error', id: d.id, msg: GE_L.openErr }); return; }
+      doc.geLink = { id: d.id, readOnly: !!d.readOnly };
+      updateTabsUI();
+      if (d.page) await goTo(Math.max(0, d.page - 1));
+      gePost({ type: 'opened', id: d.id });
+      toast(d.readOnly ? GE_L.openedRo : GE_L.opened, false, 4000);
+      return;
+    }
+    const doc = geDocById(d.id);
+    if (!doc) { gePost({ type: 'error', id: d.id, msg: GE_L.noDoc }); return; }
+    if (d.type === 'goto') { await switchDoc(doc.id); await goTo(Math.max(0, (d.page || 1) - 1)); return; }
+    if (d.type === 'annotations') { const list = await geAnnotations(doc); gePost({ type: 'annotations', id: d.id, req: d.req, list }); return; }
+  } catch (err) { console.error(err); gePost({ type: 'error', id: d.id, msg: err.message }); }
+}
+window.addEventListener('message', geOnMessage);
+{ const _uT = updateTabsUI; updateTabsUI = function () { const r = _uT.apply(this, arguments);
+    document.querySelectorAll('#tabs-bar .tab[data-id]').forEach(t => { const doc = docs.find(x => x.id === t.dataset.id);
+      if (doc && doc.geLink && !t.querySelector('.ge-link')) { const s = document.createElement('span'); s.className = 'ge-link'; s.textContent = '⇄ '; s.title = doc.geLink.readOnly ? GE_L.tabRo : GE_L.tab; s.style.color = 'var(--accent-text)'; t.insertBefore(s, t.firstChild); } });
+    return r; }; }
+
 
 // ─── Ajuda (v5.0) ──────────────────────────────────────────
 /*HELP-START*/
@@ -10530,7 +10626,7 @@ const HELP = {
 <h3>Revisions</h3>
 <p><b>Compare revisions</b> overlays two versions. With <b>New revision</b> the revision clouds carry the number (△n); the <b>revision table</b> can be copied or inserted on the page. The <b>status stamp</b> places APPROVED, REVIEWED or your own text with your name and the date.</p>
 <h3>Layers and views</h3>
-<p><b>Layer states</b> saves and applies named layer combinations (only available if the PDF has layers). <b>Synchronised split view</b> shows two drawings side by side with linked zoom and panning; it is read-only.</p>
+<p><b>Layer states</b> saves and applies named layer combinations (only available if the PDF has layers). the <b>Page comparer</b> (synchronised split view) shows two drawings or pages side by side with linked zoom and panning; it is read-only. It has a button on the view bar.</p>
 `],
   keys: ['Keyboard shortcuts', `
 <table>
@@ -10574,7 +10670,7 @@ const HELP = {
 <h3>If the option does not appear</h3>
 <p>You need to open the app's web address (https), not the file from disk. Desktop Firefox and Safari do not install PWAs; on iPhone Safari: <b>Share › Add to Home Screen</b>.</p>`],
   about: ['About Guaita PDF Edit', `
-<p><b>Guaita PDF Edit 8.11.0</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
+<p><b>Guaita PDF Edit 8.14.0</b> — editor de PDF multidocument de la suite Guaita Apps. Fitxer HTML únic i autònom: no instal·la res, no es connecta a cap servidor i funciona sense xarxa.</p>
 <p>Copyright © 2026 SBS BiM Consulting, Jordi Subirós.<br>Llicència <b>AGPL-3.0-only</b>.</p>
 <p>Components inclosos: pdf.js 3.11.174 (Mozilla, Apache-2.0), pdf-lib 1.17.1 (MIT) i @pdf-lib/fontkit 1.1.1 (MIT).</p>
 <p>Programa relacionat: guaitaPDFscan 1.3 (analitzador de PDF sospitosos), integrat al mode Escanejar.</p>`]
@@ -15219,7 +15315,7 @@ function redPdfA(P, rep, o, usage) {
   P.catalog.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
   // metadades coherents (Info i XMP)
   const now = new Date(), iso = now.toISOString().replace(/\.\d+Z$/, 'Z'), title = (o.title || '').trim();
-  const prod = 'Guaita PDF Edit 8.11.0 · pdf-lib';
+  const prod = 'Guaita PDF Edit 8.14.0 · pdf-lib';
   const info = ctx.obj({ Producer: PDFString.of(prod), CreationDate: PDFString.of(pdfDateNow(now)), ModDate: PDFString.of(pdfDateNow(now)), ...(title ? { Title: PDFHexString.fromText(title) } : {}) });
   ctx.trailerInfo.Info = ctx.register(info);
   const xmp = `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -15258,7 +15354,7 @@ async function pdfReduce(bytes, o, prog = () => { }) {
   const cat = P.catalog, del = (d, k, label) => { if (d && d.get(PDFName.of(k))) { d.delete(PDFName.of(k)); if (label && !rep.cleaned.includes(label)) rep.cleaned.push(label); } };
   if (o.meta && !o.pdfa) {
     del(cat, 'Metadata', 'XMP metadata'); del(cat, 'PieceInfo', 'private application data');
-    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.11.0') })); rep.cleaned.push('document information'); }
+    if (ctx.trailerInfo.Info) { ctx.trailerInfo.Info = ctx.register(ctx.obj({ Producer: PDFLib.PDFString.of('Guaita PDF Edit 8.14.0') })); rep.cleaned.push('document information'); }
     P.getPages().forEach(pg => { del(pg.node, 'PieceInfo'); del(pg.node, 'Metadata'); });
   }
   if (o.thumbs) P.getPages().forEach(pg => del(pg.node, 'Thumb', 'thumbnails'));
@@ -20373,7 +20469,7 @@ function metaWrite(out, M) {
     if (M.subject) out.setSubject(M.subject);
     if (M.keywords) out.setKeywords(M.keywords.split(/[,;]/).map(x => x.trim()).filter(Boolean));
     out.setCreator(M.creator || 'Guaita PDF Edit');
-    out.setProducer('Guaita PDF Edit 8.11.0 · pdf-lib');
+    out.setProducer('Guaita PDF Edit 8.14.0 · pdf-lib');
     const c = pdfDate(M.created); out.setCreationDate(c || new Date()); out.setModificationDate(new Date());
   } catch (e) { console.warn('Metadata:', e); }
 }
@@ -20392,16 +20488,8 @@ function polyStats(pts, closed) {
   return { area: Math.abs(A) / 2 * sc * sc, per: per * sc };
 }
 function drawArea(extra) {
-  clearOverlay();
-  const pts = extra ? mPts.concat([extra]) : mPts; if (!pts.length) return;
-  const ctx = $('overlay-canvas').getContext('2d'), acc = cssVar('--accent-ink');
-  ctx.save(); ctx.lineWidth = 2; ctx.strokeStyle = acc; ctx.fillStyle = 'rgba(214,251,65,.18)';
-  ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
-  if (measureMode !== 'path' && (mClosed || pts.length >= 3)) { ctx.closePath(); ctx.fill(); }
-  ctx.setLineDash(mClosed ? [] : [8, 4]); ctx.stroke(); ctx.setLineDash([]);
-  ctx.fillStyle = acc; mPts.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI * 2); ctx.fill(); });
-  if (measureMode === 'area' && !mClosed && mPts.length >= 3) { ctx.beginPath(); ctx.arc(mPts[0].x, mPts[0].y, 11, 0, Math.PI * 2); ctx.stroke(); }
-  ctx.restore();
+  const cv = $('overlay-canvas'); cv.getContext('2d').clearRect(0, 0, cv.width, cv.height);
+  MSV.d = { k: 'poly', extra: extra || null }; msLiveRedraw();
 }
 // v8.1.0: unitat de lectura de les mesures (es recorda entre sessions)
 const MEAS_UNITS = {
@@ -20899,7 +20987,7 @@ async function escBuild(doc, idx, P, zone) {
     page.node.set(N.of('Annots'), ctx.obj([ctx.register(hd)]));
     res.push(L);
   }
-  out.setProducer('Guaita PDF Edit 8.11.0 · pdf-lib');
+  out.setProducer('Guaita PDF Edit 8.14.0 · pdf-lib');
   return { bytes: await out.save({ useObjectStreams: false }), lay: res };
 }
 async function escPng(doc, P, dpi) {
@@ -20933,7 +21021,7 @@ async function escRun(how) {
   } catch (e) { console.error(e); toast('Could not generate: ' + (e.message || e), true, 6000); }
 }
 
-// ─── v8.11.0: extracció de taules de dades (CSV, LaTeX, Markdown)
+// ─── v8.12.0: extracció de taules de dades (CSV, LaTeX, Markdown)
 const TB = { pg: 0, z: null, dw: 0, dh: 0, tk: 0, rows: [], ncol: 0, hr: 0 };
 try { const z = JSON.parse(localStorage.getItem('guaita-tbzone') || 'null'); if (z && typeof z.x0 === 'number') TB.z = z; } catch (e) { }
 async function tbOpen() {
@@ -21461,6 +21549,78 @@ const MS = {
   cats: (() => { try { const c = JSON.parse(localStorage.getItem('guaita-ms-cats') || 'null'); if (Array.isArray(c) && c.length) return c; } catch (e) { } return [{ n: 'General', c: '#E5484D', s: '●' }]; })(),
   cat: 0, scope: 'doc'
 };
+// ─── v8.14.0: components del vector (ΔX, ΔY, angle) i cota nítida i de mida constant a qualsevol zoom
+(function () { const c = document.createElement('canvas'); c.id = 'ms-scr'; vc.appendChild(c); })();   // última capa del visor
+const MSC = { comp: true }; try { MSC.comp = localStorage.getItem('guaita-ms-comp') !== '0'; } catch (e) { }
+const MSV = { d: null, cur: null, zf: 1, t: 0 };
+const msZf = () => 1 / Math.max(zoom, 0.6);   // factor de mida: les marques de mesura conserven la mida a pantalla
+function msCompK(p, q, k) { const dx = (q.x - p.x) * k, dy = -(q.y - p.y) * k; return { dx, dy, len: Math.hypot(dx, dy), ang: Math.atan2(dy, dx) * 180 / Math.PI }; }
+const msCompOf = a => { const P = a.points; return msCompK(P[0], P[P.length - 1], msK() * (a.sc || 1)); };
+const msCompLive = (p, q) => msCompK(p, q, msK() * (parseFloat($('scale-input').value) || 1));
+const msNumU = mm => { const u = MEAS_UNITS[measUnit()]; return (mm * u.f).toFixed(u.d); };
+const msFmtC = c => 'ΔX ' + msNumU(c.dx) + ' · ΔY ' + msNumU(c.dy) + ' ' + MEAS_UNITS[measUnit()].s;
+function msIns(h, c) {   // afegeix la línia de components darrere de la primera línia del quadre d'informació
+  const t = '<span style="font-size:12px">ΔX <b>' + msNumU(c.dx) + '</b> · ΔY <b>' + msNumU(c.dy) + '</b> ' + MEAS_UNITS[measUnit()].s + ' · ∠ <b>' + c.ang.toFixed(1) + '°</b></span><br>';
+  const i = h.indexOf('</strong><br>'); return i < 0 ? h + '<br>' + t : h.slice(0, i + 13) + t + h.slice(i + 13);
+}
+function msCsvC(a, u, num) { if (a.kind !== 'dist' || !a.points || a.points.length < 2) return ['', '', '']; const c = msCompOf(a); return [num(c.dx * u.f, u.d), num(c.dy * u.f, u.d), num(c.ang, 1)]; }
+function msCompSet(on) { MSC.comp = !!on; try { localStorage.setItem('guaita-ms-comp', on ? '1' : '0'); } catch (e) { } updateMeasureInfo(true); if (getActiveDoc()) { redrawAnnotations(); msRefresh(); } msLiveRedraw(); }
+// capa de pantalla: previsualització de la mesura a la resolució del monitor i amb mida constant
+function msScr() {
+  const cv = $('ms-scr'), w = vc.clientWidth, h = vc.clientHeight, d = Math.min(window.devicePixelRatio || 1, 2);
+  if (cv.width !== Math.round(w * d) || cv.height !== Math.round(h * d)) { cv.width = Math.round(w * d); cv.height = Math.round(h * d); }
+  const x = cv.getContext('2d'); x.setTransform(d, 0, 0, d, 0, 0); return x;
+}
+function msScrClear() { MSV.d = null; msLiveRedraw(); }
+const msS = p => { const q = canvasToScr(p.x, p.y), r = vc.getBoundingClientRect(); return { x: q.x - r.left, y: q.y - r.top }; };
+function msPill(x, t, px, py, tx) {
+  x.font = '600 11px "IBM Plex Mono", monospace'; const w = x.measureText(t).width + 10, h = 17, l = px - w / 2, tp = py - h / 2;
+  x.fillStyle = 'rgba(14,17,22,.82)'; x.beginPath(); if (x.roundRect) x.roundRect(l, tp, w, h, 4); else x.rect(l, tp, w, h); x.fill();
+  x.fillStyle = tx || '#fff'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(t, px, py + 0.5);
+}
+function msLiveRedraw() {
+  const cv = $('ms-scr'); if (!cv || !vc) return; const x = msScr(), W = vc.clientWidth, H = vc.clientHeight; x.clearRect(0, 0, W, H);
+  if (tool !== 'measure' || !getActiveDoc()) return;
+  const acc = cssVar('--accent-ink'), d = MSV.d;
+  const path = (pts, closed) => { x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p.x, p.y) : x.moveTo(p.x, p.y)); if (closed) x.closePath(); };
+  const stroke = (w, dash) => { x.setLineDash(dash || []); x.lineJoin = 'round'; x.strokeStyle = 'rgba(255,255,255,.85)'; x.lineWidth = w + 2.2; x.stroke(); x.strokeStyle = acc; x.lineWidth = w; x.stroke(); x.setLineDash([]); };
+  const dot = p => { x.beginPath(); x.arc(p.x, p.y, 3.5, 0, Math.PI * 2); x.fillStyle = acc; x.fill(); x.lineWidth = 1.3; x.strokeStyle = '#fff'; x.stroke(); };
+  if (d && d.k === 'line') {
+    const a = msS(d.p1), b = msS(d.p2);
+    if (MSC.comp && measureMode === 'dist') {
+      const c = msCompLive(d.p1, d.p2), k = { x: b.x, y: a.y };
+      x.save(); x.globalAlpha = .85; path([a, k, b]); stroke(1, [4, 3]); x.restore();
+      if (Math.abs(b.x - a.x) > 46) msPill(x, 'ΔX ' + msNumU(c.dx), (a.x + b.x) / 2, a.y + (b.y >= a.y ? -14 : 14), '#fff');
+      if (Math.abs(b.y - a.y) > 30) msPill(x, 'ΔY ' + msNumU(c.dy), b.x + (b.x >= a.x ? 34 : -34), (a.y + b.y) / 2, '#fff');
+    }
+    path([a, b]); stroke(1.6, [8, 4]); dot(a); dot(b);
+    if (measureMode === 'dist' || measureMode === 'cal') { const L = msCompLive(d.p1, d.p2); msPill(x, msNumU(L.len) + ' ' + MEAS_UNITS[measUnit()].s, (a.x + b.x) / 2, (a.y + b.y) / 2 + (b.y > a.y ? 16 : -16), '#d8ff00'); }
+  } else if (d && d.k === 'poly' && mPts.length) {
+    const pts = mPts.concat(d.extra ? [d.extra] : []).map(msS), mp = mPts.map(msS), area = measureMode !== 'path';
+    if (area && (mClosed || pts.length >= 3)) { path(pts, true); x.fillStyle = 'rgba(214,251,65,.18)'; x.fill(); }
+    path(pts, area && mClosed); stroke(1.6, mClosed ? [] : [8, 4]); mp.forEach(dot);
+    if (measureMode === 'area' && !mClosed && mp.length >= 3) { x.beginPath(); x.arc(mp[0].x, mp[0].y, 9, 0, Math.PI * 2); x.setLineDash([]); x.strokeStyle = acc; x.lineWidth = 1.4; x.stroke(); }
+  }
+  else if (mPts.length === 1 && (measureMode === 'dist' || measureMode === 'cal')) dot(msS(mPts[0]));
+  const c = MSV.cur;
+  if (c) {   // mira: quatre traços curts al voltant del punter, sense tapar el detall
+    x.beginPath(); [[-1, 0], [1, 0], [0, -1], [0, 1]].forEach(([u, v]) => { x.moveTo(c.x + u * 5, c.y + v * 5); x.lineTo(c.x + u * 17, c.y + v * 17); });
+    x.setLineDash([]); x.strokeStyle = 'rgba(255,255,255,.9)'; x.lineWidth = 3; x.stroke(); x.strokeStyle = acc; x.lineWidth = 1.2; x.stroke();
+  }
+}
+function msZoomSync() {
+  msLiveRedraw(); clearTimeout(MSV.t);
+  MSV.t = setTimeout(() => {
+    const f = msZf(); if (Math.abs(f - MSV.zf) < 0.06 * MSV.zf) return; MSV.zf = f;
+    const doc = getActiveDoc(), pd = doc && doc.pages[doc.curIdx]; if (pd && pd.annotations.some(a => a.type === 'meas')) redrawAnnotations();
+  }, 120);
+}
+vc.addEventListener('pointermove', e => {
+  if (tool !== 'measure') { if (MSV.cur) { MSV.cur = null; msLiveRedraw(); } return; }
+  const r = vc.getBoundingClientRect(); MSV.cur = { x: e.clientX - r.left, y: e.clientY - r.top }; msLiveRedraw();
+});
+vc.addEventListener('pointerleave', () => { if (MSV.cur) { MSV.cur = null; msLiveRedraw(); } });
+$('ms-comp').checked = MSC.comp;
 const MS_KN = { dist: 'Distance', path: 'Polyline', area: 'Area', count: 'Count' };
 const msK = () => ptToMm(1) / RENDER_SCALE;   // mm de paper per píxel del llenç
 const msCur = () => MS.cats[MS.cat] || MS.cats[0];
@@ -21491,7 +21651,8 @@ function msLabel(a) {
   const v = msVals(a);
   if (a.kind === 'count') return [String(a.n || 1)];
   if (a.kind === 'area') return [fmtArea(v.area), 'P ' + fmtLen(v.per)];
-  return [fmtLen(v.len)];
+  const T = [fmtLen(v.len)]; if (MSC.comp && a.kind === 'dist' && (a.points || []).length > 1) T.push(msFmtC(msCompOf(a)));   // v8.14.0
+  return T;
 }
 const msText = a => a.kind === 'count' ? '#' + (a.n || 1) : msLabel(a).join(' · ');
 function msLabelAt(a) {
@@ -21524,7 +21685,7 @@ function msTag(ctx, lines, x, y, col, S) {
   lines.forEach((t, i) => ctx.fillText(t, x, y - h / 2 + 1.5 * S + fs * 1.2 * (i + 0.5)));
 }
 function drawMeas(a, ctx) {
-  const S = RENDER_SCALE, P = a.points; if (!P || !P.length) return;
+  const S = RENDER_SCALE * (ctx.zf || 1), P = a.points; if (!P || !P.length) return;
   const col = a.color || '#E5484D';
   ctx.save(); ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 1.2 * S; ctx.setLineDash([]);
   if (a.kind === 'count') {
@@ -21537,6 +21698,10 @@ function drawMeas(a, ctx) {
   ctx.beginPath(); P.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
   if (a.kind === 'area') { ctx.closePath(); ctx.globalAlpha = 0.16; ctx.fill(); ctx.globalAlpha = 1; }
   ctx.stroke();
+  if (a.kind === 'dist' && MSC.comp && P.length > 1) {   // v8.14.0: catets horitzontal i vertical
+    const q0 = P[0], q1 = P[P.length - 1]; ctx.save(); ctx.globalAlpha = 0.75; ctx.lineWidth = 0.7 * S; ctx.setLineDash([3 * S, 2.5 * S]);
+    ctx.beginPath(); ctx.moveTo(q0.x, q0.y); ctx.lineTo(q1.x, q0.y); ctx.lineTo(q1.x, q1.y); ctx.stroke(); ctx.restore();
+  }
   if (a.kind !== 'area' && P.length > 1) {   // traços als extrems, com una cota
     const tk = (p, q) => { const L = Math.hypot(q.x - p.x, q.y - p.y) || 1, nx = -(q.y - p.y) / L * 4 * S, ny = (q.x - p.x) / L * 4 * S; ctx.beginPath(); ctx.moveTo(p.x - nx, p.y - ny); ctx.lineTo(p.x + nx, p.y + ny); ctx.stroke(); };
     tk(P[0], P[1]); tk(P[P.length - 1], P[P.length - 2]);
@@ -21678,12 +21843,13 @@ function msCsv() {
   const L = msItems(doc, 'doc'); if (!L.length) { toast('There are no pinned measurements to export', true); return; }
   const u = MEAS_UNITS[measUnit()], num = (x, d) => x.toFixed(d).replace('.', ',');
   const rows = [['Document', 'Page', 'Type', 'Category', 'No.', 'Value', 'Unit', 'Perimeter', 'Scale']];
+  rows[0].push('ΔX', 'ΔY', 'Angle (°)');
   L.forEach(({ a, i }) => {
     const v = msVals(a); let val = '', un = '', per = '';
     if (a.kind === 'count') { val = '1'; un = 'u'; }
     else if (a.kind === 'area') { val = num(v.area * u.f * u.f, u.d); un = u.s + '²'; per = num(v.per * u.f, u.d); }
     else { val = num(v.len * u.f, u.d); un = u.s; }
-    rows.push([doc.name, i + 1, MS_KN[a.kind], a.cat || '', a.kind === 'count' ? a.n || 1 : '', val, un, per, '1:' + (a.sc || 1)]);
+    rows.push([doc.name, i + 1, MS_KN[a.kind], a.cat || '', a.kind === 'count' ? a.n || 1 : '', val, un, per, '1:' + (a.sc || 1), ...msCsvC(a, u, num)]);
   });
   const csv = '﻿' + rows.map(r => r.map(c => { c = String(c); return /[;"\n]/.test(c) ? '"' + c.replace(/"/g, '""') + '"' : c; }).join(';')).join('\r\n');
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })), l = document.createElement('a');
@@ -21729,6 +21895,7 @@ async function msWrite(out, outPage, list, rot, font, fontB, pd) {
         ops = '';
         if (a.kind === 'area') { rs = res(true); ops += `q /GS gs ${cs} rg ${path} h f Q `; }
         ops += `q ${cs} RG 1.2 w 1 j 1 J ${path}${a.kind === 'area' ? ' h' : ''} S `;
+        if (a.kind === 'dist' && MSC.comp && pts.length > 1) { const c0 = P(a.points[a.points.length - 1].x, a.points[0].y); ops += `[3 2.5] 0 d 0.6 w ${f2(pts[0].x)} ${f2(pts[0].y)} m ${f2(c0.x)} ${f2(c0.y)} l ${f2(pts[pts.length - 1].x)} ${f2(pts[pts.length - 1].y)} l S [] 0 d 1.2 w `; }   // v8.14.0
         if (a.kind !== 'area' && pts.length > 1) {
           const tk = (p, o) => { const L = Math.hypot(o.x - p.x, o.y - p.y) || 1, nx = -(o.y - p.y) / L * 4, ny = (o.x - p.x) / L * 4; return `${f2(p.x - nx)} ${f2(p.y - ny)} m ${f2(p.x + nx)} ${f2(p.y + ny)} l S `; };
           ops += tk(pts[0], pts[1]) + tk(pts[pts.length - 1], pts[pts.length - 2]);

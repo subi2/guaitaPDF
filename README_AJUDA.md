@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — Manual d'ús
 
-**Versió 8.11.0** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
+**Versió 8.14.0** · 🇬🇧 [English version](README_HELP.md) · ← Torna al [README](README.md)
 
 Editor de PDF multidocument en un sol fitxer HTML. No instal·la res, no es connecta a cap servidor i funciona sense Internet: els teus PDF no surten mai del teu ordinador. Inclou edició del contingut original, revisió i signatura, el llenç de nodes Composar, mesures a escala, comparació de revisions, reducció de mida, exportació a DXF i l'analitzador de PDF sospitosos guaitaPDFscan.
 
@@ -212,6 +212,14 @@ Formats de sortida: **CSV** (UTF-8 amb BOM i punt i coma, s'obre bé a l'Excel),
 
 Límits: només text real (un PDF escanejat no té text), no es detecten les línies de la quadrícula i les cel·les combinades només es resolen de manera aproximada; en aquest cas fusiona o edita a mà.
 
+### Components del vector i cota nítida
+
+En mesurar una **distància**, a més de la longitud, el quadre d'informació mostra la component **horitzontal (ΔX)**, la **vertical (ΔY)** i l'**angle** respecte a l'horitzontal, a l'escala de la pàgina i en la unitat triada. ΔX és positiva cap a la dreta i ΔY cap amunt; els eixos són els de la vista, tal com veus el plànol.
+
+La casella **ΔX/ΔY** de la barra de mesura decideix si les components es dibuixen al plànol: dos catets discontinus i una etiqueta de dues línies (*longitud* i *ΔX · ΔY*). També van al PDF desat i, per a les distàncies, al **CSV** (columnes ΔX, ΔY i angle).
+
+La cota és ara **nítida i de mida constant a qualsevol zoom**: mentre mesures, la línia, els punts i les etiquetes es dibuixen a la resolució de la pantalla i no engrosseixen en apropar. El cursor porta una **mira** de quatre traços curts, pensada per marcar punts de referència a zoom màxim sense tapar el detall. Les mesures ja fixades també conserven la mida a pantalla.
+
 ### Imprimir a escala i retallar una zona
 
 Al menú **Plànols**, **Imprimir a escala…** reescala el plànol a una altra escala i un altre paper: per exemple, un A1 a 1:100 passa a un A3 a 1:200. Indica l'*escala del plànol* (es llegeix de la pàgina si ja la tens calibrada), l'*escala de sortida*, el paper DIN (o «mida resultant»), l'orientació, el marge i les pàgines (actual, un interval o totes).
@@ -238,9 +246,13 @@ Aplica una llista de regles (una per línia, `cerca =&gt; substitueix`, o amb ta
 
 Al tauler **Capes** (o a **Plànols › Estats de capes…**) hi ha un selector d'estats. Posa les capes com vulguis (per exemple només «Estructura»), prem **Desa…** i dona-li un nom. Quan triïs l'estat, es tornen a aplicar a un clic les capes visibles i amagades. Els estats es recorden en aquest navegador, per nom de fitxer; la **×** elimina l'estat triat. Si desa o imprimeixes després d'aplicar un estat, el PDF porta aquella visibilitat.
 
-### Vista dividida sincronitzada
+### Comparador de pàgines
 
-**Plànols › Vista dividida sincronitzada…** obre dos plànols costat a costat (la pàgina actual i la següent, o un altre document obert) dins el visor de comparació. El zoom (`Ctrl`+roda) i el desplaçament són comuns, de manera que veus la mateixa zona dels dos. A cada costat pots triar el document i escriure el número de pàgina; amb «Pàgines sincronitzades» les fletxes avancen les dues alhora. És una vista per consultar: no es poden editar anotacions des d'aquí.
+El **Comparador de pàgines** (abans «Vista dividida sincronitzada») posa dues pàgines o plànols costat a costat amb el zoom i el desplaçament lligats. Ara té un **botó propi a la barra de visualització**, al costat de «Pantalla dividida», i també és a **Plànols › Comparador de pàgines…**. El mateix quadre fa també les diferències i la superposició de dues versions.
+
+### Vista dividida del comparador
+
+**Plànols › Comparador de pàgines…** (o el botó de la barra de visualització) obre dos plànols costat a costat (la pàgina actual i la següent, o un altre document obert) dins el visor de comparació. El zoom (`Ctrl`+roda) i el desplaçament són comuns, de manera que veus la mateixa zona dels dos. A cada costat pots triar el document i escriure el número de pàgina; amb «Pàgines sincronitzades» les fletxes avancen les dues alhora. És una vista per consultar: no es poden editar anotacions des d'aquí.
 
 ### Zoom i mida real
 

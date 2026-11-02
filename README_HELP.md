@@ -3,7 +3,7 @@
 
 # Guaita PDF Edit — User guide
 
-**Version 8.11.0** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
+**Version 8.14.0** · 🇨🇦 [Versió en català](README_AJUDA.md) · ← Back to the [README](README.md)
 
 Multi-document PDF editor in a single HTML file. It installs nothing, connects to no server and works offline: your PDFs never leave your computer. It includes original-content editing, review and signing, the Compose node canvas, scaled measurements, revision comparison, size reduction, DXF export and the suspicious-PDF analyser guaitaPDFscan.
 
@@ -212,6 +212,14 @@ Output formats: **CSV** (UTF-8 with BOM and semicolons, opens correctly in Excel
 
 Limits: real text only (a scanned PDF has no text), grid lines are not detected and merged cells are only resolved approximately; in that case merge or edit by hand.
 
+### Vector components and a crisp dimension
+
+When you measure a **distance**, besides the length, the info box shows the **horizontal (ΔX)** and **vertical (ΔY)** components and the **angle** from the horizontal, at the page scale and in the chosen unit. ΔX is positive to the right and ΔY upwards; the axes are those of the view, as you see the drawing.
+
+The **ΔX/ΔY** checkbox in the measure bar decides whether the components are drawn on the drawing: two dashed legs and a two-line label (*length* and *ΔX · ΔY*). They also go into the saved PDF and, for distances, into the **CSV** (ΔX, ΔY and angle columns).
+
+The dimension is now **crisp and of constant size at any zoom**: while you measure, the line, the points and the labels are drawn at screen resolution and do not get thicker as you zoom in. The cursor carries a **reticle** of four short ticks, made for placing reference points at maximum zoom without covering the detail. Measurements already fixed also keep their on-screen size.
+
 ### Print to scale and crop a zone
 
 In the **Drawings** menu, **Print to scale…** rescales a drawing to another scale and paper: for example, an A1 at 1:100 becomes an A3 at 1:200. Enter the *drawing scale* (read from the page if you already calibrated it), the *output scale*, the DIN paper (or «resulting size»), the orientation, the margin and the pages (current, a range or all).
@@ -238,9 +246,13 @@ Applies a list of rules (one per line, `find =&gt; replace`, or separated by a t
 
 The **Layers** panel (or **Drawings › Layer states…**) has a state selector. Set the layers as you like (for example only «Structure»), press **Save…** and name it. Choosing the state later re-applies the visible and hidden layers in one click. States are remembered in this browser, by file name; the **×** deletes the chosen state. If you save or print after applying a state, the PDF carries that visibility.
 
-### Synchronised split view
+### Page comparer
 
-**Drawings › Synchronised split view…** opens two drawings side by side (the current page and the next one, or another open document) in the comparison viewer. Zoom (`Ctrl`+wheel) and panning are shared, so you see the same area of both. On each side you can choose the document and type the page number; with «Synchronised pages» the arrows move both at once. It is a viewing aid: annotations cannot be edited from here.
+The **Page comparer** (formerly «Synchronised split view») puts two pages or drawings side by side with linked zoom and panning. It now has **its own button on the view bar**, next to «Split screen», and is also under **Drawings › Page comparer…**. The same window also does differences and overlay of two versions.
+
+### Comparer split view
+
+**Drawings › Page comparer…** (or the view-bar button) opens two drawings side by side (the current page and the next one, or another open document) in the comparison viewer. Zoom (`Ctrl`+wheel) and panning are shared, so you see the same area of both. On each side you can choose the document and type the page number; with «Synchronised pages» the arrows move both at once. It is a viewing aid: annotations cannot be edited from here.
 
 ### Zoom and real size
 
